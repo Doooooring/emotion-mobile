@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'textarea.dart' as input_emotion;
+import 'input_emotion.dart' as input_emotion;
 
 const String url = "http://localhost:3000";
 
@@ -27,13 +27,13 @@ class MyApp extends StatelessWidget {
                   FocusScope.of(context).unfocus(), //키보드 이외의 영역 터치시 사라짐
               child: SingleChildScrollView(
                 child: Container(
-                    decoration: BoxDecoration(
-                      //style 느낌
-                      color: Colors.blue,
-                      border: Border.all(color: Colors.black),
-                    ),
-                    child: Row(
-                        children: const [input_emotion.EmotionContainer()])),
+                  decoration: BoxDecoration(
+                    //style 느낌
+                    color: Colors.white,
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: input_emotion.EmotionContainer(),
+                ),
               ),
             ),
             bottomNavigationBar: BottomAppBar(

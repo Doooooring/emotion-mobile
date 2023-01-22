@@ -45,20 +45,26 @@ dynamic getDate(date) {
   return result;
 }
 
-class EmotionWrapper extends StatelessWidget {
+class EmotionWrapper extends StatefulWidget {
   const EmotionWrapper({Key? key}) : super(key: key);
 
   @override
+  State<EmotionWrapper> createState() => _EmotionWrapperState();
+}
+
+class _EmotionWrapperState extends State<EmotionWrapper> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            leading: Icon(Icons.star),
-            title: const Text("ha",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 30,
-                  backgroundColor: Colors.blue,
-                ))),
+        appBar: AppBar(title: Text("", style: TextStyle(fontSize: 30))),
+        // appBar: AppBar(
+        //     leading: Icon(Icons.star),
+        //     title: const Text("ha",
+        //         textAlign: TextAlign.left,
+        //         style: TextStyle(
+        //           fontSize: 30,
+        //           backgroundColor: Colors.blue,
+        //         ))),
         body: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(), //키보드 이외의 영역 터치시 사라짐
           child: SingleChildScrollView(
@@ -84,6 +90,7 @@ class EmotionWrapper extends StatelessWidget {
                 IconButton(onPressed: () {}, icon: Icon(Icons.book))
               ]),
         )));
+    ;
   }
 }
 

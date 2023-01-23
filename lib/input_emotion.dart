@@ -23,31 +23,12 @@ Map ImageLink = {
   "tired": "assets/images/tired.png"
 };
 
-dynamic getDate(date) {
-  Map Month = {
-    "01": "Jan",
-    "02": "Feb",
-    "03": "Mar",
-    "04": "Apr",
-    "05": "May",
-    "06": "Jun",
-    "07": "Jul",
-    "08": "Aug",
-    "09": "Sep",
-    "10": "Oct",
-    "11": "Nov",
-    "12": "Dec"
-  };
-
-  List<String> dateArray = date.split(".");
-  dateArray[0] = Month[dateArray[0]];
-  dynamic result = dateArray.join(" ");
-  return result;
-}
-
 class EmotionWrapper extends StatefulWidget {
-  const EmotionWrapper({Key? key}) : super(key: key);
-
+  const EmotionWrapper(
+      {Key? key, required this.setInputEmotionUp, required this.dateSelected})
+      : super(key: key);
+  final void Function(bool) setInputEmotionUp;
+  final String dateSelected;
   @override
   State<EmotionWrapper> createState() => _EmotionWrapperState();
 }
@@ -55,49 +36,55 @@ class EmotionWrapper extends StatefulWidget {
 class _EmotionWrapperState extends State<EmotionWrapper> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text("", style: TextStyle(fontSize: 30))),
-        // appBar: AppBar(
-        //     leading: Icon(Icons.star),
-        //     title: const Text("ha",
-        //         textAlign: TextAlign.left,
-        //         style: TextStyle(
-        //           fontSize: 30,
-        //           backgroundColor: Colors.blue,
-        //         ))),
-        body: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(), //키보드 이외의 영역 터치시 사라짐
-          child: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                //style 느낌
-                color: Colors.white,
-                border: Border.all(color: Colors.black),
-              ),
-              child: EmotionContainer(date: "Jan 01 23"),
-            ),
+    // return Scaffold(
+    //     appBar: AppBar(title: Text("", style: TextStyle(fontSize: 30))),
+    // appBar: AppBar(
+    //     leading: Icon(Icons.star),
+    //     title: const Text("ha",
+    //         textAlign: TextAlign.left,
+    //         style: TextStyle(
+    //           fontSize: 30,
+    //           backgroundColor: Colors.blue,
+    //         ))),
+    // body:
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(), //키보드 이외의 영역 터치시 사라짐
+      child: SingleChildScrollView(
+        child: Container(
+          height: 800,
+          decoration: BoxDecoration(
+            //style 느낌
+            color: Colors.white,
           ),
+          child: EmotionContainer(
+              date: widget.dateSelected,
+              setInputEmotionUp: widget.setInputEmotionUp),
         ),
-        bottomNavigationBar: BottomAppBar(
-            child: SizedBox(
-          height: 60,
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                IconButton(onPressed: () {}, icon: Icon(Icons.face)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.home)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.book))
-              ]),
-        )));
-    ;
+      ),
+    )
+        // bottomNavigationBar: BottomAppBar(
+        //     child: SizedBox(
+        //   height: 60,
+        //   child: Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //       crossAxisAlignment: CrossAxisAlignment.center,
+        //       children: <Widget>[
+        //         IconButton(onPressed: () {}, icon: Icon(Icons.face)),
+        //         IconButton(onPressed: () {}, icon: Icon(Icons.home)),
+        //         IconButton(onPressed: () {}, icon: Icon(Icons.book))
+        //       ]),
+        // )));
+        ;
   }
 }
 
 class EmotionContainer extends StatefulWidget {
   final String date;
 
-  const EmotionContainer({Key? key, required this.date}) : super(key: key);
+  const EmotionContainer(
+      {Key? key, required this.date, required this.setInputEmotionUp})
+      : super(key: key);
+  final void Function(bool) setInputEmotionUp;
 
   @override
   State<EmotionContainer> createState() => _EmotionContainerState();
@@ -133,14 +120,19 @@ class _EmotionContainerState extends State<EmotionContainer> {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
           color: Color.fromRGBO(240, 240, 240, 1),
         ),
         child: Stack(
           children: [
             Column(children: <Widget>[
               SizedBox(height: 30),
-              EmotionHead(date: widget.date),
+              EmotionHead(
+                  date: widget.date,
+                  setInputEmotionUp: widget.setInputEmotionUp),
               SizedBox(height: 30),
               EmotionChart(emotion: emotion),
               SizedBox(
@@ -159,17 +151,6 @@ class _EmotionContainerState extends State<EmotionContainer> {
               )
             ]),
             Loading(isLoading: isLoading),
-            TextButton(
-              onPressed: () {
-                setIsLoading(!isLoading);
-                if (isLoading) {
-                  developer.log("hi");
-                } else {
-                  developer.log("no");
-                }
-              },
-              child: Text("here"),
-            )
           ],
         ),
       ),
@@ -178,8 +159,11 @@ class _EmotionContainerState extends State<EmotionContainer> {
 }
 
 class EmotionHead extends StatefulWidget {
-  const EmotionHead({Key? key, required this.date}) : super(key: key);
+  const EmotionHead(
+      {Key? key, required this.date, required this.setInputEmotionUp})
+      : super(key: key);
   final dynamic date;
+  final void Function(bool) setInputEmotionUp;
 
   @override
   State<EmotionHead> createState() => _EmotionHeadState();
@@ -189,7 +173,7 @@ class _EmotionHeadState extends State<EmotionHead> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(20.0),
       child: Row(children: [
         Opacity(
             opacity: 0,
@@ -216,7 +200,7 @@ class _EmotionHeadState extends State<EmotionHead> {
           width: 60.0,
           child: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                widget.setInputEmotionUp(false);
               },
               icon: Image.asset('assets/images/ico_close.png')),
         )
@@ -341,7 +325,7 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 533,
+      height: 800,
       child: Offstage(
           offstage: widget.isLoading,
           child: Stack(children: const <Widget>[

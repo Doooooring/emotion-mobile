@@ -53,7 +53,6 @@ class _CalanderWrapperState extends State<CalanderWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            leading: Icon(Icons.star),
             title: const Text("ha",
                 textAlign: TextAlign.left,
                 style: TextStyle(

@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 const String url = "http://localhost:3000";
 
 Map ImageLink = {
-  "null": "assets/images/question.jpeg",
+  "null": "assets/images/mean.png",
   "angry": "assets/images/angry.png",
   "anticipate": "assets/images/anticipate.png",
   "bored": "assets/images/bored.png",
@@ -99,7 +99,7 @@ class _EmotionContainerState extends State<EmotionContainer> {
     });
   }
 
-  String emotion = "assets/images/question.jpeg";
+  String emotion = "assets/images/mean.png";
   void setEmotion(String newEmotion) {
     setState(() {
       emotion = newEmotion;

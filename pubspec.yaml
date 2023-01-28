@@ -80,6 +80,7 @@ flutter:
     - assets/images/tired.png
     - assets/images/ico_close.png
     - assets/images/ico_close@2x.png
+    - assets/images/mean.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

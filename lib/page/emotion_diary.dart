@@ -1,9 +1,8 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 
-import "input_emotion.dart" as input_emotion;
+import "../component/common/bottom_bar.dart";
+import "../component/emoticon_diary/calandar/calandar.dart";
+import '../component/emoticon_diary/emotion/emotion.dart' as input_emotion;
 
 dynamic getDate(date) {
   Map Month = {
@@ -53,11 +52,12 @@ class _CalanderWrapperState extends State<CalanderWrapper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("ha",
+          backgroundColor: Color(0xffFAE297),
+          elevation: 1.0,
+          title: const Text("hmm",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 30,
-                backgroundColor: Colors.blue,
               ))),
       body: Wrap(children: [
         SizedBox(
@@ -80,23 +80,10 @@ class _CalanderWrapperState extends State<CalanderWrapper> {
                     //     },
                     //     icon: Icon(Icons.add_circle))),
                   ),
-                  TableCalendar(
-                      onDaySelected: (selectedDay, focusedDay) {
-                        List<String> dayToArray =
-                            selectedDay.toString().split(' ');
-                        String ymd = dayToArray[0];
-                        String dateInForm = getDate(ymd);
-                        developer.log(dateInForm);
-                        setDateSelected(dateInForm);
-                        setInputEmotionUp(true);
-                      },
-                      headerStyle: HeaderStyle(
-                        titleCentered: true,
-                        formatButtonVisible: false,
-                      ),
-                      focusedDay: DateTime.now(),
-                      firstDay: DateTime.utc(2022, 1, 1),
-                      lastDay: DateTime.utc(2023, 12, 30)),
+                  Calander(
+                    setDateSelected: setDateSelected,
+                    setInputEmotionUp: setInputEmotionUp,
+                  )
                 ],
               ),
               AnimatedPositioned(
@@ -112,58 +99,18 @@ class _CalanderWrapperState extends State<CalanderWrapper> {
           ),
         ),
       ]),
-      bottomNavigationBar: BottomAppBar(
-        clipBehavior: Clip.antiAlias,
-        shape:
-            CircularNotchedRectangle(), // ← carves notch for FAB in BottomAppBar
-        color: Colors.white,
-        notchMargin: 10,
-        child: SizedBox(
-          width: double.infinity,
-          height: 63,
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                  colors: [Color.fromRGBO(0, 0, 0, 0.1), Colors.black],
-                  begin: Alignment.topCenter,
-                      end : Alignment.bottomCenter
-                )),
-              ),
-              Column(
-                children: [
-                  SizedBox(
-                    height: 3,
-                  ),
-                  BottomAppBar(
-                    // ****** APP BAR ******************
-                    clipBehavior: Clip.antiAlias,
-                    shape:
-                        CircularNotchedRectangle(), // ← carves notch for FAB in BottomAppBar
-                    color: Colors.white,
-                    elevation: 0,
-                    // ↑ use .withAlpha(0) to debug/peek underneath ↑ BottomAppBar
-                    notchMargin: 12,
-                    child: SizedBox(width: double.infinity, height: 60),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
+      bottomNavigationBar: BottomNavBar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
-        width: 70,
-        height: 70,
+        width: 80,
+        height: 80,
         child: FloatingActionButton(
           backgroundColor: Color(0xffFAE297),
           shape: const CircleBorder(),
           onPressed: () {},
           child: Icon(
             Icons.house,
-            size: 30,
+            size: 35,
             color: Colors.black,
           ),
         ),

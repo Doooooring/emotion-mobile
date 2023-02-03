@@ -9,29 +9,16 @@ import 'emotion_selector.dart';
 
 const String url = "http://localhost:3000";
 
-Map ImageLink = {
-  "null": "assets/images/mean.png",
-  "angry": "assets/images/angry.png",
-  "anticipate": "assets/images/anticipate.png",
-  "bored": "assets/images/bored.png",
-  "calm": "assets/images/calm.png",
-  "content": "assets/images/content.png",
-  "excited": "assets/images/excited.png",
-  "happy": "assets/images/happy.png",
-  "relaxed": "assets/images/relaxed.png",
-  "sad": "assets/images/sad.png",
-  "surprised(bad reason)": "assets/images/surprised(bad).png",
-  "surprised(good reason)": "assets/images/surprised(good).png",
-  "tense": "assets/images/tense.png",
-  "tired": "assets/images/tired.png"
-};
-
 class EmotionWrapper extends StatefulWidget {
   const EmotionWrapper(
-      {Key? key, required this.setInputEmotionUp, required this.dateSelected})
+      {Key? key,
+      required this.setInputEmotionUp,
+      required this.dateSelected,
+      required this.dateSelectedDeformed})
       : super(key: key);
   final void Function(bool) setInputEmotionUp;
   final String dateSelected;
+  final DateTime dateSelectedDeformed;
   @override
   State<EmotionWrapper> createState() => _EmotionWrapperState();
 }
@@ -58,7 +45,8 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
           child: Stack(children: [
             EmotionContainer(
                 date: widget.dateSelected,
-                setInputEmotionUp: widget.setInputEmotionUp),
+                setInputEmotionUp: widget.setInputEmotionUp,
+                dateSelectedDeformed: widget.dateSelectedDeformed),
             EmoticonSelector(emotionSelectorUp: emotionSelectorUp)
           ]),
         ),
@@ -71,9 +59,13 @@ class EmotionContainer extends StatefulWidget {
   final String date;
 
   const EmotionContainer(
-      {Key? key, required this.date, required this.setInputEmotionUp})
+      {Key? key,
+      required this.date,
+      required this.setInputEmotionUp,
+      required this.dateSelectedDeformed})
       : super(key: key);
   final void Function(bool) setInputEmotionUp;
+  final DateTime dateSelectedDeformed;
 
   @override
   State<EmotionContainer> createState() => _EmotionContainerState();
@@ -133,9 +125,11 @@ class _EmotionContainerState extends State<EmotionContainer> {
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   EmotionHandleButton(
-                      inputText: inputText,
-                      setEmotion: setEmotion,
-                      setIsLoading: setIsLoading)
+                    inputText: inputText,
+                    setEmotion: setEmotion,
+                    setIsLoading: setIsLoading,
+                    dateSelectedDeformed: widget.dateSelectedDeformed,
+                  )
                 ]),
               )
             ]),

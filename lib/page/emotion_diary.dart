@@ -1,43 +1,37 @@
 import 'package:flutter/material.dart';
 
+import "../asset/init_data.dart";
 import "../component/common/bottom_bar.dart";
-import "../component/emoticon_diary/calandar/calandar.dart";
+import "../component/emoticon_diary/calendar/calendar.dart";
 import '../component/emoticon_diary/emotion/emotion.dart' as input_emotion;
+import "../services/emotion.dart";
 
-dynamic getDate(date) {
-  Map Month = {
-    "01": "Jan",
-    "02": "Feb",
-    "03": "Mar",
-    "04": "Apr",
-    "05": "May",
-    "06": "Jun",
-    "07": "Jul",
-    "08": "Aug",
-    "09": "Sep",
-    "10": "Oct",
-    "11": "Nov",
-    "12": "Dec"
-  };
-
-  List<String> dateArray = date.split("-");
-  dateArray[1] = Month[dateArray[1]];
-  dynamic result = dateArray.join(" ");
-  return result;
-}
-
-class CalanderWrapper extends StatefulWidget {
-  const CalanderWrapper({Key? key}) : super(key: key);
+class CalendarWrapper extends StatefulWidget {
+  const CalendarWrapper({Key? key}) : super(key: key);
 
   @override
-  State<CalanderWrapper> createState() => _CalanderWrapperState();
+  State<CalendarWrapper> createState() => _CalendarWrapperState();
 }
 
-class _CalanderWrapperState extends State<CalanderWrapper> {
+class _CalendarWrapperState extends State<CalendarWrapper> {
   String dateSelected = "null";
   void setDateSelected(String date) {
     setState(() {
       dateSelected = date;
+    });
+  }
+
+  DateTime dateSelectedDeformed = new DateTime.now();
+  void setDateSelectedDeformed(DateTime date) {
+    setState(() {
+      dateSelectedDeformed = date;
+    });
+  }
+
+  bool isLoading = false;
+  void setIsLoading(bool state) {
+    setState(() {
+      isLoading = state;
     });
   }
 
@@ -46,6 +40,21 @@ class _CalanderWrapperState extends State<CalanderWrapper> {
     setState(() {
       inputEmotionUp = state;
     });
+  }
+
+  Map curDates = InitDate;
+  void setCurDates(Map Dates) {
+    setState(() {
+      curDates = Dates;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    DateTime Today = DateTime.now();
+    EmoticonServices().getEmotionMonth(Today.year, Today.month, setIsLoading);
   }
 
   @override
@@ -68,20 +77,11 @@ class _CalanderWrapperState extends State<CalanderWrapper> {
                 children: [
                   SizedBox(
                     height: 100,
-                    // child: IconButton(
-                    //    onPressed: () {
-                    //      setInputEmotionUp(true);
-                    // Navigator.push(
-                    //     context,
-                    //     PageTransition(
-                    //         type: PageTransitionType.rightToLeft,
-                    //         child: const input_emotion.EmotionWrapper(),
-                    //         ));
-                    //     },
-                    //     icon: Icon(Icons.add_circle))),
                   ),
-                  Calander(
+                  Calendar(
+                    curDates: curDates,
                     setDateSelected: setDateSelected,
+                    setDateSelectedDeformed: setDateSelectedDeformed,
                     setInputEmotionUp: setInputEmotionUp,
                   )
                 ],
@@ -90,7 +90,8 @@ class _CalanderWrapperState extends State<CalanderWrapper> {
                 duration: const Duration(milliseconds: 200),
                 child: input_emotion.EmotionWrapper(
                     dateSelected: dateSelected,
-                    setInputEmotionUp: setInputEmotionUp),
+                    setInputEmotionUp: setInputEmotionUp,
+                    dateSelectedDeformed: dateSelectedDeformed),
                 width: 430,
                 left: 0,
                 top: inputEmotionUp ? 50 : 800,

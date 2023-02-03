@@ -46,7 +46,9 @@ class BottomNavBar extends StatelessWidget {
                                 SizedBox(height: 10),
                                 IconButton(
                                     padding: EdgeInsets.all(0),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, "/baby_monitor");
+                                    },
                                     icon: Image.asset(
                                       width: 45,
                                       "assets/images/babyFace@2.png",
@@ -61,7 +63,9 @@ class BottomNavBar extends StatelessWidget {
                                 SizedBox(height: 10),
                                 IconButton(
                                     padding: EdgeInsets.all(0),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushNamed(context, "/diary");
+                                    },
                                     icon: Image.asset(
                                         width: 50, "assets/images/diary.png")),
                                 Text("Diary")

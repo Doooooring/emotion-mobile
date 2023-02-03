@@ -1,15 +1,15 @@
-import 'dart:convert';
-
-import 'package:firstproject/url.dart';
-import 'package:http/http.dart' as http;
+import "../repositories/diary.dart";
 
 class EmoticonServices {
-  Future<String> getEmotion(String text) async {
-    Uri endPoint = Uri.parse('$HOST_URL/emotion');
-    var bodyEncoded = json.encode({"text": text});
-    http.Response response = await http.post(endPoint,
-        body: bodyEncoded, headers: {"Content-Type": "application/json"});
-    dynamic result = json.decode(response.body);
+  Future<Map> getEmotionMonth(
+      int year, int month, void Function(bool) setIsLoading) async {
+    Map result = await DiaryRepositories().getDiaryMonth(year, month);
+
+    return {};
+  }
+
+  Future<String> getEmotion(DateTime date, String text) async {
+    Map result = await DiaryRepositories().postDiary(date, text);
     String emotion = result["emotion"];
     return emotion;
   }

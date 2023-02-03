@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'page/emotion_diary.dart' as calander;
+import './page/baby_monitor.dart';
+import './page/emotion_diary.dart';
+import './page/initial.dart';
 
 const String url = "http://localhost:3000";
 
@@ -14,7 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(initialRoute: '/', routes: {
-      '/': (context) => calander.CalanderWrapper(),
+      '/': (context) => InitialPage(),
+      '/diary': (context) => CalendarWrapper(),
+      '/baby_monitor': (context) => BabyMonitor()
     });
   }
 }

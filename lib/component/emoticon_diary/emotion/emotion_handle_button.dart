@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 
 import "../../../services/emotion.dart";
@@ -28,11 +26,13 @@ class EmotionHandleButton extends StatefulWidget {
       {Key? key,
       required this.inputText,
       required this.setEmotion,
-      required this.setIsLoading})
+      required this.setIsLoading,
+      required this.dateSelectedDeformed})
       : super(key: key);
   final String inputText;
   final void Function(String) setEmotion;
   final void Function(bool) setIsLoading;
+  final DateTime dateSelectedDeformed;
   @override
   State<EmotionHandleButton> createState() => _EmotionHandleButtonState();
 }
@@ -44,9 +44,9 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
         icon: const Icon(Icons.send),
         onPressed: () {
           widget.setIsLoading(false);
-          Future<String> emotion = EmoticonService.getEmotion(widget.inputText);
+          Future<String> emotion = EmoticonService.getEmotion(
+              widget.dateSelectedDeformed, widget.inputText);
           emotion.then((val) {
-            developer.log(val);
             String imageLink = ImageLink[val];
             widget.setEmotion(imageLink);
             widget.setIsLoading(true);

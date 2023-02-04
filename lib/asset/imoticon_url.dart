@@ -1,5 +1,5 @@
 Map ImageLink = {
-  "null": "assets/images/mean.png",
+  null: "assets/images/mean.png",
   "angry": "assets/images/angry.png",
   "anticipate": "assets/images/anticipate.png",
   "bored": "assets/images/bored.png",

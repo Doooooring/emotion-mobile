@@ -1,8 +1,9 @@
 Map InitDate = {
   '1': {
-    'id': null,
-    'emotion': null,
-    'content': null,
+    'id': "afsdfwg",
+    'emotion': "happy",
+    'content':
+        "I hope that it work well without any error. Heart beats fast. Colors and promises. How to be brave",
   },
   '2': {
     'id': null,

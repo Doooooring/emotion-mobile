@@ -22,7 +22,6 @@ class DiaryRepositories {
       "date": date.day,
       "content": text
     });
-
     http.Response response = await http.post(endPoint,
         body: bodyEncoded, headers: {"Content-Type": "application/json"});
     dynamic result = json.decode(response.body);
@@ -40,6 +39,14 @@ class DiaryRepositories {
 
   getDiary(String id) async {
     Uri endPoint = Uri.parse('$HOST_URL/diary/:${id}');
+    http.Response response =
+        await http.get(endPoint, headers: {"Content-Type": "application/json"});
+    dynamic result = json.decode(response.body);
+    return result;
+  }
+
+  getTempDiary(String id) async {
+    Uri endPoint = Uri.parse('$HOST_URL/diary/temp/:${id}');
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
     dynamic result = json.decode(response.body);

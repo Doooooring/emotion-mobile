@@ -4,7 +4,8 @@ import "../asset/init_data.dart";
 import "../component/common/bottom_bar.dart";
 import "../component/emoticon_diary/calendar/calendar.dart";
 import '../component/emoticon_diary/emotion/emotion.dart' as input_emotion;
-import "../services/emotion.dart";
+import "../component/emoticon_diary/emotion/emotion_preview.dart";
+import "../component/emoticon_diary/emotion/emotion_selector.dart";
 
 class CalendarWrapper extends StatefulWidget {
   const CalendarWrapper({Key? key}) : super(key: key);
@@ -14,8 +15,8 @@ class CalendarWrapper extends StatefulWidget {
 }
 
 class _CalendarWrapperState extends State<CalendarWrapper> {
-  String dateSelected = "null";
-  void setDateSelected(String date) {
+  DateTime dateSelected = DateTime.now();
+  void setDateSelected(DateTime date) {
     setState(() {
       dateSelected = date;
     });
@@ -42,10 +43,26 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
+  String? curId = null;
+  void setCurId(String? id) {
+    setState(() {
+      curId = id;
+    });
+  }
+
   Map curDates = InitDate;
   void setCurDates(Map Dates) {
     setState(() {
       curDates = Dates;
+    });
+  }
+
+  String? curEmotion = null;
+
+  bool emotionSelectorUp = false;
+  void setEmotionSelectorUp(bool state) {
+    setState(() {
+      emotionSelectorUp = state;
     });
   }
 
@@ -54,7 +71,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     // TODO: implement initState
     super.initState();
     DateTime Today = DateTime.now();
-    EmoticonServices().getEmotionMonth(Today.year, Today.month, setIsLoading);
+    //EmoticonServices().getEmotionMonth(Today.year, Today.month, setIsLoading);
   }
 
   @override
@@ -76,25 +93,46 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
               Column(
                 children: [
                   SizedBox(
-                    height: 100,
+                    height: 30,
                   ),
                   Calendar(
                     curDates: curDates,
                     setDateSelected: setDateSelected,
                     setDateSelectedDeformed: setDateSelectedDeformed,
                     setInputEmotionUp: setInputEmotionUp,
+                  ),
+                  SizedBox(height: 20),
+                  EmotionPreview(
+                    curDates: curDates,
+                    dateSelected: dateSelected,
+                    setInputEmotionUp: setInputEmotionUp,
+                    setEmotionSelectorUp: setEmotionSelectorUp,
                   )
                 ],
               ),
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 200),
                 child: input_emotion.EmotionWrapper(
-                    dateSelected: dateSelected,
-                    setInputEmotionUp: setInputEmotionUp,
-                    dateSelectedDeformed: dateSelectedDeformed),
+                  dateSelected: dateSelected,
+                  setInputEmotionUp: setInputEmotionUp,
+                  dateSelectedDeformed: dateSelectedDeformed,
+                  emotionSelectorUp: emotionSelectorUp,
+                  setEmotionSelectorUp: setEmotionSelectorUp,
+                ),
                 width: 430,
                 left: 0,
-                top: inputEmotionUp ? 50 : 800,
+                top: inputEmotionUp ? 70 : 800,
+              ),
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 200),
+                child: EmoticonSelector(
+                    emotionSelectorUp: emotionSelectorUp,
+                    id: curId,
+                    date: dateSelected,
+                    emotion: curEmotion),
+                width: 430,
+                left: 0,
+                top: emotionSelectorUp ? 70 : 800,
               ),
             ],
           ),

@@ -5,20 +5,23 @@ import 'emotion_chart.dart';
 import 'emotion_handle_button.dart';
 import 'emotion_head.dart';
 import 'emotion_input.dart';
-import 'emotion_selector.dart';
 
 const String url = "http://localhost:3000";
 
 class EmotionWrapper extends StatefulWidget {
-  const EmotionWrapper(
-      {Key? key,
-      required this.setInputEmotionUp,
-      required this.dateSelected,
-      required this.dateSelectedDeformed})
-      : super(key: key);
+  const EmotionWrapper({
+    Key? key,
+    required this.setInputEmotionUp,
+    required this.setEmotionSelectorUp,
+    required this.dateSelected,
+    required this.dateSelectedDeformed,
+    required this.emotionSelectorUp,
+  }) : super(key: key);
   final void Function(bool) setInputEmotionUp;
-  final String dateSelected;
+  final void Function(bool) setEmotionSelectorUp;
+  final DateTime dateSelected;
   final DateTime dateSelectedDeformed;
+  final bool emotionSelectorUp;
   @override
   State<EmotionWrapper> createState() => _EmotionWrapperState();
 }
@@ -26,13 +29,6 @@ class EmotionWrapper extends StatefulWidget {
 class _EmotionWrapperState extends State<EmotionWrapper> {
   @override
   Widget build(BuildContext context) {
-    bool emotionSelectorUp = false;
-    void setEmotionSelectorUp(bool state) {
-      setState(() {
-        emotionSelectorUp = state;
-      });
-    }
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(), //키보드 이외의 영역 터치시 사라짐
       child: SingleChildScrollView(
@@ -46,8 +42,8 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
             EmotionContainer(
                 date: widget.dateSelected,
                 setInputEmotionUp: widget.setInputEmotionUp,
-                dateSelectedDeformed: widget.dateSelectedDeformed),
-            EmoticonSelector(emotionSelectorUp: emotionSelectorUp)
+                dateSelectedDeformed: widget.dateSelectedDeformed,
+                setEmotionSelectorUp: widget.setEmotionSelectorUp),
           ]),
         ),
       ),
@@ -56,16 +52,17 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
 }
 
 class EmotionContainer extends StatefulWidget {
-  final String date;
-
   const EmotionContainer(
       {Key? key,
       required this.date,
       required this.setInputEmotionUp,
-      required this.dateSelectedDeformed})
+      required this.dateSelectedDeformed,
+      required this.setEmotionSelectorUp})
       : super(key: key);
+  final DateTime date;
   final void Function(bool) setInputEmotionUp;
   final DateTime dateSelectedDeformed;
+  final void Function(bool) setEmotionSelectorUp;
 
   @override
   State<EmotionContainer> createState() => _EmotionContainerState();

@@ -8,9 +8,16 @@ class InitialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+          backgroundColor: Color(0xffFAE297),
+          elevation: 1.0,
+          title: const Text("hmm",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 30,
+              ))),
       body: SizedBox(),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(state: true),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         width: 80,

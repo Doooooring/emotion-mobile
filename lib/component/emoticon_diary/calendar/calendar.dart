@@ -5,15 +5,15 @@ import "./calendarBuilder.dart";
 
 dynamic getDate(date) {
   Map Month = {
-    "01": "Jan",
-    "02": "Feb",
-    "03": "Mar",
-    "04": "Apr",
-    "05": "May",
-    "06": "Jun",
-    "07": "Jul",
-    "08": "Aug",
-    "09": "Sep",
+    "1": "Jan",
+    "2": "Feb",
+    "3": "Mar",
+    "4": "Apr",
+    "5": "May",
+    "6": "Jun",
+    "7": "Jul",
+    "8": "Aug",
+    "9": "Sep",
     "10": "Oct",
     "11": "Nov",
     "12": "Dec"
@@ -28,11 +28,13 @@ dynamic getDate(date) {
 class Calendar extends StatefulWidget {
   const Calendar({
     Key? key,
+    required this.setCurEmotion,
     required this.setDateSelected,
     required this.setInputEmotionUp,
     required this.curDates,
     required this.setDateSelectedDeformed,
   }) : super(key: key);
+  final void Function(String?) setCurEmotion;
   final void Function(DateTime) setDateSelected;
   final void Function(bool) setInputEmotionUp;
   final void Function(DateTime) setDateSelectedDeformed;
@@ -51,10 +53,15 @@ class _CalendarState extends State<Calendar> {
           if (selectedDay.month != focusedDay.month) {
             return;
           }
+          if (selectedDay.day > DateTime.now().day) {
+            return;
+          }
           // List<String> dayToArray = selectedDay.toString().split(' ');
           // String ymd = dayToArray[0];
           // String dateInForm = getDate(ymd);
+          Map curDate = widget.curDates[selectedDay.day.toString()];
           widget.setDateSelected(selectedDay);
+          widget.setCurEmotion(curDate["emotion"]);
         },
         headerStyle: const HeaderStyle(
           headerPadding: EdgeInsets.all(20),

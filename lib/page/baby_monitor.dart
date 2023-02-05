@@ -10,7 +10,7 @@ class BabyMonitor extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: SizedBox(),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: BottomNavBar(state: true),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         width: 80,

@@ -29,23 +29,20 @@ class EmotionWrapper extends StatefulWidget {
 class _EmotionWrapperState extends State<EmotionWrapper> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(), //키보드 이외의 영역 터치시 사라짐
-      child: SingleChildScrollView(
-        child: Container(
-          height: 800,
-          decoration: BoxDecoration(
-            //style 느낌
-            color: Colors.white,
-          ),
-          child: Stack(children: [
-            EmotionContainer(
-                date: widget.dateSelected,
-                setInputEmotionUp: widget.setInputEmotionUp,
-                dateSelectedDeformed: widget.dateSelectedDeformed,
-                setEmotionSelectorUp: widget.setEmotionSelectorUp),
-          ]),
+    return SingleChildScrollView(
+      child: Container(
+        height: 800,
+        decoration: BoxDecoration(
+          //style 느낌
+          color: Colors.white,
         ),
+        child: Stack(children: [
+          EmotionContainer(
+              date: widget.dateSelected,
+              setInputEmotionUp: widget.setInputEmotionUp,
+              dateSelectedDeformed: widget.dateSelectedDeformed,
+              setEmotionSelectorUp: widget.setEmotionSelectorUp),
+        ]),
       ),
     );
   }
@@ -94,6 +91,7 @@ class _EmotionContainerState extends State<EmotionContainer> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
       },

@@ -25,14 +25,14 @@ class EmotionHandleButton extends StatefulWidget {
   const EmotionHandleButton(
       {Key? key,
       required this.inputText,
-      required this.setEmotion,
+      //equired this.setEmotion,
       required this.setIsLoading,
-      required this.dateSelectedDeformed})
+      required this.dateSelected})
       : super(key: key);
   final String inputText;
-  final void Function(String) setEmotion;
+  //final void Function(String) setEmotion;
   final void Function(bool) setIsLoading;
-  final DateTime dateSelectedDeformed;
+  final DateTime dateSelected;
   @override
   State<EmotionHandleButton> createState() => _EmotionHandleButtonState();
 }
@@ -42,15 +42,13 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
   Widget build(BuildContext context) {
     return IconButton(
         icon: const Icon(Icons.send),
-        onPressed: () {
+        onPressed: () async {
           widget.setIsLoading(false);
-          Future<String> emotion = EmoticonService.getEmotion(
-              widget.dateSelectedDeformed, widget.inputText);
-          emotion.then((val) {
-            String imageLink = ImageLink[val];
-            widget.setEmotion(imageLink);
-            widget.setIsLoading(true);
-          });
+          String emotion = await EmoticonService.getEmotion(
+              widget.dateSelected, widget.inputText);
+          String imageLink = ImageLink[emotion];
+          //widget.setEmotion(imageLink);
+          widget.setIsLoading(true);
         });
   }
 }

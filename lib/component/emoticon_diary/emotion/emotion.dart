@@ -11,16 +11,17 @@ const String url = "http://localhost:3000";
 class EmotionWrapper extends StatefulWidget {
   const EmotionWrapper({
     Key? key,
+    required this.curDates,
     required this.setInputEmotionUp,
     required this.setEmotionSelectorUp,
     required this.dateSelected,
-    required this.dateSelectedDeformed,
     required this.emotionSelectorUp,
   }) : super(key: key);
+  final Map curDates;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
   final DateTime dateSelected;
-  final DateTime dateSelectedDeformed;
+
   final bool emotionSelectorUp;
   @override
   State<EmotionWrapper> createState() => _EmotionWrapperState();
@@ -38,9 +39,10 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
         ),
         child: Stack(children: [
           EmotionContainer(
+              curDates: widget.curDates,
               date: widget.dateSelected,
               setInputEmotionUp: widget.setInputEmotionUp,
-              dateSelectedDeformed: widget.dateSelectedDeformed,
+              dateSelected: widget.dateSelected,
               setEmotionSelectorUp: widget.setEmotionSelectorUp),
         ]),
       ),
@@ -51,14 +53,16 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
 class EmotionContainer extends StatefulWidget {
   const EmotionContainer(
       {Key? key,
+      required this.curDates,
       required this.date,
       required this.setInputEmotionUp,
-      required this.dateSelectedDeformed,
+      required this.dateSelected,
       required this.setEmotionSelectorUp})
       : super(key: key);
+  final Map curDates;
   final DateTime date;
   final void Function(bool) setInputEmotionUp;
-  final DateTime dateSelectedDeformed;
+  final DateTime dateSelected;
   final void Function(bool) setEmotionSelectorUp;
 
   @override
@@ -71,13 +75,6 @@ class _EmotionContainerState extends State<EmotionContainer> {
   void setInputText(String text) {
     setState(() {
       inputText = text;
-    });
-  }
-
-  String emotion = "assets/images/mean.png";
-  void setEmotion(String newEmotion) {
-    setState(() {
-      emotion = newEmotion;
     });
   }
 
@@ -110,7 +107,10 @@ class _EmotionContainerState extends State<EmotionContainer> {
                   date: widget.date,
                   setInputEmotionUp: widget.setInputEmotionUp),
               SizedBox(height: 30),
-              EmotionChart(emotion: emotion),
+              EmotionChart(
+                  date: widget.dateSelected,
+                  curDates: widget.curDates,
+                  setEmotionSelectorUp: widget.setEmotionSelectorUp),
               SizedBox(
                 child: Column(children: <Widget>[
                   EmotionInput(inputText: inputText, setInputText: setInputText)
@@ -121,9 +121,9 @@ class _EmotionContainerState extends State<EmotionContainer> {
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   EmotionHandleButton(
                     inputText: inputText,
-                    setEmotion: setEmotion,
+                    //setEmotion: setEmotion,
                     setIsLoading: setIsLoading,
-                    dateSelectedDeformed: widget.dateSelectedDeformed,
+                    dateSelected: widget.dateSelected,
                   )
                 ]),
               )

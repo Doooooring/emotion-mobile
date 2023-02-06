@@ -240,14 +240,10 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
       itemBuilder: (BuildContext context) => [
         PopupMenuItem(
           value: SampleItem.itemOne,
-          child: Text("edit diary"),
+          child: Text("edit"),
         ),
         PopupMenuItem(
           value: SampleItem.itemTwo,
-          child: Text("edit emoji"),
-        ),
-        PopupMenuItem(
-          value: SampleItem.itemThree,
           child: Text("daily report"),
         ),
       ],

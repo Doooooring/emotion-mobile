@@ -124,6 +124,7 @@ flutter:
     - assets/images/babyFace@2.png
     - assets/images/needle.png
     - assets/images/levelBoard.png
+    - assets/images/sentimentalLevelBoard.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

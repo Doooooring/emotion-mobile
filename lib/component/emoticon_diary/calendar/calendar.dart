@@ -32,12 +32,10 @@ class Calendar extends StatefulWidget {
     required this.setDateSelected,
     required this.setInputEmotionUp,
     required this.curDates,
-    required this.setDateSelectedDeformed,
   }) : super(key: key);
   final void Function(String?) setCurEmotion;
   final void Function(DateTime) setDateSelected;
   final void Function(bool) setInputEmotionUp;
-  final void Function(DateTime) setDateSelectedDeformed;
   final Map curDates;
 
   @override

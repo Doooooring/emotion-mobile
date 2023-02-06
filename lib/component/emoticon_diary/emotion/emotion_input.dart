@@ -27,7 +27,7 @@ class _EmotionInputState extends State<EmotionInput> {
                 child: TextField(
                   style: TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
-                      hintText: '오늘 OO이와의 하루는 어땠나요?',
+                      hintText: 'How was your day?',
                       labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),

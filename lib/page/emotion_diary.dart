@@ -22,13 +22,6 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
-  DateTime dateSelectedDeformed = DateTime.now();
-  void setDateSelectedDeformed(DateTime date) {
-    setState(() {
-      dateSelectedDeformed = date;
-    });
-  }
-
   bool isLoading = false;
   void setIsLoading(bool state) {
     setState(() {
@@ -113,7 +106,6 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                     Calendar(
                       curDates: curDates,
                       setDateSelected: setDateSelected,
-                      setDateSelectedDeformed: setDateSelectedDeformed,
                       setCurEmotion: setCurEmotion,
                       setInputEmotionUp: setInputEmotionUp,
                     ),
@@ -130,9 +122,9 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 200),
                 child: input_emotion.EmotionWrapper(
+                  curDates: curDates,
                   dateSelected: dateSelected,
                   setInputEmotionUp: setInputEmotionUp,
-                  dateSelectedDeformed: dateSelectedDeformed,
                   emotionSelectorUp: emotionSelectorUp,
                   setEmotionSelectorUp: setEmotionSelectorUp,
                 ),

@@ -3,6 +3,7 @@ import "dart:math" as math;
 import 'package:flutter/material.dart';
 
 import "../asset/imoticon_url.dart";
+import "../component/emoticon_diary/emotion/youtube_player.dart";
 
 Map Month = {
   "1": "Jan",
@@ -158,13 +159,14 @@ class EmotionResult extends StatelessWidget {
                       ])),
               SizedBox(height: 20),
               Container(
-                  width: 340,
-                  height: 300,
-                  padding: EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(40)),
-                  child: Text(recommend)),
+                width: 340,
+                height: 300,
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(40)),
+                child: Player("aB8Xgn6JKXw"),
+              )
             ])),
       ),
     );

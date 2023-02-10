@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import "../../../asset/imoticon_url.dart";
+import "../../../services/emotion.dart";
+
+EmotionServices emotionServices = EmotionServices();
 
 class EmotionChart extends StatefulWidget {
   const EmotionChart(
@@ -38,6 +41,9 @@ class _EmotionChartState extends State<EmotionChart> {
                 return;
               }
               // tempemotion 받아오기
+              int curId = selected["id"];
+              emotionServices.reviseTempEmotion(
+                  curId, widget.setCurTempEmotion, widget.setEmotionSelectorUp);
               widget.setEmotionSelectorUp(true);
             },
             icon: Image.asset(image)));

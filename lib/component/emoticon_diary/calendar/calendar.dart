@@ -74,7 +74,7 @@ class _CalendarState extends State<Calendar> {
           rightChevronPadding: EdgeInsets.all(0),
           titleTextStyle: TextStyle(fontSize: 25.0),
         ),
-        calendarBuilders: calendarBuilders(),
+        calendarBuilders: calendarBuilders(widget.curDates),
         focusedDay: DateTime.now(),
         firstDay: DateTime.utc(1998, 1, 1),
         lastDay: DateTime.utc(2023, 12, 30));

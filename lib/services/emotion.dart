@@ -32,9 +32,11 @@ class EmotionServices {
       void Function(String?) setCurTempEmotion) async {
     if (id == null) {
       Map result = await repository.postDiary(dateSelected, text);
+
       String today = dateSelected.day.toString();
       int curId = result["diaryId"];
       String tempEmotion = result["tempEmotion"];
+
       setCurDate(today, curId, text, null);
       setCurTempEmotion(tempEmotion);
       setEmotionSelectorUp(true);

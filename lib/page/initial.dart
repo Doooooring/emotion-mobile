@@ -16,7 +16,7 @@ class InitialPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 30,
               ))),
-      body: SizedBox(),
+      body: SizedBox(height: 10),
       bottomNavigationBar: BottomNavBar(state: true),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(

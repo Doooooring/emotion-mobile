@@ -25,6 +25,8 @@ class _EmotionInputState extends State<EmotionInput> {
     Map curInfo = widget.curDates[widget.date.day.toString()];
     String? curEmotion = curInfo["emotion"];
 
+    String initialText = curInfo["content"] != null ? curInfo["content"] : "";
+
     return Container(
         width: double.infinity,
         child: Row(
@@ -35,7 +37,8 @@ class _EmotionInputState extends State<EmotionInput> {
               padding: EdgeInsets.all(20),
               child: SizedBox(
                 width: 350,
-                child: TextField(
+                child: TextFormField(
+                  initialValue: initialText,
                   style: TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
                       hintText: 'How was your day?',

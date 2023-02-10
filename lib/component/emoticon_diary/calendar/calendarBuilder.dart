@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../asset/imoticon_url.dart';
-import '../../../asset/init_data.dart';
 
 SizedBox buildCalendarDay(
     {required String day,
@@ -40,11 +39,11 @@ SizedBox buildCalendarDay(
               ])));
 }
 
-CalendarBuilders calendarBuilders() {
+CalendarBuilders calendarBuilders(Map curDates) {
   return CalendarBuilders(
     selectedBuilder: (context, date, _) {
       String day = date.day.toString();
-      Map info = InitDate[day];
+      Map info = curDates[day];
       String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
@@ -57,7 +56,7 @@ CalendarBuilders calendarBuilders() {
     },
     todayBuilder: (context, date, _) {
       String day = date.day.toString();
-      Map info = InitDate[day];
+      Map info = curDates[day];
       String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
@@ -70,7 +69,7 @@ CalendarBuilders calendarBuilders() {
     },
     rangeStartBuilder: (context, date, _) {
       String day = date.day.toString();
-      Map info = InitDate[day];
+      Map info = curDates[day];
       String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
@@ -83,7 +82,7 @@ CalendarBuilders calendarBuilders() {
     },
     rangeEndBuilder: (context, date, _) {
       String day = date.day.toString();
-      Map info = InitDate[day];
+      Map info = curDates[day];
       String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
@@ -96,20 +95,19 @@ CalendarBuilders calendarBuilders() {
     },
     outsideBuilder: (context, date, _) {
       String day = date.day.toString();
-      Map info = InitDate[day];
       String emoticon = ImageLink[null];
-      Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
+      Color back = Colors.white;
       return buildCalendarDay(
           day: day,
           selected: false,
           isToday: false,
           outSide: true,
-          back: Colors.white,
+          back: back,
           imoticon: emoticon);
     },
     disabledBuilder: (context, date, _) {
       String day = date.day.toString();
-      Map info = InitDate[day];
+      Map info = curDates[day];
       String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
@@ -122,7 +120,7 @@ CalendarBuilders calendarBuilders() {
     },
     holidayBuilder: (context, date, _) {
       String day = date.day.toString();
-      Map info = InitDate[day];
+      Map info = curDates[day];
       String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
@@ -135,7 +133,7 @@ CalendarBuilders calendarBuilders() {
     },
     defaultBuilder: (context, date, _) {
       String day = date.day.toString();
-      Map info = InitDate[day];
+      Map info = curDates[day];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       String emoticon = ImageLink[info["emotion"]];
       return buildCalendarDay(

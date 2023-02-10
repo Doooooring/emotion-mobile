@@ -36,7 +36,6 @@ class DiaryRepositories {
   // }
   postDiary(DateTime date, String text) async {
     Uri endPoint = Uri.parse('$HOST_URL/diary');
-
     var bodyEncoded = json.encode({
       "year": date.year,
       "month": date.month,

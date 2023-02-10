@@ -6,6 +6,9 @@ import "../component/emoticon_diary/calendar/calendar.dart";
 import "../component/emoticon_diary/emotion/emotion.dart" as input_emotion;
 import "../component/emoticon_diary/emotion/emotion_preview.dart";
 import "../component/emoticon_diary/emotion/emotion_selector.dart";
+import "../services/emotion.dart";
+
+EmotionServices emotionServices = EmotionServices();
 
 class CalendarWrapper extends StatefulWidget {
   const CalendarWrapper({Key? key}) : super(key: key);
@@ -83,7 +86,8 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     // TODO: implement initState
     super.initState();
     DateTime Today = DateTime.now();
-    //EmoticonServices().getEmotionMonth(Today.year, Today.month, setIsLoading);
+    emotionServices.getEmotionMonth(
+        Today.year, Today.month, setCurDatesAll, setIsLoading);
   }
 
   @override
@@ -130,9 +134,10 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                 child: input_emotion.EmotionWrapper(
                   curDates: curDates,
                   dateSelected: dateSelected,
+                  emotionSelectorUp: emotionSelectorUp,
+                  setCurDate: setCurDate,
                   setInputEmotionUp: setInputEmotionUp,
                   setCurTempEmotion: setCurTempEmotion,
-                  emotionSelectorUp: emotionSelectorUp,
                   setEmotionSelectorUp: setEmotionSelectorUp,
                 ),
                 width: 430,
@@ -142,13 +147,15 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 200),
                 child: SelectorWrapper(
-                    setInputEmotionUp: setInputEmotionUp,
-                    setEmotionSelectorUp: setEmotionSelectorUp,
-                    emotionSelectorUp: emotionSelectorUp,
-                    setNavBarUp: setNavBarUp,
-                    date: dateSelected,
-                    tempEmotion: curTempEmotion,
-                    curDates: curDates),
+                  setNavBarUp: setNavBarUp,
+                  date: dateSelected,
+                  tempEmotion: curTempEmotion,
+                  curDates: curDates,
+                  setCurDate: setCurDate,
+                  emotionSelectorUp: emotionSelectorUp,
+                  setInputEmotionUp: setInputEmotionUp,
+                  setEmotionSelectorUp: setEmotionSelectorUp,
+                ),
                 width: 430,
                 height: 800,
                 left: 0,

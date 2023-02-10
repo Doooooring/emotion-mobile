@@ -6,12 +6,14 @@ class EmotionInput extends StatefulWidget {
       required this.date,
       required this.curDates,
       required this.inputText,
-      required this.setInputText})
+      required this.setInputText,
+      required this.setIsChanged})
       : super(key: key);
   final DateTime date;
   final Map curDates;
   final String inputText;
   final void Function(String) setInputText;
+  final void Function(bool) setIsChanged;
 
   @override
   State<EmotionInput> createState() => _EmotionInputState();
@@ -20,7 +22,7 @@ class EmotionInput extends StatefulWidget {
 class _EmotionInputState extends State<EmotionInput> {
   @override
   Widget build(BuildContext context) {
-    Map curInfo = widget.curDates[widget.date.day];
+    Map curInfo = widget.curDates[widget.date.day.toString()];
     String? curEmotion = curInfo["emotion"];
 
     return Container(
@@ -47,7 +49,9 @@ class _EmotionInputState extends State<EmotionInput> {
                           borderSide:
                               BorderSide(width: 1, color: Colors.blueGrey))),
                   onChanged: (text) {
-                    if (curEmotion != null) {}
+                    if (curEmotion != null) {
+                      widget.setIsChanged(true);
+                    }
                     widget.setInputText(text);
                   },
                   keyboardType: TextInputType.multiline,

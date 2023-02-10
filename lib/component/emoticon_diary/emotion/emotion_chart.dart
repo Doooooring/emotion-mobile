@@ -7,11 +7,13 @@ class EmotionChart extends StatefulWidget {
       {Key? key,
       required this.date,
       required this.curDates,
+      required this.isChanged,
       required this.setEmotionSelectorUp,
       required this.setCurTempEmotion})
       : super(key: key);
   final Map curDates;
   final DateTime date;
+  final bool isChanged;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(String?) setCurTempEmotion;
   @override
@@ -22,7 +24,8 @@ class _EmotionChartState extends State<EmotionChart> {
   @override
   Widget build(BuildContext context) {
     Map selected = widget.curDates[widget.date.day.toString()];
-    String image = ImageLink[selected["emotion"]];
+    String image =
+        widget.isChanged ? ImageLink[null] : ImageLink[selected["emotion"]];
 
     bool state = selected["id"] == null; //이모티콘 없는 상태
     return Container(

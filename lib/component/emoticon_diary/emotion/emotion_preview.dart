@@ -2,6 +2,9 @@ import "package:flutter/material.dart";
 
 import "../../../asset/imoticon_url.dart";
 import "../../../page/emotion_result.dart";
+import "../../../services/emotion.dart";
+
+EmotionServices emotionService = new EmotionServices();
 
 Map Month = {
   "1": "Jan",
@@ -42,7 +45,7 @@ class _EmotionPreviewState extends State<EmotionPreview> {
   @override
   Widget build(BuildContext context) {
     return EmotionPreviewBox(
-        datesInfo: widget.curDates,
+        curDates: widget.curDates,
         date: widget.dateSelected,
         setInputEmotionUp: widget.setInputEmotionUp,
         setEmotionSelectorUp: widget.setEmotionSelectorUp,
@@ -53,14 +56,14 @@ class _EmotionPreviewState extends State<EmotionPreview> {
 class EmotionPreviewBox extends StatefulWidget {
   const EmotionPreviewBox(
       {Key? key,
-      required this.datesInfo,
+      required this.curDates,
       required this.date,
       required this.setInputEmotionUp,
       required this.setEmotionSelectorUp,
       required this.setNavBarUp})
       : super(key: key);
 
-  final Map datesInfo;
+  final Map curDates;
   final DateTime date;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
@@ -76,9 +79,9 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
     String month = widget.date.month.toString();
     String year = widget.date.year.toString();
 
-    Map dateInfo = widget.datesInfo[day];
+    Map dateInfo = widget.curDates[day];
 
-    String? id = dateInfo["id"];
+    int? id = dateInfo["id"];
     String? emotion = dateInfo["emotion"];
     String content =
         id == null ? "Write in today's diary" : dateInfo["content"];
@@ -107,6 +110,7 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
           color: backgroundColor),
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         PreviewBoxHeader(
+            id: id,
             date: widget.date,
             emotion: emotion,
             image: imageLink,
@@ -124,6 +128,7 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
 class PreviewBoxHeader extends StatefulWidget {
   const PreviewBoxHeader(
       {Key? key,
+      required this.id,
       required this.date,
       required this.emotion,
       required this.image,
@@ -132,6 +137,7 @@ class PreviewBoxHeader extends StatefulWidget {
       required this.setEmotionSelectorUp,
       required this.setNavBarUp})
       : super(key: key);
+  final int? id;
   final DateTime date;
   final String? emotion;
   final String image;
@@ -175,6 +181,7 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             PopUpMenuButtonWrapper(
+                id: widget.id,
                 date: widget.date,
                 emotion: widget.emotion,
                 setInputEmotionUp: widget.setInputEmotionUp,
@@ -192,12 +199,14 @@ enum SampleItem { itemOne, itemTwo, itemThree }
 class PopUpMenuButtonWrapper extends StatefulWidget {
   const PopUpMenuButtonWrapper(
       {Key? key,
+      required this.id,
       required this.date,
       required this.emotion,
       required this.setInputEmotionUp,
       required this.setEmotionSelectorUp,
       required this.setNavBarUp})
       : super(key: key);
+  final int? id;
   final DateTime date;
   final String? emotion;
   final void Function(bool) setInputEmotionUp;
@@ -233,25 +242,24 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
       return PopupMenuButton<SampleItem>(
         initialValue: selectedMenu,
         // Callback that sets the selected popup menu item.
-        onSelected: (SampleItem item) {
+        onSelected: (SampleItem item) async {
           if (item == SampleItem.itemOne) {
             widget.setInputEmotionUp(true);
-          } else if (item == SampleItem.itemThree) {
-            widget.setInputEmotionUp(true);
-            widget.setEmotionSelectorUp(true);
-            widget.setNavBarUp(false);
           } else {
-            widget.setInputEmotionUp(false);
-            widget.setEmotionSelectorUp(false);
+            Map response =
+                await emotionService.getResultPage(widget.id, widget.date);
+            if (!mounted) {
+              return;
+            }
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => EmotionResult(
-                        date: widget.date,
-                        emotion: widget.emotion,
-                        emotionText: "You had a wonderful day!",
-                        sentimentLevel: 4.12,
-                        recommend: "hi")));
+                        date: response["date"],
+                        emotion: response["emotion"],
+                        emotionText: response["emotionText"],
+                        sentimentLevel: response["sentimentalLevel"],
+                        recommend: response["recommend"])));
           }
         },
         itemBuilder: (BuildContext context) => [

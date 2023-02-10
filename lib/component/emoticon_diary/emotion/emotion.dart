@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../common/loading.dart';
+import "../../common/loading.dart";
 import 'emotion_chart.dart';
 import 'emotion_handle_button.dart';
 import 'emotion_head.dart';
@@ -9,22 +9,24 @@ import 'emotion_input.dart';
 const String url = "http://localhost:3000";
 
 class EmotionWrapper extends StatefulWidget {
-  const EmotionWrapper({
-    Key? key,
-    required this.curDates,
-    required this.setInputEmotionUp,
-    required this.setEmotionSelectorUp,
-    required this.dateSelected,
-    required this.setCurTempEmotion,
-    required this.emotionSelectorUp,
-  }) : super(key: key);
+  const EmotionWrapper(
+      {Key? key,
+      required this.curDates,
+      required this.dateSelected,
+      required this.emotionSelectorUp,
+      required this.setCurDate,
+      required this.setInputEmotionUp,
+      required this.setCurTempEmotion,
+      required this.setEmotionSelectorUp})
+      : super(key: key);
   final Map curDates;
+  final DateTime dateSelected;
+  final bool emotionSelectorUp;
+  final void Function(String, int?, String?, String?) setCurDate;
   final void Function(String?) setCurTempEmotion;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
-  final DateTime dateSelected;
 
-  final bool emotionSelectorUp;
   @override
   State<EmotionWrapper> createState() => _EmotionWrapperState();
 }
@@ -42,9 +44,9 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
         child: Stack(children: [
           EmotionContainer(
               curDates: widget.curDates,
-              date: widget.dateSelected,
-              setInputEmotionUp: widget.setInputEmotionUp,
               dateSelected: widget.dateSelected,
+              setInputEmotionUp: widget.setInputEmotionUp,
+              setCurDate: widget.setCurDate,
               setEmotionSelectorUp: widget.setEmotionSelectorUp,
               setCurTempEmotion: widget.setCurTempEmotion),
         ]),
@@ -57,16 +59,16 @@ class EmotionContainer extends StatefulWidget {
   const EmotionContainer(
       {Key? key,
       required this.curDates,
-      required this.date,
       required this.setInputEmotionUp,
       required this.dateSelected,
+      required this.setCurDate,
       required this.setEmotionSelectorUp,
       required this.setCurTempEmotion})
       : super(key: key);
   final Map curDates;
-  final DateTime date;
   final void Function(bool) setInputEmotionUp;
   final DateTime dateSelected;
+  final void Function(String, int?, String?, String?) setCurDate;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(String?) setCurTempEmotion;
 
@@ -80,6 +82,13 @@ class _EmotionContainerState extends State<EmotionContainer> {
   void setInputText(String text) {
     setState(() {
       inputText = text;
+    });
+  }
+
+  bool isChanged = false;
+  void setIsChanged(state) {
+    setState(() {
+      isChanged = state;
     });
   }
 
@@ -109,32 +118,34 @@ class _EmotionContainerState extends State<EmotionContainer> {
             Column(children: <Widget>[
               SizedBox(height: 30),
               EmotionHead(
-                  date: widget.date,
+                  date: widget.dateSelected,
                   setInputEmotionUp: widget.setInputEmotionUp),
               SizedBox(height: 30),
               EmotionChart(
                   date: widget.dateSelected,
                   curDates: widget.curDates,
+                  isChanged: isChanged,
                   setEmotionSelectorUp: widget.setEmotionSelectorUp,
                   setCurTempEmotion: widget.setCurTempEmotion),
               SizedBox(
                 child: Column(children: <Widget>[
                   EmotionInput(
-                      date : widget.date, curDates : widget.curDates,
-                      inputText: inputText, setInputText: setInputText
-                  )
+                      date: widget.dateSelected,
+                      curDates: widget.curDates,
+                      inputText: inputText,
+                      setInputText: setInputText,
+                      setIsChanged: setIsChanged)
                 ]),
               ),
               SizedBox(
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   EmotionHandleButton(
-                      date: widget.dateSelected,
                       curDates: widget.curDates,
                       inputText: inputText,
-                      //setEmotion: setEmotion,
-                      setIsLoading: setIsLoading,
                       dateSelected: widget.dateSelected,
+                      setIsLoading: setIsLoading,
+                      setCurDate: widget.setCurDate,
                       setCurTempEmotion: widget.setCurTempEmotion,
                       setEmotionSelectorUp: widget.setEmotionSelectorUp)
                 ]),

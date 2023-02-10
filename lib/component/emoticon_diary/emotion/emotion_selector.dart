@@ -4,18 +4,23 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import "../../../asset/imoticon_url.dart";
+import "../../../services/emotion.dart";
+
+EmotionServices emotionServices = new EmotionServices();
 
 class SelectorWrapper extends StatefulWidget {
-  const SelectorWrapper(
-      {Key? key,
-      required this.setInputEmotionUp,
-      required this.setEmotionSelectorUp,
-      required this.emotionSelectorUp,
-      required this.setNavBarUp,
-      required this.date,
-      required this.tempEmotion,
-      required this.curDates})
-      : super(key: key);
+  const SelectorWrapper({
+    Key? key,
+    required this.date,
+    required this.tempEmotion,
+    required this.curDates,
+    required this.emotionSelectorUp,
+    required this.setCurDate,
+    required this.setNavBarUp,
+    required this.setInputEmotionUp,
+    required this.setEmotionSelectorUp,
+  }) : super(key: key);
+  final void Function(String, int?, String?, String?) setCurDate;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(bool) setNavBarUp;
@@ -32,9 +37,9 @@ class SelectorWrapper extends StatefulWidget {
 class _SelectorWrapperState extends State<SelectorWrapper> {
   @override
   Widget build(BuildContext context) {
-    Map curInfo = widget.curDates[widget.date.day];
-    String curEmotion = curInfo["emotion"];
-    String curId = curInfo["id"];
+    Map curInfo = widget.curDates[widget.date.day.toString()];
+    int? curId = curInfo["id"];
+    String? curEmotion = curInfo["emotion"];
 
     return SizedBox(
       height: 800,
@@ -53,13 +58,15 @@ class _SelectorWrapperState extends State<SelectorWrapper> {
                       },
                     )))),
         EmotionWrapper(
-            setInputEmotionUp: widget.setInputEmotionUp,
-            setEmotionSelectorUp: widget.setEmotionSelectorUp,
-            emotionSelectorUp: widget.emotionSelectorUp,
-            date: widget.date,
-            emotion: curEmotion,
-            id: curId,
-            curDates: widget.curDates)
+          id: curId,
+          date: widget.date,
+          emotion: curEmotion,
+          curDates: widget.curDates,
+          emotionSelectorUp: widget.emotionSelectorUp,
+          setCurDate: widget.setCurDate,
+          setInputEmotionUp: widget.setInputEmotionUp,
+          setEmotionSelectorUp: widget.setEmotionSelectorUp,
+        )
       ]),
     );
   }
@@ -68,21 +75,24 @@ class _SelectorWrapperState extends State<SelectorWrapper> {
 class EmotionWrapper extends StatefulWidget {
   const EmotionWrapper({
     Key? key,
-    required this.setInputEmotionUp,
-    required this.setEmotionSelectorUp,
-    required this.emotionSelectorUp,
+    required this.id,
     required this.date,
     required this.emotion,
-    required this.id,
     required this.curDates,
+    required this.emotionSelectorUp,
+    required this.setCurDate,
+    required this.setInputEmotionUp,
+    required this.setEmotionSelectorUp,
   }) : super(key: key);
-  final void Function(bool) setInputEmotionUp;
-  final void Function(bool) setEmotionSelectorUp;
-  final bool emotionSelectorUp;
-  final String? id;
+
+  final int? id;
   final DateTime date;
   final String? emotion;
   final Map curDates;
+  final bool emotionSelectorUp;
+  final void Function(String, int?, String?, String?) setCurDate;
+  final void Function(bool) setInputEmotionUp;
+  final void Function(bool) setEmotionSelectorUp;
   @override
   State<EmotionWrapper> createState() => _EmotionWrapperState();
 }
@@ -121,10 +131,13 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: EmoticonList(
+                      widget.id,
+                      widget.date,
                       widget.emotion,
-                      widget.setEmotionSelectorUp,
-                      widget.setInputEmotionUp,
                       widget.curDates,
+                      widget.setCurDate,
+                      widget.setInputEmotionUp,
+                      widget.setEmotionSelectorUp,
                       context)),
             ),
           ],
@@ -133,45 +146,47 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
 }
 
 List<Widget> EmoticonList(
+    int? id,
+    DateTime date,
     String? emotion,
+    Map curDates,
+    void Function(String, int?, String?, String?) setCurDate,
     void Function(bool) setEmotionSelectorUp,
     void Function(bool) setInputEmotionUp,
-    Map curDates,
     BuildContext context) {
   if (emotion == null) {
     return [];
   }
-  log(emotion);
   List<String> curList = ImoticonLink[emotion];
   List<Widget> curWidgets = [];
   for (String str in curList) {
     curWidgets.add(ButtonWrapper(
+        id: id,
         setEmotionSelectorUp: setEmotionSelectorUp,
         setInputEmotionUp: setInputEmotionUp,
-        emotion: str));
-    // IconButton(
-    // padding: EdgeInsets.all(0),
-    // onPressed: () {
-    //   setEmotionSelectorUp(false);
-    //   setInputEmotionUp(false);
-    //   Navigator.push(context,
-    //       MaterialPageRoute(builder: (context) => EmotionResult()));
-    // },
-    // icon: Image.asset(height: 50, width: 50, str)));
+        setCurDate: setCurDate,
+        emotion: str,
+        date: date));
   }
   return curWidgets;
 }
 
 class ButtonWrapper extends StatefulWidget {
-  const ButtonWrapper(
-      {Key? key,
-      required this.setEmotionSelectorUp,
-      required this.setInputEmotionUp,
-      required this.emotion})
-      : super(key: key);
-  final void Function(bool) setEmotionSelectorUp;
-  final void Function(bool) setInputEmotionUp;
+  const ButtonWrapper({
+    Key? key,
+    required this.id,
+    required this.date,
+    required this.emotion,
+    required this.setCurDate,
+    required this.setInputEmotionUp,
+    required this.setEmotionSelectorUp,
+  }) : super(key: key);
+  final int? id;
+  final DateTime date;
   final String emotion;
+  final void Function(String, int?, String?, String?) setCurDate;
+  final void Function(bool) setInputEmotionUp;
+  final void Function(bool) setEmotionSelectorUp;
   @override
   State<ButtonWrapper> createState() => _ButtonWrapperState();
 }
@@ -184,6 +199,13 @@ class _ButtonWrapperState extends State<ButtonWrapper> {
         onPressed: () {
           widget.setEmotionSelectorUp(false);
           widget.setInputEmotionUp(false);
+          emotionServices.reviseEmotion(
+              widget.id,
+              widget.emotion,
+              widget.date,
+              widget.setEmotionSelectorUp,
+              widget.setInputEmotionUp,
+              widget.setCurDate);
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (context) => EmotionResult()));
         },

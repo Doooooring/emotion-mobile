@@ -45,20 +45,20 @@ CalendarBuilders calendarBuilders() {
     selectedBuilder: (context, date, _) {
       String day = date.day.toString();
       Map info = InitDate[day];
-      String imoticon = ImageLink[info["emotion"]];
+      String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
           day: day,
           selected: true,
           isToday: false,
           outSide: false,
-          imoticon: imoticon,
+          imoticon: emoticon,
           back: back);
     },
     todayBuilder: (context, date, _) {
       String day = date.day.toString();
       Map info = InitDate[day];
-      String imoticon = ImageLink[info["emotion"]];
+      String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
           day: day,
@@ -66,12 +66,12 @@ CalendarBuilders calendarBuilders() {
           isToday: true,
           outSide: false,
           back: back,
-          imoticon: imoticon);
+          imoticon: emoticon);
     },
     rangeStartBuilder: (context, date, _) {
       String day = date.day.toString();
       Map info = InitDate[day];
-      String imoticon = ImageLink[info["emotion"]];
+      String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
           day: day,
@@ -79,12 +79,12 @@ CalendarBuilders calendarBuilders() {
           isToday: false,
           outSide: false,
           back: back,
-          imoticon: imoticon);
+          imoticon: emoticon);
     },
     rangeEndBuilder: (context, date, _) {
       String day = date.day.toString();
       Map info = InitDate[day];
-      String imoticon = ImageLink[info["emotion"]];
+      String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
           day: day,
@@ -92,12 +92,12 @@ CalendarBuilders calendarBuilders() {
           isToday: false,
           outSide: false,
           back: back,
-          imoticon: imoticon);
+          imoticon: emoticon);
     },
     outsideBuilder: (context, date, _) {
       String day = date.day.toString();
       Map info = InitDate[day];
-      String imoticon = ImageLink[null];
+      String emoticon = ImageLink[null];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
           day: day,
@@ -105,12 +105,12 @@ CalendarBuilders calendarBuilders() {
           isToday: false,
           outSide: true,
           back: Colors.white,
-          imoticon: imoticon);
+          imoticon: emoticon);
     },
     disabledBuilder: (context, date, _) {
       String day = date.day.toString();
       Map info = InitDate[day];
-      String imoticon = ImageLink[info["emotion"]];
+      String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
           day: day,
@@ -118,12 +118,12 @@ CalendarBuilders calendarBuilders() {
           isToday: false,
           outSide: false,
           back: back,
-          imoticon: imoticon);
+          imoticon: emoticon);
     },
     holidayBuilder: (context, date, _) {
       String day = date.day.toString();
       Map info = InitDate[day];
-      String imoticon = ImageLink[info["emotion"]];
+      String emoticon = ImageLink[info["emotion"]];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
       return buildCalendarDay(
           day: day,
@@ -131,20 +131,20 @@ CalendarBuilders calendarBuilders() {
           isToday: false,
           outSide: false,
           back: back,
-          imoticon: imoticon);
+          imoticon: emoticon);
     },
     defaultBuilder: (context, date, _) {
       String day = date.day.toString();
       Map info = InitDate[day];
       Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
-      String imoticon = ImageLink[info["emotion"]];
+      String emoticon = ImageLink[info["emotion"]];
       return buildCalendarDay(
           day: day,
           back: back,
           selected: false,
           isToday: false,
           outSide: false,
-          imoticon: imoticon);
+          imoticon: emoticon);
     },
   );
 }

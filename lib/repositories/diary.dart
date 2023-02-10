@@ -18,14 +18,13 @@ class DiaryRepositories {
 
   getDiaryMonth(int year, int month) async {
     Uri endPoint =
-        Uri.parse('$HOST_URL/diary/month/?year=${year}&month=${month}');
+        Uri.parse('$HOST_URL/diary/month?year=${year}&month=${month}');
 
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
+    Map result = json.decode(response.body);
 
-    dynamic result = json.decode(response.body);
-
-    return result.data;
+    return result["result"];
   }
 
   // return {"success": true,
@@ -50,7 +49,7 @@ class DiaryRepositories {
 
     dynamic result = json.decode(response.body);
 
-    return result.data;
+    return result["result"];
   }
 
   // case1
@@ -84,7 +83,7 @@ class DiaryRepositories {
 
     dynamic result = json.decode(response.body);
 
-    return result.data;
+    return result["result"];
   }
 
   // return {
@@ -100,7 +99,7 @@ class DiaryRepositories {
 
     dynamic result = json.decode(response.body);
 
-    return result.data;
+    return result["result"];
   }
 
 //   return {
@@ -115,14 +114,13 @@ class DiaryRepositories {
 //      }
 //   }
 
-  getDiaryResult(int id) async {
+  getDiaryResult(int? id) async {
     Uri endPoint = Uri.parse('$HOST_URL/diary/result/:${id}');
 
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
 
     dynamic result = json.decode(response.body);
-
-    return result;
+    return result.data;
   }
 }

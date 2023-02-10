@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import "../../../services/emotion.dart";
 
-var EmoticonService = new EmoticonServices();
+var EmotionService = new EmotionServices();
 
 Map ImageLink = {
   "null": "assets/images/mean.png",
@@ -24,19 +24,19 @@ Map ImageLink = {
 class EmotionHandleButton extends StatefulWidget {
   const EmotionHandleButton(
       {Key? key,
-      required this.date,
       required this.curDates,
       required this.inputText,
-      required this.setIsLoading,
       required this.dateSelected,
+      required this.setIsLoading,
+      required this.setCurDate,
       required this.setCurTempEmotion,
       required this.setEmotionSelectorUp})
       : super(key: key);
-  final DateTime date;
   final Map curDates;
   final String inputText;
-  final void Function(bool) setIsLoading;
   final DateTime dateSelected;
+  final void Function(bool) setIsLoading;
+  final void Function(String, int?, String?, String?) setCurDate;
   final void Function(String?) setCurTempEmotion;
   final void Function(bool) setEmotionSelectorUp;
   @override
@@ -46,13 +46,22 @@ class EmotionHandleButton extends StatefulWidget {
 class _EmotionHandleButtonState extends State<EmotionHandleButton> {
   @override
   Widget build(BuildContext context) {
+    Map curDates = widget.curDates;
+    DateTime curDate = widget.dateSelected;
+    Map curInfo = curDates[curDate.day.toString()];
+    int? curId = curInfo['id'];
+
     return IconButton(
         icon: const Icon(Icons.send),
         onPressed: () async {
           widget.setIsLoading(false);
-          String emotion = await EmoticonService.getEmotion(
-              widget.dateSelected, widget.inputText);
-          String imageLink = ImageLink[emotion];
+          EmotionService.saveDiaryText(
+              curId,
+              widget.dateSelected,
+              widget.inputText,
+              widget.setCurDate,
+              widget.setEmotionSelectorUp,
+              widget.setCurTempEmotion);
           widget.setIsLoading(true);
         });
   }

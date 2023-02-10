@@ -213,41 +213,59 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<SampleItem>(
-      initialValue: selectedMenu,
-      // Callback that sets the selected popup menu item.
-      onSelected: (SampleItem item) {
-        if (item == SampleItem.itemOne) {
-          widget.setInputEmotionUp(true);
-        } else if (item == SampleItem.itemTwo) {
-          widget.setInputEmotionUp(true);
-          widget.setEmotionSelectorUp(true);
-          widget.setNavBarUp(false);
-        } else {
-          widget.setInputEmotionUp(false);
-          widget.setEmotionSelectorUp(false);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => EmotionResult(
-                      date: widget.date,
-                      emotion: widget.emotion,
-                      emotionText: "You had a wonderful day!",
-                      sentimentLevel: 4.12,
-                      recommend: "hi")));
-        }
-      },
-      itemBuilder: (BuildContext context) => [
-        PopupMenuItem(
-          value: SampleItem.itemOne,
-          child: Text("edit"),
-        ),
-        PopupMenuItem(
-          value: SampleItem.itemTwo,
-          child: Text("daily report"),
-        ),
-      ],
-    );
+    if (widget.emotion == null) {
+      return PopupMenuButton<SampleItem>(
+        initialValue: selectedMenu,
+        // Callback that sets the selected popup menu item.
+        onSelected: (SampleItem item) {
+          if (item == SampleItem.itemOne) {
+            widget.setInputEmotionUp(true);
+          }
+        },
+        itemBuilder: (BuildContext context) => [
+          PopupMenuItem(
+            value: SampleItem.itemOne,
+            child: Text("edit"),
+          ),
+        ],
+      );
+    } else {
+      return PopupMenuButton<SampleItem>(
+        initialValue: selectedMenu,
+        // Callback that sets the selected popup menu item.
+        onSelected: (SampleItem item) {
+          if (item == SampleItem.itemOne) {
+            widget.setInputEmotionUp(true);
+          } else if (item == SampleItem.itemThree) {
+            widget.setInputEmotionUp(true);
+            widget.setEmotionSelectorUp(true);
+            widget.setNavBarUp(false);
+          } else {
+            widget.setInputEmotionUp(false);
+            widget.setEmotionSelectorUp(false);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EmotionResult(
+                        date: widget.date,
+                        emotion: widget.emotion,
+                        emotionText: "You had a wonderful day!",
+                        sentimentLevel: 4.12,
+                        recommend: "hi")));
+          }
+        },
+        itemBuilder: (BuildContext context) => [
+          PopupMenuItem(
+            value: SampleItem.itemOne,
+            child: Text("edit"),
+          ),
+          PopupMenuItem(
+            value: SampleItem.itemTwo,
+            child: Text("daily report"),
+          ),
+        ],
+      );
+    }
   }
 }
 

@@ -15,9 +15,11 @@ class EmotionWrapper extends StatefulWidget {
     required this.setInputEmotionUp,
     required this.setEmotionSelectorUp,
     required this.dateSelected,
+    required this.setCurTempEmotion,
     required this.emotionSelectorUp,
   }) : super(key: key);
   final Map curDates;
+  final void Function(String?) setCurTempEmotion;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
   final DateTime dateSelected;
@@ -43,7 +45,8 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
               date: widget.dateSelected,
               setInputEmotionUp: widget.setInputEmotionUp,
               dateSelected: widget.dateSelected,
-              setEmotionSelectorUp: widget.setEmotionSelectorUp),
+              setEmotionSelectorUp: widget.setEmotionSelectorUp,
+              setCurTempEmotion: widget.setCurTempEmotion),
         ]),
       ),
     );
@@ -57,13 +60,15 @@ class EmotionContainer extends StatefulWidget {
       required this.date,
       required this.setInputEmotionUp,
       required this.dateSelected,
-      required this.setEmotionSelectorUp})
+      required this.setEmotionSelectorUp,
+      required this.setCurTempEmotion})
       : super(key: key);
   final Map curDates;
   final DateTime date;
   final void Function(bool) setInputEmotionUp;
   final DateTime dateSelected;
   final void Function(bool) setEmotionSelectorUp;
+  final void Function(String?) setCurTempEmotion;
 
   @override
   State<EmotionContainer> createState() => _EmotionContainerState();
@@ -110,21 +115,28 @@ class _EmotionContainerState extends State<EmotionContainer> {
               EmotionChart(
                   date: widget.dateSelected,
                   curDates: widget.curDates,
-                  setEmotionSelectorUp: widget.setEmotionSelectorUp),
+                  setEmotionSelectorUp: widget.setEmotionSelectorUp,
+                  setCurTempEmotion: widget.setCurTempEmotion),
               SizedBox(
                 child: Column(children: <Widget>[
-                  EmotionInput(inputText: inputText, setInputText: setInputText)
+                  EmotionInput(
+                      date : widget.date, curDates : widget.curDates,
+                      inputText: inputText, setInputText: setInputText
+                  )
                 ]),
               ),
               SizedBox(
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   EmotionHandleButton(
-                    inputText: inputText,
-                    //setEmotion: setEmotion,
-                    setIsLoading: setIsLoading,
-                    dateSelected: widget.dateSelected,
-                  )
+                      date: widget.dateSelected,
+                      curDates: widget.curDates,
+                      inputText: inputText,
+                      //setEmotion: setEmotion,
+                      setIsLoading: setIsLoading,
+                      dateSelected: widget.dateSelected,
+                      setCurTempEmotion: widget.setCurTempEmotion,
+                      setEmotionSelectorUp: widget.setEmotionSelectorUp)
                 ]),
               )
             ]),

@@ -15,10 +15,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(initialRoute: '/', routes: {
-      '/': (context) => InitialPage(),
-      '/diary': (context) => CalendarWrapper(),
-      '/baby_monitor': (context) => BabyMonitor()
-    });
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => InitialPage(),
+        '/diary': (context) => CalendarWrapper(),
+        '/baby_monitor': (context) => BabyMonitor()
+      },
+    );
   }
 }

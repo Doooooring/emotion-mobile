@@ -12,18 +12,17 @@ class SelectorWrapper extends StatefulWidget {
       required this.setEmotionSelectorUp,
       required this.emotionSelectorUp,
       required this.setNavBarUp,
-      required this.id,
       required this.date,
-      required this.emotion,
+      required this.tempEmotion,
       required this.curDates})
       : super(key: key);
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(bool) setNavBarUp;
   final bool emotionSelectorUp;
-  final String? id;
+
   final DateTime date;
-  final String? emotion;
+  final String? tempEmotion;
   final Map curDates;
 
   @override
@@ -33,6 +32,10 @@ class SelectorWrapper extends StatefulWidget {
 class _SelectorWrapperState extends State<SelectorWrapper> {
   @override
   Widget build(BuildContext context) {
+    Map curInfo = widget.curDates[widget.date.day];
+    String curEmotion = curInfo["emotion"];
+    String curId = curInfo["id"];
+
     return SizedBox(
       height: 800,
       child: Column(children: [
@@ -54,8 +57,8 @@ class _SelectorWrapperState extends State<SelectorWrapper> {
             setEmotionSelectorUp: widget.setEmotionSelectorUp,
             emotionSelectorUp: widget.emotionSelectorUp,
             date: widget.date,
-            emotion: widget.emotion,
-            id: widget.id,
+            emotion: curEmotion,
+            id: curId,
             curDates: widget.curDates)
       ]),
     );
@@ -179,7 +182,6 @@ class _ButtonWrapperState extends State<ButtonWrapper> {
     return IconButton(
         padding: EdgeInsets.all(0),
         onPressed: () {
-          log("here2");
           widget.setEmotionSelectorUp(false);
           widget.setInputEmotionUp(false);
           // Navigator.push(context,

@@ -36,24 +36,31 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
-  String? curId = null;
-  void setCurId(String? id) {
-    setState(() {
-      curId = id;
-    });
-  }
-
   Map curDates = InitDate;
-  void setCurDates(Map Dates) {
+  void setCurDatesAll(Map Dates) {
     setState(() {
       curDates = Dates;
     });
   }
 
-  String? curEmotion = InitDate[DateTime.now().day.toString()]["emotion"];
-  void setCurEmotion(String? emotion) {
+  void setCurDate(String day, int? id, String? text, String? emotion) {
     setState(() {
-      curEmotion = emotion;
+      if (id != null) {
+        curDates[day]["id"] = id;
+      }
+      if (text != null) {
+        curDates[day]["text"] = text;
+      }
+      if (emotion != null) {
+        curDates[day]["emotion"] = emotion;
+      }
+    });
+  }
+
+  String? curTempEmotion = null;
+  void setCurTempEmotion(String? tempEmotion) {
+    setState(() {
+      curTempEmotion = tempEmotion;
     });
   }
 
@@ -106,7 +113,6 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                     Calendar(
                       curDates: curDates,
                       setDateSelected: setDateSelected,
-                      setCurEmotion: setCurEmotion,
                       setInputEmotionUp: setInputEmotionUp,
                     ),
                     SizedBox(height: 20),
@@ -125,6 +131,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                   curDates: curDates,
                   dateSelected: dateSelected,
                   setInputEmotionUp: setInputEmotionUp,
+                  setCurTempEmotion: setCurTempEmotion,
                   emotionSelectorUp: emotionSelectorUp,
                   setEmotionSelectorUp: setEmotionSelectorUp,
                 ),
@@ -139,9 +146,8 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                     setEmotionSelectorUp: setEmotionSelectorUp,
                     emotionSelectorUp: emotionSelectorUp,
                     setNavBarUp: setNavBarUp,
-                    id: curId,
                     date: dateSelected,
-                    emotion: curEmotion,
+                    tempEmotion: curTempEmotion,
                     curDates: curDates),
                 width: 430,
                 height: 800,

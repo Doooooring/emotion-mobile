@@ -24,15 +24,21 @@ Map ImageLink = {
 class EmotionHandleButton extends StatefulWidget {
   const EmotionHandleButton(
       {Key? key,
+      required this.date,
+      required this.curDates,
       required this.inputText,
-      //equired this.setEmotion,
       required this.setIsLoading,
-      required this.dateSelected})
+      required this.dateSelected,
+      required this.setCurTempEmotion,
+      required this.setEmotionSelectorUp})
       : super(key: key);
+  final DateTime date;
+  final Map curDates;
   final String inputText;
-  //final void Function(String) setEmotion;
   final void Function(bool) setIsLoading;
   final DateTime dateSelected;
+  final void Function(String?) setCurTempEmotion;
+  final void Function(bool) setEmotionSelectorUp;
   @override
   State<EmotionHandleButton> createState() => _EmotionHandleButtonState();
 }
@@ -47,7 +53,6 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
           String emotion = await EmoticonService.getEmotion(
               widget.dateSelected, widget.inputText);
           String imageLink = ImageLink[emotion];
-          //widget.setEmotion(imageLink);
           widget.setIsLoading(true);
         });
   }

@@ -28,12 +28,10 @@ dynamic getDate(date) {
 class Calendar extends StatefulWidget {
   const Calendar({
     Key? key,
-    required this.setCurEmotion,
     required this.setDateSelected,
     required this.setInputEmotionUp,
     required this.curDates,
   }) : super(key: key);
-  final void Function(String?) setCurEmotion;
   final void Function(DateTime) setDateSelected;
   final void Function(bool) setInputEmotionUp;
   final Map curDates;
@@ -59,7 +57,6 @@ class _CalendarState extends State<Calendar> {
           // String dateInForm = getDate(ymd);
           Map curDate = widget.curDates[selectedDay.day.toString()];
           widget.setDateSelected(selectedDay);
-          widget.setCurEmotion(curDate["emotion"]);
         },
         headerStyle: const HeaderStyle(
           headerPadding: EdgeInsets.all(20),

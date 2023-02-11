@@ -11,7 +11,6 @@ class EmotionServices {
     try {
       Map result = await repository.getDiaryMonth(year, month);
       if (result["success"] == false) {
-        log("herherhe");
         Error();
       }
       setCurDateAll(result);
@@ -31,6 +30,8 @@ class EmotionServices {
       void Function(bool) setEmotionSelectorUp,
       void Function(String?) setCurTempEmotion) async {
     if (id == null) {
+      log(text);
+
       Map result = await repository.postDiary(dateSelected, text);
 
       String today = dateSelected.day.toString();
@@ -96,8 +97,7 @@ class EmotionServices {
       void Function(bool) setEmotionSelectorUp,
       void Function(String?) setCurTempEmotion) async {
     try {
-      Map result = await repository.postDiary(dateSelected, diary);
-      Map data = result["data"];
+      Map data = await repository.postDiary(dateSelected, diary);
       int curId = data["diaryId"];
       String tempEmotion = data["tempEmotion"];
       setCurDates(dateSelected.day.toString(), curId);

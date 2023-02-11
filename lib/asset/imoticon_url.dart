@@ -52,16 +52,16 @@ Map ImoticonLink = {
     "assets/images/sad3.png",
     "assets/images/sad4.png"
   ],
-  "surprised(bad)": [
-    "assets/images/surprised(bad)1.png",
-    "assets/images/surprised(bad)2.png",
-    "assets/images/surprised(bad).png3"
+  "badSurprised": [
+    "assets/images/badSurprised1.png",
+    "assets/images/badSurprised2.png",
+    "assets/images/badSurprised3.png"
   ],
-  "surprised(good)": [
-    "assets/images/surprised(good)1.png",
-    "assets/images/surprised(good)2.png",
-    "assets/images/surprised(good)3.png",
-    "assets/images/surprised(good)4.png"
+  "goodSurprised": [
+    "assets/images/goodSurprised1.png",
+    "assets/images/goodSurprised2.png",
+    "assets/images/goodSurprised3.png",
+    "assets/images/goodSurprised4.png"
   ],
   "tense": [
     "assets/images/tense1.png",

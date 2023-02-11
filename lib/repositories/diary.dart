@@ -1,4 +1,5 @@
 import 'dart:convert';
+import "dart:developer";
 
 import 'package:http/http.dart' as http;
 
@@ -35,11 +36,13 @@ class DiaryRepositories {
   // }
   // }
   postDiary(DateTime date, String text) async {
+    log(date.year.toString());
+    log(date.month.toString());
     Uri endPoint = Uri.parse('$HOST_URL/diary');
     var bodyEncoded = json.encode({
       "year": date.year,
       "month": date.month,
-      "date": date.day,
+      "day": date.day,
       "content": text
     });
 
@@ -47,7 +50,7 @@ class DiaryRepositories {
         body: bodyEncoded, headers: {"Content-Type": "application/json"});
 
     dynamic result = json.decode(response.body);
-
+    log(result.toString());
     return result["result"];
   }
 
@@ -71,7 +74,7 @@ class DiaryRepositories {
   patchDiary(int id, String? text, String? emotion, String type
       //type = content or emotion
       ) async {
-    Uri endPoint = Uri.parse('$HOST_URL/diary/:${id}?type=${type}');
+    Uri endPoint = Uri.parse('$HOST_URL/diary/${id}?type=${type}');
 
     Map body = type == "content" ? {"content": text} : {"emotion": emotion};
 
@@ -91,7 +94,7 @@ class DiaryRepositories {
   //  emotion : string
   // }
   getDiary(int id) async {
-    Uri endPoint = Uri.parse('$HOST_URL/diary/:${id}');
+    Uri endPoint = Uri.parse('$HOST_URL/diary/${id}');
 
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
@@ -114,7 +117,7 @@ class DiaryRepositories {
 //   }
 
   getDiaryResult(int? id) async {
-    Uri endPoint = Uri.parse('$HOST_URL/diary/result/:${id}');
+    Uri endPoint = Uri.parse('$HOST_URL/diary/result/${id}');
 
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});

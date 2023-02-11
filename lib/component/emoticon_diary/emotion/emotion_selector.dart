@@ -1,4 +1,3 @@
-import "dart:developer";
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -51,7 +50,6 @@ class _SelectorWrapperState extends State<SelectorWrapper> {
                     height: 450,
                     child: GestureDetector(
                       onTap: () {
-                        log("It's here");
                         widget.setNavBarUp(true);
                         widget.setEmotionSelectorUp(false);
                         widget.setInputEmotionUp(false);
@@ -60,7 +58,7 @@ class _SelectorWrapperState extends State<SelectorWrapper> {
         EmotionWrapper(
           id: curId,
           date: widget.date,
-          emotion: curEmotion,
+          emotion: widget.tempEmotion,
           curDates: widget.curDates,
           emotionSelectorUp: widget.emotionSelectorUp,
           setCurDate: widget.setCurDate,

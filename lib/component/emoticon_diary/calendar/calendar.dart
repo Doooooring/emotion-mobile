@@ -30,10 +30,14 @@ class Calendar extends StatefulWidget {
     Key? key,
     required this.setDateSelected,
     required this.setInputEmotionUp,
+    required this.setCurDateAll,
+    required this.setIsLoading,
     required this.curDates,
   }) : super(key: key);
   final void Function(DateTime) setDateSelected;
   final void Function(bool) setInputEmotionUp;
+  final void Function(Map) setCurDateAll;
+  final void Function(bool) setIsLoading;
   final Map curDates;
 
   @override
@@ -41,6 +45,23 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+  int focusedYear = DateTime.now().toUtc().year;
+  void setFocusedYear(int nextYear) {
+    setState(() {
+      focusedYear = nextYear;
+    });
+  }
+
+  int focusedMonth = DateTime.now().toUtc().month;
+  void setFocusedMonth(int newMonth) {
+    focusedMonth = newMonth;
+  }
+
+  int focusedDay = DateTime.now().toUtc().day;
+  void setFocusedDay(int newDay) {
+    focusedDay = newDay;
+  }
+
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
@@ -58,24 +79,48 @@ class _CalendarState extends State<Calendar> {
           Map curDate = widget.curDates[selectedDay.day.toString()];
           widget.setDateSelected(selectedDay);
         },
-        headerStyle: const HeaderStyle(
-          headerPadding: EdgeInsets.all(20),
+        headerStyle: HeaderStyle(
+          headerPadding: EdgeInsets.all(24),
           headerMargin:
               EdgeInsets.only(left: 60, top: 10, right: 60, bottom: 0),
           titleCentered: true,
           formatButtonVisible: false,
-          leftChevronIcon:
-              Icon(Icons.keyboard_arrow_left, size: 40, color: Colors.black),
+          leftChevronIcon: IconButton(
+              onPressed: () {
+                if (focusedMonth == 1) {
+                  setFocusedYear(focusedYear - 1);
+                  setFocusedMonth(12);
+                } else {
+                  setFocusedMonth(focusedMonth - 1);
+                }
+                emotionServices.getEmotionMonth(focusedYear, focusedMonth,
+                    widget.setCurDateAll, widget.setIsLoading);
+              },
+              icon: Icon(Icons.keyboard_arrow_left,
+                  size: 40, color: Colors.black)),
           leftChevronMargin: EdgeInsets.all(0),
           leftChevronPadding: EdgeInsets.all(0),
-          rightChevronIcon:
-              Icon(Icons.keyboard_arrow_right, size: 40, color: Colors.black),
+          rightChevronIcon: IconButton(
+              onPressed: () {
+                if (focusedMonth == 12) {
+                  setFocusedYear(focusedYear + 1);
+                  setFocusedMonth(1);
+                } else {
+                  setFocusedMonth(focusedMonth + 1);
+                }
+                emotionServices.getEmotionMonth(focusedYear, focusedMonth,
+                    widget.setCurDateAll, widget.setIsLoading);
+              },
+              icon: Icon(Icons.keyboard_arrow_right,
+                  size: 40, color: Colors.black)),
           rightChevronMargin: EdgeInsets.all(0),
           rightChevronPadding: EdgeInsets.all(0),
           titleTextStyle: TextStyle(fontSize: 25.0),
         ),
-        calendarBuilders: calendarBuilders(widget.curDates),
-        focusedDay: DateTime.now(),
+        calendarBuilders: calendarBuilders(
+            widget.curDates, widget.setCurDateAll, widget.setIsLoading),
+        focusedDay: DateTime.parse(
+            '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay}'),
         firstDay: DateTime.utc(1998, 1, 1),
         lastDay: DateTime.utc(2023, 12, 30));
   }

@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
 
-import "../../../asset/imoticon_url.dart";
 import "../../../page/emotion_result.dart";
 import "../../../services/emotion.dart";
 
@@ -22,14 +21,14 @@ Map Month = {
 };
 
 class EmotionPreview extends StatefulWidget {
-  const EmotionPreview(
-      {Key? key,
-      required this.curDates,
-      required this.dateSelected,
-      required this.setInputEmotionUp,
-      required this.setEmotionSelectorUp,
-      required this.setNavBarUp})
-      : super(key: key);
+  const EmotionPreview({
+    Key? key,
+    required this.curDates,
+    required this.dateSelected,
+    required this.setInputEmotionUp,
+    required this.setEmotionSelectorUp,
+    required this.setNavBarUp,
+  }) : super(key: key);
 
   final Map curDates;
   final DateTime dateSelected;
@@ -45,23 +44,24 @@ class _EmotionPreviewState extends State<EmotionPreview> {
   @override
   Widget build(BuildContext context) {
     return EmotionPreviewBox(
-        curDates: widget.curDates,
-        date: widget.dateSelected,
-        setInputEmotionUp: widget.setInputEmotionUp,
-        setEmotionSelectorUp: widget.setEmotionSelectorUp,
-        setNavBarUp: widget.setNavBarUp);
+      curDates: widget.curDates,
+      date: widget.dateSelected,
+      setInputEmotionUp: widget.setInputEmotionUp,
+      setEmotionSelectorUp: widget.setEmotionSelectorUp,
+      setNavBarUp: widget.setNavBarUp,
+    );
   }
 }
 
 class EmotionPreviewBox extends StatefulWidget {
-  const EmotionPreviewBox(
-      {Key? key,
-      required this.curDates,
-      required this.date,
-      required this.setInputEmotionUp,
-      required this.setEmotionSelectorUp,
-      required this.setNavBarUp})
-      : super(key: key);
+  const EmotionPreviewBox({
+    Key? key,
+    required this.curDates,
+    required this.date,
+    required this.setInputEmotionUp,
+    required this.setEmotionSelectorUp,
+    required this.setNavBarUp,
+  }) : super(key: key);
 
   final Map curDates;
   final DateTime date;
@@ -82,15 +82,16 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
     Map dateInfo = widget.curDates[day];
 
     int? id = dateInfo["id"];
-    String? emotion = dateInfo["emotion"];
-    String content =
-        id == null ? "Write in today's diary" : dateInfo["content"];
+    String emotion = dateInfo["emotion"] == null
+        ? "assets/images/mean.png"
+        : dateInfo["emotion"];
+    String content = dateInfo["content"] == null
+        ? "Write in today's diary"
+        : dateInfo["content"];
 
     String monthToEng = Month[month];
 
     String selectDay = '${monthToEng} ${day} ${year}';
-
-    String imageLink = ImageLink[emotion];
 
     Color backgroundColor =
         id == null ? Color.fromRGBO(250, 250, 250, 0.2) : Color(0xffFFF6DA);
@@ -110,14 +111,15 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
           color: backgroundColor),
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         PreviewBoxHeader(
-            id: id,
-            date: widget.date,
-            emotion: emotion,
-            image: imageLink,
-            title: selectDay,
-            setInputEmotionUp: widget.setInputEmotionUp,
-            setEmotionSelectorUp: widget.setEmotionSelectorUp,
-            setNavBarUp: widget.setNavBarUp),
+          id: id,
+          date: widget.date,
+          emotion: emotion,
+          title: selectDay,
+          curDates: widget.curDates,
+          setInputEmotionUp: widget.setInputEmotionUp,
+          setEmotionSelectorUp: widget.setEmotionSelectorUp,
+          setNavBarUp: widget.setNavBarUp,
+        ),
         SizedBox(height: 20),
         PreviewBoxBody(content)
       ]),
@@ -126,22 +128,22 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
 }
 
 class PreviewBoxHeader extends StatefulWidget {
-  const PreviewBoxHeader(
-      {Key? key,
-      required this.id,
-      required this.date,
-      required this.emotion,
-      required this.image,
-      required this.title,
-      required this.setInputEmotionUp,
-      required this.setEmotionSelectorUp,
-      required this.setNavBarUp})
-      : super(key: key);
+  const PreviewBoxHeader({
+    Key? key,
+    required this.id,
+    required this.date,
+    required this.emotion,
+    required this.title,
+    required this.curDates,
+    required this.setInputEmotionUp,
+    required this.setEmotionSelectorUp,
+    required this.setNavBarUp,
+  }) : super(key: key);
   final int? id;
   final DateTime date;
-  final String? emotion;
-  final String image;
+  final String emotion;
   final String title;
+  final Map curDates;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(bool) setNavBarUp;
@@ -164,7 +166,7 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Image.asset(height: 50, widget.image),
+                  Image.asset(height: 50, widget.emotion),
                   SizedBox(
                     width: 30,
                   ),
@@ -181,12 +183,14 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             PopUpMenuButtonWrapper(
-                id: widget.id,
-                date: widget.date,
-                emotion: widget.emotion,
-                setInputEmotionUp: widget.setInputEmotionUp,
-                setEmotionSelectorUp: widget.setEmotionSelectorUp,
-                setNavBarUp: widget.setNavBarUp)
+              id: widget.id,
+              date: widget.date,
+              emotion: widget.emotion,
+              curDates: widget.curDates,
+              setInputEmotionUp: widget.setInputEmotionUp,
+              setEmotionSelectorUp: widget.setEmotionSelectorUp,
+              setNavBarUp: widget.setNavBarUp,
+            )
           ]),
         )
       ]),
@@ -202,6 +206,7 @@ class PopUpMenuButtonWrapper extends StatefulWidget {
       required this.id,
       required this.date,
       required this.emotion,
+      required this.curDates,
       required this.setInputEmotionUp,
       required this.setEmotionSelectorUp,
       required this.setNavBarUp})
@@ -209,6 +214,7 @@ class PopUpMenuButtonWrapper extends StatefulWidget {
   final int? id;
   final DateTime date;
   final String? emotion;
+  final Map curDates;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(bool) setNavBarUp;
@@ -244,6 +250,8 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
         // Callback that sets the selected popup menu item.
         onSelected: (SampleItem item) async {
           if (item == SampleItem.itemOne) {
+            String? curText =
+                widget.curDates[widget.date.day.toString()]["content"];
             widget.setInputEmotionUp(true);
           } else {
             Map response =

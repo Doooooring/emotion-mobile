@@ -1,14 +1,18 @@
+import "dart:developer";
+
 import 'package:flutter/material.dart';
 
 class EmotionInput extends StatefulWidget {
-  const EmotionInput(
-      {Key? key,
-      required this.date,
-      required this.curDates,
-      required this.inputText,
-      required this.setInputText,
-      required this.setIsChanged})
-      : super(key: key);
+  const EmotionInput({
+    Key? key,
+    required this.textController,
+    required this.date,
+    required this.curDates,
+    required this.inputText,
+    required this.setInputText,
+    required this.setIsChanged,
+  }) : super(key: key);
+  final TextEditingController textController;
   final DateTime date;
   final Map curDates;
   final String inputText;
@@ -27,6 +31,8 @@ class _EmotionInputState extends State<EmotionInput> {
 
     String initialText = curInfo["content"] != null ? curInfo["content"] : "";
 
+    widget.textController.text = initialText;
+
     return Container(
         width: double.infinity,
         child: Row(
@@ -38,7 +44,7 @@ class _EmotionInputState extends State<EmotionInput> {
               child: SizedBox(
                 width: 350,
                 child: TextFormField(
-                  initialValue: initialText,
+                  controller: widget.textController,
                   style: TextStyle(fontSize: 20),
                   decoration: const InputDecoration(
                       hintText: 'How was your day?',
@@ -55,6 +61,7 @@ class _EmotionInputState extends State<EmotionInput> {
                     if (curEmotion != null) {
                       widget.setIsChanged(true);
                     }
+                    log(text);
                     widget.setInputText(text);
                   },
                   keyboardType: TextInputType.multiline,

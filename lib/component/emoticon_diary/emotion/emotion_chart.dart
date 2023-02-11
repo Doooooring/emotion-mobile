@@ -27,8 +27,11 @@ class _EmotionChartState extends State<EmotionChart> {
   @override
   Widget build(BuildContext context) {
     Map selected = widget.curDates[widget.date.day.toString()];
-    String image =
-        widget.isChanged ? ImageLink[null] : ImageLink[selected["emotion"]];
+    String emoticon = selected["emotion"] == null
+        ? "assets/images/mean.png"
+        : selected["emotion"];
+
+    String image = widget.isChanged ? ImageLink[null] : emoticon;
 
     bool state = selected["id"] == null; //이모티콘 없는 상태
     return Container(
@@ -46,6 +49,6 @@ class _EmotionChartState extends State<EmotionChart> {
                   curId, widget.setCurTempEmotion, widget.setEmotionSelectorUp);
               widget.setEmotionSelectorUp(true);
             },
-            icon: Image.asset(image)));
+            icon: Image.asset(emoticon)));
   }
 }

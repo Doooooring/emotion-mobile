@@ -11,6 +11,7 @@ const String url = "http://localhost:3000";
 class EmotionWrapper extends StatefulWidget {
   const EmotionWrapper(
       {Key? key,
+      required this.textController,
       required this.curDates,
       required this.dateSelected,
       required this.emotionSelectorUp,
@@ -19,6 +20,7 @@ class EmotionWrapper extends StatefulWidget {
       required this.setCurTempEmotion,
       required this.setEmotionSelectorUp})
       : super(key: key);
+  final TextEditingController textController;
   final Map curDates;
   final DateTime dateSelected;
   final bool emotionSelectorUp;
@@ -43,6 +45,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
         ),
         child: Stack(children: [
           EmotionContainer(
+              textController: widget.textController,
               curDates: widget.curDates,
               dateSelected: widget.dateSelected,
               setInputEmotionUp: widget.setInputEmotionUp,
@@ -58,6 +61,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
 class EmotionContainer extends StatefulWidget {
   const EmotionContainer(
       {Key? key,
+      required this.textController,
       required this.curDates,
       required this.setInputEmotionUp,
       required this.dateSelected,
@@ -65,6 +69,7 @@ class EmotionContainer extends StatefulWidget {
       required this.setEmotionSelectorUp,
       required this.setCurTempEmotion})
       : super(key: key);
+  final TextEditingController textController;
   final Map curDates;
   final void Function(bool) setInputEmotionUp;
   final DateTime dateSelected;
@@ -130,6 +135,7 @@ class _EmotionContainerState extends State<EmotionContainer> {
               SizedBox(
                 child: Column(children: <Widget>[
                   EmotionInput(
+                      textController: widget.textController,
                       date: widget.dateSelected,
                       curDates: widget.curDates,
                       inputText: inputText,

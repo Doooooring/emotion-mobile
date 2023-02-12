@@ -1,3 +1,5 @@
+import "dart:developer";
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -28,12 +30,14 @@ dynamic getDate(date) {
 class Calendar extends StatefulWidget {
   const Calendar({
     Key? key,
+    required this.textEditController,
     required this.setDateSelected,
     required this.setInputEmotionUp,
     required this.setCurDateAll,
     required this.setIsLoading,
     required this.curDates,
   }) : super(key: key);
+  final TextEditingController textEditController;
   final void Function(DateTime) setDateSelected;
   final void Function(bool) setInputEmotionUp;
   final void Function(Map) setCurDateAll;
@@ -76,7 +80,11 @@ class _CalendarState extends State<Calendar> {
           // List<String> dayToArray = selectedDay.toString().split(' ');
           // String ymd = dayToArray[0];
           // String dateInForm = getDate(ymd);
-          Map curDate = widget.curDates[selectedDay.day.toString()];
+
+          Map curInfo = widget.curDates[selectedDay.day.toString()];
+          String diaryContent = curInfo["content"] ?? "";
+          log(diaryContent);
+          widget.textEditController.text = diaryContent;
           widget.setDateSelected(selectedDay);
         },
         headerStyle: HeaderStyle(

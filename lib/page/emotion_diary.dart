@@ -97,7 +97,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
+    final TextEditingController controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Color(0xffFAE297),
@@ -122,6 +122,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                       height: 30,
                     ),
                     Calendar(
+                      textEditController: controller,
                       curDates: curDates,
                       setDateSelected: setDateSelected,
                       setInputEmotionUp: setInputEmotionUp,
@@ -141,7 +142,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 200),
                 child: input_emotion.EmotionWrapper(
-                  textController: _controller,
+                  textController: controller,
                   curDates: curDates,
                   dateSelected: dateSelected,
                   emotionSelectorUp: emotionSelectorUp,

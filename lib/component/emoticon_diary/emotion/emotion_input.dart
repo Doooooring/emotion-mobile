@@ -23,14 +23,6 @@ class EmotionInput extends StatefulWidget {
 
 class _EmotionInputState extends State<EmotionInput> {
   @override
-  void initState() {
-    super.initState();
-    Map curInfo = widget.curDates[widget.date.day.toString()];
-    widget.textController.text =
-        curInfo["content"] != null ? curInfo["content"] : "";
-  }
-
-  @override
   Widget build(BuildContext context) {
     Map curInfo = widget.curDates[widget.date.day.toString()];
     String? curEmotion = curInfo["emotion"];
@@ -63,6 +55,7 @@ class _EmotionInputState extends State<EmotionInput> {
                     if (curEmotion != null) {
                       widget.setIsChanged(true);
                     }
+                    widget.textController.text = text;
                     widget.setInputText(text);
                   },
                   keyboardType: TextInputType.multiline,

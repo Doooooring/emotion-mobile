@@ -1,5 +1,3 @@
-import "dart:developer";
-
 import "package:flutter/material.dart";
 
 import "../../../page/emotion_result.dart";
@@ -84,8 +82,9 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
     Map dateInfo = widget.curDates[day];
 
     int? id = dateInfo["id"];
-    String emotion = dateInfo["emotion"] ?? "assets/images/mean.png";
-    log(dateInfo.toString());
+    String emotion = dateInfo["emotion"] == null
+        ? "assets/images/mean.png"
+        : 'assets/images/${dateInfo["emotion"]}.png';
     String content = dateInfo["content"] ?? "Write in today's diary";
 
     String monthToEng = Month[month];

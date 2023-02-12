@@ -3,24 +3,11 @@ Map ImageLink = {
 };
 
 Map ImoticonLink = {
-  "angry": [
-    "assets/images/angry1.png",
-    "assets/images/angry2.png",
-    "assets/images/angry3.png",
-    "assets/images/angry4.png",
-  ],
-  "anticipate": [
-    "assets/images/anticipate1.png",
-    "assets/images/anticipate2.png",
-    "assets/images/anticipate3.png"
-  ],
-  "bored": ["assets/images/bored.png1"],
-  "calm": ["assets/images/calm1.png", "assets/images/calm2.png"],
-  "content": [
-    "assets/images/content1.png",
-    "assets/images/content2.png",
-    "assets/images/content3.png"
-  ],
+  "angry": ["angry1", "angry2", "angry3", "angry4"],
+  "anticipate": ["anticipate1", "anticipate2", "anticipate3"],
+  "bored": ["bored1", "bored2", "bored3", "bored4"],
+  "calm": ["calm1", "calm2", "calm3", "calm4"],
+  "content": ["content1", "content2", "content3", "content4"],
   "excited": [
     "assets/images/excited1.png",
     "assets/images/excited2.png",

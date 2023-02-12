@@ -75,12 +75,19 @@ flutter:
     - assets/images/anticipate1.png
     - assets/images/anticipate2.png
     - assets/images/anticipate3.png
+    - assets/images/anticipate4.png
     - assets/images/bored1.png
+    - assets/images/bored2.png
+    - assets/images/bored3.png
+    - assets/images/bored4.png
     - assets/images/calm1.png
     - assets/images/calm2.png
+    - assets/images/calm3.png
+    - assets/images/calm4.png
     - assets/images/content1.png
     - assets/images/content2.png
     - assets/images/content3.png
+    - assets/images/content4.png
     - assets/images/excited1.png
     - assets/images/excited2.png
     - assets/images/excited3.png
@@ -88,7 +95,11 @@ flutter:
     - assets/images/happy1.png
     - assets/images/happy2.png
     - assets/images/happy3.png
+    - assets/images/happy4.png
     - assets/images/relaxed1.png
+    - assets/images/relaxed2.png
+    - assets/images/relaxed3.png
+    - assets/images/relaxed4.png
     - assets/images/sad1.png
     - assets/images/sad2.png
     - assets/images/sad3.png
@@ -106,6 +117,9 @@ flutter:
     - assets/images/tense3.png
     - assets/images/tense4.png
     - assets/images/tired1.png
+    - assets/images/tired2.png
+    - assets/images/tired3.png
+    - assets/images/tired4.png
     - assets/images/ico_close.png
     - assets/images/ico_close@2x.png
     - assets/images/mean.png

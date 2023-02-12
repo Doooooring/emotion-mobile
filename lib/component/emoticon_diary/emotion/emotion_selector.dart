@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import "../../../asset/imoticon_url.dart";
 import "../../../services/emotion.dart";
 
 EmotionServices emotionServices = new EmotionServices();
@@ -155,7 +154,12 @@ List<Widget> EmoticonList(
   if (emotion == null) {
     return [];
   }
-  List<String> curList = ImoticonLink[emotion];
+  List<String> curList = [
+    '${emotion}1',
+    '${emotion}2',
+    '${emotion}3',
+    '${emotion}4'
+  ];
   List<Widget> curWidgets = [];
   for (String str in curList) {
     curWidgets.add(ButtonWrapper(
@@ -207,6 +211,7 @@ class _ButtonWrapperState extends State<ButtonWrapper> {
           // Navigator.push(context,
           //     MaterialPageRoute(builder: (context) => EmotionResult()));
         },
-        icon: Image.asset(height: 50, width: 50, widget.emotion));
+        icon: Image.asset(
+            height: 50, width: 50, 'assets/images/${widget.emotion}.png'));
   }
 }

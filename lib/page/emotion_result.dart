@@ -2,7 +2,6 @@ import "dart:math" as math;
 
 import 'package:flutter/material.dart';
 
-import "../asset/imoticon_url.dart";
 import "../component/emoticon_diary/emotion/youtube_player.dart";
 
 Map Month = {
@@ -39,7 +38,9 @@ class EmotionResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String month = Month[date.month.toString()];
-    String emotionLink = ImageLink[emotion];
+    String emotionLink = emotion == null
+        ? "assets/images/mean.png"
+        : 'assets/images/${emotion}.png';
     String emotionState = sentimentLevel > 3.3
         ? "Positive"
         : sentimentLevel > 1.6

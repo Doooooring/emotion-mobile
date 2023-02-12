@@ -67,7 +67,9 @@ CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
     Map info = curDates[day] ?? {"id": null, "emotion": null, "content": null};
 
     int? id = info["id"];
-    String emoticon = info["emotion"] ?? "assets/images/mean.png";
+    String emoticon = info["emotion"] == null
+        ? "assets/images/mean.png"
+        : "assets/images/${info["emotion"]}.png";
     Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
 
     return buildCalendarDay(
@@ -82,7 +84,9 @@ CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
     String day = date.day.toString();
     Map info = curDates[day] ?? {"id": null, "emotion": null, "content": null};
     int? id = info["id"];
-    String emoticon = info["emotion"] ?? "assets/images/mean.png";
+    String emoticon = info["emotion"] == null
+        ? "assets/images/mean.png"
+        : "assets/images/${info["emotion"]}.png";
     Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
     return buildCalendarDay(
         id: id,
@@ -96,7 +100,9 @@ CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
     String day = date.day.toString();
     Map info = curDates[day] ?? {"id": null, "emotion": null, "content": null};
     int? id = info["id"];
-    String emoticon = info["emotion"] ?? "assets/images/mean.png";
+    String emoticon = info["emotion"] == null
+        ? "assets/images/mean.png"
+        : "assets/images/${info["emotion"]}.png";
     Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
     return buildCalendarDay(
         id: id,
@@ -110,7 +116,9 @@ CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
     String day = date.day.toString();
     Map info = curDates[day] ?? {"id": null, "emotion": null, "content": null};
     int? id = info["id"];
-    String emoticon = info["emotion"] ?? "assets/images/mean.png";
+    String emoticon = info["emotion"] == null
+        ? "assets/images/mean.png"
+        : "assets/images/${info["emotion"]}.png";
     Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
     return buildCalendarDay(
         id: id,
@@ -138,7 +146,9 @@ CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
 
     int? id = info["id"];
 
-    String emoticon = info["emotion"] ?? "assets/images/mean.png";
+    String emoticon = info["emotion"] == null
+        ? "assets/images/mean.png"
+        : "assets/images/${info["emotion"]}.png";
     Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
     return buildCalendarDay(
         id: id,
@@ -152,7 +162,9 @@ CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
     String day = date.day.toString();
     Map info = curDates[day] ?? {"id": null, "emotion": null, "content": null};
     int? id = info["id"];
-    String emoticon = info["emotion"] ?? "assets/images/mean.png";
+    String emoticon = info["emotion"] == null
+        ? "assets/images/mean.png"
+        : "assets/images/${info["emotion"]}.png";
     Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
     return buildCalendarDay(
         id: id,
@@ -167,7 +179,9 @@ CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
     Map info = curDates[day] ?? {"id": null, "emotion": null, "content": null};
     int? id = info["id"];
     Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);
-    String emoticon = info["emotion"] ?? "assets/images/mean.png";
+    String emoticon = info["emotion"] == null
+        ? "assets/images/mean.png"
+        : "assets/images/${info["emotion"]}.png";
 
     return buildCalendarDay(
         id: id,

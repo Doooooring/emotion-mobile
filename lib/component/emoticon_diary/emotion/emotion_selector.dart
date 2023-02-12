@@ -23,7 +23,6 @@ class SelectorWrapper extends StatefulWidget {
   final void Function(bool) setEmotionSelectorUp;
   final void Function(bool) setNavBarUp;
   final bool emotionSelectorUp;
-
   final DateTime date;
   final String? tempEmotion;
   final Map curDates;
@@ -37,7 +36,6 @@ class _SelectorWrapperState extends State<SelectorWrapper> {
   Widget build(BuildContext context) {
     Map curInfo = widget.curDates[widget.date.day.toString()];
     int? curId = curInfo["id"];
-    String? curEmotion = curInfo["emotion"];
 
     return SizedBox(
       height: 800,

@@ -59,6 +59,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
         log(curDates.toString());
       }
       if (emotion != null) {
+        log("hehre");
         curDates[day]["emotion"] = emotion;
         log("here");
       }

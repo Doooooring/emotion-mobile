@@ -87,7 +87,7 @@ class DiaryRepositories {
 
     dynamic result = json.decode(response.body);
 
-    return result["result"];
+    return type == "content" ? result["result"] : result["success"];
   }
 
   // return {

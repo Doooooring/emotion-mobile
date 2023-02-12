@@ -17,9 +17,10 @@ Map Month = {
 
 class EmotionHead extends StatefulWidget {
   const EmotionHead(
-      {Key? key, required this.date, required this.setInputEmotionUp})
+      {Key? key, required this.date, required this.setIsChanged, required this.setInputEmotionUp})
       : super(key: key);
   final DateTime date;
+  final void Function(bool) setIsChanged;
   final void Function(bool) setInputEmotionUp;
 
   @override
@@ -58,6 +59,7 @@ class _EmotionHeadState extends State<EmotionHead> {
           width: 60.0,
           child: IconButton(
               onPressed: () {
+                widget.setIsChanged(false);
                 widget.setInputEmotionUp(false);
               },
               icon: Image.asset('assets/images/ico_close.png')),

@@ -12,6 +12,7 @@ class EmotionHandleButton extends StatefulWidget {
       required this.dateSelected,
       required this.setIsLoading,
       required this.setCurDate,
+      required this.setIsChanged,
       required this.setCurTempEmotion,
       required this.setEmotionSelectorUp})
       : super(key: key);
@@ -20,6 +21,7 @@ class EmotionHandleButton extends StatefulWidget {
   final DateTime dateSelected;
   final void Function(bool) setIsLoading;
   final void Function(String, int?, String?, String?) setCurDate;
+  final void Function(bool) setIsChanged;
   final void Function(String?) setCurTempEmotion;
   final void Function(bool) setEmotionSelectorUp;
   @override
@@ -37,6 +39,7 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
     return IconButton(
         icon: const Icon(Icons.send),
         onPressed: () async {
+          widget.setIsChanged(false);
           EmotionService.saveDiaryText(
               curId,
               widget.dateSelected,

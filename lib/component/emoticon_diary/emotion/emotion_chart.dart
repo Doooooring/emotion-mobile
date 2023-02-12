@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-// import "package:fluttertoast/fluttertoast.dart";
-
-import "../../../asset/imoticon_url.dart";
 import "../../../services/emotion.dart";
 
 EmotionServices emotionServices = EmotionServices();
@@ -30,9 +27,11 @@ class _EmotionChartState extends State<EmotionChart> {
   Widget build(BuildContext context) {
     Map selected = widget.curDates[widget.date.day.toString()];
 
-    String emoticon = selected["emotion"] ?? "assets/images/mean.png";
+    String emoticon = selected["emotion"] ?? "mean";
 
-    String image = widget.isChanged ? ImageLink[null] : emoticon;
+    String emoticonUrl = 'assets/images/${emoticon}.png';
+
+    String image = widget.isChanged ? "assets/images/mean.png" : emoticonUrl;
 
     bool state = selected["id"] == null; //이모티콘 없는 상태
 

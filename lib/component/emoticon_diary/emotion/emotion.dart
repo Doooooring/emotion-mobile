@@ -76,6 +76,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                   SizedBox(height: 30),
                   EmotionHead(
                       date: widget.dateSelected,
+                      setIsChanged: setIsChanged,
                       setInputEmotionUp: widget.setInputEmotionUp),
                   SizedBox(height: 30),
                   EmotionChart(
@@ -105,6 +106,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                               dateSelected: widget.dateSelected,
                               setIsLoading: setIsLoading,
                               setCurDate: widget.setCurDate,
+                              setIsChanged: setIsChanged,
                               setCurTempEmotion: widget.setCurTempEmotion,
                               setEmotionSelectorUp: widget.setEmotionSelectorUp)
                         ]),

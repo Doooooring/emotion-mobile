@@ -29,26 +29,30 @@ class EmotionServices {
       void Function(String, int?, String?, String?) setCurDate,
       void Function(bool) setEmotionSelectorUp,
       void Function(String?) setCurTempEmotion) async {
-    if (id == null) {
+    try {
       setIsLoading(false);
-      Map result = await repository.postDiary(dateSelected, text);
+      if (id == null) {
+        Map result = await repository.postDiary(dateSelected, text);
 
-      String today = dateSelected.day.toString();
-      int curId = result["diaryId"];
-      String tempEmotion = result["tempEmotion"];
+        String today = dateSelected.day.toString();
+        int curId = result["diaryId"];
+        String tempEmotion = result["tempEmotion"];
 
-      setCurDate(today, curId, text, null);
-      setCurTempEmotion(tempEmotion);
-      setEmotionSelectorUp(true);
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-      Map result = await repository.patchDiary(id, text, null, "content");
-      String today = dateSelected.day.toString();
-      String tempEmotion = result["tempEmotion"];
-      setCurDate(today, id, text, null);
-      setCurTempEmotion(tempEmotion);
-      setEmotionSelectorUp(true);
+        setCurDate(today, curId, text, null);
+        setCurTempEmotion(tempEmotion);
+        setEmotionSelectorUp(true);
+        setIsLoading(true);
+      } else {
+        Map result = await repository.patchDiary(id, text, null, "content");
+        String today = dateSelected.day.toString();
+        String tempEmotion = result["tempEmotion"];
+        setCurDate(today, id, text, null);
+        setCurTempEmotion(tempEmotion);
+        setEmotionSelectorUp(true);
+        setIsLoading(true);
+      }
+    } catch (e) {
+      log(e.toString());
       setIsLoading(true);
     }
   }
@@ -77,10 +81,11 @@ class EmotionServices {
       if (id == null) {
         return;
       }
-      String response =
-          await repository.patchDiary(id, null, emotion, "emotion");
-      if (response == "success") {
+      bool response = await repository.patchDiary(id, null, emotion, "emotion");
+      if (response) {
+        log("herhes");
         String today = dateSelected.day.toString();
+        log(today);
         setCurDate(today, null, null, emotion);
         setEmotionSelectorUp(false);
         setInputEmotionUp(false);

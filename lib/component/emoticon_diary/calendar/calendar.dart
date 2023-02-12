@@ -70,7 +70,7 @@ class _CalendarState extends State<Calendar> {
           if (selectedDay.month != focusedDay.month) {
             return;
           }
-          if (selectedDay.day > DateTime.now().day) {
+          if (selectedDay.isAfter(DateTime.now())) {
             return;
           }
           // List<String> dayToArray = selectedDay.toString().split(' ');
@@ -93,6 +93,10 @@ class _CalendarState extends State<Calendar> {
                 } else {
                   setFocusedMonth(focusedMonth - 1);
                 }
+
+                widget.setDateSelected(DateTime.parse(
+                    '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay}'));
+
                 emotionServices.getEmotionMonth(focusedYear, focusedMonth,
                     widget.setCurDateAll, widget.setIsLoading);
               },
@@ -108,6 +112,9 @@ class _CalendarState extends State<Calendar> {
                 } else {
                   setFocusedMonth(focusedMonth + 1);
                 }
+
+                widget.setDateSelected(DateTime.parse(
+                    '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay}'));
                 emotionServices.getEmotionMonth(focusedYear, focusedMonth,
                     widget.setCurDateAll, widget.setIsLoading);
               },

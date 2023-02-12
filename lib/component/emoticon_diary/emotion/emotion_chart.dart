@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// import "package:fluttertoast/fluttertoast.dart";
+
 import "../../../asset/imoticon_url.dart";
 import "../../../services/emotion.dart";
 
@@ -27,20 +29,20 @@ class _EmotionChartState extends State<EmotionChart> {
   @override
   Widget build(BuildContext context) {
     Map selected = widget.curDates[widget.date.day.toString()];
-    String emoticon = selected["emotion"] == null
-        ? "assets/images/mean.png"
-        : selected["emotion"];
+
+    String emoticon = selected["emotion"] ?? "assets/images/mean.png";
 
     String image = widget.isChanged ? ImageLink[null] : emoticon;
 
     bool state = selected["id"] == null; //이모티콘 없는 상태
+
     return Container(
         width: 80,
         height: 80,
         child: IconButton(
             onPressed: () {
               if (state == true) {
-                //toast 띄우기
+                // flutterToast();
                 return;
               }
               // tempemotion 받아오기
@@ -49,6 +51,18 @@ class _EmotionChartState extends State<EmotionChart> {
                   curId, widget.setCurTempEmotion, widget.setEmotionSelectorUp);
               widget.setEmotionSelectorUp(true);
             },
-            icon: Image.asset(emoticon)));
+            icon: Image.asset(image)));
   }
+}
+
+void flutterToast() {
+  // 토스트 메시지를 출력하기 위한 함수 생성
+  // Fluttertoast.showToast(
+  //     msg: 'Flutter 토스트 메시지', // 토스트 메시지 내용
+  //     gravity: ToastGravity.BOTTOM,
+  //     backgroundColor: Colors.redAccent, // 배경색 빨강색
+  //     fontSize: 20.0,
+  //     textColor: Colors.white, // 폰트 하얀색
+  //     toastLength: Toast.LENGTH_SHORT // 토스트 메시지 지속시간 짧게
+  // );
 }

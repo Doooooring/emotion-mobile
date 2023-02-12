@@ -41,6 +41,7 @@ dependencies:
   page_transition: ^2.0.9
   speech_to_text: ^6.1.1
   youtube_player_flutter: ^8.1.2
+  toast: ^0.3.0
 
 dev_dependencies:
   flutter_test:
@@ -67,56 +68,43 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/question.jpeg
-    - assets/images/angry.png
     - assets/images/angry1.png
     - assets/images/angry2.png
     - assets/images/angry3.png
     - assets/images/angry4.png
-    - assets/images/anticipate.png
     - assets/images/anticipate1.png
     - assets/images/anticipate2.png
     - assets/images/anticipate3.png
-    - assets/images/bored.png
     - assets/images/bored1.png
-    - assets/images/calm.png
-    -  assets/images/calm1.png
-    -  assets/images/calm2.png
-    - assets/images/content.png
+    - assets/images/calm1.png
+    - assets/images/calm2.png
     - assets/images/content1.png
     - assets/images/content2.png
     - assets/images/content3.png
-    - assets/images/excited.png
     - assets/images/excited1.png
     - assets/images/excited2.png
     - assets/images/excited3.png
     - assets/images/excited4.png
-    - assets/images/happy.png
-    -  assets/images/happy1.png
-    -  assets/images/happy2.png
-    -  assets/images/happy3.png
-    - assets/images/relaxed.png
+    - assets/images/happy1.png
+    - assets/images/happy2.png
+    - assets/images/happy3.png
     - assets/images/relaxed1.png
-    - assets/images/sad.png
     - assets/images/sad1.png
     - assets/images/sad2.png
     - assets/images/sad3.png
     - assets/images/sad4.png
-    - assets/images/surprised(bad).png
     - assets/images/badSurprised1.png
     - assets/images/badSurprised2.png
     - assets/images/badSurprised3.png
     - assets/images/badSurprised4.png
-    - assets/images/surprised(good).png
     - assets/images/goodSurprised1.png
     - assets/images/goodSurprised2.png
     - assets/images/goodSurprised3.png
     - assets/images/goodSurprised4.png
-    - assets/images/tense.png
     - assets/images/tense1.png
     - assets/images/tense2.png
     - assets/images/tense3.png
     - assets/images/tense4.png
-    - assets/images/tired.png
     - assets/images/tired1.png
     - assets/images/ico_close.png
     - assets/images/ico_close@2x.png

@@ -17,7 +17,6 @@ class EmotionServices {
       setIsLoading(false);
     } catch (e) {
       //토스트업
-      log("it's error");
       setIsLoading(false);
     }
   }
@@ -30,8 +29,6 @@ class EmotionServices {
       void Function(bool) setEmotionSelectorUp,
       void Function(String?) setCurTempEmotion) async {
     if (id == null) {
-      log(text);
-
       Map result = await repository.postDiary(dateSelected, text);
 
       String today = dateSelected.day.toString();
@@ -75,8 +72,9 @@ class EmotionServices {
       if (id == null) {
         return;
       }
-      Map response = await repository.patchDiary(id, null, emotion, "emotion");
-      if (response["success"] == true) {
+      String response =
+          await repository.patchDiary(id, null, emotion, "emotion");
+      if (response == "success") {
         String today = dateSelected.day.toString();
         setCurDate(today, null, null, emotion);
         setEmotionSelectorUp(false);
@@ -85,6 +83,7 @@ class EmotionServices {
         //toast up?
       }
     } catch (e) {
+      log(e.toString());
       Error();
     }
   }

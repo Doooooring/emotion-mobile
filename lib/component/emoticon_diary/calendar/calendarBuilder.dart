@@ -147,7 +147,9 @@ CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
     Map info = curDates[day] != null
         ? curDates[day]
         : {"id": null, "emotion": null, "content": null};
+
     int? id = info["id"];
+
     String emoticon =
         info["emotion"] == null ? "assets/images/mean.png" : info["emotion"];
     Color back = info["id"] == null ? Colors.white : Color(0xffFFF6DA);

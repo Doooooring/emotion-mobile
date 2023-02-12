@@ -1,5 +1,3 @@
-import "dart:developer";
-
 import 'package:flutter/material.dart';
 
 class EmotionInput extends StatefulWidget {
@@ -25,13 +23,17 @@ class EmotionInput extends StatefulWidget {
 
 class _EmotionInputState extends State<EmotionInput> {
   @override
+  void initState() {
+    super.initState();
+    Map curInfo = widget.curDates[widget.date.day.toString()];
+    widget.textController.text =
+        curInfo["content"] != null ? curInfo["content"] : "";
+  }
+
+  @override
   Widget build(BuildContext context) {
     Map curInfo = widget.curDates[widget.date.day.toString()];
     String? curEmotion = curInfo["emotion"];
-
-    String initialText = curInfo["content"] != null ? curInfo["content"] : "";
-
-    widget.textController.text = initialText;
 
     return Container(
         width: double.infinity,
@@ -61,7 +63,6 @@ class _EmotionInputState extends State<EmotionInput> {
                     if (curEmotion != null) {
                       widget.setIsChanged(true);
                     }
-                    log(text);
                     widget.setInputText(text);
                   },
                   keyboardType: TextInputType.multiline,

@@ -6,8 +6,6 @@ import 'emotion_handle_button.dart';
 import 'emotion_head.dart';
 import 'emotion_input.dart';
 
-const String url = "http://localhost:3000";
-
 class EmotionWrapper extends StatefulWidget {
   const EmotionWrapper(
       {Key? key,

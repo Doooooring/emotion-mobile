@@ -1,3 +1,5 @@
+import "dart:developer";
+
 import 'package:flutter/material.dart';
 
 import "../asset/init_data.dart";
@@ -52,10 +54,13 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
         curDates[day]["id"] = id;
       }
       if (text != null) {
-        curDates[day]["text"] = text;
+        log(curDates.toString());
+        curDates[day]["content"] = text;
+        log(curDates.toString());
       }
       if (emotion != null) {
         curDates[day]["emotion"] = emotion;
+        log("here");
       }
     });
   }

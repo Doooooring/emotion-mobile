@@ -38,6 +38,8 @@ class DiaryRepositories {
   postDiary(DateTime date, String text) async {
     log(date.year.toString());
     log(date.month.toString());
+    log("herher");
+    log(text);
     Uri endPoint = Uri.parse('$HOST_URL/diary');
     var bodyEncoded = json.encode({
       "year": date.year,
@@ -67,7 +69,7 @@ class DiaryRepositories {
   // return {
   //    "success" : true
   //    "message" : ""
-  //    "data"    : null
+  //    "result"    : "success"
   //     }
   // }
 
@@ -123,6 +125,6 @@ class DiaryRepositories {
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
 
     dynamic result = json.decode(response.body);
-    return result.data;
+    return result["result"];
   }
 }

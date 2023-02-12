@@ -1,3 +1,5 @@
+import "dart:developer";
+
 import "package:flutter/material.dart";
 
 import "../../../page/emotion_result.dart";
@@ -82,12 +84,9 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
     Map dateInfo = widget.curDates[day];
 
     int? id = dateInfo["id"];
-    String emotion = dateInfo["emotion"] == null
-        ? "assets/images/mean.png"
-        : dateInfo["emotion"];
-    String content = dateInfo["content"] == null
-        ? "Write in today's diary"
-        : dateInfo["content"];
+    String emotion = dateInfo["emotion"] ?? "assets/images/mean.png";
+    log(dateInfo.toString());
+    String content = dateInfo["content"] ?? "Write in today's diary";
 
     String monthToEng = Month[month];
 
@@ -228,7 +227,7 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.emotion == null) {
+    if (widget.id == null) {
       return PopupMenuButton<SampleItem>(
         initialValue: selectedMenu,
         // Callback that sets the selected popup menu item.

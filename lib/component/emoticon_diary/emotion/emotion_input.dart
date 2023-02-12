@@ -55,7 +55,6 @@ class _EmotionInputState extends State<EmotionInput> {
                     if (curEmotion != null) {
                       widget.setIsChanged(true);
                     }
-                    widget.textController.text = text;
                     widget.setInputText(text);
                   },
                   keyboardType: TextInputType.multiline,

@@ -65,7 +65,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
-  String? curTempEmotion = null;
+  String? curTempEmotion;
   void setCurTempEmotion(String? tempEmotion) {
     setState(() {
       curTempEmotion = tempEmotion;
@@ -95,9 +95,10 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
         Today.year, Today.month, setCurDatesAll, setIsLoading);
   }
 
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Color(0xffFAE297),
@@ -145,7 +146,6 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                   textController: controller,
                   curDates: curDates,
                   dateSelected: dateSelected,
-                  emotionSelectorUp: emotionSelectorUp,
                   setCurDate: setCurDate,
                   setInputEmotionUp: setInputEmotionUp,
                   setCurTempEmotion: setCurTempEmotion,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import "../component/common/bottom_bar.dart";
+import "../component/common/loading.dart";
 
 class InitialPage extends StatelessWidget {
   const InitialPage({Key? key}) : super(key: key);
@@ -11,12 +12,13 @@ class InitialPage extends StatelessWidget {
       appBar: AppBar(
           backgroundColor: Color(0xffFAE297),
           elevation: 1.0,
-          title: const Text("hmm",
+          title: const Text("ah",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 30,
               ))),
-      body: SizedBox(height: 10),
+      body:
+          Container(height: 700, child: Loading(isLoading: false, height: 100)),
       bottomNavigationBar: BottomNavBar(state: true),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(

@@ -249,8 +249,6 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
         // Callback that sets the selected popup menu item.
         onSelected: (SampleItem item) async {
           if (item == SampleItem.itemOne) {
-            String? curText =
-                widget.curDates[widget.date.day.toString()]["content"];
             widget.setInputEmotionUp(true);
           } else {
             Map response =

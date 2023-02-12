@@ -26,10 +26,10 @@ class EmotionWrapper extends StatefulWidget {
   final void Function(String?) setCurTempEmotion;
 
   @override
-  State<EmotionWrapper> createState() => _EmotionContainerState();
+  State<EmotionWrapper> createState() => _EmotionWrapperState();
 }
 
-class _EmotionContainerState extends State<EmotionWrapper> {
+class _EmotionWrapperState extends State<EmotionWrapper> {
   @override
   String inputText = '';
   void setInputText(String text) {

@@ -72,6 +72,7 @@ class _CalendarState extends State<Calendar> {
         rowHeight: 60,
         onDaySelected: (selectedDay, focusedDay) {
           if (selectedDay.month != focusedDay.month) {
+            log("here");
             return;
           }
           if (selectedDay.isAfter(DateTime.now())) {
@@ -83,7 +84,7 @@ class _CalendarState extends State<Calendar> {
 
           Map curInfo = widget.curDates[selectedDay.day.toString()];
           String diaryContent = curInfo["content"] ?? "";
-          log(diaryContent);
+
           widget.textEditController.text = diaryContent;
           widget.setDateSelected(selectedDay);
         },

@@ -17,8 +17,11 @@ class InitialPage extends StatelessWidget {
               style: TextStyle(
                 fontSize: 30,
               ))),
-      body:
-          Container(height: 700, child: Loading(isLoading: false, height: 100)),
+      body: Column(
+        children: [
+          Container(height: 400, child: Loading(isLoading: true, height: 100)),
+        ],
+      ),
       bottomNavigationBar: BottomNavBar(state: true),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(

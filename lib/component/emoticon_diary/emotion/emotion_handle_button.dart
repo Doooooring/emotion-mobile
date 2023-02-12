@@ -37,15 +37,14 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
     return IconButton(
         icon: const Icon(Icons.send),
         onPressed: () async {
-          widget.setIsLoading(false);
           EmotionService.saveDiaryText(
               curId,
               widget.dateSelected,
               widget.inputText,
+              widget.setIsLoading,
               widget.setCurDate,
               widget.setEmotionSelectorUp,
               widget.setCurTempEmotion);
-          widget.setIsLoading(true);
         });
   }
 }

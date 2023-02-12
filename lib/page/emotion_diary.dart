@@ -88,9 +88,8 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    DateTime Today = DateTime.now();
+    DateTime Today = DateTime.now().toUtc();
     emotionServices.getEmotionMonth(
         Today.year, Today.month, setCurDatesAll, setIsLoading);
   }

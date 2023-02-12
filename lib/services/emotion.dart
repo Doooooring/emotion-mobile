@@ -25,10 +25,12 @@ class EmotionServices {
       int? id,
       DateTime dateSelected,
       String text,
+      void Function(bool) setIsLoading,
       void Function(String, int?, String?, String?) setCurDate,
       void Function(bool) setEmotionSelectorUp,
       void Function(String?) setCurTempEmotion) async {
     if (id == null) {
+      setIsLoading(false);
       Map result = await repository.postDiary(dateSelected, text);
 
       String today = dateSelected.day.toString();
@@ -38,13 +40,16 @@ class EmotionServices {
       setCurDate(today, curId, text, null);
       setCurTempEmotion(tempEmotion);
       setEmotionSelectorUp(true);
+      setIsLoading(true);
     } else {
+      setIsLoading(false);
       Map result = await repository.patchDiary(id, text, null, "content");
       String today = dateSelected.day.toString();
       String tempEmotion = result["tempEmotion"];
       setCurDate(today, id, text, null);
       setCurTempEmotion(tempEmotion);
       setEmotionSelectorUp(true);
+      setIsLoading(true);
     }
   }
 

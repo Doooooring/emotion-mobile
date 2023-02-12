@@ -27,7 +27,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
-  bool isLoading = false;
+  bool isLoading = true;
   void setIsLoading(bool state) {
     setState(() {
       isLoading = state;

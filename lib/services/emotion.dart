@@ -7,14 +7,14 @@ DiaryRepositories repository = new DiaryRepositories();
 class EmotionServices {
   void getEmotionMonth(int year, int month, void Function(Map) setCurDateAll,
       void Function(bool) setIsLoading) async {
-    setIsLoading(true);
+    setIsLoading(false);
     try {
       Map result = await repository.getDiaryMonth(year, month);
       if (result["success"] == false) {
         Error();
       }
       setCurDateAll(result);
-      setIsLoading(false);
+      setIsLoading(true);
     } catch (e) {
       //토스트업
       setIsLoading(false);

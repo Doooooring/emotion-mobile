@@ -22,7 +22,7 @@ class _LoadingState extends State<Loading> {
           offstage: widget.isLoading,
           child: Stack(children: <Widget>[
             Opacity(
-              opacity: 0.5,
+              opacity: 0.1,
               child: ModalBarrier(dismissible: false, color: Colors.black),
             ),
             Center(
@@ -30,7 +30,9 @@ class _LoadingState extends State<Loading> {
               Container(
                   width: 200,
                   height: 200,
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -57,13 +59,15 @@ class ProgressIndicatorWrapper extends StatefulWidget {
 
 class _ProgressIndicatorWrapperState extends State<ProgressIndicatorWrapper>
     with SingleTickerProviderStateMixin {
-  late final Animation<AlignmentGeometry> _animation = Tween<AlignmentGeometry>(
-          begin: Alignment.bottomCenter, end: Alignment.topCenter)
-      .animate(CurvedAnimation(parent: _controller, curve: Curves.decelerate));
-
   late final AnimationController _controller =
       AnimationController(vsync: this, duration: Duration(milliseconds: 200))
         ..repeat(reverse: true);
+  late final Animation<AlignmentGeometry> _animation = Tween<AlignmentGeometry>(
+          begin: Alignment.bottomCenter, end: Alignment.topCenter)
+      .animate(CurvedAnimation(parent: _controller, curve: Curves.decelerate))
+    ..addListener(() {
+      setState(() {});
+    });
 
   @override
   void initState() {
@@ -85,9 +89,12 @@ class _ProgressIndicatorWrapperState extends State<ProgressIndicatorWrapper>
 
   @override
   Widget build(BuildContext context) {
-    return AlignTransition(
-        alignment: _animation,
-        child: ProgressIndicator(curIdx, setCurIdx, widget.isLoading));
+    return Container(
+      height: 100,
+      child: AlignTransition(
+          alignment: _animation,
+          child: ProgressIndicator(curIdx, setCurIdx, widget.isLoading)),
+    );
   }
 }
 
@@ -115,8 +122,7 @@ Container ProgressIndicator(
 
   setEmotion();
 
-  return Container(
-      height: 100, child: Image.asset(height: 70, width: 70, curEmotion));
+  return Container(child: Image.asset(height: 70, width: 70, curEmotion));
 }
 
 List<String> commentList = [
@@ -140,7 +146,12 @@ List<String> commentList = [
   'analyzing emotion',
   'analyzing emotion.',
   'analyzing emotion..',
-  'analyzing emotion...'
+  'analyzing emotion...',
+  'analyzing emotion....',
+  'analyzing emotion....',
+  'analyzing emotion....',
+  'analyzing emotion....',
+  'analyzing emotion....'
 ];
 
 class TextAnimation extends StatefulWidget {
@@ -155,10 +166,13 @@ class TextAnimation extends StatefulWidget {
 class _TextAnimationState extends State<TextAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController controller =
-      AnimationController(vsync: this, duration: Duration(seconds: 2))
+      AnimationController(vsync: this, duration: Duration(milliseconds: 1800))
         ..repeat(reverse: false);
   late Animation<double> animation =
-      Tween<double>(begin: 0, end: 20).animate(controller);
+      Tween<double>(begin: 0, end: 24).animate(controller)
+        ..addListener(() {
+          setState(() {});
+        });
 
   @override
   Widget build(BuildContext context) {
@@ -167,10 +181,12 @@ class _TextAnimationState extends State<TextAnimation>
     String curText = commentList[curLength];
 
     return SizedBox(
-        width: 100,
+        width: 180,
         height: 30,
-        child: Row(children: [
-          Text(style: TextStyle(fontSize: 15), '${curText}'),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              '${curText}'),
           Container(
               width: 7, height: 20, color: state ? Colors.grey : Colors.black)
         ]));

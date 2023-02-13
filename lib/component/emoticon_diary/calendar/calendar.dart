@@ -91,7 +91,7 @@ class _CalendarState extends State<Calendar> {
         headerStyle: HeaderStyle(
           headerPadding: EdgeInsets.all(24),
           headerMargin:
-              EdgeInsets.only(left: 60, top: 10, right: 60, bottom: 0),
+              EdgeInsets.only(left: 62, top: 10, right: 62, bottom: 0),
           titleCentered: true,
           formatButtonVisible: false,
           leftChevronIcon: IconButton(

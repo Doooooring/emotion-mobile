@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import "../../common/loading.dart";
+import "../../common/loading_proto.dart";
 import 'emotion_chart.dart';
 import 'emotion_handle_button.dart';
 import 'emotion_head.dart';

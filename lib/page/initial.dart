@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import "../component/common/bottom_bar.dart";
-import "../component/common/loading.dart";
+import "../component/common/loading_proto.dart";
 
 class InitialPage extends StatelessWidget {
   const InitialPage({Key? key}) : super(key: key);

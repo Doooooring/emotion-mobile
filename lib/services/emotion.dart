@@ -83,9 +83,7 @@ class EmotionServices {
       }
       bool response = await repository.patchDiary(id, null, emotion, "emotion");
       if (response) {
-        log("herhes");
         String today = dateSelected.day.toString();
-        log(today);
         setCurDate(today, null, null, emotion);
         setEmotionSelectorUp(false);
         setInputEmotionUp(false);

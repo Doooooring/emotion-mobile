@@ -36,8 +36,8 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
     Map curInfo = curDates[curDate.day.toString()];
     int? curId = curInfo['id'];
 
-    return IconButton(
-        icon: const Icon(Icons.send),
+    return TextButton(
+        child: const Text("SAVE"),
         onPressed: () async {
           widget.setIsChanged(false);
           EmotionService.saveDiaryText(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import "../../common/loading_proto.dart";
 import 'emotion_chart.dart';
-import 'emotion_handle_button.dart';
 import 'emotion_head.dart';
 import 'emotion_input.dart';
 
@@ -17,10 +16,10 @@ class EmotionWrapper extends StatefulWidget {
       required this.setEmotionSelectorUp,
       required this.setCurTempEmotion})
       : super(key: key);
-  final TextEditingController textController;
   final Map curDates;
-  final void Function(bool) setInputEmotionUp;
   final DateTime dateSelected;
+  final TextEditingController textController;
+  final void Function(bool) setInputEmotionUp;
   final void Function(String, int?, String?, String?) setCurDate;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(String?) setCurTempEmotion;
@@ -76,6 +75,13 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                   SizedBox(height: 30),
                   EmotionHead(
                       date: widget.dateSelected,
+                      curDates: widget.curDates,
+                      inputText: inputText,
+                      dateSelected: widget.dateSelected,
+                      setIsLoading: setIsLoading,
+                      setCurDate: widget.setCurDate,
+                      setCurTempEmotion: widget.setCurTempEmotion,
+                      setEmotionSelectorUp: widget.setEmotionSelectorUp,
                       setIsChanged: setIsChanged,
                       setInputEmotionUp: widget.setInputEmotionUp),
                   SizedBox(height: 30),
@@ -95,21 +101,6 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                           setInputText: setInputText,
                           setIsChanged: setIsChanged)
                     ]),
-                  ),
-                  SizedBox(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          EmotionHandleButton(
-                              curDates: widget.curDates,
-                              inputText: inputText,
-                              dateSelected: widget.dateSelected,
-                              setIsLoading: setIsLoading,
-                              setCurDate: widget.setCurDate,
-                              setIsChanged: setIsChanged,
-                              setCurTempEmotion: widget.setCurTempEmotion,
-                              setEmotionSelectorUp: widget.setEmotionSelectorUp)
-                        ]),
                   )
                 ]),
                 Loading(isLoading: isLoading, height: 800),

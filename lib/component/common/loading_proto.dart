@@ -101,10 +101,15 @@ Container ProgressIndicator(double animationValue, bool isLoading) {
     "excited3",
     "content3",
     "angry2",
-    "goodSurprised2"
+    "goodSurprised2",
+    "anticipate1",
+    "anticipate2",
+    "bored3",
+    "bored2",
+    "happy2"
   ];
 
-  int idx = (animationValue / 60).floor() % 6;
+  int idx = (animationValue / 60).floor() % 11;
 
   String curEmotion = 'assets/images/${emotionList[idx]}.png';
 
@@ -164,7 +169,7 @@ class _TextAnimationState extends State<TextAnimation>
       AnimationController(vsync: this, duration: Duration(milliseconds: 1800))
         ..repeat(reverse: false);
   late Animation<double> animation =
-      Tween<double>(begin: 0, end: 24).animate(controller)
+      Tween<double>(begin: 0, end: 25).animate(controller)
         ..addListener(() {
           if (mounted) {
             setState(() {});

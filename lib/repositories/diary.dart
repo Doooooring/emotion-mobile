@@ -1,5 +1,4 @@
 import 'dart:convert';
-import "dart:developer";
 
 import 'package:http/http.dart' as http;
 
@@ -36,10 +35,6 @@ class DiaryRepositories {
   // }
   // }
   postDiary(DateTime date, String text) async {
-    log(date.year.toString());
-    log(date.month.toString());
-    log("herher");
-    log(text);
     Uri endPoint = Uri.parse('$HOST_URL/diary');
     var bodyEncoded = json.encode({
       "year": date.year,
@@ -52,7 +47,6 @@ class DiaryRepositories {
         body: bodyEncoded, headers: {"Content-Type": "application/json"});
 
     dynamic result = json.decode(response.body);
-    log(result.toString());
     return result["result"];
   }
 

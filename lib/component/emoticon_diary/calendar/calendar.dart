@@ -40,7 +40,7 @@ class Calendar extends StatefulWidget {
   final TextEditingController textEditController;
   final void Function(DateTime) setDateSelected;
   final void Function(bool) setInputEmotionUp;
-  final void Function(Map) setCurDateAll;
+  final void Function(Map<String, Map>) setCurDateAll;
   final void Function(bool) setIsLoading;
   final Map curDates;
 

@@ -31,7 +31,7 @@ class EmotionHead extends StatefulWidget {
       required this.setInputEmotionUp})
       : super(key: key);
   final DateTime date;
-  final Map curDates;
+  final Map<String, Map> curDates;
   final String inputText;
   final DateTime dateSelected;
   final void Function(bool) setIsLoading;

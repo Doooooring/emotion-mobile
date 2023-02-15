@@ -5,11 +5,14 @@ import "../repositories/diary.dart";
 DiaryRepositories repository = new DiaryRepositories();
 
 class EmotionServices {
-  void getEmotionMonth(int year, int month, void Function(Map) setCurDateAll,
+  void getEmotionMonth(
+      int year,
+      int month,
+      void Function(Map<String, Map>) setCurDateAll,
       void Function(bool) setIsLoading) async {
     setIsLoading(false);
     try {
-      Map result = await repository.getDiaryMonth(year, month);
+      Map<String, Map> result = await repository.getDiaryMonth(year, month);
       if (result["success"] == false) {
         Error();
       }

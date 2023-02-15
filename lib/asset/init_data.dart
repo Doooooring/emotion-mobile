@@ -1,4 +1,4 @@
-Map InitDate = {
+Map<String, Map> InitDate = {
   '1': {'id': null, 'emotion': null, 'content': null},
   '2': {
     'id': null,

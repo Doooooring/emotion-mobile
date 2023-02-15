@@ -16,7 +16,7 @@ class EmotionWrapper extends StatefulWidget {
       required this.setEmotionSelectorUp,
       required this.setCurTempEmotion})
       : super(key: key);
-  final Map curDates;
+  final Map<String, Map> curDates;
   final DateTime dateSelected;
   final TextEditingController textController;
   final void Function(bool) setInputEmotionUp;

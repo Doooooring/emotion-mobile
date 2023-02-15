@@ -41,8 +41,8 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
-  Map curDates = InitDate;
-  void setCurDatesAll(Map Dates) {
+  Map<String, Map> curDates = InitDate;
+  void setCurDatesAll(Map<String, Map> Dates) {
     setState(() {
       curDates = Dates;
     });
@@ -51,15 +51,15 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
   void setCurDate(String day, int? id, String? text, String? emotion) {
     setState(() {
       if (id != null) {
-        curDates[day]["id"] = id;
+        curDates[day]?["id"] = id;
       }
       if (text != null) {
         log(curDates.toString());
-        curDates[day]["content"] = text;
+        curDates[day]?["content"] = text;
         log(curDates.toString());
       }
       if (emotion != null) {
-        curDates[day]["emotion"] = emotion;
+        curDates[day]?["emotion"] = emotion;
       }
     });
   }

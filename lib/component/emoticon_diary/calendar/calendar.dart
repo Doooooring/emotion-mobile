@@ -1,5 +1,3 @@
-import "dart:developer";
-
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -42,7 +40,7 @@ class Calendar extends StatefulWidget {
   final void Function(bool) setInputEmotionUp;
   final void Function(Map<String, Map>) setCurDateAll;
   final void Function(bool) setIsLoading;
-  final Map curDates;
+  final Map<String, Map> curDates;
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -72,7 +70,6 @@ class _CalendarState extends State<Calendar> {
         rowHeight: 60,
         onDaySelected: (selectedDay, focusedDay) {
           if (selectedDay.month != focusedDay.month) {
-            log("here");
             return;
           }
           if (selectedDay.isAfter(DateTime.now())) {
@@ -82,14 +79,14 @@ class _CalendarState extends State<Calendar> {
           // String ymd = dayToArray[0];
           // String dateInForm = getDate(ymd);
 
-          Map curInfo = widget.curDates[selectedDay.day.toString()];
+          Map curInfo = widget.curDates[selectedDay.day.toString()] ?? {};
           String diaryContent = curInfo["content"] ?? "";
 
           widget.textEditController.text = diaryContent;
           widget.setDateSelected(selectedDay);
         },
         headerStyle: HeaderStyle(
-          headerPadding: EdgeInsets.all(24),
+          headerPadding: EdgeInsets.all(20),
           headerMargin:
               EdgeInsets.only(left: 62, top: 10, right: 62, bottom: 0),
           titleCentered: true,

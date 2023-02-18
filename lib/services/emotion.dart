@@ -10,12 +10,8 @@ class EmotionServices {
       int month,
       void Function(Map<String, Map>) setCurDateAll,
       void Function(bool) setIsLoading) async {
-    setIsLoading(false);
     try {
       Map<String, Map> result = await repository.getDiaryMonth(year, month);
-      if (result["success"] == false) {
-        Error();
-      }
       setCurDateAll(result);
       setIsLoading(true);
     } catch (e) {

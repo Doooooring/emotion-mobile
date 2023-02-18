@@ -31,3 +31,4 @@ class EmotionResult {
   final double? sentimentalLevel;
   final String? recommend;
 }
+

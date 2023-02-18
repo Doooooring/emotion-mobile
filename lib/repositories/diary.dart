@@ -16,15 +16,14 @@ class DiaryRepositories {
   // }
   //}
 
-  getDiaryMonth(int year, int month) async {
+  Future<Map<String, Map>> getDiaryMonth(int year, int month) async {
     Uri endPoint =
         Uri.parse('$HOST_URL/diary/month?year=${year}&month=${month}');
 
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
-    Map result = json.decode(response.body);
-
-    return result["result"];
+    dynamic result = json.decode(response.body);
+    return Map<String, Map>.from(result["result"]);
   }
 
   // return {"success": true,
@@ -34,7 +33,7 @@ class DiaryRepositories {
   // "tempEmotion": string
   // }
   // }
-  postDiary(DateTime date, String text) async {
+  Future<Map> postDiary(DateTime date, String text) async {
     Uri endPoint = Uri.parse('$HOST_URL/diary');
     var bodyEncoded = json.encode({
       "year": date.year,
@@ -47,7 +46,7 @@ class DiaryRepositories {
         body: bodyEncoded, headers: {"Content-Type": "application/json"});
 
     dynamic result = json.decode(response.body);
-    return result["result"];
+    return Map.from(result["result"]);
   }
 
   // case1

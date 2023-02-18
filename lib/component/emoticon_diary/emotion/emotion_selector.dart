@@ -153,10 +153,10 @@ List<Widget> EmoticonList(
     return [];
   }
   List<String> curList = [
-    '${emotion}1',
-    '${emotion}2',
-    '${emotion}3',
-    '${emotion}4'
+    '${emotion}-1',
+    '${emotion}-2',
+    '${emotion}-3',
+    '${emotion}-4'
   ];
   List<Widget> curWidgets = [];
   for (String str in curList) {

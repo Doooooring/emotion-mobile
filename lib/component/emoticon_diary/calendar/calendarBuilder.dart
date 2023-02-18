@@ -61,7 +61,8 @@ SizedBox buildCalendarDay({
               ])));
 }
 
-CalendarBuilders calendarBuilders(Map curDates, setCurDateAll, setIsLoading) {
+CalendarBuilders calendarBuilders(Map<String, Map> curDates,
+    Function(Map<String, Map>) setCurDateAll, Function(bool) setIsLoading) {
   return CalendarBuilders(selectedBuilder: (context, date, _) {
     String day = date.day.toString();
     Map info = curDates[day] ?? {"id": null, "emotion": null, "content": null};

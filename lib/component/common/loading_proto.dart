@@ -1,4 +1,4 @@
-import "dart:developer";
+import "dart:math";
 
 import 'package:flutter/material.dart';
 
@@ -66,14 +66,17 @@ class _ProgressIndicatorWrapperState extends State<ProgressIndicatorWrapper>
     with TickerProviderStateMixin {
   late AnimationController controller =
       AnimationController(vsync: this, duration: Duration(seconds: 10))
-        ..repeat(reverse: false);
+        ..repeat(reverse: false)
+        ..addListener(_listener);
+
+  void _listener() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   late Animation<double> animation =
-      Tween<double>(begin: 0, end: 600).animate(controller)
-        ..addListener(() {
-          if (mounted) {
-            setState(() {});
-          }
-        });
+      Tween<double>(begin: 0, end: 600).animate(controller);
 
   @override
   void initState() {
@@ -82,6 +85,7 @@ class _ProgressIndicatorWrapperState extends State<ProgressIndicatorWrapper>
 
   @override
   void dispose() {
+    controller.removeListener(_listener);
     controller.dispose();
     super.dispose();
   }
@@ -109,15 +113,13 @@ Container ProgressIndicator(double animationValue, bool isLoading) {
     "happy2"
   ];
 
-  int idx = (animationValue / 60).floor() % 11;
-
-  String curEmotion = 'assets/images/${emotionList[idx]}.png';
-
   int iteration = (animationValue / 60).floor();
 
-  double height = (animationValue - 60 * iteration - 30).abs();
+  int idx = iteration % 11;
+  String curEmotion = 'assets/images/${emotionList[idx]}.png';
 
-  log(height.toString());
+  double height = -1 *
+      (10 - (pow(animationValue - 60 * iteration - 30, 2)) / 30).toDouble();
 
   return Container(
       child: Transform.translate(
@@ -168,13 +170,22 @@ class _TextAnimationState extends State<TextAnimation>
   late AnimationController controller =
       AnimationController(vsync: this, duration: Duration(milliseconds: 1800))
         ..repeat(reverse: false);
-  late Animation<double> animation =
-      Tween<double>(begin: 0, end: 25).animate(controller)
-        ..addListener(() {
-          if (mounted) {
-            setState(() {});
-          }
-        });
+  late Animation<double> animation = Tween<double>(begin: 0, end: 25)
+      .animate(controller)
+    ..addListener(_listener);
+
+  void _listener() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(_listener);
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

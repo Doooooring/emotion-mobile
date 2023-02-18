@@ -42,6 +42,8 @@ dependencies:
   speech_to_text: ^6.1.1
   youtube_player_flutter: ^8.1.2
   toast: ^0.3.0
+  socket_io_client: ^2.0.1
+  flutter_webrtc: ^0.9.23
 
 dev_dependencies:
   flutter_test:
@@ -68,58 +70,58 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/question.jpeg
-    - assets/images/angry1.png
-    - assets/images/angry2.png
-    - assets/images/angry3.png
-    - assets/images/angry4.png
-    - assets/images/anticipate1.png
-    - assets/images/anticipate2.png
-    - assets/images/anticipate3.png
-    - assets/images/anticipate4.png
-    - assets/images/bored1.png
-    - assets/images/bored2.png
-    - assets/images/bored3.png
-    - assets/images/bored4.png
-    - assets/images/calm1.png
-    - assets/images/calm2.png
-    - assets/images/calm3.png
-    - assets/images/calm4.png
-    - assets/images/content1.png
-    - assets/images/content2.png
-    - assets/images/content3.png
-    - assets/images/content4.png
-    - assets/images/excited1.png
-    - assets/images/excited2.png
-    - assets/images/excited3.png
-    - assets/images/excited4.png
-    - assets/images/happy1.png
-    - assets/images/happy2.png
-    - assets/images/happy3.png
-    - assets/images/happy4.png
-    - assets/images/relaxed1.png
-    - assets/images/relaxed2.png
-    - assets/images/relaxed3.png
-    - assets/images/relaxed4.png
-    - assets/images/sad1.png
-    - assets/images/sad2.png
-    - assets/images/sad3.png
-    - assets/images/sad4.png
-    - assets/images/badSurprised1.png
-    - assets/images/badSurprised2.png
-    - assets/images/badSurprised3.png
-    - assets/images/badSurprised4.png
-    - assets/images/goodSurprised1.png
-    - assets/images/goodSurprised2.png
-    - assets/images/goodSurprised3.png
-    - assets/images/goodSurprised4.png
-    - assets/images/tense1.png
-    - assets/images/tense2.png
-    - assets/images/tense3.png
-    - assets/images/tense4.png
-    - assets/images/tired1.png
-    - assets/images/tired2.png
-    - assets/images/tired3.png
-    - assets/images/tired4.png
+    - assets/images/angry-1.png
+    - assets/images/angry-2.png
+    - assets/images/angry-3.png
+    - assets/images/angry-4.png
+    - assets/images/anticipate-1.png
+    - assets/images/anticipate-2.png
+    - assets/images/anticipate-3.png
+    - assets/images/anticipate-4.png
+    - assets/images/bored-1.png
+    - assets/images/bored-2.png
+    - assets/images/bored-3.png
+    - assets/images/bored-4.png
+    - assets/images/calm-1.png
+    - assets/images/calm-2.png
+    - assets/images/calm-3.png
+    - assets/images/calm-4.png
+    - assets/images/content-1.png
+    - assets/images/content-2.png
+    - assets/images/content-3.png
+    - assets/images/content-4.png
+    - assets/images/excited-1.png
+    - assets/images/excited-2.png
+    - assets/images/excited-3.png
+    - assets/images/excited-4.png
+    - assets/images/happy-1.png
+    - assets/images/happy-2.png
+    - assets/images/happy-3.png
+    - assets/images/happy-4.png
+    - assets/images/relaxed-1.png
+    - assets/images/relaxed-2.png
+    - assets/images/relaxed-3.png
+    - assets/images/relaxed-4.png
+    - assets/images/sad-1.png
+    - assets/images/sad-2.png
+    - assets/images/sad-3.png
+    - assets/images/sad-4.png
+    - assets/images/badSurprised-1.png
+    - assets/images/badSurprised-2.png
+    - assets/images/badSurprised-3.png
+    - assets/images/badSurprised-4.png
+    - assets/images/goodSurprised-1.png
+    - assets/images/goodSurprised-2.png
+    - assets/images/goodSurprised-3.png
+    - assets/images/goodSurprised-4.png
+    - assets/images/tense-1.png
+    - assets/images/tense-2.png
+    - assets/images/tense-3.png
+    - assets/images/tense-4.png
+    - assets/images/tired-1.png
+    - assets/images/tired-2.png
+    - assets/images/tired-3.png
+    - assets/images/tired-4.png
     - assets/images/ico_close.png
     - assets/images/ico_close@2x.png
     - assets/images/mean.png
@@ -129,6 +131,7 @@ flutter:
     - assets/images/needle.png
     - assets/images/levelBoard.png
     - assets/images/sentimentalLevelBoard.png
+    - assets/images/alert.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

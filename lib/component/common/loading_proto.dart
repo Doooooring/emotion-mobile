@@ -1,4 +1,5 @@
 import "dart:math";
+import "dart:ui";
 
 import 'package:flutter/material.dart';
 
@@ -19,34 +20,39 @@ class _LoadingState extends State<Loading> {
       return Container(height: 0);
     }
 
-    return Container(
-      width: double.infinity,
-      height: widget.height,
-      child: Offstage(
-          offstage: widget.isLoading,
-          child: Stack(children: <Widget>[
-            Opacity(
-              opacity: 0.1,
-              child: ModalBarrier(dismissible: false, color: Colors.black),
-            ),
-            Center(
-                child: Stack(children: [
-              Container(
-                  width: 200,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ProgressIndicatorWrapper(isLoading: widget.isLoading),
-                      SizedBox(height: 20),
-                      TextAnimation(isLoading: widget.isLoading)
-                    ],
-                  ))
-            ]))
-          ])),
+    return ClipRRect(
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          width: double.infinity,
+          height: widget.height,
+          child: Offstage(
+              offstage: widget.isLoading,
+              child: Stack(children: <Widget>[
+                Opacity(
+                  opacity: 0.1,
+                  child: ModalBarrier(dismissible: false, color: Colors.black),
+                ),
+                Center(
+                    child: Stack(children: [
+                  Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ProgressIndicatorWrapper(isLoading: widget.isLoading),
+                          SizedBox(height: 20),
+                          TextAnimation(isLoading: widget.isLoading)
+                        ],
+                      ))
+                ]))
+              ])),
+        ),
+      ),
     );
   }
 }
@@ -100,17 +106,17 @@ class _ProgressIndicatorWrapperState extends State<ProgressIndicatorWrapper>
 
 Container ProgressIndicator(double animationValue, bool isLoading) {
   List<String> emotionList = [
-    "happy1",
-    "calm1",
-    "excited3",
-    "content3",
-    "angry2",
-    "goodSurprised2",
-    "anticipate1",
-    "anticipate2",
-    "bored3",
-    "bored2",
-    "happy2"
+    "happy-1",
+    "calm-1",
+    "excited-3",
+    "content-3",
+    "angry-2",
+    "goodSurprised-2",
+    "anticipate-1",
+    "anticipate-2",
+    "bored-3",
+    "bored-2",
+    "happy-2"
   ];
 
   int iteration = (animationValue / 60).floor();

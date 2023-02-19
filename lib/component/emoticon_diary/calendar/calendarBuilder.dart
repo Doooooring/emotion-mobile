@@ -1,3 +1,5 @@
+import "dart:developer";
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -32,11 +34,17 @@ SizedBox buildCalendarDay({
   required String imoticon,
   required Color back,
 }) {
-  Color fontBackground = isToday
-      ? Color(0xff65B1EF)
-      : id == null
-          ? Colors.white
-          : Color(0xffFFF6DA);
+  Color fontBackground = selected
+      ? Colors.red
+      : isToday
+          ? Color(0xff65B1EF)
+          : id == null
+              ? Colors.white
+              : Color(0xffFFF6DA);
+  if (selected) {
+    log("is here");
+    log(selected.toString());
+  }
   Color fontColor = isToday ? Colors.white : Colors.black;
 
   if (outSide) {

@@ -1,3 +1,5 @@
+import "dart:developer";
+
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -68,6 +70,13 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return TableCalendar(
         rowHeight: 60,
+        selectedDayPredicate: (selectedDay) {
+          bool state = (selectedDay.year == focusedYear) &
+                  (selectedDay.month == focusedMonth) &&
+              (selectedDay.day == focusedDay);
+          log(state.toString());
+          return state;
+        },
         onDaySelected: (selectedDay, focusedDay) {
           if (selectedDay.month != focusedDay.month) {
             return;
@@ -84,6 +93,9 @@ class _CalendarState extends State<Calendar> {
 
           widget.textEditController.text = diaryContent;
           widget.setDateSelected(selectedDay);
+          setFocusedYear(selectedDay.year);
+          setFocusedMonth(selectedDay.month);
+          setFocusedDay(selectedDay.day);
         },
         headerStyle: HeaderStyle(
           headerPadding: EdgeInsets.all(20),
@@ -101,7 +113,7 @@ class _CalendarState extends State<Calendar> {
                 }
 
                 widget.setDateSelected(DateTime.parse(
-                    '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay}'));
+                    '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay.toString().padLeft(2, '0')}'));
 
                 emotionServices.getEmotionMonth(focusedYear, focusedMonth,
                     widget.setCurDateAll, widget.setIsLoading);
@@ -120,7 +132,7 @@ class _CalendarState extends State<Calendar> {
                 }
 
                 widget.setDateSelected(DateTime.parse(
-                    '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay}'));
+                    '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay.toString().padLeft(2, '0')}'));
                 emotionServices.getEmotionMonth(focusedYear, focusedMonth,
                     widget.setCurDateAll, widget.setIsLoading);
               },

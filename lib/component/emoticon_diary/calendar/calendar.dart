@@ -1,8 +1,8 @@
 import "dart:developer";
 
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 
+import ',./../../../../table-calendar/table_calendar.dart';
 import "./calendarBuilder.dart";
 
 dynamic getDate(date) {

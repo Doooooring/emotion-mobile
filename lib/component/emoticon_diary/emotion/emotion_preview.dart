@@ -95,8 +95,8 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
         id == null ? Color.fromRGBO(250, 250, 250, 0.2) : Color(0xffFFF6DA);
 
     return Container(
+      padding: EdgeInsets.only(bottom: 30),
       width: 400,
-      height: 180,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           boxShadow: [

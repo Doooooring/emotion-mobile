@@ -102,74 +102,81 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
               style: TextStyle(
                 fontSize: 30,
               ))),
-      body: Wrap(children: [
-        Container(
-          child: Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.only(left: 20, right: 20),
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 30,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        physics: ClampingScrollPhysics(),
+        child: SizedBox(
+          height: 800,
+          child: Wrap(children: [
+            Container(
+              child: Stack(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    padding: EdgeInsets.only(left: 20, right: 20),
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Calendar(
+                          textEditController: controller,
+                          curDates: curDates,
+                          setDateSelected: setDateSelected,
+                          setInputEmotionUp: setInputEmotionUp,
+                          setCurDateAll: setCurDatesAll,
+                          setIsLoading: setIsLoading,
+                        ),
+                        SizedBox(height: 20),
+                        EmotionPreview(
+                            curDates: curDates,
+                            dateSelected: dateSelected,
+                            setInputEmotionUp: setInputEmotionUp,
+                            setEmotionSelectorUp: setEmotionSelectorUp,
+                            setNavBarUp: setNavBarUp)
+                      ],
                     ),
-                    Calendar(
-                      textEditController: controller,
+                  ),
+                  AnimatedPositioned(
+                    duration: const Duration(milliseconds: 200),
+                    child: input_emotion.EmotionWrapper(
+                      textController: controller,
                       curDates: curDates,
-                      setDateSelected: setDateSelected,
+                      dateSelected: dateSelected,
+                      setCurDate: setCurDate,
                       setInputEmotionUp: setInputEmotionUp,
-                      setCurDateAll: setCurDatesAll,
-                      setIsLoading: setIsLoading,
+                      setCurTempEmotion: setCurTempEmotion,
+                      setEmotionSelectorUp: setEmotionSelectorUp,
                     ),
-                    SizedBox(height: 20),
-                    EmotionPreview(
-                        curDates: curDates,
-                        dateSelected: dateSelected,
-                        setInputEmotionUp: setInputEmotionUp,
-                        setEmotionSelectorUp: setEmotionSelectorUp,
-                        setNavBarUp: setNavBarUp)
-                  ],
-                ),
+                    width: 430,
+                    left: 0,
+                    top: inputEmotionUp ? 70 : 800,
+                  ),
+                  AnimatedPositioned(
+                    duration: const Duration(milliseconds: 200),
+                    child: SelectorWrapper(
+                      setNavBarUp: setNavBarUp,
+                      date: dateSelected,
+                      tempEmotion: curTempEmotion,
+                      curDates: curDates,
+                      setCurDate: setCurDate,
+                      emotionSelectorUp: emotionSelectorUp,
+                      setInputEmotionUp: setInputEmotionUp,
+                      setEmotionSelectorUp: setEmotionSelectorUp,
+                    ),
+                    width: 430,
+                    height: 800,
+                    left: 0,
+                    top: emotionSelectorUp ? 70 : 800,
+                  ),
+                ],
               ),
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 200),
-                child: input_emotion.EmotionWrapper(
-                  textController: controller,
-                  curDates: curDates,
-                  dateSelected: dateSelected,
-                  setCurDate: setCurDate,
-                  setInputEmotionUp: setInputEmotionUp,
-                  setCurTempEmotion: setCurTempEmotion,
-                  setEmotionSelectorUp: setEmotionSelectorUp,
-                ),
-                width: 430,
-                left: 0,
-                top: inputEmotionUp ? 70 : 800,
-              ),
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 200),
-                child: SelectorWrapper(
-                  setNavBarUp: setNavBarUp,
-                  date: dateSelected,
-                  tempEmotion: curTempEmotion,
-                  curDates: curDates,
-                  setCurDate: setCurDate,
-                  emotionSelectorUp: emotionSelectorUp,
-                  setInputEmotionUp: setInputEmotionUp,
-                  setEmotionSelectorUp: setEmotionSelectorUp,
-                ),
-                width: 430,
-                height: 800,
-                left: 0,
-                top: emotionSelectorUp ? 70 : 800,
-              ),
-            ],
-          ),
+            ),
+          ]),
         ),
-      ]),
+      ),
       bottomNavigationBar: BottomNavBar(state: navBarUp),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: !navBarUp

@@ -56,6 +56,16 @@ class EmotionResult extends StatelessWidget {
     double rotateAngle = math.pi * (sentimentLevel - 2.5) / 5;
     return Scaffold(
       appBar: AppBar(
+          leading: IconButton(
+            icon: Row(
+              children: [
+                SizedBox(width: 15),
+                Icon(Icons.arrow_back_ios, color: Colors.black),
+              ],
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          scrolledUnderElevation: 1,
           toolbarHeight: 120,
           backgroundColor: Color(0xffFFF6DA),
           elevation: 0,
@@ -72,6 +82,7 @@ class EmotionResult extends StatelessWidget {
           ])),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
+        physics: ClampingScrollPhysics(),
         child: Container(
             width: double.infinity,
             color: Color(0xffFFF6DA),
@@ -124,7 +135,7 @@ class EmotionResult extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            SizedBox(height: 19),
+                                            SizedBox(height: 27),
                                             Container(
                                               height: 70,
                                               child: Image.asset(

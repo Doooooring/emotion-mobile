@@ -1,9 +1,7 @@
-import "dart:developer";
-
 import 'package:flutter/material.dart';
 
 import './table-calendar/table_calendar.dart';
-import '../../../asset/imoticon_url.dart';
+import '../../../asset/emoticon_url.dart';
 import "../../../services/emotion.dart";
 
 EmotionServices emotionServices = EmotionServices();
@@ -35,16 +33,12 @@ SizedBox buildCalendarDay({
   required Color back,
 }) {
   Color fontBackground = selected
-      ? Colors.red
+      ? Color.fromRGBO(255, 0, 0, 0.4)
       : isToday
           ? Color(0xff65B1EF)
           : id == null
               ? Colors.white
               : Color(0xffFFF6DA);
-  if (selected) {
-    log("is here");
-    log(selected.toString());
-  }
   Color fontColor = isToday ? Colors.white : Colors.black;
 
   if (outSide) {
@@ -53,14 +47,14 @@ SizedBox buildCalendarDay({
 
   return SizedBox(
       child: Container(
-          padding: EdgeInsets.only(left: 5, top: 0, right: 5, bottom: 0),
+          padding: EdgeInsets.only(left: 5, top: 5, right: 5, bottom: 0),
           decoration: BoxDecoration(
               color: back, borderRadius: BorderRadius.circular(10)),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(width: 30, imoticon),
+                Image.asset(width: 25, imoticon),
                 Container(
                     padding: EdgeInsets.all(5),
                     decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -16,6 +17,10 @@ class CalendarHeader extends StatelessWidget {
   final HeaderStyle headerStyle;
   final VoidCallback onLeftChevronTap;
   final VoidCallback onRightChevronTap;
+  final Function(int difference) headerChange; //refactor
+  final Function(
+    int year,
+  ) setByYear;
   final VoidCallback onHeaderTap;
   final VoidCallback onHeaderLongPress;
   final ValueChanged<CalendarFormat> onFormatButtonTap;
@@ -30,6 +35,8 @@ class CalendarHeader extends StatelessWidget {
     required this.headerStyle,
     required this.onLeftChevronTap,
     required this.onRightChevronTap,
+    required this.headerChange, //set header change by dropdown
+    required this.setByYear, //refactor
     required this.onHeaderTap,
     required this.onHeaderLongPress,
     required this.onFormatButtonTap,
@@ -64,7 +71,10 @@ class CalendarHeader extends StatelessWidget {
                     onTap: onHeaderTap,
                     onLongPress: onHeaderLongPress,
                     child: Column(children: [
-                      Text(Year),
+                      YearButton(
+                          year: Year,
+                          headerChange: headerChange,
+                          setByYear: setByYear),
                       Text(
                         Month,
                         style: TextStyle(fontSize: 25),
@@ -95,5 +105,95 @@ class CalendarHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+List<int> YearList = [
+  1980,
+  1981,
+  1982,
+  1983,
+  1984,
+  1985,
+  1986,
+  1987,
+  1988,
+  1989,
+  1990,
+  1991,
+  1992,
+  1993,
+  1994,
+  1995,
+  1996,
+  1997,
+  1998,
+  1999,
+  2000,
+  2001,
+  2002,
+  2003,
+  2004,
+  2005,
+  2006,
+  2007,
+  2008,
+  2009,
+  2010,
+  2011,
+  2012,
+  2013,
+  2014,
+  2015,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023
+];
+
+class YearButton extends StatefulWidget {
+  const YearButton(
+      {Key? key,
+      required this.year,
+      required this.headerChange,
+      required this.setByYear})
+      : super(key: key);
+
+  final String year;
+  final Function(int) headerChange;
+  final Function(int year) setByYear;
+
+  @override
+  State<YearButton> createState() => _YearButtonState();
+}
+
+class _YearButtonState extends State<YearButton> {
+  @override
+  Widget build(BuildContext context) {
+    String dropDownValue = widget.year;
+
+    return DropdownButton(
+        menuMaxHeight: 150,
+        value: dropDownValue,
+        items: YearList.map((year) {
+          return DropdownMenuItem(
+              value: year.toString(), child: Text(year.toString()));
+        }).toList(),
+        onChanged: (value) {
+          if (value == null) {
+            return;
+          }
+          int curYear = int.parse(dropDownValue);
+          int nextYear = int.parse(value);
+          widget.headerChange(nextYear - curYear);
+          widget.setByYear(nextYear);
+          setState(() {
+            dropDownValue = value;
+          });
+        });
   }
 }

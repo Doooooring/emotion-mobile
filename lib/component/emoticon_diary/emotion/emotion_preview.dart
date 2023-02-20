@@ -262,8 +262,9 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
                         date: response["date"],
                         emotion: response["emotion"],
                         emotionText: response["emotionText"],
-                        sentimentLevel: response["sentimentalLevel"],
-                        recommend: response["recommend"])));
+                        sentimentLevel: response["sentimentLevel"],
+                        videoUrl: response["videoUrl"],
+                        title: response["title"])));
           }
         },
         itemBuilder: (BuildContext context) => [

@@ -36,7 +36,7 @@ class PlayerState extends State<Player> {
   @override
   Widget build(BuildContext context) {
     return YoutubePlayer(
-      width: 320,
+      width: 250,
       key: ObjectKey(_controller),
       controller: _controller,
       actionsPadding: const EdgeInsets.only(left: 16.0),

@@ -118,16 +118,19 @@ class EmotionServices {
     DateTime dateSelected,
   ) async {
     Map response = await repository.getDiaryResult(id);
+    log(response.toString());
     String emotion = response["emotion"];
     String emotionText = response["emotionText"];
-    double sentimentLevel = response["sentimentalLevel"];
-    String recommend = response["recommend"];
+    double sentimentLevel = response["sentimentLevel"];
+    String videoUrl = response["videoUrl"];
+    String title = response["title"];
     return {
       "date": dateSelected,
       "emotion": emotion,
       "emotionText": emotionText,
       "sentimentLevel": sentimentLevel,
-      "recommend": recommend
+      "videoUrl": videoUrl,
+      "title": title
     };
   }
 }

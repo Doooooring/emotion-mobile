@@ -204,6 +204,9 @@ class TableCalendar<T> extends StatefulWidget {
   /// Called when the calendar is created. Exposes its PageController.
   final void Function(PageController pageController)? onCalendarCreated;
 
+  /// set year of focused day when push the year dropdown button;
+  final void Function(int year) setByYear; //
+
   /// Creates a `TableCalendar` widget.
   TableCalendar({
     Key? key,
@@ -211,6 +214,7 @@ class TableCalendar<T> extends StatefulWidget {
     required DateTime firstDay,
     required DateTime lastDay,
     DateTime? currentDay,
+    required this.setByYear,
     this.locale,
     this.rangeStartDay,
     this.rangeEndDay,
@@ -445,6 +449,13 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
     );
   }
 
+  void _headerChange(int difference) {
+    _pageController.moveByYear(
+        difference: difference,
+        duration: widget.pageAnimationDuration,
+        curve: widget.pageAnimationCurve);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -458,6 +469,8 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                 focusedMonth: value,
                 onLeftChevronTap: _onLeftChevronTap,
                 onRightChevronTap: _onRightChevronTap,
+                headerChange: _headerChange, //refactor
+                setByYear: widget.setByYear, //refactor
                 onHeaderTap: () => widget.onHeaderTapped?.call(value),
                 onHeaderLongPress: () =>
                     widget.onHeaderLongPressed?.call(value),

@@ -22,7 +22,7 @@ class DiaryRepositories {
 
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
-    dynamic result = json.decode(response.body);
+    dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return Map<String, Map>.from(result["result"]);
   }
 
@@ -45,7 +45,7 @@ class DiaryRepositories {
     http.Response response = await http.post(endPoint,
         body: bodyEncoded, headers: {"Content-Type": "application/json"});
 
-    dynamic result = json.decode(response.body);
+    dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return Map.from(result["result"]);
   }
 
@@ -78,7 +78,7 @@ class DiaryRepositories {
     http.Response response = await http.patch(endPoint,
         body: bodyEncoded, headers: {"Content-Type": "application/json"});
 
-    dynamic result = json.decode(response.body);
+    dynamic result = json.decode(utf8.decode(response.bodyBytes));
 
     return type == "content" ? result["result"] : result["success"];
   }
@@ -94,7 +94,7 @@ class DiaryRepositories {
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
 
-    dynamic result = json.decode(response.body);
+    dynamic result = json.decode(utf8.decode(response.bodyBytes));
 
     return result["result"];
   }
@@ -107,17 +107,17 @@ class DiaryRepositories {
 //      "emotion" : string,
 //      "emotionText" : string,
 //      "sentimentalLevel" : float,
-//      "recommend" : string
+//      "title" : string,
+//      "videoUrl" : string
 //      }
 //   }
 
   getDiaryResult(int? id) async {
     Uri endPoint = Uri.parse('$HOST_URL/diary/result/${id}');
-
     http.Response response =
         await http.get(endPoint, headers: {"Content-Type": "application/json"});
 
-    dynamic result = json.decode(response.body);
+    dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return result["result"];
   }
 }

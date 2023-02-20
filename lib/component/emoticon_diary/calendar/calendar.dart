@@ -1,5 +1,3 @@
-import "dart:developer";
-
 import 'package:flutter/material.dart';
 
 import "./calendarBuilder.dart";
@@ -68,13 +66,21 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    void setByYear(int year) async {
+      setFocusedYear(year);
+      widget.setDateSelected(DateTime.parse(
+          '${year}${focusedMonth.toString().padLeft(2, '0')}01'));
+      emotionServices.getEmotionMonth(
+          year, focusedMonth, widget.setCurDateAll, widget.setIsLoading);
+    }
+
     return TableCalendar(
         rowHeight: 60,
+        setByYear: setByYear,
         selectedDayPredicate: (selectedDay) {
           bool state = (selectedDay.year == focusedYear) &
-                  (selectedDay.month == focusedMonth) &&
+              (selectedDay.month == focusedMonth) &
               (selectedDay.day == focusedDay);
-          log(state.toString());
           return state;
         },
         onDaySelected: (selectedDay, focusedDay) {
@@ -145,7 +151,7 @@ class _CalendarState extends State<Calendar> {
         calendarBuilders: calendarBuilders(
             widget.curDates, widget.setCurDateAll, widget.setIsLoading),
         focusedDay: DateTime.parse(
-            '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay}'),
+            '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay.toString().padLeft(2, "0")}'),
         firstDay: DateTime.utc(1998, 1, 1),
         lastDay: DateTime.utc(2023, 12, 30));
   }

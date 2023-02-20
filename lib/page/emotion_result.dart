@@ -26,14 +26,16 @@ class EmotionResult extends StatelessWidget {
       required this.emotion,
       required this.emotionText,
       required this.sentimentLevel,
-      required this.recommend})
+      required this.videoUrl,
+      required this.title})
       : super(key: key);
 
   final DateTime date;
   final String? emotion;
   final String emotionText;
   final double sentimentLevel;
-  final String recommend;
+  final String videoUrl;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -162,12 +164,30 @@ class EmotionResult extends StatelessWidget {
               Container(
                 width: 340,
                 height: 300,
-                padding: EdgeInsets.all(20),
+                padding:
+                    EdgeInsets.only(top: 25, left: 15, right: 15, bottom: 20),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(40)),
-                child: Player("aB8Xgn6JKXw"),
-              )
+                child: Column(
+                  children: [
+                    Text("Playlist for your mood",
+                        style: TextStyle(fontSize: 25)),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.music_note, size: 20, color: Colors.grey),
+                        Text(title,
+                            style: TextStyle(color: Colors.grey, fontSize: 10))
+                      ],
+                    ),
+                    SizedBox(height: 15),
+                    Player(videoUrl),
+                  ],
+                ),
+              ),
+              SizedBox(height: 300)
             ])),
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import "package:get/get.dart";
 
-import './page/baby_monitor.dart';
-import './page/emotion_diary.dart';
+import './controller/routeController.dart';
 import './page/initial.dart';
 
 const String url = "http://localhost:3000";
@@ -12,16 +12,12 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/': (context) => InitialPage(),
-        '/diary': (context) => CalendarWrapper(),
-        '/baby_monitor': (context) => BabyMonitor()
-      },
+    final RouteController routerController = Get.put(RouteController());
+    return GetMaterialApp(
+      title: "aeye",
+      home: InitialPage(),
     );
   }
 }

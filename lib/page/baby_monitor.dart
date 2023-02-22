@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
+import "package:get/get.dart";
 
 import "../component/baby_monitor/alert.dart";
+import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
+import "../controller/routeController.dart";
 
 class BabyMonitor extends StatelessWidget {
   const BabyMonitor({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final RouteController routeController = Get.find();
+
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Color(0xffFAE297),
-          elevation: 1.0,
-          title: const Text("hmm",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 30,
-              ))),
+      appBar: Header(),
       body: Wrap(children: [
         Container(child: Stack(children: [SizedBox(), Alert()]))
       ]),
@@ -28,11 +26,14 @@ class BabyMonitor extends StatelessWidget {
         child: FloatingActionButton(
             backgroundColor: Color(0xffFAE297),
             shape: const CircleBorder(),
-            onPressed: () {},
+            onPressed: () {
+              routeController.toInit();
+              Navigator.pop(context);
+            },
             child: Icon(
               Icons.house,
               size: 35,
-              color: Colors.black,
+              color: Colors.white,
             )),
       ),
     );

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import "package:get/get.dart";
 
 import "../asset/init_data.dart";
+import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
 import "../component/emoticon_diary/calendar/calendar.dart";
 import "../component/emoticon_diary/emotion/emotion.dart" as input_emotion;
 import "../component/emoticon_diary/emotion/emotion_preview.dart";
 import "../component/emoticon_diary/emotion/emotion_selector.dart";
+import "../controller/routeController.dart";
 import "../services/emotion.dart";
 
 EmotionServices emotionServices = EmotionServices();
@@ -18,6 +21,8 @@ class CalendarWrapper extends StatefulWidget {
 }
 
 class _CalendarWrapperState extends State<CalendarWrapper> {
+  final RouteController routeController = Get.find();
+
   DateTime dateSelected = DateTime.now();
   void setDateSelected(DateTime date) {
     setState(() {
@@ -94,14 +99,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Color(0xffFAE297),
-          elevation: 1.0,
-          title: const Text("hmm",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 30,
-              ))),
+      appBar: Header(),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         physics: ClampingScrollPhysics(),
@@ -187,11 +185,14 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
               child: FloatingActionButton(
                 backgroundColor: Color(0xffFAE297),
                 shape: const CircleBorder(),
-                onPressed: () {},
+                onPressed: () {
+                  routeController.toInit();
+                  Navigator.pop(context);
+                },
                 child: Icon(
                   Icons.house,
                   size: 35,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ),
             ),

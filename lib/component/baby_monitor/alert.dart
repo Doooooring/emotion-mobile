@@ -1,4 +1,3 @@
-import "dart:developer";
 import "dart:ui";
 
 import "package:flutter/material.dart";
@@ -72,11 +71,8 @@ class _AlertWrapperState extends State<AlertWrapper> {
   @override
   Widget build(BuildContext context) {
     Color viewButtonColor = isViewing ? Colors.black : Colors.white;
-    String viewImage = isViewing
-        ? "assets/images/cam(white).png"
-        : "assets/images/cam(black).png";
 
-    double alertLogoSize = isViewing ? 150 : 200;
+    double alertLogoSize = 150;
 
     return Container(
         width: double.infinity,
@@ -98,9 +94,10 @@ class _AlertWrapperState extends State<AlertWrapper> {
               ),
               SizedBox(
                   child: Column(children: [
-                Text("낙상이 감지되었습니다.", style: TextStyle(fontSize: 28)),
+                Text("It looks like your baby had a fall",
+                    style: TextStyle(fontSize: 28)),
                 SizedBox(height: 10),
-                Text("아이를 확인해주세요", style: TextStyle(fontSize: 28))
+                Text("Check on your baby!", style: TextStyle(fontSize: 20))
               ])),
               SizedBox(height: 50),
               SizedBox(),
@@ -109,13 +106,6 @@ class _AlertWrapperState extends State<AlertWrapper> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                     SizedBox(width: 90),
-                    CircleButton(
-                        backgroundColor: viewButtonColor,
-                        icon: viewImage,
-                        action: () {
-                          log(isViewing.toString());
-                          setIsViewing(!isViewing);
-                        }),
                     CircleButton(
                         backgroundColor: Colors.red,
                         icon: "assets/images/sos.png",

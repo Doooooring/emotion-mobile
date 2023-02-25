@@ -61,7 +61,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                                       IconButton(
                                           padding: EdgeInsets.all(0),
                                           onPressed: () {
-                                            if (routeController.curPath ==
+                                            if (routeController.curPath
+                                                    .toString() ==
                                                 "babyMonitor") {
                                               return;
                                             }
@@ -73,7 +74,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                                                         BabyMonitor()));
                                           },
                                           icon: Image.asset(
-                                            color: routeController.curPath ==
+                                            color: routeController.curPath
+                                                        .toString() ==
                                                     "babyMonitor"
                                                 ? Colors.black
                                                 : Colors.grey,
@@ -82,7 +84,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                                           )),
                                       Text("Baby Monitor",
                                           style: TextStyle(
-                                            color: routeController.curPath ==
+                                            color: routeController.curPath
+                                                        .toString() ==
                                                     "babyMonitor"
                                                 ? Colors.black
                                                 : Colors.grey,

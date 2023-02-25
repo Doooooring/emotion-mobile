@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
 import "../component/common/loading_proto.dart";
 
@@ -9,14 +10,7 @@ class InitialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Color(0xffFAE297),
-          elevation: 1.0,
-          title: const Text("ah",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 30,
-              ))),
+      appBar: Header(),
       body: Column(
         children: [
           Container(height: 400, child: Loading(isLoading: true, height: 100)),

@@ -1,17 +1,15 @@
-import "dart:developer";
-
 import "package:firstproject/controller/routeController.dart";
 import "package:firstproject/page/emoticon_month_result.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
-AppBar Header() {
+AppBar Header(DateTime? curDate) {
   final RouteController routeController = Get.find();
   final String curPath = routeController.curPath.toString();
 
   final String title = curPath == "emotionDiary" ? "Diary" : "Baby Monitor";
 
-  if (curPath == "init") {
+  if (curPath == "init" || curDate == null) {
     return AppBar(
         backgroundColor: Color(0xffFFF7DF),
         elevation: 0.5,
@@ -32,7 +30,10 @@ AppBar Header() {
         ),
         actions: [
           PopupMenuButton(
-            icon: Icon(Icons.keyboard_control, color: Colors.black),
+            icon: RotatedBox(
+                quarterTurns: 1,
+                child: Icon(
+                    size: 30, Icons.keyboard_control, color: Colors.black)),
             iconSize: 40,
             onSelected: (result) {},
             itemBuilder: (BuildContext context) => []
@@ -78,9 +79,14 @@ AppBar Header() {
         ),
       ),
       actions: [
-        curPath == "emotionDiary" ? MonthResultButton() : SizedBox(width: 0),
+        curPath == "emotionDiary"
+            ? MonthResultButton(curDate: curDate)
+            : SizedBox(width: 0),
         PopupMenuButton(
-          icon: Icon(Icons.keyboard_control, color: Colors.black),
+          icon: RotatedBox(
+              quarterTurns: 1,
+              child:
+                  Icon(size: 30, Icons.keyboard_control, color: Colors.black)),
           iconSize: 40,
           onSelected: (result) {},
           itemBuilder: (BuildContext context) => []
@@ -95,7 +101,9 @@ AppBar Header() {
 }
 
 class MonthResultButton extends StatefulWidget {
-  const MonthResultButton({Key? key}) : super(key: key);
+  const MonthResultButton({Key? key, required this.curDate}) : super(key: key);
+
+  final DateTime curDate;
 
   @override
   State<MonthResultButton> createState() => _MonthResultButtonState();
@@ -104,12 +112,14 @@ class MonthResultButton extends StatefulWidget {
 class _MonthResultButtonState extends State<MonthResultButton> {
   @override
   Widget build(BuildContext context) {
-    log("here");
     return IconButton(
       icon: Image.asset("assets/images/heartemoticon.png"),
       onPressed: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => EmoticonMonthResult()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EmoticonMonthResult(
+                    year: widget.curDate.year, month: widget.curDate.month)));
       },
     );
   }

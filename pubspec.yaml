@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.18.0
   simple_gesture_detector: ^0.2.0
   get: ^4.6.5
+  syncfusion_flutter_charts: ^20.4.51
 
 dev_dependencies:
   flutter_test:

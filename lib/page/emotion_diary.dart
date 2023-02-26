@@ -98,7 +98,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Header(),
+        appBar: Header(dateSelected),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: ClampingScrollPhysics(),

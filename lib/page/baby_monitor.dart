@@ -14,7 +14,7 @@ class BabyMonitor extends StatelessWidget {
     final RouteController routeController = Get.find();
 
     return Scaffold(
-      appBar: Header(),
+      appBar: Header(null),
       body: Wrap(children: [
         Container(child: Stack(children: [SizedBox(), Alert()]))
       ]),

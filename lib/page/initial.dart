@@ -10,7 +10,7 @@ class InitialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Header(),
+      appBar: Header(null),
       body: Column(
         children: [
           Container(height: 400, child: Loading(isLoading: true, height: 100)),

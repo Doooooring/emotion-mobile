@@ -258,7 +258,7 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => EmotionResult(
+                    builder: (context) => DailReport(
                         date: response["date"],
                         emotion: response["emotion"],
                         emotionText: response["emotionText"],

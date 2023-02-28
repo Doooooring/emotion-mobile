@@ -1,7 +1,10 @@
 import "package:firstproject/controller/routeController.dart";
 import "package:firstproject/page/emoticon_month_result.dart";
+import "package:firstproject/services/emotion.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
+
+EmotionServices emotionService = new EmotionServices();
 
 AppBar Header(DateTime? curDate) {
   final RouteController routeController = Get.find();
@@ -114,12 +117,16 @@ class _MonthResultButtonState extends State<MonthResultButton> {
   Widget build(BuildContext context) {
     return IconButton(
       icon: Image.asset("assets/images/heartemoticon.png"),
-      onPressed: () {
+      onPressed: () async {
+        Map response = await emotionService.getMonthlyResult(
+            widget.curDate.year, widget.curDate.month);
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => EmoticonMonthResult(
-                    year: widget.curDate.year, month: widget.curDate.month)));
+                    year: widget.curDate.year,
+                    month: widget.curDate.month,
+                    data: response)));
       },
     );
   }

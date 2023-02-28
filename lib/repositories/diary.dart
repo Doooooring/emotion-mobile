@@ -120,4 +120,15 @@ class DiaryRepositories {
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return result["result"];
   }
+
+  getMonthlyResult(int year, int month) async {
+    Uri endPoint =
+    Uri.parse('$HOST_URL/diary/report?year=${year}&month=${month}');
+    http.Response response = await http.get(endPoint, headers: {
+      "Content-Type": "application/json"
+    });
+    dynamic result = json.decode(utf8.decode(response.bodyBytes));
+
+    return result["result"];
+  }
 }

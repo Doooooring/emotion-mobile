@@ -135,7 +135,6 @@ class EmotionServices {
 
   Future<Map> getMonthlyResult(int year, int month) async {
     Map response = await repository.getMonthlyResult(year, month);
-    log(response.toString());
     return response;
   }
 }

@@ -106,117 +106,133 @@ class EmoticonMonthResult extends StatelessWidget {
                         Text("Monthly Report", style: TextStyle(fontSize: 30)),
                         SizedBox(height: 20)
                       ])),
+                      ChartWrapper(sentimentalLevel: sentimentalLevel),
+                      EmotionStatic(
+                          emotionHistogram: emotionHistogram,
+                          bestEmotion: bestEmotion),
+                      SizedBox(height: 20),
                       Container(
-                          width: 360,
-                          padding: EdgeInsets.only(
-                              left: 0, right: 0, top: 30, bottom: 30),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
+                          padding: EdgeInsets.only(left: 20),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Text("In this month,",
+                                    style: TextStyle(
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.w400)),
+                                SizedBox(height: 8),
                                 Row(
                                   children: [
-                                    SizedBox(width: 40),
-                                    Text("Sentiment Level",
-                                        style: TextStyle(fontSize: 23)),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                    child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                      Container(
-                                        width: 230,
-                                        height: 230,
-                                        child: CircularChart(curData: [
-                                          _CircularData(
-                                              "positive",
-                                              sentimentalLevel["positive"],
-                                              Color(0xff4FB600)),
-                                          _CircularData(
-                                              "neutral",
-                                              sentimentalLevel["neutral"],
-                                              Color(0xffFFB600)),
-                                          _CircularData(
-                                              "negative",
-                                              sentimentalLevel["negative"],
-                                              Color(0xffEC5313))
-                                        ]),
-                                      ),
-                                      ChartLegend(curData: [
-                                        _CircularData(
-                                            "positive",
-                                            sentimentalLevel["positive"],
-                                            Color(0xff4FB600)),
-                                        _CircularData(
-                                            "neutral",
-                                            sentimentalLevel["neutral"],
-                                            Color(0xffFFB600)),
-                                        _CircularData(
-                                            "negative",
-                                            sentimentalLevel["negative"],
-                                            Color(0xffEC5313))
-                                      ])
-                                    ])),
-                                EmotionStatic(
-                                    emotionHistogram: emotionHistogram,
-                                    bestEmotion: bestEmotion),
-                                SizedBox(height: 20),
-                                Container(
-                                    padding: EdgeInsets.only(left: 20),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text("In this month,",
-                                              style: TextStyle(
-                                                  fontSize: 21,
-                                                  fontWeight: FontWeight.w400)),
-                                          SizedBox(height: 8),
-                                          Row(
-                                            children: [
-                                              Text("You felt ",
-                                                  style: TextStyle(
-                                                      fontSize: 21,
-                                                      fontWeight:
-                                                          FontWeight.w400)),
-                                              Text("${bestEmotion}",
-                                                  style: TextStyle(
-                                                      fontSize: 21,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: monthlyColor)),
-                                              Text(" most frequently",
-                                                  style: TextStyle(
-                                                      fontSize: 21,
-                                                      fontWeight:
-                                                          FontWeight.w400)),
-                                            ],
-                                          )
-                                        ])),
-                                SizedBox(height: 30),
-                                Container(
-                                    padding: EdgeInsets.only(left: 20),
-                                    child: Text("${monthlyComment}",
+                                    Text("You felt ",
                                         style: TextStyle(
                                             fontSize: 21,
-                                            fontWeight: FontWeight.w400)))
-                              ]))
+                                            fontWeight: FontWeight.w400)),
+                                    Text("${bestEmotion}",
+                                        style: TextStyle(
+                                            fontSize: 21,
+                                            fontWeight: FontWeight.w400,
+                                            color: monthlyColor)),
+                                    Text(" most frequently",
+                                        style: TextStyle(
+                                            fontSize: 21,
+                                            fontWeight: FontWeight.w400)),
+                                  ],
+                                )
+                              ])),
+                      SizedBox(height: 30),
+                      Container(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text("${monthlyComment}",
+                              style: TextStyle(
+                                  fontSize: 21, fontWeight: FontWeight.w400)))
                     ]))));
   }
 }
 
+class ChartWrapper extends StatefulWidget {
+  const ChartWrapper({Key? key, required this.sentimentalLevel})
+      : super(key: key);
+
+  final Map sentimentalLevel;
+
+  @override
+  State<ChartWrapper> createState() => _ChartWrapperState();
+}
+
+class _ChartWrapperState extends State<ChartWrapper> {
+  int curIdx = -1;
+  void setCurIdx(int nextIdx) {
+    setState(() {
+      curIdx = nextIdx;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 360,
+        padding: EdgeInsets.only(left: 0, right: 0, top: 30, bottom: 30),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            children: [
+              SizedBox(width: 40),
+              Text("Sentiment Level", style: TextStyle(fontSize: 23)),
+            ],
+          ),
+          SizedBox(height: 10),
+          Container(
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                Container(
+                  width: 230,
+                  height: 230,
+                  child: CircularChart(
+                      curIdx: curIdx,
+                      setCurIdx: setCurIdx,
+                      curData: [
+                        _CircularData(
+                            "positive",
+                            widget.sentimentalLevel["positive"],
+                            Color(0xff4FB600)),
+                        _CircularData(
+                            "neutral",
+                            widget.sentimentalLevel["neutral"],
+                            Color(0xffFFB600)),
+                        _CircularData(
+                            "negative",
+                            widget.sentimentalLevel["negative"],
+                            Color(0xffEC5313))
+                      ]),
+                ),
+                ChartLegend(curIdx: curIdx, curData: [
+                  _CircularData("positive", widget.sentimentalLevel["positive"],
+                      Color(0xff4FB600)),
+                  _CircularData("neutral", widget.sentimentalLevel["neutral"],
+                      Color(0xffFFB600)),
+                  _CircularData("negative", widget.sentimentalLevel["negative"],
+                      Color(0xffEC5313))
+                ])
+              ]))
+        ]));
+  }
+}
+
 class CircularChart extends StatefulWidget {
-  const CircularChart({Key? key, required this.curData}) : super(key: key);
+  const CircularChart(
+      {Key? key,
+      required this.curData,
+      required this.curIdx,
+      required this.setCurIdx})
+      : super(key: key);
 
   final List<_CircularData> curData;
+  final int curIdx;
+  final Function(int) setCurIdx;
 
   @override
   State<CircularChart> createState() => _CircularChartState();
@@ -230,6 +246,10 @@ class _CircularChartState extends State<CircularChart> {
         radius: "65%",
         innerRadius: "75%",
         dataSource: widget.curData,
+        onPointTap: (ChartPointDetails data) {
+          int seriesIndex = data.seriesIndex!;
+          widget.setCurIdx(seriesIndex);
+        },
         xValueMapper: (_CircularData data, _) => data.emotion,
         yValueMapper: (_CircularData data, _) => data.data,
         dataLabelSettings: DataLabelSettings(
@@ -245,7 +265,15 @@ class _CircularChartState extends State<CircularChart> {
                       style: TextStyle(color: data.pointColor)));
             }),
         dataLabelMapper: (_CircularData data, _) => data.data.toString(),
-        pointColorMapper: (data, _) => data.pointColor,
+        pointColorMapper: (data, _) {
+          if (widget.curIdx == -1) {
+            return data.pointColor;
+          } else {
+            return data.emotion == widget.curData[widget.curIdx].emotion
+                ? data.pointColor
+                : Color(0xff9E9E9E);
+          }
+        },
         startAngle: -40,
         endAngle: 320,
       )
@@ -254,9 +282,11 @@ class _CircularChartState extends State<CircularChart> {
 }
 
 class ChartLegend extends StatelessWidget {
-  const ChartLegend({Key? key, required this.curData}) : super(key: key);
+  const ChartLegend({Key? key, required this.curData, required this.curIdx})
+      : super(key: key);
 
   final List<_CircularData> curData;
+  final int curIdx;
 
   @override
   Widget build(BuildContext context) {
@@ -269,6 +299,10 @@ class ChartLegend extends StatelessWidget {
         child: Column(
             children: curData.map<SizedBox>((element) {
           int curRate = (element.data / total * 100).floor();
+          Color curColor =
+              curIdx == -1 || element.emotion == curData[curIdx].emotion
+                  ? element.pointColor
+                  : Color(0xff9E9E9E);
           return LegendContent(element.emotion, curRate, element.pointColor);
         }).toList()));
   }

@@ -1,1 +1,1 @@
-final HOST_URL = "http://api.a-eye.co.kr";
+final HOST_URL = "http://34.64.61.18:8080";

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "340659862944",
+    "project_id": "a-eye-fcm",
+    "storage_bucket": "a-eye-fcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340659862944:android:e7be24d7c240017ca978c5",
+        "android_client_info": {
+          "package_name": "com.example.firstproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340659862944-l2s30f7hqghuv9acc8gj73cfmghglmrt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firstproject",
+            "certificate_hash": "11d76c8cb67ab11f248f70a9824dc769a30ae548"
+          }
+        },
+        {
+          "client_id": "340659862944-bmh5g6agb85kucohtme90v3t3dr6p7ll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQnXX5JRQelui6MCaTzMfBt1nFj3fwZOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340659862944-bmh5g6agb85kucohtme90v3t3dr6p7ll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

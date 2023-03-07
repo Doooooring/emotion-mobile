@@ -1,21 +1,32 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import "package:flutter/material.dart";
 import "package:flutter_local_notifications/flutter_local_notifications.dart";
 
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static void initialize(BuildContext context) {
+  static void initialize() {
+    //ios, android basic settings
     final InitializationSettings initializationSettings =
         InitializationSettings(
-            android: AndroidInitializationSettings("@mipmap/ic_launcher"));
-    _notificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String? payloadData) async {
-      if (payloadData != null) {
-        //알림페이지 들어갈 부분
-      }
-    });
+            android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+            iOS: IOSInitializationSettings());
+    //
+    _notificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: (String? payloadData) async {
+        if (payloadData != null) {
+          //알림페이지 들어갈 부분
+        }
+      },
+    );
+  }
+
+  static Future<String?> getBackgroundMessage() async {
+    final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+        await _notificationsPlugin.getNotificationAppLaunchDetails();
+    String? payload = notificationAppLaunchDetails!.payload;
+    return payload;
   }
 
   static void display(RemoteMessage message) async {

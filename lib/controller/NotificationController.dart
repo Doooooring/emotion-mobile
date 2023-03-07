@@ -28,7 +28,7 @@ class NotificationController extends GetxController {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       _addNotification(event);
     });
-    // 앱이 background 동작중일때 호출됨, 종료중일때도 호출됨?
+    // 앱이 background 동작중일때 호출됨, 종료중일때도 호출됨
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _addNotification(message);
     });

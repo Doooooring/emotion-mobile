@@ -1,11 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import "package:flutter/material.dart";
 import "package:flutter_local_notifications/flutter_local_notifications.dart";
 
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static void initialize() {
+  static void initialize(BuildContext context) {
     //ios, android basic settings
     final InitializationSettings initializationSettings =
         InitializationSettings(
@@ -16,7 +17,7 @@ class LocalNotificationService {
       initializationSettings,
       onSelectNotification: (String? payloadData) async {
         if (payloadData != null) {
-          //알림페이지 들어갈 부분
+          //알림페이지 들어갈 부분(foreground 일 때의 동작 -> context 이동하기)
         }
       },
     );
@@ -35,18 +36,18 @@ class LocalNotificationService {
 
       final NotificationDetails notificationDetails = NotificationDetails(
           android: AndroidNotificationDetails(
-        "push notifications",
-        "push notifications",
-        "push notifications",
+        "push notifications", //channelId
+        "push notifications", //channelName
+        "push notifications", //channelDescription
         importance: Importance.max,
         priority: Priority.high,
       ));
 
       await _notificationsPlugin.show(
-        id,
-        'push notifications',
-        'You have received a new push notification!',
-        notificationDetails,
+        id, //message id
+        'push notifications', //title
+        'You have received a new push notification!', //body
+        notificationDetails, //android or ios notificationDetails
         payload: message
             .data['default'], // THIS IS NULL WHEN IN TERMINATED STATE OF APP
       );

@@ -24,14 +24,19 @@ class NotificationController extends GetxController {
   }
 
   void _initNotification() {
+    FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+      //background/terminate 상태에서 메세지 핸들링 관련
+      return;
+    });
     // 앱이 동작중일때 호출됨
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       _addNotification(event);
     });
-    // 앱이 background 동작중일때 호출됨, 종료중일때도 호출됨
+    // 앱이 background 동작중일때 호출됨
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       _addNotification(message);
     });
+    // 앱이 terminated 상태일 때 호출됨
   }
 
   // 메시지를 변수에 저장

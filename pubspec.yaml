@@ -143,6 +143,8 @@ flutter:
     - assets/images/cam(white).png
     - assets/images/sos.png
     - assets/images/heartemoticon.png
+    - assets/images/reply_left.png
+    - assets/images/reply_right.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

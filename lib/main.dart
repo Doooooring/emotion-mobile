@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import "package:get/get.dart";
 
 import './page/initial.dart';
+import "./controller/routeController.dart";
 
 void main() {
   runApp(const MyApp());
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(RouteController());
     return GetMaterialApp(title: "aeye", home: InitialPage());
   }
 }

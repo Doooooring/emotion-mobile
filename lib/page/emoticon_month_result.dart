@@ -68,26 +68,7 @@ class EmoticonMonthResult extends StatelessWidget {
     Map emotionHistogram = data["emotionHistogram"];
     Map monthlyEmotion = data["monthlyEmotion"];
 
-    String bestEmotion = monthlyEmotion["emotion"];
-    String monthlyComment = monthlyEmotion["comment"];
-
-    Color monthlyColor = PositiveList.contains(bestEmotion)
-        ? Color(0xff4FB600)
-        : Color(0xffEC5313);
-
     return Scaffold(
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Color(0xffFFF7DF),
-            elevation: 0.0,
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.close),
-                  color: Colors.black)
-            ]),
         body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             physics: ClampingScrollPhysics(),
@@ -100,60 +81,55 @@ class EmoticonMonthResult extends StatelessWidget {
                     children: [
                       Container(
                           child: Column(children: [
-                        Text("${mon} ${year}",
-                            style: TextStyle(fontSize: 20, color: Colors.grey)),
-                        SizedBox(height: 10),
+                        SizedBox(height: 80),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 120,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  IconButton(
+                                      iconSize: 30,
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: Icon(Icons.arrow_back_ios_new),
+                                      color: Colors.black),
+                                ],
+                              ),
+                            ),
+                            Text("${mon} ${year}",
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.grey)),
+                            SizedBox(
+                              width: 120,
+                            )
+                          ],
+                        ),
                         Text("Monthly Report", style: TextStyle(fontSize: 30)),
                         SizedBox(height: 20)
                       ])),
-                      ChartWrapper(sentimentalLevel: sentimentalLevel),
-                      EmotionStatic(
+                      ChartWrapper(
+                          sentimentalLevel: sentimentalLevel,
                           emotionHistogram: emotionHistogram,
-                          bestEmotion: bestEmotion),
-                      SizedBox(height: 20),
-                      Container(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("In this month,",
-                                    style: TextStyle(
-                                        fontSize: 21,
-                                        fontWeight: FontWeight.w400)),
-                                SizedBox(height: 8),
-                                Row(
-                                  children: [
-                                    Text("You felt ",
-                                        style: TextStyle(
-                                            fontSize: 21,
-                                            fontWeight: FontWeight.w400)),
-                                    Text("${bestEmotion}",
-                                        style: TextStyle(
-                                            fontSize: 21,
-                                            fontWeight: FontWeight.w400,
-                                            color: monthlyColor)),
-                                    Text(" most frequently",
-                                        style: TextStyle(
-                                            fontSize: 21,
-                                            fontWeight: FontWeight.w400)),
-                                  ],
-                                )
-                              ])),
-                      SizedBox(height: 30),
-                      Container(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Text("${monthlyComment}",
-                              style: TextStyle(
-                                  fontSize: 21, fontWeight: FontWeight.w400)))
+                          monthlyEmotion: monthlyEmotion),
                     ]))));
   }
 }
 
 class ChartWrapper extends StatefulWidget {
-  const ChartWrapper({Key? key, required this.sentimentalLevel})
+  const ChartWrapper(
+      {Key? key,
+      required this.sentimentalLevel,
+      required this.emotionHistogram,
+      required this.monthlyEmotion})
       : super(key: key);
 
   final Map sentimentalLevel;
+  final Map emotionHistogram;
+  final Map monthlyEmotion;
 
   @override
   State<ChartWrapper> createState() => _ChartWrapperState();
@@ -169,12 +145,27 @@ class _ChartWrapperState extends State<ChartWrapper> {
 
   @override
   Widget build(BuildContext context) {
+    String bestEmotion = widget.monthlyEmotion["emotion"];
+    String monthlyComment = widget.monthlyEmotion["comment"];
+
+    Color monthlyColor = PositiveList.contains(bestEmotion)
+        ? Color(0xff4FB600)
+        : Color(0xffEC5313);
+
     return Container(
         width: 360,
         padding: EdgeInsets.only(left: 0, right: 0, top: 30, bottom: 30),
         decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(20))),
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black,
+                  offset: Offset.zero,
+                  blurRadius: 1.0,
+                  spreadRadius: -0.9,
+                  blurStyle: BlurStyle.normal)
+            ]),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             children: [
@@ -182,7 +173,6 @@ class _ChartWrapperState extends State<ChartWrapper> {
               Text("Sentiment Level", style: TextStyle(fontSize: 23)),
             ],
           ),
-          SizedBox(height: 10),
           Container(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -217,7 +207,41 @@ class _ChartWrapperState extends State<ChartWrapper> {
                   _CircularData("negative", widget.sentimentalLevel["negative"],
                       Color(0xffEC5313))
                 ])
-              ]))
+              ])),
+          EmotionStatic(
+              emotionHistogram: widget.emotionHistogram,
+              bestEmotion: bestEmotion),
+          SizedBox(height: 20),
+          Container(
+              padding: EdgeInsets.only(left: 20),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("In this month,",
+                        style: TextStyle(
+                            fontSize: 21, fontWeight: FontWeight.w400)),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Text("You felt ",
+                            style: TextStyle(
+                                fontSize: 21, fontWeight: FontWeight.w400)),
+                        Text("${bestEmotion}",
+                            style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w400,
+                                color: monthlyColor)),
+                        Text(" most frequently",
+                            style: TextStyle(
+                                fontSize: 21, fontWeight: FontWeight.w400)),
+                      ],
+                    )
+                  ])),
+          SizedBox(height: 30),
+          Container(
+              padding: EdgeInsets.only(left: 20),
+              child: Text("${monthlyComment}",
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.w400)))
         ]));
   }
 }
@@ -247,7 +271,7 @@ class _CircularChartState extends State<CircularChart> {
         innerRadius: "75%",
         dataSource: widget.curData,
         onPointTap: (ChartPointDetails data) {
-          int seriesIndex = data.seriesIndex!;
+          int seriesIndex = data.pointIndex!;
           widget.setCurIdx(seriesIndex);
         },
         xValueMapper: (_CircularData data, _) => data.emotion,
@@ -262,7 +286,11 @@ class _CircularChartState extends State<CircularChart> {
                   height: 13,
                   width: 15,
                   child: Text(data.data.toString(),
-                      style: TextStyle(color: data.pointColor)));
+                      style: TextStyle(
+                          color:
+                              widget.curIdx == -1 || pointIndex == widget.curIdx
+                                  ? data.pointColor
+                                  : Color(0xff9E9E9E))));
             }),
         dataLabelMapper: (_CircularData data, _) => data.data.toString(),
         pointColorMapper: (data, _) {
@@ -303,7 +331,7 @@ class ChartLegend extends StatelessWidget {
               curIdx == -1 || element.emotion == curData[curIdx].emotion
                   ? element.pointColor
                   : Color(0xff9E9E9E);
-          return LegendContent(element.emotion, curRate, element.pointColor);
+          return LegendContent(element.emotion, curRate, curColor);
         }).toList()));
   }
 }

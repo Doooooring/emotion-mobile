@@ -1,3 +1,4 @@
+import "package:firstproject/page/emotion_comment.dart";
 import "package:flutter/material.dart";
 
 import "../../../page/emotion_result.dart";
@@ -119,7 +120,9 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
           setNavBarUp: widget.setNavBarUp,
         ),
         SizedBox(height: 20),
-        PreviewBoxBody(content)
+        PreviewBoxBody(content),
+        ButtonToComment(
+            context, widget.date.year, widget.date.month, widget.date.day)
       ]),
     );
   }
@@ -286,11 +289,23 @@ Container PreviewBoxBody(String text) {
   return Container(
       width: 360,
       child: Text(
-        style: TextStyle(
-            fontSize: 18,
-            height: 1.4,
-            color: Colors.black,
-            fontWeight: FontWeight.w500),
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            height: 1.5,
+          ),
         text,
       ));
+}
+
+TextButton ButtonToComment(BuildContext context, int year, int month, int day) {
+  return TextButton(
+      onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    EmotionComment(year: year, month: month, day: day)));
+      },
+      child: Text("View comments"));
 }

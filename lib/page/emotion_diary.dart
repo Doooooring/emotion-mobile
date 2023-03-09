@@ -85,6 +85,8 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
+  TextEditingController controller = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -92,8 +94,6 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     emotionServices.getEmotionMonth(
         Today.year, Today.month, setCurDatesAll, setIsLoading);
   }
-
-  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

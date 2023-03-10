@@ -1,9 +1,9 @@
 import "dart:developer";
 
-import 'package:firstproject/controller/routeController.dart';
-import "package:firstproject/page/baby_monitor.dart";
-import "package:firstproject/page/emotion_diary.dart";
-import "package:firstproject/page/initial.dart";
+import 'package:aeye/controller/routeController.dart';
+import "package:aeye/page/baby_monitor.dart";
+import "package:aeye/page/emotion_diary.dart";
+import "package:aeye/page/initial.dart";
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
 

@@ -1,6 +1,6 @@
 import "dart:ui";
 
-import "package:firstproject/component/emoticon_diary/emotion/emotion_preview_comment.dart";
+import "package:aeye/component/emoticon_diary/emotion/emotion_preview_comment.dart";
 import "package:flutter/material.dart";
 
 Map Month = {

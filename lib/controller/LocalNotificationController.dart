@@ -1,6 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import "package:aeye/controller/NotificationController.dart";
 import "package:flutter/material.dart";
 import "package:flutter_local_notifications/flutter_local_notifications.dart";
+
+NotificationController notificationController = NotificationController();
 
 class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =

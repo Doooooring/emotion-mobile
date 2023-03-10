@@ -1,7 +1,7 @@
 import "package:firebase_messaging/firebase_messaging.dart";
 import "package:get/get.dart";
 
-class NotificationController extends GetxController {
+class NotificationController {
   static NotificationController get to => Get.find();
 
   // 최신버전의 초기화 방법
@@ -10,16 +10,13 @@ class NotificationController extends GetxController {
   // remoteMessage 가 obx 에서 검출이 잘되지 않아서 dateTime 을 추가함
   Rx<DateTime> dateTime = DateTime.now().obs;
 
-  @override
-  void onInit() {
+  Future<void> initializeLocalNotifications() async {
     _initNotification();
     // 토큰을 알면 특정 디바이스에게 문자를 전달가능
     _getToken();
-
-    super.onInit();
   }
 
-  void _getToken() {
+  void _getToken() async {
     _messaging.getToken().then((token) {});
   }
 

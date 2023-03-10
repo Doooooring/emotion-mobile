@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:340659862944:android:e7be24d7c240017ca978c5",
         "android_client_info": {
-          "package_name": "com.example.firstproject"
+          "package_name": "com.example.aeye"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "340659862944-l2s30f7hqghuv9acc8gj73cfmghglmrt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.firstproject",
+            "package_name": "com.example.aeye",
             "certificate_hash": "11d76c8cb67ab11f248f70a9824dc769a30ae548"
           }
         },

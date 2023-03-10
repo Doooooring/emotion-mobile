@@ -1,4 +1,4 @@
-import "package:firstproject/page/emotion_comment.dart";
+import "package:aeye/page/emotion_comment.dart";
 import "package:flutter/material.dart";
 
 import "../../../page/emotion_result.dart";
@@ -289,11 +289,11 @@ Container PreviewBoxBody(String text) {
   return Container(
       width: 360,
       child: Text(
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            height: 1.5,
-          ),
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          height: 1.5,
+        ),
         text,
       ));
 }

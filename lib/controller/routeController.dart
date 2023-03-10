@@ -14,4 +14,8 @@ class RouteController extends GetxController {
   void toEmotionDiary() {
     curPath = "emotionDiary".obs;
   }
+
+  void toAdvice() {
+    curPath = "advice".obs;
+  }
 }

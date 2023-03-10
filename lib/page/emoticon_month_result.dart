@@ -86,7 +86,7 @@ class EmoticonMonthResult extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: 120,
+                              width: 100,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -104,7 +104,7 @@ class EmoticonMonthResult extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.grey)),
                             SizedBox(
-                              width: 120,
+                              width: 100,
                             )
                           ],
                         ),
@@ -272,6 +272,10 @@ class _CircularChartState extends State<CircularChart> {
         dataSource: widget.curData,
         onPointTap: (ChartPointDetails data) {
           int seriesIndex = data.pointIndex!;
+          if (widget.curIdx == seriesIndex) {
+            widget.setCurIdx(-1);
+            return;
+          }
           widget.setCurIdx(seriesIndex);
         },
         xValueMapper: (_CircularData data, _) => data.emotion,
@@ -284,7 +288,9 @@ class _CircularChartState extends State<CircularChart> {
             builder: (data, point, series, pointIndex, seriesIndex) {
               return Container(
                   height: 13,
-                  width: 15,
+                  width: widget.curIdx == -1 || pointIndex == widget.curIdx
+                      ? 15
+                      : 500,
                   child: Text(data.data.toString(),
                       style: TextStyle(
                           color:

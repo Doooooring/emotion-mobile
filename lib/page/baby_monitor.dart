@@ -3,7 +3,6 @@ import "package:get/get.dart";
 
 import "../component/baby_monitor/alert.dart";
 import "../component/common/app_bar.dart";
-import "../component/common/bottom_bar.dart";
 import "../controller/routeController.dart";
 
 class BabyMonitor extends StatelessWidget {
@@ -18,24 +17,6 @@ class BabyMonitor extends StatelessWidget {
       body: Wrap(children: [
         Container(child: Stack(children: [SizedBox(), Alert()]))
       ]),
-      bottomNavigationBar: BottomNavBar(state: true),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        width: 80,
-        height: 80,
-        child: FloatingActionButton(
-            backgroundColor: Color(0xffFAE297),
-            shape: const CircleBorder(),
-            onPressed: () {
-              routeController.toInit();
-              Navigator.pop(context);
-            },
-            child: Icon(
-              Icons.house,
-              size: 35,
-              color: Colors.white,
-            )),
-      ),
     );
   }
 }

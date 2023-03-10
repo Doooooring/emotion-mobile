@@ -94,10 +94,16 @@ class _AlertWrapperState extends State<AlertWrapper> {
               ),
               SizedBox(
                   child: Column(children: [
-                Text("It looks like your baby had a fall",
-                    style: TextStyle(fontSize: 28)),
+                Text("It looks like",
+                    style:
+                        TextStyle(fontSize: 30, fontWeight: FontWeight.w600)),
                 SizedBox(height: 10),
-                Text("Check on your baby!", style: TextStyle(fontSize: 20))
+                Text("your baby had a fall",
+                    style:
+                        TextStyle(fontSize: 28, fontWeight: FontWeight.w600)),
+                SizedBox(height: 10),
+                Text("Check on your baby!",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
               ])),
               SizedBox(height: 50),
               SizedBox(),

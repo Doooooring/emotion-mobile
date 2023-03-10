@@ -12,14 +12,14 @@ AppBar Header(DateTime? curDate) {
 
   final String title = curPath == "emotionDiary" ? "Diary" : "Baby Monitor";
 
-  if (curPath == "init" || curDate == null) {
+  if (curPath == "init") {
     return AppBar(
         backgroundColor: Color(0xffFFF7DF),
         elevation: 0.5,
         centerTitle: false,
         title: SizedBox(
           child: Row(
-            children: [
+            children: const [
               SizedBox(width: 10),
               Text("A-eye",
                   textAlign: TextAlign.left,
@@ -33,7 +33,7 @@ AppBar Header(DateTime? curDate) {
         ),
         actions: [
           PopupMenuButton(
-            icon: RotatedBox(
+            icon: const RotatedBox(
                 quarterTurns: 1,
                 child: Icon(
                     size: 30, Icons.keyboard_control, color: Colors.black)),
@@ -55,13 +55,9 @@ AppBar Header(DateTime? curDate) {
         return IconButton(
           icon: Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black),
           onPressed: () {
-            if (curPath != "init") {
-              routeController.toInit();
-              Navigator.pop(context);
-              return;
-            } else {
-              return;
-            }
+            routeController.toInit();
+            Navigator.pop(context);
+            return;
           },
         );
       }),
@@ -82,7 +78,7 @@ AppBar Header(DateTime? curDate) {
         ),
       ),
       actions: [
-        curPath == "emotionDiary"
+        curDate != null
             ? MonthResultButton(curDate: curDate)
             : SizedBox(width: 0),
         PopupMenuButton(
@@ -119,29 +115,28 @@ class _MonthResultButtonState extends State<MonthResultButton> {
       icon: Image.asset("assets/images/heartemoticon.png"),
       onPressed: () async {
         Map response = {
-            "sentimentLevel": {"positive": 8, "neutral": 11, "negative": 1},
-            "emotionHistogram": {
-              "excited": 8,
-              "happy": 0,
-              "calm": 2,
-              "content": 0,
-              "anticipate": 1,
-              "tense": 1,
-              "angry": 0,
-              "sad": 0,
-              "badSurprised": 4,
-              "goodSurprised": 2,
-              "relaxed": 0,
-              "bored": 0,
-              "tired": 1,
-              "mostFrequentEmotion": "excited" //이건 무시해죠..
-            },
-            "monthlyEmotion": {
-              "emotion": "excited",
-              "comment": "You had a wonderful day!"
-            }
-          };
-
+          "sentimentLevel": {"positive": 8, "neutral": 11, "negative": 1},
+          "emotionHistogram": {
+            "excited": 8,
+            "happy": 0,
+            "calm": 2,
+            "content": 0,
+            "anticipate": 1,
+            "tense": 1,
+            "angry": 0,
+            "sad": 0,
+            "badSurprised": 4,
+            "goodSurprised": 2,
+            "relaxed": 0,
+            "bored": 0,
+            "tired": 1,
+            "mostFrequentEmotion": "excited" //이건 무시해죠..
+          },
+          "monthlyEmotion": {
+            "emotion": "excited",
+            "comment": "You had a wonderful day!"
+          }
+        };
 
         // await emotionService.getMonthlyResult(
         //     widget.curDate.year, widget.curDate.month);

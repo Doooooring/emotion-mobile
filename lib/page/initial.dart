@@ -17,20 +17,6 @@ class InitialPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavBar(state: true),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        width: 80,
-        height: 80,
-        child: FloatingActionButton(
-            backgroundColor: Color(0xffFAE297),
-            shape: const CircleBorder(),
-            onPressed: () {},
-            child: Icon(
-              Icons.house,
-              size: 35,
-              color: Colors.black,
-            )),
-      ),
-    );
+      );
   }
 }

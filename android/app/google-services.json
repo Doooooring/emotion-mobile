@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:340659862944:android:e7be24d7c240017ca978c5",
+        "mobilesdk_app_id": "1:340659862944:android:5677a075c1d22ac0a978c5",
         "android_client_info": {
           "package_name": "com.example.aeye"
         }
       },
       "oauth_client": [
         {
-          "client_id": "340659862944-l2s30f7hqghuv9acc8gj73cfmghglmrt.apps.googleusercontent.com",
+          "client_id": "340659862944-qa3p2rvvs3tnu1q9ujuab9m98e5sutq3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.aeye",
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "340659862944-bmh5g6agb85kucohtme90v3t3dr6p7ll.apps.googleusercontent.com",
+          "client_id": "340659862944-iojdpg9mu5skku1jp73virlr9mtmlgn9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

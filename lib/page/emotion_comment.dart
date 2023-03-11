@@ -1,6 +1,7 @@
 import "dart:ui";
 
 import "package:aeye/component/emoticon_diary/emotion/emotion_preview_comment.dart";
+import "package:aeye/controller/sizeController.dart";
 import "package:flutter/material.dart";
 
 Map Month = {
@@ -76,7 +77,7 @@ class _EmotionCommentState extends State<EmotionComment> {
             padding: EdgeInsets.only(left: 20, right: 20, top: 30),
             child: Column(children: [
               Container(
-                height: 680,
+                height: scaleHeight(context, 600),
                 child: SingleChildScrollView(
                   child: Container(
                       child: Column(children: [
@@ -88,7 +89,7 @@ class _EmotionCommentState extends State<EmotionComment> {
                         diary: curData.diary),
                     Column(
                       children: curData.comment.map((_Comment data) {
-                        return CommentLabel(data);
+                        return CommentLabel(context, data);
                       }).toList(),
                     ),
                   ])),
@@ -131,7 +132,7 @@ AppBar Header(int month, int day) {
   );
 }
 
-Container CommentLabel(_Comment comment) {
+Container CommentLabel(BuildContext context, _Comment comment) {
   String date = comment.date;
   String type = comment.type;
   String body = comment.comment;
@@ -141,7 +142,7 @@ Container CommentLabel(_Comment comment) {
     return Container(
         padding: EdgeInsets.only(bottom: 10),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          CommentBox(backgroundColor, date, body),
+          CommentBox(context, backgroundColor, date, body),
           Container(
               padding: EdgeInsets.only(top: 10),
               width: 50,
@@ -158,15 +159,16 @@ Container CommentLabel(_Comment comment) {
               width: 50,
               child: Image.asset(
                   width: 23, height: 23, "assets/images/reply_left.png")),
-          CommentBox(backgroundColor, date, body)
+          CommentBox(context, backgroundColor, date, body)
         ]));
   }
 }
 
-Container CommentBox(Color backgroundColor, String date, String body) {
+Container CommentBox(
+    BuildContext context, Color backgroundColor, String date, String body) {
   return Container(
-      width: 340,
-      padding: EdgeInsets.all(20),
+      width: scaleWidth(context, 270),
+      padding: EdgeInsets.only(top: 20, bottom: 20, left: 15, right: 10),
       decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -183,7 +185,7 @@ Container CommentBox(Color backgroundColor, String date, String body) {
               fontSize: 13,
               color: Colors.grey,
             )),
-        SizedBox(height: 10),
+        SizedBox(height: 5),
         Text(body,
             style: TextStyle(
               fontSize: 20,
@@ -195,7 +197,7 @@ Container CommentBox(Color backgroundColor, String date, String body) {
 
 Container CommentInput() {
   return Container(
-      height: 65,
+      height: 70,
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [

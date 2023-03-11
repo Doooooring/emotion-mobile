@@ -1,3 +1,4 @@
+import "package:aeye/controller/sizeController.dart";
 import "package:aeye/page/emotion_comment.dart";
 import "package:flutter/material.dart";
 
@@ -120,7 +121,7 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
           setNavBarUp: widget.setNavBarUp,
         ),
         SizedBox(height: 20),
-        PreviewBoxBody(content),
+        PreviewBoxBody(context, content),
         ButtonToComment(
             context, widget.date.year, widget.date.month, widget.date.day)
       ]),
@@ -157,19 +158,19 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 380,
+      width: double.infinity,
       child: Row(children: [
         Container(
-            width: 300,
+            width: scaleWidth(context, 250),
             height: 60,
             padding: EdgeInsets.only(left: 20),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Image.asset(height: 50, widget.emotion),
+                  Image.asset(width: 40, height: 40, widget.emotion),
                   SizedBox(
-                    width: 30,
+                    width: scaleWidth(context, 30),
                   ),
                   Container(
                       child: Text(
@@ -180,7 +181,7 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
                           widget.title))
                 ])),
         Container(
-          width: 80,
+          width: 60,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             PopUpMenuButtonWrapper(
@@ -285,13 +286,15 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
   }
 }
 
-Container PreviewBoxBody(String text) {
+Container PreviewBoxBody(BuildContext context, String text) {
   return Container(
-      width: 360,
+      width: double.infinity,
+      padding: EdgeInsets.only(
+          left: scaleWidth(context, 20), right: scaleWidth(context, 20)),
       child: Text(
         style: TextStyle(
           fontSize: 20,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w400,
           height: 1.5,
         ),
         text,

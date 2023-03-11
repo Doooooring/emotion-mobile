@@ -28,38 +28,35 @@ class _EmotionInputState extends State<EmotionInput> {
     String? curEmotion = curInfo["emotion"];
 
     return Container(
-        width: double.infinity,
+        padding: EdgeInsets.all(20),
+        width: MediaQuery.of(context).size.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              padding: EdgeInsets.all(20),
-              child: SizedBox(
-                width: 350,
-                child: TextFormField(
-                  controller: widget.textController,
-                  style: TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                      hintText: 'How was your day?',
-                      labelStyle: TextStyle(color: Colors.white),
-                      enabledBorder: OutlineInputBorder(
+            Expanded(
+              child: TextFormField(
+                controller: widget.textController,
+                style: TextStyle(fontSize: 20),
+                decoration: const InputDecoration(
+                    hintText: 'How was your day?',
+                    labelStyle: TextStyle(color: Colors.white),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderSide: BorderSide(width: 1, color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        borderSide: BorderSide(width: 1, color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(width: 1, color: Colors.blueGrey))),
-                  onChanged: (text) {
-                    if (curEmotion != null) {
-                      widget.setIsChanged(true);
-                    }
-                    widget.setInputText(text);
-                  },
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 9,
-                ),
+                        borderSide:
+                            BorderSide(width: 1, color: Colors.blueGrey))),
+                onChanged: (text) {
+                  if (curEmotion != null) {
+                    widget.setIsChanged(true);
+                  }
+                  widget.setInputText(text);
+                },
+                keyboardType: TextInputType.multiline,
+                maxLines: 9,
               ),
             )
           ],

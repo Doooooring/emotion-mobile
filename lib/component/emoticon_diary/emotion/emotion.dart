@@ -55,6 +55,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        width: double.infinity,
         height: 800,
         decoration: BoxDecoration(color: Colors.white),
         child: GestureDetector(
@@ -64,6 +65,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
           },
           child: Container(
             width: double.infinity,
+            height: 800,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
@@ -92,6 +94,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                       setEmotionSelectorUp: widget.setEmotionSelectorUp,
                       setCurTempEmotion: widget.setCurTempEmotion),
                   SizedBox(
+                    width: double.infinity,
                     child: Column(children: <Widget>[
                       EmotionInput(
                           textController: widget.textController,

@@ -49,8 +49,8 @@ dependencies:
   syncfusion_flutter_charts: ^20.4.51
   flutter_native_splash: ^2.2.18
   firebase_messaging: ^14.2.5
-  flutter_local_notifications: ^8.2.0
   permission_handler: ^10.2.0
+  flutter_local_notifications: ^13.0.0
 
 dev_dependencies:
   flutter_test:

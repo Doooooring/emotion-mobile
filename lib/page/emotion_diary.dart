@@ -103,14 +103,17 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
           scrollDirection: Axis.vertical,
           physics: ClampingScrollPhysics(),
           child: SizedBox(
+            width: MediaQuery.of(context).size.width,
             height: 800,
             child: Wrap(children: [
               Container(
+                width: MediaQuery.of(context).size.width,
+                height: 800,
                 child: Stack(
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
+                      height: 800,
                       padding: EdgeInsets.only(left: 20, right: 20),
                       color: Colors.white,
                       child: Column(
@@ -147,9 +150,9 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                         setCurTempEmotion: setCurTempEmotion,
                         setEmotionSelectorUp: setEmotionSelectorUp,
                       ),
-                      width: 430,
+                      width: MediaQuery.of(context).size.width,
                       left: 0,
-                      top: inputEmotionUp ? 70 : 800,
+                      top: inputEmotionUp ? 50 : 800,
                     ),
                     AnimatedPositioned(
                       duration: const Duration(milliseconds: 200),
@@ -163,7 +166,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                         setInputEmotionUp: setInputEmotionUp,
                         setEmotionSelectorUp: setEmotionSelectorUp,
                       ),
-                      width: 430,
+                      width: MediaQuery.of(context).size.width,
                       height: 800,
                       left: 0,
                       top: emotionSelectorUp ? 70 : 800,

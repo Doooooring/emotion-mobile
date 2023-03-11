@@ -1,3 +1,4 @@
+import "package:aeye/controller/sizeController.dart";
 import 'package:flutter/material.dart';
 
 import "./calendarBuilder.dart";
@@ -104,7 +105,10 @@ class _CalendarState extends State<Calendar> {
           setFocusedDay(selectedDay.day);
         },
         headerStyle: HeaderStyle(
-          headerPadding: EdgeInsets.all(20),
+          headerPadding: EdgeInsets.only(
+              left: scaleWidth(context, 2),
+              right: scaleWidth(context, 2),
+              bottom: scaleWidth(context, 10)),
           headerMargin:
               EdgeInsets.only(left: 62, top: 10, right: 62, bottom: 0),
           titleCentered: true,

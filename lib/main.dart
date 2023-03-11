@@ -14,40 +14,42 @@ import 'firebase_options.dart';
 late AndroidNotificationChannel channel;
 
 @pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message,
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+Future<void> firebaseMessagingBackgroundHandler(
+  RemoteMessage message,
+) async {
+  await Firebase.initializeApp();
   String title = message.notification?.title ?? "title missing";
   String body = message.notification?.body ?? "body missing";
+  NotificationDetails platformChannelSpecifics = NotificationDetails(
+    android: AndroidNotificationDetails(
+      "Baby fall",
+      "High_Importance_Notifications",
+      priority: Priority.max,
+      importance: Importance.max,
+    ),
+  );
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   flutterLocalNotificationsPlugin.show(
-      0,
-      title,
-      body,
-      NotificationDetails(
-          android: AndroidNotificationDetails(
-        "push notifications", //channelId
-        "push notifications", //channelName//channelDescription
-        importance: Importance.max,
-        priority: Priority.high,
-      )),
-      payload: message.data['default']);
+    message.notification.hashCode,
+    message.notification?.title,
+    message.notification?.body,
+    platformChannelSpecifics,
+  );
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   final fcmToken = await FirebaseMessaging.instance.getToken();
+
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-
-  // FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
-  //   firebaseMessagingBackgroundHandler(
-  //       message, flutterLocalNotificationsPlugin);
-  // });
 
   final InitializationSettings initializationSettings = InitializationSettings(
       android: AndroidInitializationSettings("@mipmap/ic_launcher"),
@@ -85,16 +87,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool isAlert = false;
+  void setIsAlert(bool state) {
+    setState(() {
+      isAlert = state;
+    });
+  }
+
   @override
   void initState() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      log("here");
-      log(message.messageId.toString());
-      log(message.notification.toString());
       RemoteNotification? notification = message.notification;
       NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: AndroidNotificationDetails(
-          "high_importance_channel",
+          "Baby fall",
           "High_Importance_Notifications",
           priority: Priority.max,
           importance: Importance.max,
@@ -111,23 +117,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      RemoteNotification? notification = message.notification;
-      NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: AndroidNotificationDetails(
-          "high_importance_channel",
-          "high_importance_channel",
-          priority: Priority.max,
-          importance: Importance.max,
-        ),
-      );
-      if (notification != null) {
-        widget.flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          platformChannelSpecifics,
-        );
-      }
+      log("is background here");
     });
     super.initState();
   }

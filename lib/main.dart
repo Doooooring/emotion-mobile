@@ -125,6 +125,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     Get.put(RouteController());
+    Get.put(isAlert);
     return GetMaterialApp(title: "aeye", home: InitialPage());
   }
 }

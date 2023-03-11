@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import "package:get/get.dart";
 
 import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
 import "../component/common/loading_proto.dart";
 
 class InitialPage extends StatelessWidget {
-  const InitialPage({Key? key}) : super(key: key);
+  final bool isAlert = Get.find();
+
+  InitialPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +20,6 @@ class InitialPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomNavBar(state: true),
-      );
+    );
   }
 }

@@ -1,5 +1,3 @@
-import "dart:developer";
-
 import "package:aeye/controller/LocalNotificationController.dart";
 import 'package:aeye/page/baby_monitor.dart';
 import "package:firebase_core/firebase_core.dart";
@@ -11,6 +9,7 @@ import "package:get/get.dart";
 
 import "./controller/routeController.dart";
 import './page/initial.dart';
+import "./page/login.dart";
 
 late AndroidNotificationChannel channel;
 
@@ -45,7 +44,6 @@ void main() async {
   LocalNotificationController localNotificationController =
       LocalNotificationController();
   await localNotificationController.initialize();
-  log("here");
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
@@ -132,12 +130,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(widget.localNotificationController);
+    Get.put(widget.localNotificationController)..setContext(context);
     Get.put(RouteController());
     Get.put(isAlert);
 
-    return widget.localNotificationController.messaging.toString() == "true"
-        ? GetMaterialApp(title: "baby", home: BabyMonitor())
-        : GetMaterialApp(title: "aeye", home: InitialPage());
+    return GetBuilder<LocalNotificationController>(builder: (controller) {
+      return GetMaterialApp(title: "hey", home: Login());
+
+      if (controller.messaging.toString() == "true") {
+        return GetMaterialApp(title: "baby", home: BabyMonitor());
+      } else {
+        return GetMaterialApp(title: "aeye", home: InitialPage());
+      }
+      return widget.localNotificationController.messaging.toString() == "true"
+          ? GetMaterialApp(title: "baby", home: BabyMonitor())
+          : GetMaterialApp(title: "aeye", home: InitialPage());
+    });
   }
 }

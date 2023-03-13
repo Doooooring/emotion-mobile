@@ -1,6 +1,8 @@
 import "dart:ui";
 
+import "package:aeye/controller/LocalNotificationController.dart";
 import "package:flutter/material.dart";
+import "package:get/get.dart";
 
 class CircleButton extends StatefulWidget {
   const CircleButton(
@@ -21,9 +23,11 @@ class CircleButton extends StatefulWidget {
 class _CircleButtonState extends State<CircleButton> {
   @override
   Widget build(BuildContext context) {
+    final LocalNotificationController localNotificationController = Get.find();
     return ElevatedButton(
       onPressed: () {
-        widget.action();
+        localNotificationController.messaging = false.obs;
+        Get.back();
       },
       child: Container(
         width: 80,

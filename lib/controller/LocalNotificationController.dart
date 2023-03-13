@@ -1,7 +1,9 @@
 import "dart:developer";
 
+import "package:aeye/page/baby_monitor.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
+import "package:flutter/material.dart";
 import "package:flutter_local_notifications/flutter_local_notifications.dart";
 import "package:get/get.dart";
 
@@ -33,7 +35,32 @@ Future<void> firebaseMessagingBackgroundHandler(
 }
 
 class LocalNotificationController extends GetxController {
-  var messaging = false.obs;
+  RxBool messaging = false.obs;
+
+  void isOff() {
+    messaging = false.obs;
+    update();
+  }
+
+  void isOn() {
+    messaging = true.obs;
+    update();
+  }
+
+  BuildContext? _context = null;
+
+  void setContext(BuildContext context) {
+    _context = context;
+    update();
+  }
+
+  void getAlert() {
+    Get.to(() => BabyMonitor());
+  }
+
+  void removeAlert(BuildContext context) {
+    Navigator.pop(context);
+  }
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -55,8 +82,12 @@ class LocalNotificationController extends GetxController {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (NotificationResponse notification) {
       String payload = notification.payload ?? "missing title";
-      messaging = true.obs;
-      log(messaging.toString());
+      if (_context != null) {
+        log("work well");
+        getAlert();
+        log("erherhehehehe");
+        return;
+      }
 
       //알림페이지 들어갈 부분(foreground 일 때의 동작 -> context 이동하기)
 
@@ -97,6 +128,10 @@ class LocalNotificationController extends GetxController {
   void onMessageOpened() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       log("is background here");
+      if (_context != null) {
+        getAlert();
+        return;
+      }
     });
   }
 }

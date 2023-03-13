@@ -43,7 +43,7 @@ dependencies:
   toast: ^0.3.0
   socket_io_client: ^2.0.1
   flutter_webrtc: ^0.9.23
-  intl: ^0.18.0
+  intl: ^0.17.0
   simple_gesture_detector: ^0.2.0
   get: ^4.6.5
   syncfusion_flutter_charts: ^20.4.51
@@ -51,6 +51,9 @@ dependencies:
   permission_handler: ^10.2.0
   flutter_local_notifications: ^12.0.0
   firebase_messaging: ^14.2.6
+  firebase_ui_oauth_google: ^1.0.23
+  video_player: ^2.6.0
+  google_sign_in: ^6.0.2
 
 dev_dependencies:
   flutter_test:

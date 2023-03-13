@@ -1,5 +1,3 @@
-import "dart:developer";
-
 import 'package:aeye/controller/routeController.dart';
 import "package:aeye/page/baby_monitor.dart";
 import "package:aeye/page/emotion_diary.dart";
@@ -74,7 +72,6 @@ OutlinedButton NavComp(
               OutlinedButton.styleFrom(side: BorderSide(color: Colors.white)),
           onPressed: () {
             if (routeController.curPath.toString() == link) {
-              log("here");
               return;
             }
             curMethod();

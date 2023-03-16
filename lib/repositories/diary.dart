@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import "package:aeye/controller/loginController.dart";
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import 'package:http/http.dart' as http;
 
@@ -7,6 +8,7 @@ import "../asset/url.dart";
 
 class DiaryRepositories {
   FlutterSecureStorage storage = new FlutterSecureStorage();
+  LoginController loginController = new LoginController();
   //return {
   // data : {
   //   "1" : {
@@ -19,12 +21,23 @@ class DiaryRepositories {
   //}
 
   Future<Map<String, Map>> getDiaryMonth(int year, int month) async {
+    Map tokens = await loginController.getToken();
+    print(tokens["access"]);
+    print(tokens["refresh"]);
     Uri endPoint =
         Uri.parse('$HOST_URL/diary/month?year=${year}&month=${month}');
 
-    http.Response response =
-        await http.get(endPoint, headers: {"Content-Type": "application/json"});
+    http.Response response = await http.get(endPoint, headers: {
+      "Content-Type": "application/json",
+      "Authorization": tokens["access"],
+      "cookie": tokens["refresh"]
+    });
+    print(response);
+    print(response.statusCode);
+    print(response.body);
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
+    print("here");
+    print(result);
     return Map<String, Map>.from(result["result"]);
   }
 
@@ -36,6 +49,7 @@ class DiaryRepositories {
   // }
   // }
   Future<Map> postDiary(DateTime date, String text) async {
+    Map tokens = await loginController.getToken();
     Uri endPoint = Uri.parse('$HOST_URL/diary');
     var bodyEncoded = json.encode({
       "year": date.year,
@@ -45,7 +59,11 @@ class DiaryRepositories {
     });
 
     http.Response response = await http.post(endPoint,
-        body: bodyEncoded, headers: {"Content-Type": "application/json"});
+        body: bodyEncoded,
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": tokens["access"]
+        });
 
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return Map.from(result["result"]);
@@ -71,12 +89,17 @@ class DiaryRepositories {
   patchDiary(int id, String? text, String? emotion, String type
       //type = content or emotion
       ) async {
+    Map tokens = await loginController.getToken();
     Uri endPoint = Uri.parse('$HOST_URL/diary/${id}?type=${type}');
     Map body = type == "content" ? {"content": text} : {"emotion": emotion};
     var bodyEncoded = json.encode(body);
 
     http.Response response = await http.patch(endPoint,
-        body: bodyEncoded, headers: {"Content-Type": "application/json"});
+        body: bodyEncoded,
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": tokens["access"]
+        });
 
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
 
@@ -89,11 +112,14 @@ class DiaryRepositories {
   //  emotion : string
   // }
   getDiary(int id) async {
+    Map tokens = await loginController.getToken();
     Uri endPoint = Uri.parse('$HOST_URL/diary/${id}');
 
-    http.Response response =
-        await http.get(endPoint, headers: {"Content-Type": "application/json"});
-
+    http.Response response = await http.get(endPoint, headers: {
+      "Content-Type": "application/json",
+      "authorization": tokens["access"]
+    });
+    print(response);
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
 
     return result["result"];
@@ -113,19 +139,26 @@ class DiaryRepositories {
 //   }
 
   getDiaryResult(int? id) async {
+    Map tokens = await loginController.getToken();
     Uri endPoint = Uri.parse('$HOST_URL/diary/result/${id}');
-    http.Response response =
-        await http.get(endPoint, headers: {"Content-Type": "application/json"});
+    http.Response response = await http.get(endPoint, headers: {
+      "Content-Type": "application/json",
+      "authorization": tokens["access"]
+    });
 
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return result["result"];
   }
 
   getMonthlyResult(int year, int month) async {
+    Map tokens = await loginController.getToken();
     Uri endPoint =
         Uri.parse('$HOST_URL/diary/report?year=${year}&month=${month}');
-    http.Response response =
-        await http.get(endPoint, headers: {"Content-Type": "application/json"});
+    http.Response response = await http.get(endPoint, headers: {
+      "Content-Type": "application/json",
+      "authorization": tokens["access"]
+    });
+    print(response);
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
 
     return result["result"];

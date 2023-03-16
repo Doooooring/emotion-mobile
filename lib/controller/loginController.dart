@@ -10,10 +10,17 @@ class LoginController {
 
   //회원 가입
   Future<bool> signUp(String name, String email, String password) async {
+    print(name);
+    print(email);
+    print(password);
     Uri endPoint = Uri.parse('$HOST_URL/auth/signup');
     var bodyEncoded =
-        json.encode({"name": name, "email": email, "password": password});
-    http.Response response = await http.post(endPoint, body: bodyEncoded);
+        json.encode({"email": email, "name": name, "password": password});
+    http.Response response = await http.post(
+      endPoint,
+      headers: {"Content-Type": "application/json"},
+      body: bodyEncoded,
+    );
     if (response.statusCode == 200) {
       return true;
     } else {
@@ -24,23 +31,19 @@ class LoginController {
   //로그인
   Future<Map<String, String?>> signIn(String id, String password) async {
     Uri endPoint = Uri.parse('$HOST_URL/auth/login');
-    var bodyEncoded = json.encode({"id": id, "password": password});
+    var bodyEncoded = json.encode({"email": id, "password": password});
 
-    http.Response response = await http.post(endPoint, body: bodyEncoded);
+    http.Response response = await http.post(endPoint,
+        headers: {"Content-Type": "application/json"}, body: bodyEncoded);
     if (response.statusCode == 200) {
       String? rawCookie = response.headers["set-cookie"];
-      if (rawCookie == null) {
-        print("fail");
-        return {"access": null};
+      String? refreshToken = null;
+      if (rawCookie != null) {
+        int index = rawCookie.indexOf(";");
+        refreshToken = index == -1 ? rawCookie : rawCookie.substring(0, index);
       }
-      dynamic result = json.decode(utf8.decode(response.bodyBytes));
-      Map body = result["result"];
-      String accessToken = body["access_token"]!;
-      int index = rawCookie.indexOf(";");
-      String refreshToken =
-          index == -1 ? rawCookie : rawCookie.substring(0, index);
-      print(accessToken);
-      print(refreshToken);
+      dynamic body = json.decode(utf8.decode(response.bodyBytes));
+      String accessToken = body["accessToken"]!;
       await storage.write(key: "access", value: accessToken);
       await storage.write(key: "refresh", value: refreshToken);
       return {"access": accessToken, "refresh": refreshToken};
@@ -67,11 +70,11 @@ class LoginController {
     return isExpired;
   }
 
-  Future<String> getAccess() async {
-    Uri endPoint = Uri.parse('$HOST_URL/login');
-    http.Response response =
-        await http.get(endPoint); //header refresh onBoarding
-    return "";
+  Future<Map> getToken() async {
+    String? userInfo = await storage.read(key: "access");
+    String? refresh =
+        await storage.read(key: "refresh"); //header refresh onBoarding
+    return {"access": userInfo, "refresh": refresh};
   }
 
   Future<bool> getRefresh() async {

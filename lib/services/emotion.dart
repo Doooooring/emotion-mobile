@@ -16,6 +16,7 @@ class EmotionServices {
       setIsLoading(true);
     } catch (e) {
       //토스트업
+      print(e);
       setIsLoading(false);
     }
   }

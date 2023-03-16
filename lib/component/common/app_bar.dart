@@ -1,5 +1,5 @@
 import "package:aeye/controller/routeController.dart";
-import "package:aeye/page/emoticon_month_result.dart";
+import 'package:aeye/page/emotion/emoticon_month_result.dart';
 import "package:aeye/services/emotion.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";

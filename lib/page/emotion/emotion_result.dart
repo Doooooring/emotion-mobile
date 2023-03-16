@@ -2,7 +2,7 @@ import "dart:math" as math;
 
 import 'package:flutter/material.dart';
 
-import "../component/emoticon_diary/emotion/youtube_player.dart";
+import '../../component/emoticon_diary/emotion/youtube_player.dart';
 
 Map Month = {
   "1": "Jan",

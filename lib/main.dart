@@ -7,6 +7,7 @@ import "./controller/loginController.dart";
 import "./controller/routeController.dart";
 import "./controller/userController.dart";
 import './page/initial.dart';
+import "./page/login/login.dart";
 
 // late AndroidNotificationChannel channel;
 //
@@ -94,6 +95,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   FlutterSecureStorage storage = FlutterSecureStorage();
+  UserController userController = UserController();
+
   String? userInfo = null;
 
   _asyncMethod() async {
@@ -145,10 +148,12 @@ class _MyAppState extends State<MyApp> {
     // Get.put(widget.localNotificationController)..setContext(context);
     Get.put(LoginController());
     Get.put(RouteController());
-    Get.put(UserController());
+    Get.put(userController);
     Get.put(isAlert);
 
-    return GetMaterialApp(title: "aeye", home: InitialPage());
+    return GetMaterialApp(
+        title: "login",
+        home: userController.access == null ? InitialPage() : Login());
 
     // return GetBuilder<LocalNotificationController>(builder: (controller) {
     // return GetMaterialApp(title: "hey", home: Login());

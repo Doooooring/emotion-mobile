@@ -1,5 +1,8 @@
+import 'package:aeye/controller/loginController.dart';
 import "package:aeye/controller/routeController.dart";
 import "package:aeye/controller/sizeController.dart";
+import "package:aeye/controller/userController.dart";
+import "package:aeye/page/initial.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
@@ -9,6 +12,9 @@ class SignIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RouteController routeController = Get.find();
+    final LoginController loginController = Get.find();
+    final UserController userController = Get.find();
+
     TextEditingController idController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     return Scaffold(
@@ -89,7 +95,20 @@ class SignIn extends StatelessWidget {
                     )
                   ])),
               SizedBox(
-                  child: TextButton(onPressed: () {}, child: Text("sign in")))
+                  child: TextButton(
+                      onPressed: () async {
+                        Map<String, String?> tokens = await loginController
+                            .signIn(idController.text, passwordController.text);
+                        if (tokens["access"] != null) {
+                          String accessToken = tokens["access"]!;
+                          userController.getAccess(accessToken);
+                          Get.to(() => InitialPage());
+                        } else {
+                          print("fail");
+                          return;
+                        }
+                      },
+                      child: Text("sign in")))
             ],
           ),
         ),

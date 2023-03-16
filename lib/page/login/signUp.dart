@@ -1,3 +1,4 @@
+import "package:aeye/controller/loginController.dart";
 import "package:aeye/controller/routeController.dart";
 import "package:aeye/controller/sizeController.dart";
 import "package:flutter/material.dart";
@@ -9,8 +10,9 @@ class SignUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RouteController routeController = Get.find();
+    final LoginController loginController = Get.find();
     TextEditingController nameController = TextEditingController();
-    TextEditingController idController = TextEditingController();
+    TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
@@ -74,7 +76,7 @@ class SignUp extends StatelessWidget {
                           color: Colors.white,
                           width: scaleWidth(context, 240),
                           child: TextField(
-                            controller: idController,
+                            controller: emailController,
                             decoration: InputDecoration(
                                 hintText: "Write your id",
                                 labelStyle: TextStyle(
@@ -120,7 +122,20 @@ class SignUp extends StatelessWidget {
                     )
                   ])),
               SizedBox(
-                  child: TextButton(onPressed: () {}, child: Text("sign up")))
+                  child: TextButton(
+                      onPressed: () async {
+                        bool result = await loginController.signUp(
+                            nameController.text,
+                            emailController.text,
+                            passwordController.text);
+                        if (result) {
+                          print(result);
+                          Get.back();
+                        } else {
+                          print("fail");
+                        }
+                      },
+                      child: Text("sign up")))
             ],
           ),
         ),

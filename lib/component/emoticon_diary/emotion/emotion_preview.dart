@@ -1,8 +1,8 @@
 import "package:aeye/controller/sizeController.dart";
-import "package:aeye/page/emotion_comment.dart";
+import 'package:aeye/page/emotion/emotion_comment.dart';
 import "package:flutter/material.dart";
 
-import "../../../page/emotion_result.dart";
+import '../../../page/emotion/emotion_result.dart';
 import "../../../services/emotion.dart";
 
 EmotionServices emotionService = new EmotionServices();

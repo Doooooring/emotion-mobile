@@ -1,7 +1,7 @@
 import "package:firebase_messaging/firebase_messaging.dart";
 import "package:get/get.dart";
 
-class NotificationController {
+class NotificationController extends GetxController {
   static NotificationController get to => Get.find();
 
   // 최신버전의 초기화 방법

@@ -9,14 +9,14 @@ GoogleSignIn _googleSignIn = GoogleSignIn(
   hostedDomain: "http://api.a-eye.co.kr/login/oauth2/code/google",
 );
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class LoginGoogle extends StatefulWidget {
+  const LoginGoogle({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginGoogle> createState() => _LoginGoogleState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginGoogleState extends State<LoginGoogle> {
   GoogleSignInAccount? _currentUser;
   String _contactText = '';
 

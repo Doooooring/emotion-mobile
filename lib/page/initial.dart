@@ -11,7 +11,8 @@ import 'package:url_launcher/url_launcher.dart';
 import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
 import "../component/common/loading_proto.dart";
-import "../page/loginGoogle.dart";
+import 'login/login.dart';
+import 'login/loginGoogle.dart';
 
 final dio = Dio();
 
@@ -81,6 +82,11 @@ class InitialPage extends StatelessWidget {
               dynamic result = json.decode(utf8.decode(response.bodyBytes));
             },
             icon: Icon(Icons.add)),
+        IconButton(
+            onPressed: () {
+              Get.to(LoginGoogle());
+            },
+            icon: Icon(Icons.ac_unit)),
         IconButton(
             onPressed: () {
               Get.to(Login());

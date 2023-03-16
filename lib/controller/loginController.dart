@@ -48,6 +48,15 @@ class LoginController {
     return isExpired;
   }
 
+  Future<bool> checkRefresh() async {
+    String? refreshToken = await storage.read(key: "refresh");
+    if (refreshToken == null) {
+      return false;
+    }
+    bool isExpired = Jwt.isExpired(refreshToken);
+    return isExpired;
+  }
+
   Future<String> getAccess() async {
     Uri endPoint = Uri.parse('$HOST_URL/login');
     http.Response response =

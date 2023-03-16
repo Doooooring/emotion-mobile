@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:get/get.dart";
 
+import "./controller/loginController.dart";
 import "./controller/routeController.dart";
+import "./controller/userController.dart";
 import './page/initial.dart';
 
 // late AndroidNotificationChannel channel;
@@ -106,9 +108,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _asyncMethod();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _asyncMethod();
+    // });
 
     // widget.localNotificationController.onMessage();
     // widget.localNotificationController.onMessageOpened();
@@ -141,7 +143,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     // Get.put(widget.localNotificationController)..setContext(context);
+    Get.put(LoginController());
     Get.put(RouteController());
+    Get.put(UserController());
     Get.put(isAlert);
 
     return GetMaterialApp(title: "aeye", home: InitialPage());

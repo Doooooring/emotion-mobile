@@ -122,8 +122,17 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
         ),
         SizedBox(height: 20),
         PreviewBoxBody(context, content),
-        ButtonToComment(
-            context, widget.date.year, widget.date.month, widget.date.day)
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.only(left: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ButtonToComment(context, widget.date.year, widget.date.month,
+                  widget.date.day),
+            ],
+          ),
+        )
       ]),
     );
   }
@@ -310,5 +319,5 @@ TextButton ButtonToComment(BuildContext context, int year, int month, int day) {
                 builder: (context) =>
                     EmotionComment(year: year, month: month, day: day)));
       },
-      child: Text("View comments"));
+      child: Text("View comments", style: TextStyle(color: Colors.grey)));
 }

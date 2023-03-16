@@ -1,49 +1,44 @@
-import "package:aeye/controller/LocalNotificationController.dart";
-import 'package:aeye/page/baby_monitor.dart';
-import "package:firebase_core/firebase_core.dart";
-import "package:firebase_messaging/firebase_messaging.dart";
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import "package:flutter_local_notifications/flutter_local_notifications.dart";
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:get/get.dart";
 
 import "./controller/routeController.dart";
 import './page/initial.dart';
-import "./page/login.dart";
 
-late AndroidNotificationChannel channel;
-
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(
-  RemoteMessage message,
-) async {
-  await Firebase.initializeApp();
-  String title = message.notification?.title ?? "title missing";
-  String body = message.notification?.body ?? "body missing";
-  NotificationDetails platformChannelSpecifics = NotificationDetails(
-    android: AndroidNotificationDetails(
-      "Baby fall",
-      "High_Importance_Notifications",
-      priority: Priority.max,
-      importance: Importance.max,
-    ),
-  );
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-  flutterLocalNotificationsPlugin.show(
-    message.notification.hashCode,
-    message.notification?.title,
-    message.notification?.body,
-    platformChannelSpecifics,
-  );
-}
+// late AndroidNotificationChannel channel;
+//
+// @pragma('vm:entry-point')
+// Future<void> firebaseMessagingBackgroundHandler(
+//   RemoteMessage message,
+// ) async {
+//   await Firebase.initializeApp();
+//   String title = message.notification?.title ?? "title missing";
+//   String body = message.notification?.body ?? "body missing";
+//   NotificationDetails platformChannelSpecifics = NotificationDetails(
+//     android: AndroidNotificationDetails(
+//       "Baby fall",
+//       "High_Importance_Notifications",
+//       priority: Priority.max,
+//       importance: Importance.max,
+//     ),
+//   );
+//   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//       FlutterLocalNotificationsPlugin();
+//   flutterLocalNotificationsPlugin.show(
+//     message.notification.hashCode,
+//     message.notification?.title,
+//     message.notification?.body,
+//     platformChannelSpecifics,
+//   );
+// }
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
 
-  LocalNotificationController localNotificationController =
-      LocalNotificationController();
-  await localNotificationController.initialize();
+  // LocalNotificationController localNotificationController =
+  //     LocalNotificationController();
+  // await localNotificationController.initialize();
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform,
   // );
@@ -77,14 +72,12 @@ void main() async {
   //   sound: true,
   // );
 
-  runApp(MyApp(localNotificationController: localNotificationController));
+  // runApp(MyApp(localNotificationController: localNotificationController));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key, required this.localNotificationController})
-      : super(key: key);
-
-  final LocalNotificationController localNotificationController;
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -98,10 +91,27 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  FlutterSecureStorage storage = FlutterSecureStorage();
+  String? userInfo = null;
+
+  _asyncMethod() async {
+    userInfo = await storage.read(key: "access");
+    if (userInfo != null) {
+      Get.to(InitialPage());
+    } else {
+      print("Need login authorization");
+    }
+  }
+
   @override
   void initState() {
-    widget.localNotificationController.onMessage();
-    widget.localNotificationController.onMessageOpened();
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
+
+    // widget.localNotificationController.onMessage();
+    // widget.localNotificationController.onMessageOpened();
     // FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
     //   RemoteNotification? notification = message.notification;
     //   NotificationDetails platformChannelSpecifics = NotificationDetails(
@@ -125,26 +135,26 @@ class _MyAppState extends State<MyApp> {
     // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
     //   log("is background here");
     // });
-    super.initState();
+    //  super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(widget.localNotificationController)..setContext(context);
+    // Get.put(widget.localNotificationController)..setContext(context);
     Get.put(RouteController());
     Get.put(isAlert);
 
-    return GetBuilder<LocalNotificationController>(builder: (controller) {
-      return GetMaterialApp(title: "hey", home: Login());
+    return GetMaterialApp(title: "aeye", home: InitialPage());
 
-      if (controller.messaging.toString() == "true") {
-        return GetMaterialApp(title: "baby", home: BabyMonitor());
-      } else {
-        return GetMaterialApp(title: "aeye", home: InitialPage());
-      }
-      return widget.localNotificationController.messaging.toString() == "true"
-          ? GetMaterialApp(title: "baby", home: BabyMonitor())
-          : GetMaterialApp(title: "aeye", home: InitialPage());
-    });
+    // return GetBuilder<LocalNotificationController>(builder: (controller) {
+    // return GetMaterialApp(title: "hey", home: Login());
+    // return GetMaterialApp(title: "aeye", home: InitialPage());
+
+    //   if (controller.messaging.toString() == "true") {
+    //     return GetMaterialApp(title: "baby", home: BabyMonitor());
+    //   } else {
+    //     return GetMaterialApp(title: "aeye", home: InitialPage());
+    //   }
+    // });
   }
 }

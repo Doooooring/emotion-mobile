@@ -2,8 +2,8 @@ import "package:aeye/controller/routeController.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+class PrimarySignUp extends StatelessWidget {
+  const PrimarySignUp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,13 +11,13 @@ class Login extends StatelessWidget {
     return Scaffold(
       body: SizedBox(
           child: Column(children: [
-        Container(),
+        Container(
+            child: Column(children: [
+          Text("Pass this verification code"),
+          Text("to secondary caregiver")
+        ])),
         SizedBox(),
-        SizedBox(
-            child: Row(children: [
-          OutlinedButton(onPressed: () {}, child: SizedBox()),
-          OutlinedButton(onPressed: () {}, child: SizedBox())
-        ]))
+        SizedBox(child: Row(children: [TextField()]))
       ])),
     );
   }

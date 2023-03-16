@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import 'package:http/http.dart' as http;
 
 import "../asset/url.dart";
 
 class DiaryRepositories {
+  FlutterSecureStorage storage = new FlutterSecureStorage();
   //return {
   // data : {
   //   "1" : {
@@ -70,9 +72,7 @@ class DiaryRepositories {
       //type = content or emotion
       ) async {
     Uri endPoint = Uri.parse('$HOST_URL/diary/${id}?type=${type}');
-
     Map body = type == "content" ? {"content": text} : {"emotion": emotion};
-
     var bodyEncoded = json.encode(body);
 
     http.Response response = await http.patch(endPoint,
@@ -123,10 +123,9 @@ class DiaryRepositories {
 
   getMonthlyResult(int year, int month) async {
     Uri endPoint =
-    Uri.parse('$HOST_URL/diary/report?year=${year}&month=${month}');
-    http.Response response = await http.get(endPoint, headers: {
-      "Content-Type": "application/json"
-    });
+        Uri.parse('$HOST_URL/diary/report?year=${year}&month=${month}');
+    http.Response response =
+        await http.get(endPoint, headers: {"Content-Type": "application/json"});
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
 
     return result["result"];

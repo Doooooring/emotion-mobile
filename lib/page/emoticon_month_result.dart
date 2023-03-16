@@ -38,7 +38,6 @@ List<String> PositiveList = [
   "calm",
   "content",
   "goodSurprised",
-  "anticipated"
 ];
 
 List<String> NegativeList = [
@@ -50,6 +49,14 @@ List<String> NegativeList = [
   "tired",
   "badSurprised",
 ];
+
+List<String> NeutralList = ["anticipate"];
+
+Map<String, List> sentimentMap = {
+  "0": PositiveList,
+  "1": NeutralList,
+  "2": NegativeList
+};
 
 class EmoticonMonthResult extends StatelessWidget {
   const EmoticonMonthResult(
@@ -69,53 +76,54 @@ class EmoticonMonthResult extends StatelessWidget {
     Map monthlyEmotion = data["monthlyEmotion"];
 
     return Scaffold(
-        body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            physics: ClampingScrollPhysics(),
-            child: Container(
-                width: double.infinity,
-                padding: EdgeInsets.only(bottom: 100),
-                color: Color(0xffFFF7DF),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          child: Column(children: [
-                        SizedBox(height: 80),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 100,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                      iconSize: 30,
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      icon: Icon(Icons.arrow_back_ios_new),
-                                      color: Colors.black),
-                                ],
-                              ),
+      body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
+          child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(bottom: 100),
+              color: Color(0xffFFF7DF),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        child: Column(children: [
+                      SizedBox(height: 80),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                IconButton(
+                                    iconSize: 30,
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(Icons.arrow_back_ios_new),
+                                    color: Colors.black),
+                              ],
                             ),
-                            Text("${mon} ${year}",
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.grey)),
-                            SizedBox(
-                              width: 100,
-                            )
-                          ],
-                        ),
-                        Text("Monthly Report", style: TextStyle(fontSize: 30)),
-                        SizedBox(height: 20)
-                      ])),
-                      ChartWrapper(
-                          sentimentalLevel: sentimentalLevel,
-                          emotionHistogram: emotionHistogram,
-                          monthlyEmotion: monthlyEmotion),
-                    ]))));
+                          ),
+                          Text("${mon} ${year}",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.grey)),
+                          SizedBox(
+                            width: 100,
+                          )
+                        ],
+                      ),
+                      Text("Monthly Report", style: TextStyle(fontSize: 30)),
+                      SizedBox(height: 20)
+                    ])),
+                    ChartWrapper(
+                        sentimentalLevel: sentimentalLevel,
+                        emotionHistogram: emotionHistogram,
+                        monthlyEmotion: monthlyEmotion),
+                  ]))),
+    );
   }
 }
 
@@ -208,9 +216,11 @@ class _ChartWrapperState extends State<ChartWrapper> {
                       Color(0xffEC5313))
                 ])
               ])),
-          EmotionStatic(
-              emotionHistogram: widget.emotionHistogram,
-              bestEmotion: bestEmotion),
+          // EmotionStatic(
+          //     emotionHistogram: widget.emotionHistogram,
+          //     bestEmotion: bestEmotion),
+          SentimentEmotion(
+              curIdx: curIdx, emotionHistogram: widget.emotionHistogram),
           SizedBox(height: 20),
           Container(
               padding: EdgeInsets.only(left: 20),
@@ -457,70 +467,111 @@ class _EmotionEachState extends State<EmotionEach> {
   }
 }
 
+class SentimentEmotion extends StatefulWidget {
+  const SentimentEmotion(
+      {Key? key, required this.curIdx, required this.emotionHistogram})
+      : super(key: key);
+
+  final int curIdx;
+  final Map emotionHistogram;
+
+  @override
+  State<SentimentEmotion> createState() => _SentimentEmotionState();
+}
+
+class _SentimentEmotionState extends State<SentimentEmotion> {
+  @override
+  Widget build(BuildContext context) {
+    Map<String, Color> colorMap = {
+      "0": Color(0xff4FB600),
+      "1": Color(0xffFFB600),
+      "2": Color(0xffEC5313)
+    };
+
+    if (widget.curIdx == -1) {
+      return Container(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+            Text("Click chart and view more details", style: TextStyle())
+          ]));
+    }
+
+    List curList = sentimentMap[widget.curIdx.toString()]!;
+    Color curColor = colorMap[widget.curIdx.toString()]!;
+
+    return Container(
+        padding: EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+            children: curList.map((emotion) {
+          print(emotion);
+          return EmotionRow(
+              emotion: emotion,
+              color: curColor,
+              num: widget.emotionHistogram[emotion]);
+        }).toList()));
+  }
+}
+
+class EmotionRow extends StatefulWidget {
+  const EmotionRow(
+      {Key? key, required this.emotion, required this.color, required this.num})
+      : super(key: key);
+
+  final String emotion;
+  final Color color;
+  final int num;
+
+  @override
+  State<EmotionRow> createState() => _EmotionRowState();
+}
+
+class _EmotionRowState extends State<EmotionRow> {
+  @override
+  Widget build(BuildContext context) {
+    String curEmotion = "assets/images/${widget.emotion}-1.png";
+    double width = 400 * (widget.num / 31);
+
+    return Container(
+        padding: EdgeInsets.only(
+          bottom: 10,
+          top: 10,
+        ),
+        child: Row(children: [
+          Image.asset(width: 30, height: 30, curEmotion),
+          SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(widget.emotion,
+                  style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600)),
+              SizedBox(height: 5),
+              Row(
+                children: [
+                  Container(
+                    color: widget.color,
+                    width: width,
+                    height: 20,
+                  ),
+                  SizedBox(width: widget.num == 0 ? 0 : 10),
+                  Text(widget.num.toString(),
+                      style: TextStyle(color: widget.color, fontSize: 18))
+                ],
+              )
+            ],
+          )
+        ]));
+  }
+}
+
 class _CircularData {
   _CircularData(this.emotion, this.data, this.pointColor);
 
   final String emotion;
   final int data;
   final Color pointColor;
-}
-
-class Histogram extends StatefulWidget {
-  const Histogram({Key? key, required this.emotionHistogram}) : super(key: key);
-
-  final Map<String, int> emotionHistogram;
-
-  @override
-  State<Histogram> createState() => _HistogramState();
-}
-
-class _HistogramState extends State<Histogram> {
-  String curClicked = "excited";
-  void setCurClicked(String curEmotion) {
-    setState(() {
-      curClicked = curEmotion;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    int curIndex = emotionList.indexOf(curClicked);
-
-    return Column(children: [
-      SizedBox(
-          width: double.infinity,
-          child: Transform.translate(
-              offset: Offset(curIndex * 20, 0), child: Text(curClicked))),
-      SizedBox(child: Row(children: []))
-    ]);
-  }
-}
-
-class HistoStick extends StatefulWidget {
-  const HistoStick({Key? key, required this.emotion}) : super(key: key);
-
-  final String emotion;
-
-  @override
-  State<HistoStick> createState() => _HistoStickState();
-}
-
-class _HistoStickState extends State<HistoStick> {
-  @override
-  Widget build(BuildContext context) {
-    List<String> positiveList = [
-      "excited",
-      "happy",
-      "content",
-      "calm",
-      "good_surprised",
-      "relaxed"
-    ];
-
-    Color stickColor = positiveList.contains(widget.emotion)
-        ? Color(0xff4FB600)
-        : Color(0xffEC5313);
-
-    return SizedBox();
-  }
 }

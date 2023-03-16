@@ -1,4 +1,3 @@
-import 'package:aeye/controller/LocalNotificationController.dart';
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
 
@@ -22,7 +21,7 @@ class CalendarWrapper extends StatefulWidget {
 
 class _CalendarWrapperState extends State<CalendarWrapper> {
   final RouteController routeController = Get.find();
-  final LocalNotificationController localNotificationController = Get.find();
+  // final LocalNotificationController localNotificationController = Get.find();
 
   DateTime dateSelected = DateTime.now();
   void setDateSelected(DateTime date) {

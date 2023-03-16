@@ -5,7 +5,6 @@ import "package:get/get.dart";
 
 import "../component/baby_monitor/alert.dart";
 import "../component/common/app_bar.dart";
-import "../controller/LocalNotificationController.dart";
 import "../controller/routeController.dart";
 
 class BabyMonitor extends StatelessWidget {
@@ -14,10 +13,10 @@ class BabyMonitor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RouteController routeController = Get.find();
-    final LocalNotificationController localNotificationController = Get.find();
+    // final LocalNotificationController localNotificationController = Get.find();
 
     log("here");
-    log(localNotificationController.messaging.toString());
+    // log(localNotificationController.messaging.toString());
 
     return Scaffold(
       appBar: Header(null),

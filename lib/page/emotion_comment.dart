@@ -67,36 +67,40 @@ class _EmotionCommentState extends State<EmotionComment> {
     _CommentPageData curData = _CommentPageData.fromJson(dataJson);
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: Header(widget.month, widget.day),
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
           FocusScope.of(context).requestFocus(new FocusNode());
         },
-        child: Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 30),
-            child: Column(children: [
-              Container(
-                height: scaleHeight(context, 600),
-                child: SingleChildScrollView(
-                  child: Container(
-                      child: Column(children: [
-                    EmotionPreview(
-                        year: widget.year,
-                        month: widget.month,
-                        day: widget.day,
-                        emotion: curData.emotion,
-                        diary: curData.diary),
-                    Column(
-                      children: curData.comment.map((_Comment data) {
-                        return CommentLabel(context, data);
-                      }).toList(),
-                    ),
-                  ])),
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Container(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 30),
+              child: Column(children: [
+                Container(
+                  height: scaleHeight(context, 600),
+                  child: SingleChildScrollView(
+                    child: Container(
+                        child: Column(children: [
+                      EmotionPreview(
+                          year: widget.year,
+                          month: widget.month,
+                          day: widget.day,
+                          emotion: curData.emotion,
+                          diary: curData.diary),
+                      Column(
+                        children: curData.comment.map((_Comment data) {
+                          return CommentLabel(context, data);
+                        }).toList(),
+                      ),
+                    ])),
+                  ),
                 ),
-              ),
-              CommentInput()
-            ])),
+                CommentInput()
+              ])),
+        ),
       ),
     );
   }

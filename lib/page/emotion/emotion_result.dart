@@ -93,12 +93,13 @@ class _DailReportState extends State<DailReport> {
             color: Color(0xffFFF6DA),
             child: Column(children: [
               Container(
+                  padding: EdgeInsets.only(left: 50, right: 50),
                   child: Column(children: [
-                SizedBox(height: 20),
-                Image.asset(emotionLink, width: 90),
-                SizedBox(height: 10),
-                Text(widget.emotionText, style: TextStyle(fontSize: 20))
-              ])),
+                    SizedBox(height: 20),
+                    Image.asset(emotionLink, width: 90),
+                    SizedBox(height: 10),
+                    Text(widget.emotionText, style: TextStyle(fontSize: 20))
+                  ])),
               SizedBox(height: 20),
               Container(
                   width: 340,

@@ -26,12 +26,24 @@ class SignIn extends StatelessWidget {
         child: Container(
           width: double.infinity,
           height: double.infinity,
-          padding: EdgeInsets.only(left: 80, right: 30),
+          padding: EdgeInsets.only(left: 30, right: 30),
           color: Color(0xffFFF7DF),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: scaleHeight(context, 200)),
+              SizedBox(height: scaleHeight(context, 80)),
+              IconButton(
+                  padding: EdgeInsets.zero, // 패딩 설정
+                  constraints: BoxConstraints(),
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(Icons.arrow_back_ios)),
+              SizedBox(height: 15),
+              SizedBox(
+                  child: Text("Sign in with your email",
+                      style: TextStyle(fontSize: 25))),
+              SizedBox(height: scaleHeight(context, 40)),
               Container(
                   padding: EdgeInsets.only(),
                   decoration: BoxDecoration(
@@ -43,15 +55,16 @@ class SignIn extends StatelessWidget {
                       children: [
                         SizedBox(
                             width: scaleWidth(context, 120),
-                            child: Text("id", style: TextStyle(fontSize: 20))),
+                            child:
+                                Text("Email", style: TextStyle(fontSize: 20))),
                         SizedBox(height: 10),
                         Container(
                           color: Colors.white,
-                          width: scaleWidth(context, 240),
+                          width: double.infinity,
                           child: TextField(
                             controller: idController,
                             decoration: InputDecoration(
-                                hintText: "Write your id",
+                                hintText: "Write your email",
                                 labelStyle: TextStyle(
                                     color: Color.fromRGBO(50, 50, 50, 0.4)),
                                 enabledBorder: OutlineInputBorder(
@@ -71,12 +84,12 @@ class SignIn extends StatelessWidget {
                       children: [
                         SizedBox(
                             width: scaleWidth(context, 120),
-                            child: Text("password",
+                            child: Text("Password",
                                 style: TextStyle(fontSize: 20))),
                         SizedBox(height: scaleHeight(context, 10)),
                         Container(
                             color: Colors.white,
-                            width: scaleWidth(context, 240),
+                            width: double.infinity,
                             child: TextField(
                               controller: passwordController,
                               decoration: InputDecoration(

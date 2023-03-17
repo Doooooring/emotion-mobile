@@ -36,6 +36,7 @@ List<String> PositiveList = [
   "excited",
   "happy",
   "calm",
+  "relaxed",
   "content",
   "goodSurprised",
 ];
@@ -44,7 +45,6 @@ List<String> NegativeList = [
   "tense",
   "angry",
   "sad",
-  "relaxed",
   "bored",
   "tired",
   "badSurprised",
@@ -81,48 +81,46 @@ class EmoticonMonthResult extends StatelessWidget {
           physics: ClampingScrollPhysics(),
           child: Container(
               width: double.infinity,
+              height: 1300,
               padding: EdgeInsets.only(bottom: 100),
               color: Color(0xffFFF7DF),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        child: Column(children: [
-                      SizedBox(height: 80),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: 100,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                IconButton(
-                                    iconSize: 30,
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    icon: Icon(Icons.arrow_back_ios_new),
-                                    color: Colors.black),
-                              ],
-                            ),
-                          ),
-                          Text("${mon} ${year}",
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.grey)),
-                          SizedBox(
-                            width: 100,
-                          )
-                        ],
+              child: Column(children: [
+                Container(
+                    child: Column(children: [
+                  SizedBox(height: 80),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                iconSize: 30,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(Icons.arrow_back_ios_new),
+                                color: Colors.black),
+                          ],
+                        ),
                       ),
-                      Text("Monthly Report", style: TextStyle(fontSize: 30)),
-                      SizedBox(height: 20)
-                    ])),
-                    ChartWrapper(
-                        sentimentalLevel: sentimentalLevel,
-                        emotionHistogram: emotionHistogram,
-                        monthlyEmotion: monthlyEmotion),
-                  ]))),
+                      Text("${mon} ${year}",
+                          style: TextStyle(fontSize: 20, color: Colors.grey)),
+                      SizedBox(
+                        width: 100,
+                      )
+                    ],
+                  ),
+                  Text("Monthly Report", style: TextStyle(fontSize: 30)),
+                  SizedBox(height: 20)
+                ])),
+                ChartWrapper(
+                    sentimentalLevel: sentimentalLevel,
+                    emotionHistogram: emotionHistogram,
+                    monthlyEmotion: monthlyEmotion),
+              ]))),
     );
   }
 }
@@ -299,7 +297,7 @@ class _CircularChartState extends State<CircularChart> {
               return Container(
                   height: 13,
                   width: widget.curIdx == -1 || pointIndex == widget.curIdx
-                      ? 15
+                      ? 16
                       : 500,
                   child: Text(data.data.toString(),
                       style: TextStyle(

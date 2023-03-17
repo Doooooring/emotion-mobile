@@ -32,9 +32,6 @@ class DiaryRepositories {
       "Authorization": tokens["access"],
       "cookie": tokens["refresh"]
     });
-    print(response);
-    print(response.statusCode);
-    print(response.body);
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
     print("here");
     print(result);

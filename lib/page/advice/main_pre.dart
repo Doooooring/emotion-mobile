@@ -2,7 +2,7 @@ import "package:aeye/component/common/app_bar.dart";
 import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/controller/sizeController.dart";
 import "package:aeye/page/advice/pop_up_select.dart";
-import "package:aeye/page/advice/temperament_explain.dart";
+import "package:aeye/page/advice/temperament_detail.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
@@ -22,9 +22,9 @@ class MainPre extends StatelessWidget {
         SizedBox(
             child: Column(children: [
           NavigatorButton(scaleWidth(context, 200), "What is temperament?",
-              PopUpSelect(), Color(0xffE2E2E2)),
+              TemperamentDetail(), Color(0xffE2E2E2)),
           NavigatorButton(scaleWidth(context, 200), "Add Temperament info",
-              TemperamentExplain(), Color(0xffFFF7DF))
+              PopUpSelect(), Color(0xffFFF7DF))
         ]))
       ])),
       bottomNavigationBar: BottomNavBar(state: true),

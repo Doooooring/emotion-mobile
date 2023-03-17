@@ -152,6 +152,7 @@ class _MyAppState extends State<MyApp> {
     Get.put(isAlert);
 
     return GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         title: "login",
         home: userController.access == null ? InitialPage() : Login());
 

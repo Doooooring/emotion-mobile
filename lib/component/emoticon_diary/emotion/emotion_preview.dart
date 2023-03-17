@@ -97,10 +97,10 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
         id == null ? Color.fromRGBO(250, 250, 250, 0.2) : Color(0xffFFF6DA);
 
     return Container(
-      padding: EdgeInsets.only(bottom: 30),
-      width: 400,
+      padding: EdgeInsets.only(top: 15, bottom: 30),
+      width: 380,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(50),
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
@@ -177,7 +177,7 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Image.asset(width: 40, height: 40, widget.emotion),
+                  Image.asset(width: 50, height: 50, widget.emotion),
                   SizedBox(
                     width: scaleWidth(context, 30),
                   ),
@@ -302,7 +302,7 @@ Container PreviewBoxBody(BuildContext context, String text) {
           left: scaleWidth(context, 20), right: scaleWidth(context, 20)),
       child: Text(
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.w400,
           height: 1.5,
         ),

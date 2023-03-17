@@ -19,6 +19,12 @@ Map Month = {
   "12": "Dec"
 };
 
+// {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
+// {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
+// {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
+// {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
+// {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"}
+
 class EmotionComment extends StatefulWidget {
   const EmotionComment({
     Key? key,
@@ -45,26 +51,37 @@ class EmotionComment extends StatefulWidget {
  */
 
 class _EmotionCommentState extends State<EmotionComment> {
+  List<_Comment> curComment = [];
+  void setCurComment(_Comment comment) {
+    setState(() {
+      curComment.add(comment);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController();
+
     Map dataJson = {
-      "emotion": "excited-2",
-      "diary": "Liam took care of Mark instead of me. I had a day off XD",
+      "emotion": "content-3",
+      "diary": "Liam took care of Mark instead of me. I had a day off XD.",
       "comment": [
         {
-          "date": "Feb 18 2023",
+          "date": "Mar 17 2023",
           "type": "sub",
-          "comment": "Liam took care of Mark instead of me. I had a day off XD"
-        },
-        {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
-        {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
-        {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
-        {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
-        {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"}
+          "comment": "No problem honey! I am glad you got rest."
+        }
       ]
     };
 
     _CommentPageData curData = _CommentPageData.fromJson(dataJson);
+    // if (curComment.length == 0) {
+    //   setCurComment(curData.comment[0]);
+    // }
+
+    void removeFocus(BuildContext context) {
+      FocusScope.of(context).requestFocus(new FocusNode());
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -72,35 +89,37 @@ class _EmotionCommentState extends State<EmotionComment> {
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
+          removeFocus(context);
         },
-        child: SingleChildScrollView(
-          physics: ClampingScrollPhysics(),
-          child: Container(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 30),
-              child: Column(children: [
-                Container(
-                  height: scaleHeight(context, 600),
-                  child: SingleChildScrollView(
-                    child: Container(
-                        child: Column(children: [
-                      EmotionPreview(
-                          year: widget.year,
-                          month: widget.month,
-                          day: widget.day,
-                          emotion: curData.emotion,
-                          diary: curData.diary),
-                      Column(
-                        children: curData.comment.map((_Comment data) {
-                          return CommentLabel(context, data);
-                        }).toList(),
-                      ),
-                    ])),
-                  ),
+        child: Container(
+            padding: EdgeInsets.only(left: 20, right: 20, top: 30),
+            child: Stack(children: [
+              Container(
+                child: SingleChildScrollView(
+                  child: Container(
+                      child: Column(children: [
+                    EmotionPreview(
+                        year: widget.year,
+                        month: widget.month,
+                        day: widget.day,
+                        emotion: curData.emotion,
+                        diary: curData.diary),
+                    Column(
+                      children: curComment.map((_Comment data) {
+                        return CommentLabel(context, data);
+                      }).toList(),
+                    ),
+                  ])),
                 ),
-                CommentInput()
-              ])),
-        ),
+              ),
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.only(bottom: 20),
+                  alignment: Alignment.bottomCenter,
+                  child: CommentInput(controller, setCurComment, curComment,
+                      context, removeFocus))
+            ])),
       ),
     );
   }
@@ -199,37 +218,70 @@ Container CommentBox(
       ]));
 }
 
-Container CommentInput() {
-  return Container(
-      height: 70,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey.withOpacity(1),
-                blurRadius: 1,
-                spreadRadius: 0,
-                offset: Offset(0, 0))
-          ],
-          borderRadius: BorderRadius.circular(45)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextFormField(
-            scrollPadding: EdgeInsets.all(0),
-            style:
-                TextStyle(fontSize: 18, color: Color.fromRGBO(50, 50, 50, 0.4)),
-            decoration: InputDecoration(
-                hintText: "Add A Comment",
-                labelStyle: TextStyle(color: Color.fromRGBO(50, 50, 50, 0.4)),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 0, color: Colors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(width: 0, color: Colors.white))),
-          ),
-        ],
-      ));
+Row CommentInput(
+    TextEditingController controller,
+    void Function(_Comment) setCurComment,
+    List<_Comment> curComment,
+    BuildContext context,
+    void Function(BuildContext) removeFocus) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Container(
+          width: 320,
+          height: 70,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.grey.withOpacity(1),
+                    blurRadius: 1,
+                    spreadRadius: 0,
+                    offset: Offset(0, 0))
+              ],
+              borderRadius: BorderRadius.circular(45)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: controller,
+                scrollPadding: EdgeInsets.all(0),
+                style: TextStyle(fontSize: 18, color: Colors.black),
+                decoration: InputDecoration(
+                    hintText: "Add A Comment",
+                    labelStyle:
+                        TextStyle(color: Color.fromRGBO(50, 50, 50, 0.4)),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(width: 0, color: Colors.white),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 0, color: Colors.white))),
+              ),
+            ],
+          )),
+      IconButton(
+          onPressed: () {
+            _Comment cur1 = _Comment.fromJson({
+              "date": "Mar 17 2023",
+              "type": "sub",
+              "comment": "No problem honey! I am glad you got rest."
+            });
+
+            _Comment cur2 = _Comment.fromJson({
+              "date": "Mar 17 2023",
+              "type": "main",
+              "comment": "Your so sweet~"
+            });
+            if (curComment.length == 0) {
+              setCurComment(cur1);
+            } else {
+              setCurComment(cur2);
+            }
+            removeFocus(context);
+          },
+          icon: Icon(Icons.send))
+    ],
+  );
 }
 
 // data type
@@ -244,9 +296,11 @@ class _CommentPageData {
     String emotion = data["emotion"];
     String diary = data["diary"];
 
-    List<_Comment> comments = data["comment"].map<_Comment>((Map comment) {
-      return _Comment.fromJson(comment);
-    }).toList();
+    List<_Comment> comments = data["comment"].length == 0
+        ? []
+        : data["comment"].map<_Comment>((Map comment) {
+            return _Comment.fromJson(comment);
+          }).toList();
 
     return _CommentPageData(emotion, diary, comments);
   }

@@ -1,3 +1,4 @@
+import "package:aeye/component/common/button_back.dart";
 import "package:flutter/material.dart";
 
 class Explain {
@@ -83,6 +84,7 @@ class _TemperamentExplainState extends State<TemperamentExplain> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      ButtonBack(),
                       SizedBox(
                           width: double.infinity,
                           child: Row(

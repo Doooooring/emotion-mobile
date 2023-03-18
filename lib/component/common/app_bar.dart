@@ -10,7 +10,25 @@ AppBar Header(DateTime? curDate) {
   final RouteController routeController = Get.find();
   final String curPath = routeController.curPath.toString();
 
-  final String title = curPath == "emotionDiary" ? "Diary" : "Baby Monitor";
+  String title = "";
+
+  switch (curPath) {
+    case ("init"):
+      title = "A-eye";
+      break;
+    case ("emotionDiary"):
+      title = "Diary";
+      break;
+    case ("babyMonitor"):
+      title = "Baby Monitor";
+      break;
+    case ("advice"):
+      title = "Advice";
+      break;
+    default:
+      break;
+  }
+  ;
 
   if (curPath == "init") {
     return AppBar(
@@ -34,6 +52,47 @@ AppBar Header(DateTime? curDate) {
         actions: [
           PopupMenuButton(
             icon: const RotatedBox(
+                quarterTurns: 1,
+                child: Icon(
+                    size: 30, Icons.keyboard_control, color: Colors.black)),
+            iconSize: 40,
+            onSelected: (result) {},
+            itemBuilder: (BuildContext context) => []
+                .map((value) => PopupMenuItem(
+                      value: value,
+                      child: Text(value.toShortString()),
+                    ))
+                .toList(),
+          ),
+          SizedBox(width: 10)
+        ]);
+  }
+
+  if (curPath == "advice") {
+    return AppBar(
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xffFFF7DF),
+        elevation: 0.1,
+        centerTitle: false,
+        title: SizedBox(
+          child: Row(
+            children: [
+              Text(title,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  )),
+            ],
+          ),
+        ),
+        actions: [
+          curDate != null
+              ? MonthResultButton(curDate: curDate)
+              : SizedBox(width: 0),
+          PopupMenuButton(
+            icon: RotatedBox(
                 quarterTurns: 1,
                 child: Icon(
                     size: 30, Icons.keyboard_control, color: Colors.black)),

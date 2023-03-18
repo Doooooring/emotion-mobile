@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:get/get.dart";
 
+import "./controller/childController.dart";
 import "./controller/loginController.dart";
 import "./controller/routeController.dart";
 import "./controller/userController.dart";
@@ -96,6 +97,7 @@ class _MyAppState extends State<MyApp> {
 
   FlutterSecureStorage storage = FlutterSecureStorage();
   UserController userController = UserController();
+  ChildController childController = ChildController();
 
   String? userInfo = null;
 
@@ -149,6 +151,7 @@ class _MyAppState extends State<MyApp> {
     Get.put(LoginController());
     Get.put(RouteController());
     Get.put(userController);
+    Get.put(childController);
     Get.put(isAlert);
 
     return GetMaterialApp(

@@ -1,7 +1,9 @@
 import "package:flutter/material.dart";
 
 class PopUpSelect extends StatefulWidget {
-  const PopUpSelect({Key? key}) : super(key: key);
+  const PopUpSelect({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PopUpSelect> createState() => _PopUpSelectState();

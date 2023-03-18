@@ -1,4 +1,5 @@
 import 'package:aeye/controller/routeController.dart';
+import "package:aeye/page/advice/adviceRouter.dart";
 import "package:aeye/page/baby_monitor.dart";
 import 'package:aeye/page/emotion/emotion_diary.dart';
 import "package:aeye/page/initial.dart";
@@ -13,11 +14,10 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  final RouteController routeController = Get.find();
   @override
   Widget build(BuildContext context) {
-    final RouteController routeController = Get.find();
     List<String> linkList = ["init", "babyMonitor", "emotionDiary", "advice"];
-
     return widget.state
         ? BottomAppBar(
             child: Row(
@@ -57,7 +57,7 @@ OutlinedButton NavComp(
     case "advice":
       title = "Advice";
       imageLink = "assets/images/search.png";
-      addContext = CalendarWrapper();
+      addContext = AdviceRouter();
       curMethod = routeController.toAdvice;
       break;
     default:

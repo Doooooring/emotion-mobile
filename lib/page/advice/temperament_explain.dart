@@ -167,7 +167,12 @@ SizedBox TemperHeader(String temperament) {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [Text("Slow to warm up"), Text("temperament")]));
+            children: [
+          Text("Slow to warm up",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+          Text("temperament",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
+        ]));
   }
   return SizedBox(
       child: Row(children: [

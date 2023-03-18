@@ -2,6 +2,7 @@ import "package:aeye/component/common/app_bar.dart";
 import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
+import "package:aeye/page/advice/temperament_explain.dart";
 import "package:aeye/page/advice/tipDetail.dart";
 import "package:aeye/utils/interface/child.dart";
 import "package:flutter/material.dart";
@@ -66,8 +67,13 @@ class _AdviceMainState extends State<AdviceMain> {
                   SizedBox(height: 20),
                   Column(
                       children: curTips.map((tip) {
-                    return TipsNavigator(tip,
-                        TipDetail(temperament: curTemp, title: tip), context);
+                    return TipsNavigator(
+                        tip,
+                        TipDetail(
+                            temperament: curTemp,
+                            title: tip,
+                            name: curView.name),
+                        context);
                   }).toList())
                 ]))
           ])),
@@ -189,21 +195,27 @@ Container Slide(Child child, double width, double height) {
               padding: EdgeInsets.zero,
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            onPressed: () {},
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(child.temperament,
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xffFF717F))),
-              SizedBox(height: 15),
-              Text("temperament",
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xffFF717F)))
-            ]))
+            onPressed: () {
+              Get.to(() => TemperamentExplain(temperament: child.temperament));
+            },
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(child.temperament,
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xffFF717F))),
+                    SizedBox(height: 15),
+                    Text("temperament",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xffFF717F)))
+                  ]),
+            ))
       ]));
 }
 

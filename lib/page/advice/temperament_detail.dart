@@ -15,33 +15,58 @@ class TemperamentDetail extends StatelessWidget {
             width: double.infinity,
             height: double.infinity,
             padding: EdgeInsets.only(
-                left: scaleWidth(context, 30),
-                right: scaleWidth(context, 30),
-                top: scaleHeight(context, 30)),
+                left: scaleWidth(context, 35),
+                right: scaleWidth(context, 35),
+                top: scaleHeight(context, 80)),
             child: Column(children: [
               SizedBox(
                   width: double.infinity,
-                  child: Row(children: [
-                    ButtonBack(),
-                    SizedBox(
-                        child: Column(
-                            children: [Text("What is"), Text("temperament")])),
-                    ButtonBack()
-                  ])),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ButtonBack(),
+                        Expanded(
+                            child: Column(children: [
+                          Text("What is",
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.w400)),
+                          Text("temperament?",
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.w400))
+                        ])),
+                        Opacity(opacity: 0, child: ButtonBack())
+                      ])),
               SizedBox(height: 20),
               Container(
-                  child: Column(children: [
-                Text("Temperament"),
-                SizedBox(height: 10),
-                Text(
-                    "is a person's own unique characteristic that he or she has since birth")
-              ])),
-              SizedBox(height: 20),
-              Text("Types of Temperaments"),
+                  padding: EdgeInsets.only(
+                      left: scaleWidth(context, 20),
+                      right: scaleWidth(context, 20),
+                      top: scaleHeight(context, 20),
+                      bottom: scaleHeight(context, 20)),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Temperament",
+                            style: TextStyle(
+                                fontSize: 22, color: Color(0xffFF717F))),
+                        SizedBox(height: 10),
+                        Text(
+                            "is a person's own unique characteristic that he or she has since birth",
+                            style: TextStyle(fontSize: 18))
+                      ])),
+              SizedBox(height: 30),
+              Text("Types of Temperaments",
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500)),
+              SizedBox(height: 30),
               SizedBox(
                   child: Column(children: [
                 NavigatorButton("Easy", context),
+                SizedBox(height: 20),
                 NavigatorButton("Difficult", context),
+                SizedBox(height: 20),
                 NavigatorButton("Slow to warm up", context)
               ]))
             ])));
@@ -71,20 +96,28 @@ SizedBox NavigatorButton(String temperament, BuildContext context) {
       child: OutlinedButton(
           style: OutlinedButton.styleFrom(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15))),
+                  borderRadius: BorderRadius.all(Radius.circular(30))),
               backgroundColor: Colors.white,
               side: BorderSide(
                 style: BorderStyle.none,
               )),
           onPressed: () {
-            () => Get.to(TemperamentExplain(temperament: temperament));
+            print("here");
+            Get.to(() => TemperamentExplain(temperament: temperament));
           },
           child: SizedBox(
               child: Row(children: [
-            Image.asset(imageLink),
+            Image.asset(width: 30, height: 30, imageLink),
             SizedBox(width: 10),
-            Text(temperament),
-            SizedBox(width: 10),
-            Text("temperament")
+            Text(temperament,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400)),
+            Text(" temperament",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400))
           ]))));
 }

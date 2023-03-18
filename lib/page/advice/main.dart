@@ -4,6 +4,7 @@ import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
 import "package:aeye/page/advice/temperament_explain.dart";
 import "package:aeye/page/advice/tipDetail.dart";
+import "package:aeye/page/advice/revise_info.dart";
 import "package:aeye/utils/interface/child.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
@@ -177,7 +178,9 @@ Container Slide(Child child, double width, double height) {
         SizedBox(
             child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => ReviseInfo());
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [

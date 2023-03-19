@@ -1,4 +1,3 @@
-import "package:aeye/controller/routeController.dart";
 import 'package:aeye/page/login/primarySignUp.dart';
 import 'package:aeye/page/login/secondarySignUp.dart';
 import "package:flutter/material.dart";
@@ -9,7 +8,6 @@ class ChooseRole extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RouteController routeController = Get.find();
     return Scaffold(
       body: Container(
           padding: EdgeInsets.only(),

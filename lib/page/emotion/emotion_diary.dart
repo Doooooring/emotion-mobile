@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import "package:get/get.dart";
 
 import '../../asset/init_data.dart';
 import '../../component/common/app_bar.dart';
@@ -7,7 +6,6 @@ import '../../component/emoticon_diary/calendar/calendar.dart';
 import '../../component/emoticon_diary/emotion/emotion.dart' as input_emotion;
 import '../../component/emoticon_diary/emotion/emotion_preview.dart';
 import '../../component/emoticon_diary/emotion/emotion_selector.dart';
-import '../../controller/routeController.dart';
 import '../../services/emotion.dart';
 
 EmotionServices emotionServices = EmotionServices();
@@ -20,7 +18,6 @@ class CalendarWrapper extends StatefulWidget {
 }
 
 class _CalendarWrapperState extends State<CalendarWrapper> {
-  final RouteController routeController = Get.find();
   // final LocalNotificationController localNotificationController = Get.find();
 
   DateTime dateSelected = DateTime.now();
@@ -100,7 +97,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Header(dateSelected),
+        appBar: Header(dateSelected, "emotionDiary"),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: ClampingScrollPhysics(),

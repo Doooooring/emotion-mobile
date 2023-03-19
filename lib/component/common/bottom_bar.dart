@@ -1,20 +1,19 @@
-import 'package:aeye/controller/routeController.dart';
 import "package:aeye/page/advice/adviceRouter.dart";
 import "package:aeye/page/baby_monitor.dart";
 import 'package:aeye/page/emotion/emotion_diary.dart';
 import "package:aeye/page/initial.dart";
 import 'package:flutter/material.dart';
-import "package:get/get.dart";
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key, required this.state}) : super(key: key);
+  const BottomNavBar({Key? key, required this.state, required this.curPath})
+      : super(key: key);
   final bool state;
+  final String curPath;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  final RouteController routeController = Get.find();
   @override
   Widget build(BuildContext context) {
     List<String> linkList = ["init", "babyMonitor", "emotionDiary", "advice"];
@@ -23,47 +22,39 @@ class _BottomNavBarState extends State<BottomNavBar> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: linkList.map((link) {
-                  return NavComp(context, link, routeController);
+                  return NavComp(context, link, widget.curPath);
                 }).toList()))
         : SizedBox(height: 0);
   }
 }
 
-OutlinedButton NavComp(
-    BuildContext context, String link, RouteController routeController) {
+OutlinedButton NavComp(BuildContext context, String link, String curPath) {
   String title = "";
   String imageLink = "";
   Widget? addContext;
-  Function curMethod;
   switch (link) {
     case "init":
       title = "Home";
       imageLink = "assets/images/home.png";
       addContext = InitialPage();
-      curMethod = routeController.toInit;
       break;
     case "babyMonitor":
       title = "BabyMonitor";
       imageLink = "assets/images/babyface.png";
       addContext = BabyMonitor();
-      curMethod = routeController.toBabyMonitor;
       break;
     case "emotionDiary":
       title = "Diary";
       imageLink = "assets/images/diary.png";
       addContext = CalendarWrapper();
-      curMethod = routeController.toEmotionDiary;
       break;
     case "advice":
       title = "Advice";
       imageLink = "assets/images/search.png";
       addContext = AdviceRouter();
-      curMethod = routeController.toAdvice;
       break;
     default:
-      curMethod = () {
-        return;
-      };
+      break;
   }
 
   return title == "BabyMonitor"
@@ -71,17 +62,16 @@ OutlinedButton NavComp(
           style:
               OutlinedButton.styleFrom(side: BorderSide(color: Colors.white)),
           onPressed: () {
-            if (routeController.curPath.toString() == link) {
+            if (curPath == link) {
               return;
             }
-            curMethod();
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => addContext ?? Container()));
           },
           child: Opacity(
-            opacity: routeController.curPath.toString() == link ? 1 : 0.5,
+            opacity: curPath == link ? 1 : 0.5,
             child: Container(
               padding: EdgeInsets.only(top: 20),
               height: 100,
@@ -97,17 +87,16 @@ OutlinedButton NavComp(
           style:
               OutlinedButton.styleFrom(side: BorderSide(color: Colors.white)),
           onPressed: () {
-            if (routeController.curPath.toString() == link) {
+            if (curPath == link) {
               return;
             }
-            curMethod();
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => addContext ?? Container()));
           },
           child: Opacity(
-            opacity: routeController.curPath.toString() == link ? 1 : 0.5,
+            opacity: curPath == link ? 1 : 0.5,
             child: Container(
               padding: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(),

@@ -80,6 +80,7 @@ class _TemperamentExplainState extends State<TemperamentExplain> {
             scrollDirection: Axis.vertical,
             physics: ClampingScrollPhysics(),
             child: Container(
+                color: Color(0xffFFF7DF),
                 padding:
                     EdgeInsets.only(left: 30, right: 30, top: 80, bottom: 120),
                 child: Column(
@@ -97,66 +98,99 @@ class _TemperamentExplainState extends State<TemperamentExplain> {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [Image.asset(imageLink)])),
-                      SizedBox(
-                          child: Text("Characteristics",
-                              style: TextStyle(
-                                  fontSize: 22, color: Color(0xffFF717F)))),
-                      SizedBox(height: 10),
-                      SizedBox(
-                          child: Column(
-                              children: curExplain.characteristics
-                                  .map((characteristic) {
-                        return SizedBox(
-                            child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                              SizedBox(width: 10),
-                              SizedBox(
-                                  child: Column(
-                                children: [
-                                  SizedBox(height: 10),
-                                  Icon(Icons.circle, size: 8),
-                                ],
-                              )),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: Text(characteristic,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600)),
-                              ),
-                            ]));
-                      }).toList())),
-                      SizedBox(height: 20),
-                      SizedBox(
-                          child: Text("Raising",
-                              style: TextStyle(
-                                  fontSize: 22, color: Color(0xffFF717F)))),
-                      SizedBox(height: 10),
-                      SizedBox(
-                          child: Column(
-                              children: curExplain.raising.map((comp) {
-                        return SizedBox(
-                            child: Column(children: [
-                          Text(comp,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600)),
-                          SizedBox(height: 20)
-                        ]));
-                      }).toList())),
-                      SizedBox(height: 30),
-                      SizedBox(
+                      SizedBox(height: 28),
+                      Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20)),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                            Text("Example",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xffFF717F))),
-                            SizedBox(height: 10),
-                            Text(curExplain.example,
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w600))
-                          ]))
+                                SizedBox(
+                                    child: Text("Characteristics",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: Color(0xffFF717F)))),
+                                SizedBox(height: 10),
+                                SizedBox(
+                                    child: Column(
+                                        children: curExplain.characteristics
+                                            .map((characteristic) {
+                                  return SizedBox(
+                                      child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                        SizedBox(width: 10),
+                                        SizedBox(
+                                            child: Column(
+                                          children: [
+                                            SizedBox(height: 10),
+                                            Icon(Icons.circle, size: 8),
+                                          ],
+                                        )),
+                                        SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(characteristic,
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w600)),
+                                        ),
+                                      ]));
+                                }).toList())),
+                              ])),
+                      SizedBox(height: 20),
+                      Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                    child: Text("Raising",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            color: Color(0xffFF717F)))),
+                                SizedBox(height: 10),
+                                SizedBox(
+                                    child: Column(
+                                        children:
+                                            curExplain.raising.map((comp) {
+                                  return SizedBox(
+                                      child: Column(children: [
+                                    Text(comp,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600)),
+                                    SizedBox(height: 20)
+                                  ]));
+                                }).toList())),
+                              ])),
+                      SizedBox(height: 30),
+                      Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Example",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        color: Color(0xffFF717F))),
+                                SizedBox(height: 10),
+                                Text(curExplain.example,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600))
+                              ]))
                     ]))));
   }
 }
@@ -169,16 +203,16 @@ SizedBox TemperHeader(String temperament) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
           Text("Slow to warm up",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
           Text("temperament",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600))
         ]));
   }
   return SizedBox(
       child: Row(children: [
     Text(temperament,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
     Text(" temperament",
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500))
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600))
   ]));
 }

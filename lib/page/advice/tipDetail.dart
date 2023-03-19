@@ -51,7 +51,7 @@ class TipDetail extends StatelessWidget {
             SizedBox(height: 50),
             BodyContent(detailBody)
           ])),
-      bottomNavigationBar: BottomNavBar(state: true),
+      bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
     );
   }
 

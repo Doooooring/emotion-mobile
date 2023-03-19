@@ -1,15 +1,10 @@
-import "package:aeye/controller/routeController.dart";
 import 'package:aeye/page/emotion/emoticon_month_result.dart';
 import "package:aeye/services/emotion.dart";
 import "package:flutter/material.dart";
-import "package:get/get.dart";
 
 EmotionServices emotionService = new EmotionServices();
 
-AppBar Header(DateTime? curDate) {
-  final RouteController routeController = Get.find();
-  final String curPath = routeController.curPath.toString();
-
+AppBar Header(DateTime? curDate, String curPath) {
   String title = "";
 
   switch (curPath) {
@@ -32,6 +27,7 @@ AppBar Header(DateTime? curDate) {
 
   if (curPath == "init") {
     return AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Color(0xffFFF7DF),
         elevation: 0.5,
         centerTitle: false,
@@ -114,7 +110,6 @@ AppBar Header(DateTime? curDate) {
         return IconButton(
           icon: Icon(Icons.arrow_back_ios_new_outlined, color: Colors.black),
           onPressed: () {
-            routeController.toInit();
             Navigator.pop(context);
             return;
           },

@@ -1,5 +1,4 @@
 import "package:aeye/controller/loginController.dart";
-import "package:aeye/controller/routeController.dart";
 import "package:aeye/controller/sizeController.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
@@ -9,7 +8,6 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RouteController routeController = Get.find();
     final LoginController loginController = Get.find();
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();

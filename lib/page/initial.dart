@@ -32,7 +32,7 @@ class InitialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Header(null),
+      appBar: Header(null, "init"),
       body: Column(children: [
         Container(height: 400, child: Loading(isLoading: true, height: 100)),
         IconButton(
@@ -93,7 +93,7 @@ class InitialPage extends StatelessWidget {
             },
             icon: Icon(Icons.ac_unit))
       ]),
-      bottomNavigationBar: BottomNavBar(state: true),
+      bottomNavigationBar: BottomNavBar(state: true, curPath: "init"),
     );
   }
 }

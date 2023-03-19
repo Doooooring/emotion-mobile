@@ -49,7 +49,7 @@ class _MainPreState extends State<MainPre> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Header(null),
+      appBar: Header(null, "advice"),
       body: Container(
           height: double.infinity,
           padding: EdgeInsets.only(left: 40, right: 40, top: 50),
@@ -88,7 +88,7 @@ class _MainPreState extends State<MainPre> {
                       Color(0xffFFF7DF))
                 ]))
               ])),
-      bottomNavigationBar: BottomNavBar(state: true),
+      bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
     );
   }
 }

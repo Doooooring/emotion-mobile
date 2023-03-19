@@ -2,9 +2,9 @@ import "package:aeye/component/common/app_bar.dart";
 import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
+import "package:aeye/page/advice/revise_info.dart";
 import "package:aeye/page/advice/temperament_explain.dart";
 import "package:aeye/page/advice/tipDetail.dart";
-import "package:aeye/page/advice/revise_info.dart";
 import "package:aeye/utils/interface/child.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
@@ -42,7 +42,7 @@ class _AdviceMainState extends State<AdviceMain> {
     String curTemp = curView.temperament;
 
     return Scaffold(
-      appBar: Header(null),
+      appBar: Header(null, "advice"),
       body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -78,7 +78,7 @@ class _AdviceMainState extends State<AdviceMain> {
                   }).toList())
                 ]))
           ])),
-      bottomNavigationBar: BottomNavBar(state: true),
+      bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
     );
   }
 }

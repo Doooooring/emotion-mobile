@@ -10,7 +10,6 @@ import "package:get/get.dart";
 import "./controller/childController.dart";
 import "./controller/localNotificationController.dart";
 import "./controller/loginController.dart";
-import "./controller/routeController.dart";
 import "./controller/userController.dart";
 import './page/initial.dart';
 import "./page/login/login.dart";
@@ -136,7 +135,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     Get.put(widget.localNotificationController)..setContext(context);
     Get.put(LoginController());
-    Get.put(RouteController());
     Get.put(userController);
     Get.put(childController);
     Get.put(isAlert);

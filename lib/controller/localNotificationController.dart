@@ -34,6 +34,18 @@ Future<void> firebaseMessagingBackgroundHandler(
   );
 }
 
+Future reqIOSPermission(FirebaseMessaging fbMsg) async {
+  NotificationSettings settings = await fbMsg.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+}
+
 class LocalNotificationController extends GetxController {
   RxBool messaging = false.obs;
 
@@ -70,7 +82,7 @@ class LocalNotificationController extends GetxController {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     final fcmToken = await FirebaseMessaging.instance.getToken();
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
 
@@ -79,13 +91,22 @@ class LocalNotificationController extends GetxController {
             android: AndroidInitializationSettings('@mipmap/ic_launcher'),
             iOS: DarwinInitializationSettings());
 
+    NotificationSettings settings =
+        await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (NotificationResponse notification) {
       String payload = notification.payload ?? "missing title";
       if (_context != null) {
-        log("work well");
         getAlert();
-        log("erherhehehehe");
         return;
       }
 
@@ -104,16 +125,20 @@ class LocalNotificationController extends GetxController {
   }
 
   void onMessage() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    print("is on Message");
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       NotificationDetails platformChannelSpecifics = NotificationDetails(
-        android: AndroidNotificationDetails(
-          "Baby fall",
-          "High_Importance_Notifications",
-          priority: Priority.max,
-          importance: Importance.max,
-        ),
-      );
+          android: AndroidNotificationDetails(
+            "Baby fall",
+            "High_Importance_Notifications",
+            priority: Priority.max,
+            importance: Importance.max,
+          ),
+          iOS: DarwinNotificationDetails(
+              badgeNumber: 1,
+              subtitle: "the subtitle",
+              sound: "slow_spring_board.aiff"));
       if (notification != null) {
         flutterLocalNotificationsPlugin.show(
           notification.hashCode,
@@ -126,6 +151,7 @@ class LocalNotificationController extends GetxController {
   }
 
   void onMessageOpened() {
+    print("is on Message opened");
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       log("is background here");
       if (_context != null) {

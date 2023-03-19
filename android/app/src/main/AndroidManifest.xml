@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.aeye">
+    package="com.mobile.gdsc.aeye">
    <application
         android:label="aeye"
         android:name="${applicationName}"

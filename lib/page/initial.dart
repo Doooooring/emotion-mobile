@@ -40,6 +40,7 @@ class InitialPage extends StatelessWidget {
     print(hour);
 
     String monthToStr = Month[month.toString()];
+    String title = "How are you today?";
 
     return Scaffold(
       appBar: Header(null, "init"),
@@ -82,7 +83,27 @@ class InitialPage extends StatelessWidget {
                         Text(day.toString(),
                             style: TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.w700))
-                      ]))
+                      ])),
+              Container(
+                  width: scaleWidth(context, 150),
+                  child: Column(children: [
+                    Text(title,
+                        style: TextStyle(
+                          fontSize: 25,
+                        )),
+                    TextButton(
+                        style: TextButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        onPressed: () {},
+                        child: SizedBox(
+                            child: Row(children: [
+                          Image.asset("assets/images/pencil.png"),
+                          Text("write diary")
+                        ])))
+                  ]))
             ])),
         IconButton(
             onPressed: () {

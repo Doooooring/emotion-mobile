@@ -1,11 +1,15 @@
+import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
+import "package:aeye/services/advice.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
+AdviceServices adviceServices = AdviceServices();
+
 class ReviseInfo extends StatefulWidget {
-  const ReviseInfo({
-    Key? key,
-  }) : super(key: key);
+  const ReviseInfo({Key? key, required this.id}) : super(key: key);
+
+  final String id;
 
   @override
   State<ReviseInfo> createState() => _ReviseInfoState();
@@ -13,6 +17,7 @@ class ReviseInfo extends StatefulWidget {
 
 class _ReviseInfoState extends State<ReviseInfo> {
   TextEditingController nameController = TextEditingController();
+  ChildController childController = Get.find();
 
   String dropDownValue = "Easy";
   void setDropDownValue(String newValue) {
@@ -24,12 +29,18 @@ class _ReviseInfoState extends State<ReviseInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: PopUp(context, dropDownValue, setDropDownValue, nameController));
+        body: PopUp(context, widget.id, dropDownValue, setDropDownValue,
+            nameController, childController));
   }
 }
 
-GestureDetector PopUp(BuildContext context, String dropDownValue,
-    Function(String) setDropDownValue, TextEditingController controller) {
+GestureDetector PopUp(
+    BuildContext context,
+    String id,
+    String dropDownValue,
+    Function(String) setDropDownValue,
+    TextEditingController textController,
+    ChildController childController) {
   return GestureDetector(
     behavior: HitTestBehavior.opaque,
     onTap: () {
@@ -44,16 +55,19 @@ GestureDetector PopUp(BuildContext context, String dropDownValue,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: Icon(Icons.arrow_back_ios)),
-                    TextButton(
-                        onPressed: () {},
-                        child: Text("Save",
-                            style: TextStyle(color: Colors.black, fontSize: 22)))
-                  ])),
+                IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: Icon(Icons.arrow_back_ios)),
+                TextButton(
+                    onPressed: () {
+                      adviceServices.reviseChild(id, textController.text,
+                          dropDownValue, childController);
+                    },
+                    child: Text("Save",
+                        style: TextStyle(color: Colors.black, fontSize: 22)))
+              ])),
           SizedBox(height: 20),
           SizedBox(
               width: double.infinity,
@@ -81,7 +95,7 @@ GestureDetector PopUp(BuildContext context, String dropDownValue,
                       color: Colors.white,
                       child: TextField(
                         style: TextStyle(fontSize: 25),
-                        controller: controller,
+                        controller: textController,
                         decoration: InputDecoration(
                             hintText: "Write your child name",
                             hintStyle: TextStyle(fontSize: 15),
@@ -89,11 +103,11 @@ GestureDetector PopUp(BuildContext context, String dropDownValue,
                                 color: Color.fromRGBO(50, 50, 50, 0.4)),
                             enabledBorder: OutlineInputBorder(
                               borderSide:
-                              BorderSide(width: 1, color: Colors.white),
+                                  BorderSide(width: 1, color: Colors.white),
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                BorderSide(width: 0, color: Colors.white))),
+                                    BorderSide(width: 0, color: Colors.white))),
                       ),
                     )
                   ])),
@@ -101,7 +115,7 @@ GestureDetector PopUp(BuildContext context, String dropDownValue,
           SizedBox(
               width: double.infinity,
               child:
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SizedBox(
                     width: scaleWidth(context, 140),
                     child: Text("Temperament",

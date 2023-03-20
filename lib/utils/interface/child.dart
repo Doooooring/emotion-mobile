@@ -1,12 +1,14 @@
 class Child {
-  const Child(this.name, this.temperament);
+  const Child(this.id, this.name, this.temperament);
 
+  final String id;
   final String name;
   final String temperament;
 
   factory Child.fromJson(Map json) {
+    String id = json["id"];
     String name = json["name"];
     String temperament = json["temperament"];
-    return Child(name, temperament);
+    return Child(id, name, temperament);
   }
 }

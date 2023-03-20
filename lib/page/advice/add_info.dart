@@ -1,6 +1,10 @@
+import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
+import "package:aeye/services/advice.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
+
+AdviceServices adviceServices = AdviceServices();
 
 class PopUpSelect extends StatefulWidget {
   const PopUpSelect({
@@ -13,6 +17,7 @@ class PopUpSelect extends StatefulWidget {
 
 class _PopUpSelectState extends State<PopUpSelect> {
   TextEditingController nameController = TextEditingController();
+  ChildController childController = Get.find();
 
   String dropDownValue = "Easy";
   void setDropDownValue(String newValue) {
@@ -24,12 +29,17 @@ class _PopUpSelectState extends State<PopUpSelect> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: PopUp(context, dropDownValue, setDropDownValue, nameController));
+        body: PopUp(context, dropDownValue, setDropDownValue, nameController,
+            childController));
   }
 }
 
-GestureDetector PopUp(BuildContext context, String dropDownValue,
-    Function(String) setDropDownValue, TextEditingController controller) {
+GestureDetector PopUp(
+    BuildContext context,
+    String dropDownValue,
+    Function(String) setDropDownValue,
+    TextEditingController textController,
+    ChildController childController) {
   return GestureDetector(
     behavior: HitTestBehavior.opaque,
     onTap: () {
@@ -50,7 +60,10 @@ GestureDetector PopUp(BuildContext context, String dropDownValue,
                     },
                     icon: Icon(Icons.arrow_back_ios)),
                 TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      adviceServices.addChild(
+                          textController.text, dropDownValue, childController);
+                    },
                     child: Text("Save",
                         style: TextStyle(color: Colors.black, fontSize: 22)))
               ])),
@@ -81,7 +94,7 @@ GestureDetector PopUp(BuildContext context, String dropDownValue,
                       color: Colors.white,
                       child: TextField(
                         style: TextStyle(fontSize: 25),
-                        controller: controller,
+                        controller: textController,
                         decoration: InputDecoration(
                             hintText: "Write your child name",
                             hintStyle: TextStyle(fontSize: 15),

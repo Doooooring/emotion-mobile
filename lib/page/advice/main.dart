@@ -179,7 +179,7 @@ Container Slide(Child child, double width, double height) {
             child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
           TextButton(
               onPressed: () {
-                Get.to(() => ReviseInfo());
+                Get.to(() => ReviseInfo(id: child.id));
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,

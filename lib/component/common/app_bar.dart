@@ -29,7 +29,7 @@ AppBar Header(DateTime? curDate, String curPath) {
     return AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Color(0xffFFF7DF),
-        elevation: 0.5,
+        elevation: 0,
         centerTitle: false,
         title: SizedBox(
           child: Row(

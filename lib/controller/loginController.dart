@@ -52,6 +52,46 @@ class LoginController {
     }
   }
 
+  Future<Map<String, String>> chooseRole(String role, String? code) async {
+    Uri endPoint = Uri.parse('$HOST_URL/auth/user/code');
+    var bodyEncoded = json.encode({"role": role, "code": code});
+    if (role == "main") {
+      Map tokens = await getTokens();
+      String access = tokens["access"]!;
+      String refresh = tokens["refresh"]!;
+      http.Response response = await http.patch(endPoint,
+          body: bodyEncoded,
+          headers: {
+            "Content-Type": "application/json",
+            "authorization": access,
+            "cookie": refresh
+          });
+      dynamic result = json.decode(utf8.decode(response.bodyBytes));
+      if (result["success"] == true) {
+        return {"code": result["code"]};
+      } else {
+        return {"code": "fail"};
+      }
+    } else {
+      Map tokens = await getTokens();
+      String access = tokens["access"]!;
+      String refresh = tokens["refresh"]!;
+      http.Response response = await http.patch(endPoint,
+          body: bodyEncoded,
+          headers: {
+            "Content-Type": "application/json",
+            "authorization": access,
+            "cookie": refresh
+          });
+      dynamic result = json.decode(utf8.decode(response.bodyBytes));
+      if (result["success"] == true) {
+        return {"code": "done"};
+      } else {
+        return {"code": "fail"};
+      }
+    }
+  }
+
   Future<bool> checkAccess() async {
     String? accessToken = await storage.read(key: "access");
     if (accessToken == null) {
@@ -70,11 +110,11 @@ class LoginController {
     return isExpired;
   }
 
-  Future<Map> getToken() async {
-    String? userInfo = await storage.read(key: "access");
+  Future<Map> getTokens() async {
+    String? access = await storage.read(key: "access");
     String? refresh =
         await storage.read(key: "refresh"); //header refresh onBoarding
-    return {"access": userInfo, "refresh": refresh};
+    return {"access": access, "refresh": refresh};
   }
 
   Future<bool> getRefresh() async {

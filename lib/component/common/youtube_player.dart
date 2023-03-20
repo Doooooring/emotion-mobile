@@ -3,8 +3,9 @@ import "package:youtube_player_flutter/youtube_player_flutter.dart";
 
 class Player extends StatefulWidget {
   final String _videoID;
+  final double width;
 
-  Player(this._videoID);
+  Player(this._videoID, this.width);
 
   @override
   PlayerState createState() => PlayerState(_videoID);
@@ -36,7 +37,7 @@ class PlayerState extends State<Player> {
   @override
   Widget build(BuildContext context) {
     return YoutubePlayer(
-      width: 250,
+      width: widget.width,
       key: ObjectKey(_controller),
       controller: _controller,
       actionsPadding: const EdgeInsets.only(left: 16.0),

@@ -2,7 +2,7 @@ import "dart:math" as math;
 
 import 'package:flutter/material.dart';
 
-import '../../component/emoticon_diary/emotion/youtube_player.dart';
+import '../../component/common/youtube_player.dart';
 
 Map Month = {
   "1": "Jan",
@@ -201,7 +201,7 @@ class _DailReportState extends State<DailReport> {
                       ],
                     ),
                     SizedBox(height: 15),
-                    Player(widget.videoUrl),
+                    Player(widget.videoUrl, 250),
                   ],
                 ),
               ),
@@ -387,7 +387,7 @@ class EmotionResult extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 15),
-                    Player(videoUrl),
+                    Player(videoUrl, 250),
                   ],
                 ),
               ),

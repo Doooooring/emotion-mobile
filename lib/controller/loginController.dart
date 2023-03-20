@@ -32,7 +32,6 @@ class LoginController {
   Future<Map<String, String?>> signIn(String id, String password) async {
     Uri endPoint = Uri.parse('$HOST_URL/auth/login');
     var bodyEncoded = json.encode({"email": id, "password": password});
-
     http.Response response = await http.post(endPoint,
         headers: {"Content-Type": "application/json"}, body: bodyEncoded);
     if (response.statusCode == 200) {

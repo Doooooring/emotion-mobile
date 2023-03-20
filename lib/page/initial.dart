@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
+import 'package:url_launcher/url_launcher.dart';
 
 import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
+import "../component/common/youtube_player.dart";
 import "../controller/sizeController.dart";
 import 'login/login.dart';
 
@@ -36,11 +38,9 @@ class InitialPage extends StatelessWidget {
     int day = today.day;
     int hour = today.hour;
 
-    print("hour");
-    print(hour);
-
     String monthToStr = Month[month.toString()];
     String title = "How are you today?";
+    String? video = "0qaL2Im4fWY";
 
     return Scaffold(
       appBar: Header(null, "init"),
@@ -62,8 +62,8 @@ class InitialPage extends StatelessWidget {
             padding: EdgeInsets.only(
                 left: scaleWidth(context, 40),
                 right: scaleWidth(context, 40),
-                top: scaleHeight(context, 50),
-                bottom: scaleHeight(context, 50)),
+                top: scaleHeight(context, 30),
+                bottom: scaleHeight(context, 30)),
             child: Row(children: [
               Container(
                   width: scaleWidth(context, 90),
@@ -84,13 +84,12 @@ class InitialPage extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 30, fontWeight: FontWeight.w700))
                       ])),
+              SizedBox(width: scaleWidth(context, 30)),
               Container(
                   width: scaleWidth(context, 150),
                   child: Column(children: [
-                    Text(title,
-                        style: TextStyle(
-                          fontSize: 25,
-                        )),
+                    Text(title, style: TextStyle(fontSize: 25, height: 1.5)),
+                    SizedBox(height: 10),
                     TextButton(
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
@@ -101,17 +100,129 @@ class InitialPage extends StatelessWidget {
                         child: SizedBox(
                             child: Row(children: [
                           Image.asset("assets/images/pencil.png"),
-                          Text("write diary")
+                          SizedBox(width: 10),
+                          Text("write diary",
+                              style: TextStyle(color: Colors.grey))
                         ])))
                   ]))
             ])),
-        IconButton(
-            onPressed: () {
-              Get.to(Login());
-            },
-            icon: Icon(Icons.ac_unit))
+        Expanded(
+          child: SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: Column(children: [
+              Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(
+                    left: scaleWidth(context, 40),
+                    right: scaleWidth(context, 40),
+                    top: scaleWidth(context, 10),
+                  ),
+                  child: Column(children: [
+                    SizedBox(height: 20),
+                    Container(
+                        width: double.infinity,
+                        child: Text("Playlist for recent mood",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500))),
+                    Container(
+                        width: double.infinity,
+                        height: scaleHeight(context, 160),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              video != null
+                                  ? Container(
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Player(video, 280))
+                                  : SizedBox(
+                                      child: Column(
+                                      children: [
+                                        Text(
+                                            "There is no recommended playlist.",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.grey)),
+                                        SizedBox(height: 5),
+                                        Text("Write a diary!",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.grey))
+                                      ],
+                                    ))
+                            ])),
+                  ])),
+              Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.only(
+                    left: scaleWidth(context, 40),
+                  ),
+                  child: Column(children: [
+                    SizedBox(height: 20),
+                    Container(
+                        width: double.infinity,
+                        child: Text("How to be a good parent",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500))),
+                    Container(
+                        width: double.infinity,
+                        height: scaleHeight(context, 200),
+                        child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(children: [
+                              TipBox("a", "a", "https://www.google.com"),
+                              TipBox("a", "a", "https://www.google.com"),
+                              TipBox("a", "a", "https://www.google.com"),
+                              TipBox("a", "a", "https://www.google.com"),
+                              TipBox("a", "a", "https://www.google.com"),
+                              TipBox("a", "a", "https://www.google.com"),
+                              TipBox("a", "a", "https://www.google.com")
+                            ])))
+                  ])),
+              IconButton(
+                  onPressed: () {
+                    Get.to(Login());
+                  },
+                  icon: Icon(Icons.ac_unit))
+            ]),
+          ),
+        ),
       ]),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "init"),
     );
+  }
+}
+
+Container TipBox(String title, String imgLink, String link) {
+  final Uri url = Uri.parse(link);
+
+  return Container(
+      padding: EdgeInsets.only(left: 10, right: 10),
+      child: TextButton(
+          style: TextButton.styleFrom(
+            minimumSize: Size.zero,
+            padding: EdgeInsets.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          onPressed: () {
+            _launchUrl(url);
+          },
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(color: Colors.red, width: 120),
+                SizedBox(height: 10),
+                Text(title)
+              ])));
+}
+
+Future<void> _launchUrl(url) async {
+  if (!await launchUrl(url)) {
+    throw Exception('Could not launch $url');
   }
 }

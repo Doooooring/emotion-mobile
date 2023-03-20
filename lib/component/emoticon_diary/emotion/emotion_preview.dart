@@ -128,8 +128,10 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              ButtonToComment(context, widget.date.year, widget.date.month,
-                  widget.date.day),
+              id == null
+                  ? SizedBox(width: 0)
+                  : ButtonToComment(context, widget.date.year,
+                      widget.date.month, widget.date.day),
             ],
           ),
         )

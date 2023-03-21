@@ -160,6 +160,12 @@ flutter:
     - assets/images/cat.png
     - assets/images/turtle.png
     - assets/images/pencil.png
+    - assets/images/recommend1.png
+    - assets/images/recommend2.png
+    - assets/images/recommend3.png
+    - assets/images/recommend4.png
+    - assets/images/recommend5.png
+    - assets/images/recommend6.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

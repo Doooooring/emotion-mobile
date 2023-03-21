@@ -10,9 +10,6 @@ class LoginController {
 
   //회원 가입
   Future<bool> signUp(String name, String email, String password) async {
-    print(name);
-    print(email);
-    print(password);
     Uri endPoint = Uri.parse('$HOST_URL/auth/signup');
     var bodyEncoded =
         json.encode({"email": email, "name": name, "password": password});
@@ -52,7 +49,7 @@ class LoginController {
   }
 
   Future<Map<String, String>> chooseRole(String role, String? code) async {
-    Uri endPoint = Uri.parse('$HOST_URL/auth/user/code');
+    Uri endPoint = Uri.parse('$HOST_URL/user/code');
     var bodyEncoded = json.encode({"role": role, "code": code});
     if (role == "main") {
       Map tokens = await getTokens();

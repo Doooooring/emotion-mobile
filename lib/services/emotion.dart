@@ -444,4 +444,9 @@ class EmotionServices {
     Map response = await repository.getMonthlyResult(year, month);
     return response;
   }
+
+  Future<Map> getComments(String diaryId) async {
+    Map response = await repository.getComments(diaryId);
+    return response;
+  }
 }

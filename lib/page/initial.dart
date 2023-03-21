@@ -26,6 +26,44 @@ Map Month = {
   "12": "Dec"
 };
 
+List<Map> recommendList = [
+  {
+    "title": "Ready to Snap? Tips for Stressed-Out Parents",
+    "link":
+        "https://health.clevelandclinic.org/ready-snap-tips-for-stressed-out-parents/",
+    "imgLink": "assets/images/recommend1.png"
+  },
+  {
+    "title": "What is independent sleep? A guide to self settling.",
+    "link":
+        "[https://justchillbabysleep.co.uk/2021/04/20/what-is-independent-sleep-a-guide-to-self-settling/](https://justchillbabysleep.co.uk/2021/04/20/what-is-independent-sleep-a-guide-to-self-settling/)",
+    "imgLink": "assets/images/recommend2.png"
+  },
+  {
+    "title": "Positive Parenting Tips",
+    "link":
+        "https://www.cdc.gov/ncbddd/childdevelopment/positiveparenting/index.html ",
+    "imgLink": "assets/images/recommend6.png"
+  },
+  {
+    "title": "Best ways Dads can help a new mom",
+    "link": "https://www.baby-chick.com/how-dads-can-help-a-new-mom",
+    "imgLink": "assets/images/recommend4.png"
+  },
+  {
+    "title": "When Your Baby Won’t Stop Crying",
+    "link":
+        "https://www.helpguide.org/articles/parenting-family/when-your-baby-wont-stop-crying.htm",
+    "imgLink": "assets/images/recommend5.png"
+  },
+  {
+    "title": "How to Help Your Child Build Social Skills",
+    "link":
+        "https://childdevelopmentinfo.com/ages-stages/school-age-children-development-parenting-tips/social-skills/",
+    "imgLink": "assets/images/recommend6.png"
+  },
+];
+
 class InitialPage extends StatelessWidget {
   final bool isAlert = Get.find();
 
@@ -173,15 +211,11 @@ class InitialPage extends StatelessWidget {
                         height: scaleHeight(context, 200),
                         child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
-                            child: Row(children: [
-                              TipBox("a", "a", "https://www.google.com"),
-                              TipBox("a", "a", "https://www.google.com"),
-                              TipBox("a", "a", "https://www.google.com"),
-                              TipBox("a", "a", "https://www.google.com"),
-                              TipBox("a", "a", "https://www.google.com"),
-                              TipBox("a", "a", "https://www.google.com"),
-                              TipBox("a", "a", "https://www.google.com")
-                            ])))
+                            child: Row(
+                                children: recommendList.map((recommend) {
+                              return TipBox(recommend["title"],
+                                  recommend["imgLink"], recommend["link"]);
+                            }).toList())))
                   ])),
               IconButton(
                   onPressed: () {

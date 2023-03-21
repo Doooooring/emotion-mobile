@@ -156,4 +156,15 @@ class DiaryRepositories {
 
     return result["result"];
   }
+
+  getComments(String diaryId) async {
+    Map tokens = await loginController.getTokens();
+    Uri endPoint = Uri.parse('$HOST_URL/diary/commnet/${diaryId}');
+    http.Response response = await http.get(endPoint, headers: {
+      "Content-Type": "application/json",
+      "authorization": tokens["access"]
+    });
+    dynamic result = json.decode(utf8.decode(response.bodyBytes));
+    return result["result"];
+  }
 }

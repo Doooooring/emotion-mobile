@@ -1,3 +1,4 @@
+import "package:aeye/controller/loginController.dart";
 import "package:flutter/material.dart";
 
 class SecondarySignUp extends StatelessWidget {
@@ -5,6 +6,9 @@ class SecondarySignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = LoginController();
+    TextEditingController textEditingController = TextEditingController();
+
     return Scaffold(
       body: Container(
           decoration: BoxDecoration(
@@ -28,8 +32,18 @@ class SecondarySignUp extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                      SizedBox(width: 200, height: 50, child: TextField())
-                    ]))
+                      SizedBox(
+                          width: 200,
+                          height: 50,
+                          child: TextField(controller: textEditingController))
+                    ])),
+                SizedBox(
+                    child: TextButton(
+                        onPressed: () {
+                          loginController.chooseRole(
+                              "sub", textEditingController.text);
+                        },
+                        child: Text("submit")))
               ])),
     );
   }

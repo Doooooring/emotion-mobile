@@ -36,14 +36,14 @@ List<Map> recommendList = [
   {
     "title": "What is independent sleep? A guide to self settling.",
     "link":
-        "[https://justchillbabysleep.co.uk/2021/04/20/what-is-independent-sleep-a-guide-to-self-settling/](https://justchillbabysleep.co.uk/2021/04/20/what-is-independent-sleep-a-guide-to-self-settling/)",
+        "https://justchillbabysleep.co.uk/2021/04/20/what-is-independent-sleep-a-guide-to-self-settling/",
     "imgLink": "assets/images/recommend2.png"
   },
   {
     "title": "Positive Parenting Tips",
     "link":
-        "https://www.cdc.gov/ncbddd/childdevelopment/positiveparenting/index.html ",
-    "imgLink": "assets/images/recommend6.png"
+        "https://www.cdc.gov/ncbddd/childdevelopment/positiveparenting/index.html",
+    "imgLink": "assets/images/recommend3.png"
   },
   {
     "title": "Best ways Dads can help a new mom",
@@ -82,150 +82,156 @@ class InitialPage extends StatelessWidget {
 
     return Scaffold(
       appBar: Header(null, "init"),
-      body: Column(children: [
-        Container(
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      blurRadius: 18.0,
-                      spreadRadius: 0.0,
-                      offset: Offset(0, 6))
-                ],
-                color: Color(0xffFFF7DF),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(50),
-                  bottomRight: Radius.circular(50),
-                )),
-            padding: EdgeInsets.only(
-                left: scaleWidth(context, 40),
-                right: scaleWidth(context, 40),
-                top: scaleHeight(context, 30),
-                bottom: scaleHeight(context, 30)),
-            child: Row(children: [
-              Container(
-                  width: scaleWidth(context, 90),
-                  height: scaleWidth(context, 90),
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 133, 127, 0.44),
-                      borderRadius: BorderRadius.circular(40)),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(monthToStr,
-                            style: TextStyle(
-                              fontSize: 30,
-                            )),
-                        SizedBox(height: 1),
-                        Text(day.toString(),
-                            style: TextStyle(
-                                fontSize: 30, fontWeight: FontWeight.w700))
-                      ])),
-              SizedBox(width: scaleWidth(context, 30)),
-              Container(
-                  width: scaleWidth(context, 150),
-                  child: Column(children: [
-                    Text(title, style: TextStyle(fontSize: 25, height: 1.5)),
-                    SizedBox(height: 10),
-                    TextButton(
-                        style: TextButton.styleFrom(
-                          minimumSize: Size.zero,
-                          padding: EdgeInsets.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () {},
-                        child: SizedBox(
-                            child: Row(children: [
-                          Image.asset("assets/images/pencil.png"),
-                          SizedBox(width: 10),
-                          Text("write diary",
-                              style: TextStyle(color: Colors.grey))
-                        ])))
-                  ]))
-            ])),
-        Expanded(
-          child: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
-            child: Column(children: [
-              Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.only(
-                    left: scaleWidth(context, 40),
-                    right: scaleWidth(context, 40),
-                    top: scaleWidth(context, 10),
-                  ),
-                  child: Column(children: [
-                    SizedBox(height: 20),
-                    Container(
-                        width: double.infinity,
-                        child: Text("Playlist for recent mood",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500))),
-                    Container(
-                        width: double.infinity,
-                        height: scaleHeight(context, 160),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              video != null
-                                  ? Container(
-                                      clipBehavior: Clip.hardEdge,
-                                      decoration: BoxDecoration(
-                                          color: Colors.black,
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: Player(video, 280))
-                                  : SizedBox(
-                                      child: Column(
-                                      children: [
-                                        Text(
-                                            "There is no recommended playlist.",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.grey)),
-                                        SizedBox(height: 5),
-                                        Text("Write a diary!",
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.grey))
-                                      ],
-                                    ))
-                            ])),
-                  ])),
-              Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.only(
-                    left: scaleWidth(context, 40),
-                  ),
-                  child: Column(children: [
-                    SizedBox(height: 20),
-                    Container(
-                        width: double.infinity,
-                        child: Text("How to be a good parent",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500))),
-                    Container(
-                        width: double.infinity,
-                        height: scaleHeight(context, 200),
-                        child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                                children: recommendList.map((recommend) {
-                              return TipBox(recommend["title"],
-                                  recommend["imgLink"], recommend["link"]);
-                            }).toList())))
-                  ])),
-              IconButton(
-                  onPressed: () {
-                    Get.to(Login());
-                  },
-                  icon: Icon(Icons.ac_unit))
-            ]),
+      body: Container(
+        color: Colors.white,
+        child: Column(children: [
+          Container(
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        blurRadius: 18.0,
+                        spreadRadius: 0.0,
+                        offset: Offset(0, 6))
+                  ],
+                  color: Color(0xffFFF7DF),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                  )),
+              padding: EdgeInsets.only(
+                  left: scaleWidth(context, 40),
+                  right: scaleWidth(context, 40),
+                  top: scaleHeight(context, 30),
+                  bottom: scaleHeight(context, 30)),
+              child: Row(children: [
+                Container(
+                    width: scaleWidth(context, 90),
+                    height: scaleWidth(context, 90),
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(255, 113, 127, 0.41),
+                        borderRadius: BorderRadius.circular(40)),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(monthToStr,
+                              style: TextStyle(
+                                fontSize: 30,
+                              )),
+                          SizedBox(height: 1),
+                          Text(day.toString(),
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.w700))
+                        ])),
+                SizedBox(width: scaleWidth(context, 30)),
+                Container(
+                    width: scaleWidth(context, 150),
+                    child: Column(children: [
+                      Text(title, style: TextStyle(fontSize: 25, height: 1.5)),
+                      SizedBox(height: 10),
+                      TextButton(
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onPressed: () {},
+                          child: SizedBox(
+                              child: Row(children: [
+                            Image.asset("assets/images/pencil.png"),
+                            SizedBox(width: 10),
+                            Text("write diary",
+                                style: TextStyle(color: Colors.grey))
+                          ])))
+                    ]))
+              ])),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: ClampingScrollPhysics(),
+              child: Column(children: [
+                Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(
+                      left: scaleWidth(context, 40),
+                      right: scaleWidth(context, 40),
+                      top: scaleWidth(context, 10),
+                    ),
+                    child: Column(children: [
+                      SizedBox(height: 20),
+                      Container(
+                          width: double.infinity,
+                          child: Text("Playlist for recent mood",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w500))),
+                      Container(
+                          width: double.infinity,
+                          height: scaleHeight(context, 160),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                video != null
+                                    ? Container(
+                                        clipBehavior: Clip.hardEdge,
+                                        decoration: BoxDecoration(
+                                            color: Colors.black,
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: Player(video, 280))
+                                    : SizedBox(
+                                        child: Column(
+                                        children: [
+                                          Text(
+                                              "There is no recommended playlist.",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.grey)),
+                                          SizedBox(height: 5),
+                                          Text("Write a diary!",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.grey))
+                                        ],
+                                      ))
+                              ])),
+                    ])),
+                Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.only(
+                      left: scaleWidth(context, 40),
+                    ),
+                    child: Column(children: [
+                      SizedBox(height: 20),
+                      Container(
+                          width: double.infinity,
+                          child: Text("How to be a good parent",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.w500))),
+                      SizedBox(height: 10),
+                      Container(
+                          width: double.infinity,
+                          child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                  children: recommendList.map((recommend) {
+                                return Container(
+                                  padding: EdgeInsets.only(left: 10, right: 10),
+                                  child: TipBox(recommend["title"],
+                                      recommend["imgLink"], recommend["link"]),
+                                );
+                              }).toList())))
+                    ])),
+                IconButton(
+                    onPressed: () {
+                      Get.to(Login());
+                    },
+                    icon: Icon(Icons.ac_unit))
+              ]),
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "init"),
     );
   }
@@ -235,7 +241,9 @@ Container TipBox(String title, String imgLink, String link) {
   final Uri url = Uri.parse(link);
 
   return Container(
-      padding: EdgeInsets.only(left: 10, right: 10),
+      decoration: BoxDecoration(
+          color: Color.fromRGBO(237, 237, 237, 0.44),
+          borderRadius: BorderRadius.circular(30)),
       child: TextButton(
           style: TextButton.styleFrom(
             minimumSize: Size.zero,
@@ -245,14 +253,21 @@ Container TipBox(String title, String imgLink, String link) {
           onPressed: () {
             _launchUrl(url);
           },
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(color: Colors.red, width: 120),
-                SizedBox(height: 10),
-                Text(title)
-              ])));
+          child: Container(
+            clipBehavior: Clip.hardEdge,
+            padding: EdgeInsets.all(20),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                      width: 250,
+                      height: 200,
+                      child: Image.asset(width: 250, imgLink)),
+                  Text(title)
+                ]),
+          )));
 }
 
 Future<void> _launchUrl(url) async {

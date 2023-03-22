@@ -1,4 +1,5 @@
 import "package:aeye/controller/childController.dart";
+import 'package:aeye/page/advice/main.dart';
 import "package:aeye/page/advice/main_pre.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";

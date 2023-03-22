@@ -55,7 +55,8 @@ class TemperamentDetail extends StatelessWidget {
                         SizedBox(height: 10),
                         Text(
                             "is a person's own unique characteristic that he or she has since birth",
-                            style: TextStyle(fontSize: 18))
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w500))
                       ])),
               SizedBox(height: 30),
               Text("Types of Temperaments",

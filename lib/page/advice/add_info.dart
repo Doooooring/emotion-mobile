@@ -1,5 +1,6 @@
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
+import "package:aeye/page/advice/main.dart";
 import "package:aeye/services/advice.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
@@ -63,6 +64,7 @@ GestureDetector PopUp(
                     onPressed: () {
                       adviceServices.addChild(
                           textController.text, dropDownValue, childController);
+                      Get.to(AdviceMain());
                     },
                     child: Text("Save",
                         style: TextStyle(color: Colors.black, fontSize: 22)))
@@ -91,11 +93,24 @@ GestureDetector PopUp(
                     SizedBox(width: scaleWidth(context, 10)),
                     Container(
                       width: scaleWidth(context, 150),
-                      color: Colors.white,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset.zero,
+                              blurRadius: 1.0,
+                              spreadRadius: 0,
+                            )
+                          ]),
                       child: TextField(
-                        style: TextStyle(fontSize: 25),
+                        scrollPadding: EdgeInsets.all(0),
+                        style: TextStyle(
+                            fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
                         controller: textController,
                         decoration: InputDecoration(
+                            contentPadding: EdgeInsets.only(left: 10),
                             hintText: "Write your child name",
                             hintStyle: TextStyle(fontSize: 15),
                             labelStyle: TextStyle(
@@ -106,7 +121,7 @@ GestureDetector PopUp(
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(width: 0, color: Colors.white))),
+                                    BorderSide(width: 1, color: Colors.white))),
                       ),
                     )
                   ])),
@@ -124,10 +139,24 @@ GestureDetector PopUp(
                 SizedBox(width: scaleWidth(context, 10)),
                 Container(
                   width: scaleWidth(context, 150),
-                  color: Colors.white,
+                  clipBehavior: Clip.hardEdge,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset.zero,
+                          blurRadius: 1.0,
+                          spreadRadius: 0,
+                        )
+                      ]),
                   child: DropdownButtonFormField(
                       decoration: InputDecoration(
+                          labelStyle:
+                              TextStyle(color: Color.fromRGBO(50, 50, 50, 0.4)),
                           contentPadding: EdgeInsets.only(left: 10),
+                          enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white))),
@@ -138,7 +167,10 @@ GestureDetector PopUp(
                           .map((temperament) {
                         return DropdownMenuItem(
                             value: temperament,
-                            child: Container(child: Text(temperament)));
+                            child: Container(
+                                child: Text(
+                              temperament,
+                            )));
                       }).toList(),
                       onChanged: (value) {
                         if (value == null) {

@@ -39,7 +39,7 @@ AppBar Header(DateTime? curDate, String curPath) {
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 35,
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w500,
                     color: Colors.black,
                   )),
             ],

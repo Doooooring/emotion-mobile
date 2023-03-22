@@ -2,7 +2,6 @@ import "package:aeye/component/common/app_bar.dart";
 import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
-import "package:aeye/page/advice/revise_info.dart";
 import "package:aeye/page/advice/temperament_explain.dart";
 import "package:aeye/page/advice/tipDetail.dart";
 import "package:aeye/utils/interface/child.dart";
@@ -36,8 +35,20 @@ class _AdviceMainState extends State<AdviceMain> {
   Widget build(BuildContext context) {
     List<String> curTips = ["During conflicts", "Changing environment"];
 
+    List<Map> curChildList = [
+      {"id": "0", "name": "Mark", "temperament": "Easy"},
+      {"id": "1", "name": "John", "temperament": "Difficult"},
+      {"id": "2", "name": "Dori", "temperament": "Slow to warm up"}
+    ];
+
+    if (childController.childList.length == 0) {
+      curChildList.forEach((child) {
+        Child cur = Child.fromJson(child);
+        childController.addChild(cur);
+      });
+    }
+
     List<Child> childList = childController.childList!;
-    print(childList);
     Child curView = childList[curViewInd];
     String curTemp = curView.temperament;
 
@@ -58,25 +69,26 @@ class _AdviceMainState extends State<AdviceMain> {
                   setViewToRight: setViewToRight)
             ])),
             SizedBox(height: 80),
-            SizedBox(
+            Container(
+                padding: EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  Text("Parenting tips",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-                  SizedBox(height: 20),
-                  Column(
-                      children: curTips.map((tip) {
-                    return TipsNavigator(
-                        tip,
-                        TipDetail(
-                            temperament: curTemp,
-                            title: tip,
-                            name: curView.name),
-                        context);
-                  }).toList())
-                ]))
+                      Text("Parenting tips",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600)),
+                      SizedBox(height: 20),
+                      Column(
+                          children: curTips.map((tip) {
+                        return TipsNavigator(
+                            tip,
+                            TipDetail(
+                                temperament: curTemp,
+                                title: tip,
+                                name: curView.name),
+                            context);
+                      }).toList())
+                    ]))
           ])),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
     );
@@ -139,6 +151,7 @@ class _ViewTemperamentState extends State<ViewTemperament> {
               top: height / 2 - 15,
               left: 5,
               child: IconButton(
+                  splashRadius: 0.1,
                   padding: EdgeInsets.zero, // 패딩 설정
                   constraints: BoxConstraints(),
                   onPressed: () {
@@ -154,6 +167,7 @@ class _ViewTemperamentState extends State<ViewTemperament> {
               top: height / 2 - 15,
               right: 5,
               child: IconButton(
+                  splashRadius: 0.1,
                   padding: EdgeInsets.zero, // 패딩 설정
                   constraints: BoxConstraints(),
                   onPressed: () {
@@ -177,17 +191,18 @@ Container Slide(Child child, double width, double height) {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
             child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          TextButton(
-              onPressed: () {
-                Get.to(() => ReviseInfo(id: child.id));
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text("Change child's", style: TextStyle(color: Colors.grey)),
-                  Text("temperament", style: TextStyle(color: Colors.grey))
-                ],
-              ))
+          PopUpMenuButtonWrapper()
+          // TextButton(
+          //     onPressed: () {
+          //       Get.to(() => ReviseInfo(id: child.id));
+          //     },
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.end,
+          //       children: [
+          //         Text("Change child's", style: TextStyle(color: Colors.grey)),
+          //         Text("temperament", style: TextStyle(color: Colors.grey))
+          //       ],
+          //     ))
         ])),
         Text(child.name,
             style: TextStyle(fontSize: 45, fontWeight: FontWeight.w800)),
@@ -244,4 +259,41 @@ Container TipsNavigator(String title, Widget navigate, BuildContext context) {
           child: Text(title,
               style: TextStyle(
                   color: Colors.black, fontWeight: FontWeight.w400))));
+}
+
+enum SampleItem { itemOne, itemTwo, itemThree }
+
+class PopUpMenuButtonWrapper extends StatefulWidget {
+  const PopUpMenuButtonWrapper({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<PopUpMenuButtonWrapper> createState() => _PopUpMenuButtonWrapperState();
+}
+
+class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
+  SampleItem? selectedMenu;
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<SampleItem>(
+      initialValue: selectedMenu,
+      // Callback that sets the selected popup menu item.
+      onSelected: (SampleItem item) async {
+        if (item == SampleItem.itemOne) {
+        } else {}
+      },
+      itemBuilder: (BuildContext context) => [
+        PopupMenuItem(
+          value: SampleItem.itemOne,
+          child: Text("edit"),
+        ),
+        PopupMenuItem(
+          value: SampleItem.itemTwo,
+          child: Text("daily report"),
+        ),
+      ],
+    );
+  }
 }

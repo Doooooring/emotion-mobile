@@ -8,7 +8,6 @@ import "../component/common/bottom_bar.dart";
 import "../component/common/youtube_player.dart";
 import "../controller/sizeController.dart";
 import "../page/emotion/emotion_diary.dart";
-import 'login/login.dart';
 
 final dio = Dio();
 
@@ -135,22 +134,24 @@ class InitialPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1.3)),
                       SizedBox(height: 10),
-                      TextButton(
-                          style: TextButton.styleFrom(
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          onPressed: () {
-                            Get.to(CalendarWrapper());
-                          },
-                          child: SizedBox(
-                              child: Row(children: [
-                            Image.asset("assets/images/pencil.png"),
-                            SizedBox(width: 10),
-                            Text("write diary",
-                                style: TextStyle(color: Colors.grey))
-                          ])))
+                      video != null
+                          ? SizedBox(width: 0)
+                          : TextButton(
+                              style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
+                              onPressed: () {
+                                Get.to(CalendarWrapper());
+                              },
+                              child: SizedBox(
+                                  child: Row(children: [
+                                Image.asset("assets/images/pencil.png"),
+                                SizedBox(width: 10),
+                                Text("write diary",
+                                    style: TextStyle(color: Colors.grey))
+                              ])))
                     ]))
               ])),
           Expanded(
@@ -232,11 +233,12 @@ class InitialPage extends StatelessWidget {
                                 }).toList()
                               ])))
                     ])),
-                IconButton(
-                    onPressed: () {
-                      Get.to(Login());
-                    },
-                    icon: Icon(Icons.ac_unit))
+                SizedBox(height: 30)
+                // IconButton(
+                //     onPressed: () {
+                //       Get.to(Login());
+                //     },
+                //     icon: Icon(Icons.ac_unit))
               ]),
             ),
           ),

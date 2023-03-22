@@ -3,6 +3,7 @@ import "package:aeye/page/baby_monitor.dart";
 import 'package:aeye/page/emotion/emotion_diary.dart';
 import "package:aeye/page/initial.dart";
 import 'package:flutter/material.dart';
+import "package:get/get.dart";
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key, required this.state, required this.curPath})
@@ -55,6 +56,30 @@ OutlinedButton NavComp(BuildContext context, String link, String curPath) {
       break;
     default:
       break;
+  }
+
+  if (title == "Home") {
+    return OutlinedButton(
+        style: OutlinedButton.styleFrom(side: BorderSide(color: Colors.white)),
+        onPressed: () {
+          if (curPath == link) {
+            return;
+          }
+          Get.offAll(InitialPage());
+        },
+        child: Opacity(
+          opacity: curPath == link ? 1 : 0.5,
+          child: Container(
+            padding: EdgeInsets.only(top: 20),
+            decoration: BoxDecoration(),
+            height: 100,
+            child: Column(children: [
+              Image.asset(width: 30, height: 30, imageLink),
+              SizedBox(height: 5),
+              Text(title, style: TextStyle(color: Colors.black))
+            ]),
+          ),
+        ));
   }
 
   return title == "BabyMonitor"

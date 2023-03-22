@@ -7,6 +7,7 @@ import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
 import "../component/common/youtube_player.dart";
 import "../controller/sizeController.dart";
+import "../page/emotion/emotion_diary.dart";
 import 'login/login.dart';
 
 final dio = Dio();
@@ -128,7 +129,11 @@ class InitialPage extends StatelessWidget {
                 Container(
                     width: scaleWidth(context, 150),
                     child: Column(children: [
-                      Text(title, style: TextStyle(fontSize: 25, height: 1.5)),
+                      Text(title,
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              height: 1.3)),
                       SizedBox(height: 10),
                       TextButton(
                           style: TextButton.styleFrom(
@@ -136,7 +141,9 @@ class InitialPage extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(CalendarWrapper());
+                          },
                           child: SizedBox(
                               child: Row(children: [
                             Image.asset("assets/images/pencil.png"),
@@ -163,10 +170,10 @@ class InitialPage extends StatelessWidget {
                           width: double.infinity,
                           child: Text("Playlist for recent mood",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w500))),
+                                  fontSize: 25, fontWeight: FontWeight.w500))),
                       Container(
                           width: double.infinity,
-                          height: scaleHeight(context, 160),
+                          height: scaleHeight(context, 200),
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -178,7 +185,7 @@ class InitialPage extends StatelessWidget {
                                             color: Colors.black,
                                             borderRadius:
                                                 BorderRadius.circular(20)),
-                                        child: Player(video, 280))
+                                        child: Player(video, 330))
                                     : SizedBox(
                                         child: Column(
                                         children: [
@@ -198,13 +205,12 @@ class InitialPage extends StatelessWidget {
                     ])),
                 Container(
                     width: double.infinity,
-                    padding: EdgeInsets.only(
-                      left: scaleWidth(context, 40),
-                    ),
                     child: Column(children: [
                       SizedBox(height: 20),
                       Container(
                           width: double.infinity,
+                          padding:
+                              EdgeInsets.only(left: scaleWidth(context, 40)),
                           child: Text("How to be a good parent",
                               style: TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.w500))),
@@ -213,14 +219,18 @@ class InitialPage extends StatelessWidget {
                           width: double.infinity,
                           child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
-                              child: Row(
-                                  children: recommendList.map((recommend) {
-                                return Container(
-                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                  child: TipBox(recommend["title"],
-                                      recommend["imgLink"], recommend["link"]),
-                                );
-                              }).toList())))
+                              child: Row(children: [
+                                SizedBox(width: 40),
+                                ...recommendList.map((recommend) {
+                                  return Container(
+                                    padding: EdgeInsets.only(right: 20),
+                                    child: TipBox(
+                                        recommend["title"],
+                                        recommend["imgLink"],
+                                        recommend["link"]),
+                                  );
+                                }).toList()
+                              ])))
                     ])),
                 IconButton(
                     onPressed: () {
@@ -265,7 +275,7 @@ Container TipBox(String title, String imgLink, String link) {
                       width: 250,
                       height: 200,
                       child: Image.asset(width: 250, imgLink)),
-                  Text(title)
+                  Text(title, style: TextStyle(color: Colors.black))
                 ]),
           )));
 }

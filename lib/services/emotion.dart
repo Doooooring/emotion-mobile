@@ -1,5 +1,7 @@
 import "dart:developer";
 
+import 'package:aeye/utils/interface/comment.dart';
+
 import "../repositories/diary.dart";
 
 DiaryRepositories repository = new DiaryRepositories();
@@ -445,8 +447,14 @@ class EmotionServices {
     return response;
   }
 
-  Future<Map> getComments(String diaryId) async {
+  Future<CommentPageData> getComments(String diaryId) async {
     Map response = await repository.getComments(diaryId);
-    return response;
+    CommentPageData commentPageData = CommentPageData.fromJson(response);
+    return commentPageData;
+  }
+
+  Future<bool> postComments(String id, String comment) async {
+    Map response = await repository.postComments(id, comment);
+    return response["success"];
   }
 }

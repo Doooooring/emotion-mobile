@@ -130,7 +130,7 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
             children: [
               id == null
                   ? SizedBox(width: 0)
-                  : ButtonToComment(context, widget.date.year,
+                  : ButtonToComment(context, id, widget.date.year,
                       widget.date.month, widget.date.day),
             ],
           ),
@@ -312,14 +312,15 @@ Container PreviewBoxBody(BuildContext context, String text) {
       ));
 }
 
-TextButton ButtonToComment(BuildContext context, int year, int month, int day) {
+TextButton ButtonToComment(
+    BuildContext context, int id, int year, int month, int day) {
   return TextButton(
       onPressed: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    EmotionComment(year: year, month: month, day: day)));
+                builder: (context) => EmotionComment(
+                    id: id, year: year, month: month, day: day)));
       },
       child: Text("View comments", style: TextStyle(color: Colors.grey)));
 }

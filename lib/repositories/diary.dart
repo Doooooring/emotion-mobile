@@ -167,4 +167,20 @@ class DiaryRepositories {
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return result["result"];
   }
+
+  postComments(String diaryId, String comment) async {
+    Map tokens = await loginController.getTokens();
+    Uri endPoint = Uri.parse('$HOST_URL/diary/commnet/${diaryId}');
+    Map body = {"commentContent": comment};
+    var bodyEncoded = json.encode(body);
+
+    http.Response response = await http.post(endPoint,
+        headers: {
+          "Content-Type": "application/json",
+          "authorization": tokens["access"]
+        },
+        body: bodyEncoded);
+    dynamic result = json.decode(utf8.decode(response.bodyBytes));
+    return result["result"];
+  }
 }

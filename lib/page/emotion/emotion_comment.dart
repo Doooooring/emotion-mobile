@@ -2,6 +2,8 @@ import "dart:ui";
 
 import "package:aeye/component/emoticon_diary/emotion/emotion_preview_comment.dart";
 import "package:aeye/controller/sizeController.dart";
+import "package:aeye/services/emotion.dart";
+import "package:aeye/utils/interface/comment.dart";
 import "package:flutter/material.dart";
 
 Map Month = {
@@ -25,14 +27,18 @@ Map Month = {
 // {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"},
 // {"date": "Feb 18 2023", "type": "main", "comment": "You are so sweet"}
 
+EmotionServices emotionServices = EmotionServices();
+
 class EmotionComment extends StatefulWidget {
   const EmotionComment({
     Key? key,
+    required this.id,
     required this.year,
     required this.month,
     required this.day,
   }) : super(key: key);
 
+  final int id;
   final int year;
   final int month;
   final int day;
@@ -51,8 +57,8 @@ class EmotionComment extends StatefulWidget {
  */
 
 class _EmotionCommentState extends State<EmotionComment> {
-  List<_Comment> curComment = [];
-  void setCurComment(_Comment comment) {
+  List<Comment> curComment = [];
+  void setCurComment(Comment comment) {
     setState(() {
       curComment.add(comment);
     });
@@ -64,7 +70,7 @@ class _EmotionCommentState extends State<EmotionComment> {
 
     Map dataJson = {
       "emotion": "content-3",
-      "diary": "Liam took care of Mark instead of me. I had a day off XD.",
+      "content": "Liam took care of Mark instead of me. I had a day off XD.",
       "comment": [
         {
           "date": "Mar 17 2023",
@@ -74,7 +80,18 @@ class _EmotionCommentState extends State<EmotionComment> {
       ]
     };
 
-    _CommentPageData curData = _CommentPageData.fromJson(dataJson);
+    CommentPageData? curData = null;
+    setCurData(CommentPageData commentPageData) {
+      setState(() {
+        curData = commentPageData;
+      });
+    }
+
+    addComment(Comment comment) {
+      setState(() {
+        curData!.comment.add(comment);
+      });
+    }
     // if (curComment.length == 0) {
     //   setCurComment(curData.comment[0]);
     // }
@@ -83,45 +100,61 @@ class _EmotionCommentState extends State<EmotionComment> {
       FocusScope.of(context).requestFocus(new FocusNode());
     }
 
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: Header(widget.month, widget.day),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          removeFocus(context);
-        },
-        child: Container(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 30),
-            child: Stack(children: [
-              Container(
-                child: SingleChildScrollView(
-                  child: Container(
-                      child: Column(children: [
-                    EmotionPreview(
-                        year: widget.year,
-                        month: widget.month,
-                        day: widget.day,
-                        emotion: curData.emotion,
-                        diary: curData.diary),
-                    Column(
-                      children: curComment.map((_Comment data) {
-                        return CommentLabel(context, data);
-                      }).toList(),
+    _asyncMethod() async {
+      CommentPageData commentPageData =
+          await emotionServices.getComments(widget.id.toString());
+      setCurData(commentPageData);
+    }
+
+    @override
+    void initState() {
+      super.initState();
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _asyncMethod();
+      });
+    }
+
+    return curData == null
+        ? Scaffold()
+        : Scaffold(
+            resizeToAvoidBottomInset: true,
+            appBar: Header(widget.month, widget.day),
+            body: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                removeFocus(context);
+              },
+              child: Container(
+                  padding: EdgeInsets.only(left: 20, right: 20, top: 30),
+                  child: Stack(children: [
+                    Container(
+                      child: SingleChildScrollView(
+                        child: Container(
+                            child: Column(children: [
+                          EmotionPreview(
+                              year: widget.year,
+                              month: widget.month,
+                              day: widget.day,
+                              emotion: curData!.emotion,
+                              diary: curData!.diary),
+                          Column(
+                            children: curComment.map((Comment data) {
+                              return CommentLabel(context, data);
+                            }).toList(),
+                          ),
+                        ])),
+                      ),
                     ),
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        padding: EdgeInsets.only(bottom: 20),
+                        alignment: Alignment.bottomCenter,
+                        child: CommentInput(widget.id, controller,
+                            setCurComment, curComment, context, removeFocus))
                   ])),
-                ),
-              ),
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  padding: EdgeInsets.only(bottom: 20),
-                  alignment: Alignment.bottomCenter,
-                  child: CommentInput(controller, setCurComment, curComment,
-                      context, removeFocus))
-            ])),
-      ),
-    );
+            ),
+          );
   }
 }
 
@@ -155,7 +188,7 @@ AppBar Header(int month, int day) {
   );
 }
 
-Container CommentLabel(BuildContext context, _Comment comment) {
+Container CommentLabel(BuildContext context, Comment comment) {
   String date = comment.date;
   String type = comment.type;
   String body = comment.comment;
@@ -219,9 +252,10 @@ Container CommentBox(
 }
 
 Row CommentInput(
+    int id,
     TextEditingController controller,
-    void Function(_Comment) setCurComment,
-    List<_Comment> curComment,
+    void Function(Comment) setCurComment,
+    List<Comment> curComment,
     BuildContext context,
     void Function(BuildContext) removeFocus) {
   return Row(
@@ -260,64 +294,13 @@ Row CommentInput(
             ],
           )),
       IconButton(
-          onPressed: () {
-            _Comment cur1 = _Comment.fromJson({
-              "date": "Mar 17 2023",
-              "type": "sub",
-              "comment": "No problem honey! I am glad you got rest."
-            });
-
-            _Comment cur2 = _Comment.fromJson({
-              "date": "Mar 17 2023",
-              "type": "main",
-              "comment": "Your so sweet~"
-            });
-            if (curComment.length == 0) {
-              setCurComment(cur1);
-            } else {
-              setCurComment(cur2);
-            }
-            removeFocus(context);
+          onPressed: () async {
+            bool response = await emotionServices.postComments(
+                id.toString(), controller.text);
+            if (response) {
+            } else {}
           },
           icon: Icon(Icons.send))
     ],
   );
-}
-
-// data type
-class _CommentPageData {
-  _CommentPageData(this.emotion, this.diary, this.comment);
-
-  final String emotion;
-  final String diary;
-  final List<_Comment> comment;
-
-  factory _CommentPageData.fromJson(Map data) {
-    String emotion = data["emotion"];
-    String diary = data["diary"];
-
-    List<_Comment> comments = data["comment"].length == 0
-        ? []
-        : data["comment"].map<_Comment>((Map comment) {
-            return _Comment.fromJson(comment);
-          }).toList();
-
-    return _CommentPageData(emotion, diary, comments);
-  }
-}
-
-class _Comment {
-  _Comment(this.date, this.type, this.comment);
-
-  final String date;
-  final String type;
-  final String comment;
-
-  factory _Comment.fromJson(Map data) {
-    String date = data["date"];
-    String type = data["type"];
-    String comment = data["comment"];
-
-    return _Comment(date, type, comment);
-  }
 }

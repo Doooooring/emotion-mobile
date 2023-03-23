@@ -80,8 +80,6 @@ class _DailReportState extends State<DailReport> with TickerProviderStateMixin {
     double maxHeight = 30;
     double curHeight = maxHeight * pow(xForHeight, 1.5);
 
-    double xForRotating = 2 * (max(0.5, curValue) - 0.5);
-
     String month = Month[widget.date.month.toString()];
     String emotionLink = widget.emotion == null
         ? "assets/images/mean.png"

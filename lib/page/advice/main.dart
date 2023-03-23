@@ -68,7 +68,7 @@ class _AdviceMainState extends State<AdviceMain> {
                   setViewToLeft: setViewToLeft,
                   setViewToRight: setViewToRight)
             ])),
-            SizedBox(height: 80),
+            SizedBox(height: 30),
             Container(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Column(
@@ -76,7 +76,7 @@ class _AdviceMainState extends State<AdviceMain> {
                     children: [
                       Text("Parenting tips",
                           style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w600)),
+                              fontSize: 24, fontWeight: FontWeight.w600)),
                       SizedBox(height: 20),
                       Column(
                           children: curTips.map((tip) {
@@ -88,7 +88,7 @@ class _AdviceMainState extends State<AdviceMain> {
                                 name: curView.name),
                             context);
                       }).toList())
-                    ]))
+                    ])),
           ])),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
     );
@@ -185,6 +185,21 @@ class _ViewTemperamentState extends State<ViewTemperament> {
 }
 
 Container Slide(Child child, double width, double height) {
+  String imageLink = "";
+  switch (child.temperament) {
+    case ("Easy"):
+      imageLink = "assets/images/dog.png";
+      break;
+    case ("Difficult"):
+      imageLink = "assets/images/cat.png";
+      break;
+    case ("Slow to warm up"):
+      imageLink = "assets/images/turtle.png";
+      break;
+    default:
+      break;
+  }
+
   return Container(
       width: width,
       height: height,
@@ -217,49 +232,89 @@ Container Slide(Child child, double width, double height) {
             onPressed: () {
               Get.to(() => TemperamentExplain(temperament: child.temperament));
             },
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(child.temperament,
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xffFF717F))),
-                    SizedBox(height: 15),
-                    Text("temperament",
-                        style: TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0xffFF717F)))
-                  ]),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(child: Image.asset(width: 60, imageLink)),
+                SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(child.temperament,
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffFF717F))),
+                        SizedBox(height: 15),
+                        Text("temperament",
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0xffFF717F)))
+                      ]),
+                ),
+              ],
             ))
       ]));
 }
 
 Container TipsNavigator(String title, Widget navigate, BuildContext context) {
+  String imageLink = "";
+  switch (title) {
+    case ("Changing environment"):
+      imageLink = "assets/images/school.png";
+      break;
+    case ("During conflict"):
+      imageLink = "assets/images/fisted.png";
+      break;
+    case ("crying baby"):
+      imageLink = "assets/images/babyCrying.png";
+      break;
+    default:
+      break;
+  }
+
   return Container(
-      width: double.infinity,
-      height: scaleHeight(context, 45),
-      decoration: BoxDecoration(
-          border: Border(
-              bottom: BorderSide(
-                  color: Color.fromRGBO(189, 189, 189, 0.5), width: 1.0))),
-      child: TextButton(
-          style: TextButton.styleFrom(
-              minimumSize: Size.zero,
-              padding: EdgeInsets.only(
-                top: 15,
+    padding: EdgeInsets.only(bottom: 20),
+    child: Container(
+        width: double.infinity,
+        height: scaleHeight(context, 45),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0, 5),
+                blurRadius: 20,
+                spreadRadius: -19)
+          ],
+        ),
+        child: TextButton(
+            style: TextButton.styleFrom(
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                alignment: Alignment.topLeft),
+            onPressed: () {
+              Get.to(() => navigate);
+            },
+            child: Container(
+              padding: EdgeInsets.only(left: 20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(imageLink),
+                  SizedBox(width: 10),
+                  Text(title,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500)),
+                ],
               ),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              alignment: Alignment.topLeft),
-          onPressed: () {
-            Get.to(() => navigate);
-          },
-          child: Text(title,
-              style: TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.w400))));
+            ))),
+  );
 }
 
 enum SampleItem { itemOne, itemTwo, itemThree }

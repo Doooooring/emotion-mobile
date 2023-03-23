@@ -5,19 +5,19 @@ import "package:flutter/material.dart";
 Map<String, Map> DetailBody = {
   "Changing environment": {
     "Easy":
-        "They adapt well to the new environment and are emotionally stable, so they have less difficulty raising them.#Children with easy temperament often can't express themselves well even if they are stressed out, so be careful.#In the case of multiple children, it is important to respond well to their children's emotions because it is relatively easy for parents to pay less attention due to their easy temperament.#In general, don't let them get pushed out of the way just because they laugh and play well, but take care to show more special interest every day.",
+        "They <adapt well> to the new environment and are <emotionally stable>, so they have less difficulty raising them.#Children with easy temperament often <can't express themselves well> even if they are stressed out, so be careful.#In the case of multiple children, it is important to respond well to their children's emotions because it is relatively easy for parents to pay less attention due to their easy temperament.#In general, don't let them get pushed out of the way just because they laugh and play well, but <take care to show more special interest every day!>",
     "Difficult":
-        "It takes a long time for children with difficult temperament to adapt to the new environment and children with difficult temperament are prone to strong rejection#Children with difficult temperament are sensitive to parents' reactions, so it is necessary to take a good look at their children's reactions and behaviors and provide them with a sense of stability.",
+        "It <takes a long time> for children with difficult temperament to adapt to the new environment and children with difficult temperament are prone to <strong rejection>#Children with difficult temperament are sensitive to parents' reactions, so it is necessary to take a good look at their children's reactions and behaviors and <provide them with a sense of stability>.",
     "Slow to warm up":
-        "Slow-tempered children respond slowly to unfamiliar environments, but exhibit slow-adaptive behavior patterns.#As they show a negative reaction in the new environment, parents of a slow-tempered child sometimes feel that their child is similar to a difficult temperament.#Since children with slow temperament are slow to adapt, conflicts with parents who are impatient can be caused, so parents' patience is needed."
+        "Slow-tempered children respond slowly to unfamiliar environments, but exhibit slow-adaptive <behavior patterns>.#As they show a negative reaction in the new environment, parents of a slow-tempered child sometimes feel that their child is similar to a difficult temperament.#Since children with slow temperament are slow to adapt, conflicts with parents who are impatient can be caused, so parents' <patience is needed>."
   },
   "During conflicts": {
     "Easy":
-        "It is important not to force a child of a easy temperament to yield in the event of a conflict because he or she can obey what he or she does not like.#It can increase your child's sadness and anger, which can be detrimental to healthy development.",
+        "It is <important not to force> a child of a easy temperament <to yield in the event of a conflict> because he or she can obey what he or she does not like.#It can increase your child's sadness and anger, which can be detrimental to healthy development.",
     "Difficult":
-        "It${"'"}s better to offer more than one alternative, rather than control or prohibition, such as ${'"'}No!${'"'} and ${"${'"'}Don${"'"}t!"} so that the child can make his or her own choices.",
+        "It${"'"}s better to <offer more than one alternative>, rather than control or prohibition, such as ${'"'}No!${'"'} and ${"${'"'}Don${"'"}t!"} so that the child can make his or her own choices.",
     "Slow to warm up":
-        "The more pressing or urging, the more negatively children reject or act.#It also takes longer to adapt, so be careful.#It's better to help your child try to change slowly instead of trying to change suddenly."
+        "The more pressing or urging, the more negatively children reject or act.#It also takes longer to adapt, so be careful.#It's better to help your child try <to change slowly> instead of trying to change suddenly."
   }
 };
 
@@ -39,18 +39,21 @@ class TipDetail extends StatelessWidget {
 
     return Scaffold(
       appBar: TipDetailHeader(title),
-      body: Container(
-          padding: EdgeInsets.only(
-            top: 50,
-            left: 40,
-            right: 40,
-          ),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            BodyHeader(title, temperament, name, scaleWidth(context, 240)),
-            SizedBox(height: 50),
-            BodyContent(detailBody)
-          ])),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Container(
+            padding: EdgeInsets.only(
+              top: 50,
+              left: 40,
+              right: 40,
+            ),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              BodyHeader(title, temperament, name, scaleWidth(context, 240)),
+              SizedBox(height: 50),
+              BodyContent(title, detailBody)
+            ])),
+      ),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
     );
   }
@@ -113,17 +116,40 @@ class TipDetail extends StatelessWidget {
   }
 }
 
-SizedBox BodyContent(String body) {
+SizedBox BodyContent(String title, String body) {
   List<String> bodySplited = body.split("#").toList();
 
+  String imageLink = title == "Changing environment"
+      ? "assets/images/changing_environment.png"
+      : "assets/images/during_conflict.png";
+
   return SizedBox(
-      child: Column(
-          children: bodySplited.map((comp) {
-    return Container(
-        padding: EdgeInsets.only(bottom: 30),
-        child: Text(comp,
-            style: TextStyle(
-              fontSize: 18,
-            )));
-  }).toList()));
+      child: Column(children: [
+    Image.asset(imageLink),
+    SizedBox(height: 50),
+    ...bodySplited.map((comp) {
+      return BodyComp(comp);
+    }).toList()
+  ]));
+}
+
+Container BodyComp(String comp) {
+  List<String> compSplited = comp.split(RegExp("<|>"));
+
+  return Container(
+      padding: EdgeInsets.only(bottom: 30),
+      child: RichText(
+          text: TextSpan(
+              style: TextStyle(fontSize: 20),
+              children: List.generate(compSplited.length, (idx) {
+                if (idx % 2 == 0) {
+                  return TextSpan(
+                      text: compSplited[idx],
+                      style: TextStyle(color: Colors.black));
+                } else {
+                  return TextSpan(
+                      text: compSplited[idx],
+                      style: TextStyle(color: Color(0xffFF717F)));
+                }
+              }))));
 }

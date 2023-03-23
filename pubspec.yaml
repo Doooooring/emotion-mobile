@@ -166,6 +166,11 @@ flutter:
     - assets/images/recommend4.png
     - assets/images/recommend5.png
     - assets/images/recommend6.png
+    - assets/images/changing_environment.png
+    - assets/images/during_conflict.png
+    - assets/images/babyCrying.png
+    - assets/images/fisted.png
+    - assets/images/school.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

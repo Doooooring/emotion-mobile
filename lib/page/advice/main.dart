@@ -139,7 +139,8 @@ class _ViewTemperamentState extends State<ViewTemperament> {
             width: double.infinity,
             height: height,
           ),
-          Positioned(
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 150),
             left: -1 * distance * widget.curViewInd,
             child: SizedBox(
                 child: Row(

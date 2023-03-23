@@ -1,3 +1,4 @@
+import "package:aeye/page/emotion/emotion_result.dart";
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
@@ -7,7 +8,6 @@ import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
 import "../component/common/youtube_player.dart";
 import "../controller/sizeController.dart";
-import "../page/emotion/emotion_diary.dart";
 
 final dio = Dio();
 
@@ -134,7 +134,7 @@ class InitialPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1.3)),
                       SizedBox(height: 10),
-                      video != null
+                      video == null
                           ? SizedBox(width: 0)
                           : TextButton(
                               style: TextButton.styleFrom(
@@ -143,7 +143,14 @@ class InitialPage extends StatelessWidget {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               onPressed: () {
-                                Get.to(CalendarWrapper());
+                                Get.to(DailReport(
+                                    date: DateTime.now(),
+                                    emotion: "excited-3",
+                                    emotionText: "You have a good day!",
+                                    sentimentLevel: 4.3,
+                                    videoUrl: "fxtRZidW3RM",
+                                    title: "good"));
+                                // Get.to(CalendarWrapper());
                               },
                               child: SizedBox(
                                   child: Row(children: [

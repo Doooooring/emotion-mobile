@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -130,6 +131,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                       widget.date,
                       widget.emotion,
                       widget.curDates,
+                      widget.emotionSelectorUp,
                       widget.setCurDate,
                       widget.setInputEmotionUp,
                       widget.setEmotionSelectorUp,
@@ -145,6 +147,7 @@ List<Widget> EmoticonList(
     DateTime date,
     String? emotion,
     Map curDates,
+    bool emotionSelectorUp,
     void Function(String, int?, String?, String?) setCurDate,
     void Function(bool) setEmotionSelectorUp,
     void Function(bool) setInputEmotionUp,
@@ -162,6 +165,7 @@ List<Widget> EmoticonList(
   for (String str in curList) {
     curWidgets.add(ButtonWrapper(
         id: id,
+        emotionSelectorUp: emotionSelectorUp,
         setEmotionSelectorUp: setEmotionSelectorUp,
         setInputEmotionUp: setInputEmotionUp,
         setCurDate: setCurDate,
@@ -175,6 +179,7 @@ class ButtonWrapper extends StatefulWidget {
   const ButtonWrapper({
     Key? key,
     required this.id,
+    required this.emotionSelectorUp,
     required this.date,
     required this.emotion,
     required this.setCurDate,
@@ -182,6 +187,7 @@ class ButtonWrapper extends StatefulWidget {
     required this.setEmotionSelectorUp,
   }) : super(key: key);
   final int? id;
+  final bool emotionSelectorUp;
   final DateTime date;
   final String emotion;
   final void Function(String, int?, String?, String?) setCurDate;
@@ -191,25 +197,62 @@ class ButtonWrapper extends StatefulWidget {
   State<ButtonWrapper> createState() => _ButtonWrapperState();
 }
 
-class _ButtonWrapperState extends State<ButtonWrapper> {
+class _ButtonWrapperState extends State<ButtonWrapper>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 800),
+    vsync: this,
+  )..addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+      ;
+    });
+
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeInToLinear,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.emotionSelectorUp) {
+      _controller.forward();
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-        padding: EdgeInsets.all(0),
-        onPressed: () {
-          widget.setEmotionSelectorUp(false);
-          widget.setInputEmotionUp(false);
-          emotionServices.reviseEmotion(
-              widget.id,
-              widget.emotion,
-              widget.date,
-              widget.setEmotionSelectorUp,
-              widget.setInputEmotionUp,
-              widget.setCurDate);
-          // Navigator.push(context,
-          //     MaterialPageRoute(builder: (context) => EmotionResult()));
-        },
-        icon: Image.asset(
-            height: 50, width: 50, 'assets/images/${widget.emotion}.png'));
+    double curValue = _animation.value;
+    double maxHeight = 50;
+    double imageHeight = min(curValue * 100, maxHeight);
+
+    return Transform.translate(
+      offset: Offset(0, imageHeight - maxHeight),
+      child: IconButton(
+          padding: EdgeInsets.all(0),
+          onPressed: () {
+            widget.setEmotionSelectorUp(false);
+            widget.setInputEmotionUp(false);
+            emotionServices.reviseEmotion(
+                widget.id,
+                widget.emotion,
+                widget.date,
+                widget.setEmotionSelectorUp,
+                widget.setInputEmotionUp,
+                widget.setCurDate);
+            // Navigator.push(context,
+            //     MaterialPageRoute(builder: (context) => EmotionResult()));
+          },
+          icon: Image.asset(
+              height: 50, width: 50, 'assets/images/${widget.emotion}.png')),
+    );
   }
 }

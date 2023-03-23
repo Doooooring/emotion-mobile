@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import "package:flutter/material.dart";
 import "package:syncfusion_flutter_charts/charts.dart";
 
@@ -141,7 +143,29 @@ class ChartWrapper extends StatefulWidget {
   State<ChartWrapper> createState() => _ChartWrapperState();
 }
 
-class _ChartWrapperState extends State<ChartWrapper> {
+class _ChartWrapperState extends State<ChartWrapper>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 800),
+    vsync: this,
+  )..addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+      ;
+    });
+
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeInToLinear,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   int curIdx = -1;
   void setCurIdx(int nextIdx) {
     setState(() {
@@ -157,6 +181,8 @@ class _ChartWrapperState extends State<ChartWrapper> {
     Color monthlyColor = PositiveList.contains(bestEmotion)
         ? Color(0xff4FB600)
         : Color(0xffEC5313);
+
+    double value = _animation.value;
 
     return Container(
         width: 360,
@@ -188,6 +214,7 @@ class _ChartWrapperState extends State<ChartWrapper> {
                   width: 230,
                   height: 230,
                   child: CircularChart(
+                      animationController: _controller,
                       curIdx: curIdx,
                       setCurIdx: setCurIdx,
                       curData: [
@@ -218,7 +245,9 @@ class _ChartWrapperState extends State<ChartWrapper> {
           //     emotionHistogram: widget.emotionHistogram,
           //     bestEmotion: bestEmotion),
           SentimentEmotion(
-              curIdx: curIdx, emotionHistogram: widget.emotionHistogram),
+              value: value,
+              curIdx: curIdx,
+              emotionHistogram: widget.emotionHistogram),
           SizedBox(height: 20),
           Container(
               padding: EdgeInsets.only(left: 20),
@@ -257,11 +286,13 @@ class _ChartWrapperState extends State<ChartWrapper> {
 class CircularChart extends StatefulWidget {
   const CircularChart(
       {Key? key,
+      required this.animationController,
       required this.curData,
       required this.curIdx,
       required this.setCurIdx})
       : super(key: key);
 
+  final AnimationController animationController;
   final List<_CircularData> curData;
   final int curIdx;
   final Function(int) setCurIdx;
@@ -285,6 +316,8 @@ class _CircularChartState extends State<CircularChart> {
             return;
           }
           widget.setCurIdx(seriesIndex);
+          widget.animationController.reset();
+          widget.animationController.forward();
         },
         xValueMapper: (_CircularData data, _) => data.emotion,
         yValueMapper: (_CircularData data, _) => data.data,
@@ -363,113 +396,15 @@ SizedBox LegendContent(String title, int rate, Color color) {
       ]));
 }
 
-class EmotionStatic extends StatefulWidget {
-  const EmotionStatic(
-      {Key? key, required this.emotionHistogram, required this.bestEmotion})
-      : super(
-          key: key,
-        );
-
-  final Map emotionHistogram;
-  final String bestEmotion;
-
-  @override
-  State<EmotionStatic> createState() => _EmotionStaticState();
-}
-
-class _EmotionStaticState extends State<EmotionStatic> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              StaticRow(0, 2, widget.emotionHistogram, widget.bestEmotion),
-              SizedBox(height: 10),
-              StaticRow(3, 6, widget.emotionHistogram, widget.bestEmotion),
-              SizedBox(height: 10),
-              StaticRow(7, 10, widget.emotionHistogram, widget.bestEmotion),
-              SizedBox(height: 10),
-              StaticRow(11, 12, widget.emotionHistogram, widget.bestEmotion)
-            ]));
-  }
-}
-
-SizedBox StaticRow(
-    int startInd, int endInd, Map emotionHistogram, String bestEmotion) {
-  return SizedBox(
-    width: double.infinity,
-    child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: emotionList.sublist(startInd, endInd + 1).map((emotion) {
-          bool state = false;
-          if (emotion == bestEmotion) {
-            state = true;
-          }
-          return EmotionEach(
-              emotion: emotion,
-              frequency: emotionHistogram[emotion],
-              state: state);
-        }).toList()),
-  );
-}
-
-class EmotionEach extends StatefulWidget {
-  const EmotionEach(
-      {Key? key,
-      required this.emotion,
-      required this.frequency,
-      required this.state})
-      : super(key: key);
-
-  final String emotion;
-  final int? frequency;
-  final bool state;
-
-  @override
-  State<EmotionEach> createState() => _EmotionEachState();
-}
-
-class _EmotionEachState extends State<EmotionEach> {
-  @override
-  Widget build(BuildContext context) {
-    String emotionLink = "assets/images/${widget.emotion}-1.png";
-    Color fontColor = widget.state ? Colors.black : Colors.grey;
-
-    return Container(
-        width: widget.emotion == "badSurprised" ||
-                widget.emotion == "goodSurprised"
-            ? 120
-            : 80,
-        height: 60,
-        child: Column(children: [
-          Container(
-              padding: EdgeInsets.only(left: 5.0, right: 5.0),
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.7),
-                    offset: Offset.zero,
-                    blurRadius: 0.8,
-                    spreadRadius: 0.0)
-              ]),
-              child: Text(widget.emotion, style: TextStyle(color: fontColor))),
-          SizedBox(height: 5),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Image.asset(emotionLink, width: 30, height: 30),
-            SizedBox(width: 20),
-            Text(widget.frequency.toString())
-          ])
-        ]));
-  }
-}
-
 class SentimentEmotion extends StatefulWidget {
   const SentimentEmotion(
-      {Key? key, required this.curIdx, required this.emotionHistogram})
+      {Key? key,
+      required this.value,
+      required this.curIdx,
+      required this.emotionHistogram})
       : super(key: key);
 
+  final double value;
   final int curIdx;
   final Map emotionHistogram;
 
@@ -503,8 +438,8 @@ class _SentimentEmotionState extends State<SentimentEmotion> {
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Column(
             children: curList.map((emotion) {
-          print(emotion);
           return EmotionRow(
+              value: widget.value,
               emotion: emotion,
               color: curColor,
               num: widget.emotionHistogram[emotion]);
@@ -514,12 +449,17 @@ class _SentimentEmotionState extends State<SentimentEmotion> {
 
 class EmotionRow extends StatefulWidget {
   const EmotionRow(
-      {Key? key, required this.emotion, required this.color, required this.num})
+      {Key? key,
+      required this.emotion,
+      required this.color,
+      required this.num,
+      required this.value})
       : super(key: key);
 
   final String emotion;
   final Color color;
   final int num;
+  final double value;
 
   @override
   State<EmotionRow> createState() => _EmotionRowState();
@@ -529,7 +469,10 @@ class _EmotionRowState extends State<EmotionRow> {
   @override
   Widget build(BuildContext context) {
     String curEmotion = "assets/images/${widget.emotion}-1.png";
-    double width = 400 * (widget.num / 31);
+    double curValue = widget.value;
+    double maxWidth = 400 * (widget.num / 31);
+    double imageHeight = min(curValue * 100, 30);
+    double width = curValue < 0.3 ? 0 : maxWidth * (curValue - 0.3);
 
     return Container(
         padding: EdgeInsets.only(
@@ -537,7 +480,31 @@ class _EmotionRowState extends State<EmotionRow> {
           top: 10,
         ),
         child: Row(children: [
-          Image.asset(width: 30, height: 30, curEmotion),
+          Container(
+              width: 30,
+              height: 30,
+              child: Stack(children: [
+                Transform.translate(
+                    offset: Offset(0, imageHeight - 30),
+                    child: Opacity(
+                      opacity: min(curValue * 10 / 3, 1),
+                      child: Image.asset(
+                        width: 30,
+                        height: 30,
+                        curEmotion,
+                      ),
+                    )),
+                Transform.translate(
+                    offset: Offset(0, imageHeight - 30),
+                    child: Opacity(
+                      opacity: max(0, 1 - (curValue * 10 / 3)),
+                      child: Image.asset(
+                        width: 30,
+                        height: 30,
+                        "assets/images/mean.png",
+                      ),
+                    )),
+              ])),
           SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -573,3 +540,106 @@ class _CircularData {
   final int data;
   final Color pointColor;
 }
+
+//
+// class EmotionStatic extends StatefulWidget {
+//   const EmotionStatic(
+//       {Key? key, required this.emotionHistogram, required this.bestEmotion})
+//       : super(
+//     key: key,
+//   );
+//
+//   final Map emotionHistogram;
+//   final String bestEmotion;
+//
+//   @override
+//   State<EmotionStatic> createState() => _EmotionStaticState();
+// }
+//
+// class _EmotionStaticState extends State<EmotionStatic> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//         width: double.infinity,
+//         child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               StaticRow(0, 2, widget.emotionHistogram, widget.bestEmotion),
+//               SizedBox(height: 10),
+//               StaticRow(3, 6, widget.emotionHistogram, widget.bestEmotion),
+//               SizedBox(height: 10),
+//               StaticRow(7, 10, widget.emotionHistogram, widget.bestEmotion),
+//               SizedBox(height: 10),
+//               StaticRow(11, 12, widget.emotionHistogram, widget.bestEmotion)
+//             ]));
+//   }
+// }
+//
+// SizedBox StaticRow(
+//     int startInd, int endInd, Map emotionHistogram, String bestEmotion) {
+//   return SizedBox(
+//     width: double.infinity,
+//     child: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: emotionList.sublist(startInd, endInd + 1).map((emotion) {
+//           bool state = false;
+//           if (emotion == bestEmotion) {
+//             state = true;
+//           }
+//           return EmotionEach(
+//               emotion: emotion,
+//               frequency: emotionHistogram[emotion],
+//               state: state);
+//         }).toList()),
+//   );
+// }
+//
+// class EmotionEach extends StatefulWidget {
+//   const EmotionEach(
+//       {Key? key,
+//         required this.emotion,
+//         required this.frequency,
+//         required this.state})
+//       : super(key: key);
+//
+//   final String emotion;
+//   final int? frequency;
+//   final bool state;
+//
+//   @override
+//   State<EmotionEach> createState() => _EmotionEachState();
+// }
+//
+// class _EmotionEachState extends State<EmotionEach> {
+//   @override
+//   Widget build(BuildContext context) {
+//     String emotionLink = "assets/images/${widget.emotion}-1.png";
+//     Color fontColor = widget.state ? Colors.black : Colors.grey;
+//
+//     return Container(
+//         width: widget.emotion == "badSurprised" ||
+//             widget.emotion == "goodSurprised"
+//             ? 120
+//             : 80,
+//         height: 60,
+//         child: Column(children: [
+//           Container(
+//               padding: EdgeInsets.only(left: 5.0, right: 5.0),
+//               decoration: BoxDecoration(color: Colors.white, boxShadow: [
+//                 BoxShadow(
+//                     color: Colors.grey.withOpacity(0.7),
+//                     offset: Offset.zero,
+//                     blurRadius: 0.8,
+//                     spreadRadius: 0.0)
+//               ]),
+//               child: Text(widget.emotion, style: TextStyle(color: fontColor))),
+//           SizedBox(height: 5),
+//           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+//             Image.asset(emotionLink, width: 30, height: 30),
+//             SizedBox(width: 20),
+//             Text(widget.frequency.toString())
+//           ])
+//         ]));
+//   }
+// }

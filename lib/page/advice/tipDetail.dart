@@ -11,7 +11,7 @@ Map<String, Map> DetailBody = {
     "Slow to warm up":
         "Slow-tempered children respond slowly to unfamiliar environments, but exhibit slow-adaptive <behavior patterns>.#As they show a negative reaction in the new environment, parents of a slow-tempered child sometimes feel that their child is similar to a difficult temperament.#Since children with slow temperament are slow to adapt, conflicts with parents who are impatient can be caused, so parents' <patience is needed>."
   },
-  "During conflicts": {
+  "During conflict": {
     "Easy":
         "It is <important not to force> a child of a easy temperament <to yield in the event of a conflict> because he or she can obey what he or she does not like.#It can increase your child's sadness and anger, which can be detrimental to healthy development.",
     "Difficult":
@@ -104,7 +104,7 @@ class TipDetail extends StatelessWidget {
       } else {
         title = "Be more patient for ${name} to adopt to the new environment!";
       }
-    } else if (tip == "During conflicts") {
+    } else if (tip == "During conflict") {
       title = "How to handle conflicts with ${name}";
     } else {
       return SizedBox();

@@ -334,7 +334,6 @@ class EmotionServices {
       void Function(String?) setCurTempEmotion) async {
     try {
       setIsLoading(false);
-      await Future.delayed(Duration(seconds: 1));
       if (id == null) {
         Map result = await repository.postDiary(dateSelected, text);
 

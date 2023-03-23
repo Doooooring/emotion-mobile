@@ -142,7 +142,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: "login",
-        home: userController.access == null ? InitialPage() : Login());
+        home: userController.access != null ? InitialPage() : Login());
 
     // return GetBuilder<LocalNotificationController>(builder: (controller) {
     // return GetMaterialApp(title: "hey", home: Login());

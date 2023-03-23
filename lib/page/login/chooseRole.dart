@@ -1,4 +1,6 @@
-import 'package:aeye/page/login/primarySignUp.dart';
+import "package:aeye/controller/loginController.dart";
+import 'package:aeye/controller/userController.dart';
+import "package:aeye/page/initial.dart";
 import 'package:aeye/page/login/secondarySignUp.dart';
 import "package:flutter/material.dart";
 import "package:get/get.dart";
@@ -8,6 +10,9 @@ class ChooseRole extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LoginController loginController = Get.find();
+    UserController userController = Get.find();
+
     return Scaffold(
       body: Container(
           padding: EdgeInsets.only(),
@@ -39,8 +44,12 @@ class ChooseRole extends StatelessWidget {
                                 side: BorderSide(
                                   style: BorderStyle.none,
                                 )),
-                            onPressed: () {
-                              Get.to(() => PrimarySignUp());
+                            onPressed: () async {
+                              print("here");
+                              Map<String, String> code = await loginController
+                                  .chooseRole("main", null);
+                              userController.getCode(code["code"]!);
+                              Get.to(() => InitialPage());
                             },
                             child: Container(
                                 width: 120,

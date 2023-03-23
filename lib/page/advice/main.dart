@@ -33,7 +33,11 @@ class _AdviceMainState extends State<AdviceMain> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> curTips = ["During conflicts", "Changing environment"];
+    List<String> curTips = [
+      "During conflict",
+      "Changing environment",
+      "Crying baby"
+    ];
 
     List<Map> curChildList = [
       {"id": "0", "name": "Mark", "temperament": "Easy"},
@@ -70,25 +74,27 @@ class _AdviceMainState extends State<AdviceMain> {
             ])),
             SizedBox(height: 30),
             Container(
-                padding: EdgeInsets.only(left: 20, right: 20),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("Parenting tips",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w600)),
-                      SizedBox(height: 20),
-                      Column(
-                          children: curTips.map((tip) {
-                        return TipsNavigator(
-                            tip,
-                            TipDetail(
-                                temperament: curTemp,
-                                title: tip,
-                                name: curView.name),
-                            context);
-                      }).toList())
-                    ])),
+                  Container(
+                    padding: EdgeInsets.only(left: 20, bottom: 10),
+                    child: Text("Parenting tips",
+                        style: TextStyle(
+                            fontSize: 24, fontWeight: FontWeight.w600)),
+                  ),
+                  SizedBox(height: 20),
+                  Column(
+                      children: curTips.map((tip) {
+                    return TipsNavigator(
+                        tip,
+                        TipDetail(
+                            temperament: curTemp,
+                            title: tip,
+                            name: curView.name),
+                        context);
+                  }).toList())
+                ])),
           ])),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
     );
@@ -140,7 +146,7 @@ class _ViewTemperamentState extends State<ViewTemperament> {
             height: height,
           ),
           AnimatedPositioned(
-            duration: Duration(milliseconds: 150),
+            duration: Duration(milliseconds: 200),
             left: -1 * distance * widget.curViewInd,
             child: SizedBox(
                 child: Row(
@@ -268,7 +274,7 @@ Container TipsNavigator(String title, Widget navigate, BuildContext context) {
     case ("During conflict"):
       imageLink = "assets/images/fisted.png";
       break;
-    case ("crying baby"):
+    case ("Crying baby"):
       imageLink = "assets/images/babyCrying.png";
       break;
     default:
@@ -279,7 +285,6 @@ Container TipsNavigator(String title, Widget navigate, BuildContext context) {
     padding: EdgeInsets.only(bottom: 20),
     child: Container(
         width: double.infinity,
-        height: scaleHeight(context, 45),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           color: Colors.white,
@@ -300,7 +305,7 @@ Container TipsNavigator(String title, Widget navigate, BuildContext context) {
               Get.to(() => navigate);
             },
             child: Container(
-              padding: EdgeInsets.only(left: 20),
+              padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -333,23 +338,29 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuButton<SampleItem>(
-      initialValue: selectedMenu,
-      // Callback that sets the selected popup menu item.
-      onSelected: (SampleItem item) async {
-        if (item == SampleItem.itemOne) {
-        } else {}
-      },
-      itemBuilder: (BuildContext context) => [
-        PopupMenuItem(
-          value: SampleItem.itemOne,
-          child: Text("edit"),
-        ),
-        PopupMenuItem(
-          value: SampleItem.itemTwo,
-          child: Text("daily report"),
-        ),
-      ],
+    return Container(
+      width: 40,
+      height: 30,
+      child: PopupMenuButton<SampleItem>(
+        padding: EdgeInsets.zero,
+        constraints: BoxConstraints(),
+        initialValue: selectedMenu,
+        // Callback that sets the selected popup menu item.
+        onSelected: (SampleItem item) async {
+          if (item == SampleItem.itemOne) {
+          } else {}
+        },
+        itemBuilder: (BuildContext context) => [
+          PopupMenuItem(
+            value: SampleItem.itemOne,
+            child: Text("edit"),
+          ),
+          PopupMenuItem(
+            value: SampleItem.itemTwo,
+            child: Text("daily report"),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -29,8 +29,6 @@ class DiaryRepositories {
       "cookie": tokens["refresh"]
     });
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
-    print("here");
-    print(result);
     return Map<String, Map>.from(result["result"]);
   }
 
@@ -51,12 +49,12 @@ class DiaryRepositories {
       "content": text
     });
 
-    http.Response response = await http.post(endPoint,
-        body: bodyEncoded,
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": tokens["access"]
-        });
+    http.Response response =
+        await http.post(endPoint, body: bodyEncoded, headers: {
+      "Content-Type": "application/json",
+      "authorization": tokens["access"],
+      "cookie": tokens["refresh"]
+    });
 
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return Map.from(result["result"]);
@@ -87,12 +85,12 @@ class DiaryRepositories {
     Map body = type == "content" ? {"content": text} : {"emotion": emotion};
     var bodyEncoded = json.encode(body);
 
-    http.Response response = await http.patch(endPoint,
-        body: bodyEncoded,
-        headers: {
-          "Content-Type": "application/json",
-          "authorization": tokens["access"]
-        });
+    http.Response response =
+        await http.patch(endPoint, body: bodyEncoded, headers: {
+      "Content-Type": "application/json",
+      "authorization": tokens["access"],
+      "cookie": tokens["refresh"]
+    });
 
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
 
@@ -110,7 +108,8 @@ class DiaryRepositories {
 
     http.Response response = await http.get(endPoint, headers: {
       "Content-Type": "application/json",
-      "authorization": tokens["access"]
+      "authorization": tokens["access"],
+      "cookie": tokens["refresh"]
     });
     print(response);
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
@@ -136,7 +135,8 @@ class DiaryRepositories {
     Uri endPoint = Uri.parse('$HOST_URL/diary/result/${id}');
     http.Response response = await http.get(endPoint, headers: {
       "Content-Type": "application/json",
-      "authorization": tokens["access"]
+      "authorization": tokens["access"],
+      "cookie": tokens["refresh"]
     });
 
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
@@ -149,7 +149,8 @@ class DiaryRepositories {
         Uri.parse('$HOST_URL/diary/report?year=${year}&month=${month}');
     http.Response response = await http.get(endPoint, headers: {
       "Content-Type": "application/json",
-      "authorization": tokens["access"]
+      "authorization": tokens["access"],
+      "cookie": tokens["refresh"]
     });
     print(response);
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
@@ -162,7 +163,8 @@ class DiaryRepositories {
     Uri endPoint = Uri.parse('$HOST_URL/diary/commnet/${diaryId}');
     http.Response response = await http.get(endPoint, headers: {
       "Content-Type": "application/json",
-      "authorization": tokens["access"]
+      "authorization": tokens["access"],
+      "cookie": tokens["refresh"]
     });
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
     return result["result"];
@@ -177,7 +179,8 @@ class DiaryRepositories {
     http.Response response = await http.post(endPoint,
         headers: {
           "Content-Type": "application/json",
-          "authorization": tokens["access"]
+          "authorization": tokens["access"],
+          "cookie": tokens["refresh"]
         },
         body: bodyEncoded);
     dynamic result = json.decode(utf8.decode(response.bodyBytes));

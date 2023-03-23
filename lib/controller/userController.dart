@@ -4,6 +4,7 @@ class UserController extends GetxController {
   var id = null;
   var name = null;
   var access = null;
+  var code = null;
 
   void getId(String newId) {
     id = newId.obs;
@@ -17,6 +18,11 @@ class UserController extends GetxController {
 
   void getAccess(String token) {
     access = token.obs;
+    update();
+  }
+
+  void getCode(String log) {
+    code = log.obs;
     update();
   }
 }

@@ -1,13 +1,19 @@
-import "package:aeye/page/emotion/emotion_result.dart";
+import 'dart:convert';
+
+import 'package:aeye/controller/loginController.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
+import "package:http/http.dart" as http;
 import 'package:url_launcher/url_launcher.dart';
 
+import "../asset/url.dart";
 import "../component/common/app_bar.dart";
 import "../component/common/bottom_bar.dart";
 import "../component/common/youtube_player.dart";
 import "../controller/sizeController.dart";
+import "../controller/userController.dart";
+import "../page/login/chooseRole.dart";
 
 final dio = Dio();
 
@@ -64,21 +70,59 @@ List<Map> recommendList = [
   },
 ];
 
-class InitialPage extends StatelessWidget {
-  final bool isAlert = Get.find();
+class InitialPage extends StatefulWidget {
+  const InitialPage({Key? key}) : super(key: key);
 
-  InitialPage({Key? key}) : super(key: key);
+  @override
+  State<InitialPage> createState() => _InitialPageState();
+}
+
+class _InitialPageState extends State<InitialPage> {
+  UserController userController = UserController();
+  LoginController loginController = Get.find();
+
+  String? video = null;
+
+  _asyncMethod() async {
+    Map tokens = await loginController.getTokens();
+    Uri endPoint = Uri.parse('$HOST_URL/home');
+    http.Response response = await http.get(endPoint, headers: {
+      "Content-Type": "application/json",
+      "Authorization": tokens["access"],
+      "cookie": tokens["refresh"]
+    });
+    Map result = json.decode(utf8.decode(response.bodyBytes))["result"];
+    Map? recommendVideo = result["video"];
+    String? loginCode = result["code"];
+    if (loginCode == null) {
+      Get.to(() => ChooseRole());
+      return;
+    }
+    userController.getCode(loginCode);
+    if (recommendVideo != null) {
+      video = recommendVideo["videoUrl"];
+    }
+  }
+
+  @override
+  void initState() {
+    print("hey");
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     DateTime today = DateTime.now();
     int month = today.month;
     int day = today.day;
-    int hour = today.hour;
 
     String monthToStr = Month[month.toString()];
     String title = "How are you today?";
-    String? video = "0qaL2Im4fWY";
 
     return Scaffold(
       appBar: Header(null, "init"),
@@ -134,7 +178,7 @@ class InitialPage extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               height: 1.3)),
                       SizedBox(height: 10),
-                      video == null
+                      video != null
                           ? SizedBox(width: 0)
                           : TextButton(
                               style: TextButton.styleFrom(
@@ -143,13 +187,14 @@ class InitialPage extends StatelessWidget {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               onPressed: () {
-                                Get.to(DailReport(
-                                    date: DateTime.now(),
-                                    emotion: "excited-3",
-                                    emotionText: "You have a good day!",
-                                    sentimentLevel: 4.3,
-                                    videoUrl: "fxtRZidW3RM",
-                                    title: "good"));
+                                Get.to(ChooseRole());
+                                // Get.to(DailReport(
+                                //     date: DateTime.now(),
+                                //     emotion: "excited-3",
+                                //     emotionText: "You have a good day!",
+                                //     sentimentLevel: 4.3,
+                                //     videoUrl: "fxtRZidW3RM",
+                                //     title: "good"));
                                 // Get.to(CalendarWrapper());
                               },
                               child: SizedBox(
@@ -193,7 +238,7 @@ class InitialPage extends StatelessWidget {
                                             color: Colors.black,
                                             borderRadius:
                                                 BorderRadius.circular(20)),
-                                        child: Player(video, 330))
+                                        child: Player(video!, 330))
                                     : SizedBox(
                                         child: Column(
                                         children: [

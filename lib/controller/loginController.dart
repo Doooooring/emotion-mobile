@@ -62,8 +62,10 @@ class LoginController {
             "authorization": access,
             "cookie": refresh
           });
-      dynamic result = json.decode(utf8.decode(response.bodyBytes));
+
+      dynamic result = json.decode(utf8.decode(response.bodyBytes))["result"];
       if (result["success"] == true) {
+        print("good");
         return {"code": result["code"]};
       } else {
         return {"code": "fail"};
@@ -81,9 +83,9 @@ class LoginController {
           });
       dynamic result = json.decode(utf8.decode(response.bodyBytes));
       if (result["success"] == true) {
-        return {"code": "done"};
+        return {"code": "good"};
       } else {
-        return {"code": "fail"};
+        return {"code": "bad"};
       }
     }
   }

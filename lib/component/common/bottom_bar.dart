@@ -1,5 +1,5 @@
 import "package:aeye/page/advice/adviceRouter.dart";
-import "package:aeye/page/baby_monitor.dart";
+import "package:aeye/page/babyMonitor.dart";
 import 'package:aeye/page/emotion/emotion_diary.dart';
 import "package:aeye/page/initial.dart";
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ OutlinedButton NavComp(BuildContext context, String link, String curPath) {
     case "babyMonitor":
       title = "BabyMonitor";
       imageLink = "assets/images/babyface.png";
-      addContext = BabyMonitor();
+      addContext = Monitor();
       break;
     case "emotionDiary":
       title = "Diary";

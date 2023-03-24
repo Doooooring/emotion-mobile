@@ -46,7 +46,7 @@ class Comment {
   factory Comment.fromJson(Map data) {
     int year = data["date"].year;
     int month = data["date"].month;
-    String monthToStr = month.toString();
+    String monthToStr = Month[month.toString()];
     int day = data["date"].day;
 
     String dateToStr = "${monthToStr} ${day} ${year}";

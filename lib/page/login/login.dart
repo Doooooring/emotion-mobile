@@ -50,6 +50,8 @@ class _LoginState extends State<Login> {
                 width: 300,
                 height: 300,
                 child: Image.asset("assets/images/logo.png")),
+            SizedBox(height: 10),
+            Container(child: Image.asset("assets/images/logo_title.png")),
             SizedBox(height: 20),
             SizedBox(
                 child: Row(
@@ -60,13 +62,27 @@ class _LoginState extends State<Login> {
                     onPressed: () {
                       Get.to(() => SignIn());
                     },
-                    child: SizedBox(child: Text("Sign In"))),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xffFF717F),
+                            borderRadius: BorderRadius.circular(25)),
+                        child: Text("Sign In",
+                            style: TextStyle(
+                              color: Colors.white,
+                            )))),
                 SizedBox(width: 30),
                 OutlinedButton(
                     onPressed: () {
                       Get.to(() => SignUp());
                     },
-                    child: SizedBox(child: Text("Sign Up")))
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Color(0xffFF717F),
+                            borderRadius: BorderRadius.circular(25)),
+                        child: Text("Sign Up",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ))))
               ],
             )),
           ]),

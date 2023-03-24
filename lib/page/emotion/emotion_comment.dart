@@ -2,9 +2,11 @@ import "dart:ui";
 
 import "package:aeye/component/emoticon_diary/emotion/emotion_preview_comment.dart";
 import "package:aeye/controller/sizeController.dart";
+import 'package:aeye/controller/userController.dart';
 import "package:aeye/services/emotion.dart";
 import "package:aeye/utils/interface/comment.dart";
 import "package:flutter/material.dart";
+import "package:get/get.dart";
 
 Map Month = {
   "1": "Jan",
@@ -64,54 +66,53 @@ class _EmotionCommentState extends State<EmotionComment> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
+  CommentPageData? curData = null;
+  setCurData(CommentPageData commentPageData) {
+    setState(() {
+      curData = commentPageData;
+    });
+  }
 
+  addComment(Comment comment) {
+    setState(() {
+      curData!.comment.add(comment);
+    });
+    print(curData!.comment);
+  }
+
+  _asyncMethod() async {
     Map dataJson = {
       "emotion": "content-3",
       "content": "Liam took care of Mark instead of me. I had a day off XD.",
-      "comment": [
-        {
-          "date": "Mar 17 2023",
-          "type": "sub",
-          "comment": "No problem honey! I am glad you got rest."
-        }
-      ]
+      "comment": []
     };
+    // CommentPageData commentPageData =
+    //     await emotionServices.getComments(widget.id.toString());
+    // setCurData(commentPageData);
+    setCurData(CommentPageData.fromJson(dataJson));
+  }
 
-    CommentPageData? curData = null;
-    setCurData(CommentPageData commentPageData) {
-      setState(() {
-        curData = commentPageData;
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _asyncMethod();
+    });
+  }
 
-    addComment(Comment comment) {
-      setState(() {
-        curData!.comment.add(comment);
-      });
-    }
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController();
+    UserController userController = Get.find();
+
+    RxString role = userController.role;
+    print(role);
     // if (curComment.length == 0) {
     //   setCurComment(curData.comment[0]);
     // }
 
     void removeFocus(BuildContext context) {
       FocusScope.of(context).requestFocus(new FocusNode());
-    }
-
-    _asyncMethod() async {
-      CommentPageData commentPageData =
-          await emotionServices.getComments(widget.id.toString());
-      setCurData(commentPageData);
-    }
-
-    @override
-    void initState() {
-      super.initState();
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        _asyncMethod();
-      });
     }
 
     return curData == null
@@ -138,9 +139,11 @@ class _EmotionCommentState extends State<EmotionComment> {
                               emotion: curData!.emotion,
                               diary: curData!.diary),
                           Column(
-                            children: curComment.map((Comment data) {
-                              return CommentLabel(context, data);
-                            }).toList(),
+                            children: curData == null
+                                ? []
+                                : curData!.comment.map((Comment data) {
+                                    return CommentLabel(context, data);
+                                  }).toList(),
                           ),
                         ])),
                       ),
@@ -150,8 +153,8 @@ class _EmotionCommentState extends State<EmotionComment> {
                         height: MediaQuery.of(context).size.height,
                         padding: EdgeInsets.only(bottom: 20),
                         alignment: Alignment.bottomCenter,
-                        child: CommentInput(widget.id, controller,
-                            setCurComment, curComment, context, removeFocus))
+                        child: CommentInput(widget.id, role, controller,
+                            addComment, curComment, context, removeFocus))
                   ])),
             ),
           );
@@ -253,8 +256,9 @@ Container CommentBox(
 
 Row CommentInput(
     int id,
+    RxString role,
     TextEditingController controller,
-    void Function(Comment) setCurComment,
+    void Function(Comment) addComment,
     List<Comment> curComment,
     BuildContext context,
     void Function(BuildContext) removeFocus) {
@@ -295,9 +299,16 @@ Row CommentInput(
           )),
       IconButton(
           onPressed: () async {
-            bool response = await emotionServices.postComments(
-                id.toString(), controller.text);
-            if (response) {
+            // bool response = await emotionServices.postComments(
+            //     id.toString(), controller.text);
+            if (true) {
+              Comment curData = Comment.fromJson({
+                "order": curComment.length,
+                "date": DateTime.now(),
+                "role": role.toString(),
+                "commentContent": controller.text
+              });
+              addComment(curData);
             } else {}
           },
           icon: Icon(Icons.send))

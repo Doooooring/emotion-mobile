@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import "../component/baby_monitor/alert.dart";
-import "../component/common/app_bar.dart";
 
 class BabyMonitor extends StatelessWidget {
   const BabyMonitor({Key? key}) : super(key: key);
@@ -13,7 +12,6 @@ class BabyMonitor extends StatelessWidget {
     // log(localNotificationController.messaging.toString());
 
     return Scaffold(
-      appBar: Header(null, "babyMonitor"),
       body: Wrap(children: [
         Container(child: Stack(children: [SizedBox(), Alert()]))
       ]),

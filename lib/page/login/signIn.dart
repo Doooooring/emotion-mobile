@@ -105,7 +105,10 @@ class SignIn extends StatelessWidget {
                       ],
                     )
                   ])),
-              SizedBox(
+              Container(
+                  decoration: BoxDecoration(
+                      color: Color(0xffFF717F),
+                      borderRadius: BorderRadius.circular(25)),
                   child: TextButton(
                       onPressed: () async {
                         Map<String, String?> tokens = await loginController

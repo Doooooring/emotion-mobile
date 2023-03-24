@@ -1,6 +1,6 @@
 import "dart:developer";
 
-import "package:aeye/page/baby_monitor.dart";
+import "package:aeye/page/fallAlert.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
 import "package:flutter/material.dart";
@@ -140,12 +140,13 @@ class LocalNotificationController extends GetxController {
               subtitle: "the subtitle",
               sound: "slow_spring_board.aiff"));
       if (notification != null) {
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          platformChannelSpecifics,
-        );
+        Get.to(() => BabyMonitor());
+        // flutterLocalNotificationsPlugin.show(
+        //   notification.hashCode,
+        //   notification.title,
+        //   notification.body,
+        //   platformChannelSpecifics,
+        // );
       }
     });
   }
@@ -155,7 +156,8 @@ class LocalNotificationController extends GetxController {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       log("is background here");
       if (_context != null) {
-        getAlert();
+        Get.to(() => BabyMonitor());
+        // getAlert();
         return;
       }
     });

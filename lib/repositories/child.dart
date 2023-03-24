@@ -17,6 +17,7 @@ class ChildRepositories {
       "Authorization": tokens["access"],
       "cookie": tokens["refresh"]
     });
+    print(response);
     Map<String, List<Map>> result =
         json.decode(utf8.decode(response.bodyBytes))["result"];
     return result;

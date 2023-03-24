@@ -13,6 +13,7 @@ import "../component/common/bottom_bar.dart";
 import "../component/common/youtube_player.dart";
 import "../controller/sizeController.dart";
 import "../controller/userController.dart";
+import "../page/emotion/emotion_diary.dart";
 import "../page/login/chooseRole.dart";
 
 final dio = Dio();
@@ -81,11 +82,12 @@ class _InitialPageState extends State<InitialPage> {
   UserController userController = UserController();
   LoginController loginController = Get.find();
 
-  String? video = null;
+  String? video = "CwfoyVa980U";
 
   _asyncMethod() async {
     Map tokens = await loginController.getTokens();
     Uri endPoint = Uri.parse('$HOST_URL/home');
+
     http.Response response = await http.get(endPoint, headers: {
       "Content-Type": "application/json",
       "Authorization": tokens["access"],
@@ -106,8 +108,6 @@ class _InitialPageState extends State<InitialPage> {
 
   @override
   void initState() {
-    print("hey");
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });
@@ -133,7 +133,7 @@ class _InitialPageState extends State<InitialPage> {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
+                        color: Colors.grey.withOpacity(0.3),
                         blurRadius: 18.0,
                         spreadRadius: 0.0,
                         offset: Offset(0, 6))
@@ -187,15 +187,7 @@ class _InitialPageState extends State<InitialPage> {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               onPressed: () {
-                                Get.to(ChooseRole());
-                                // Get.to(DailReport(
-                                //     date: DateTime.now(),
-                                //     emotion: "excited-3",
-                                //     emotionText: "You have a good day!",
-                                //     sentimentLevel: 4.3,
-                                //     videoUrl: "fxtRZidW3RM",
-                                //     title: "good"));
-                                // Get.to(CalendarWrapper());
+                                Get.to(CalendarWrapper());
                               },
                               child: SizedBox(
                                   child: Row(children: [

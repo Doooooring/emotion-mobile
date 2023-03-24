@@ -265,9 +265,9 @@ Map<String, Map> testData = {
     'content': null,
   },
   '24': {
-    'id': null,
-    'emotion': null,
-    'content': null,
+    'id': 24,
+    'emotion': "excited-3",
+    'content': "Liam took care of Mark instead of me. I had a day off XD",
   },
   '25': {
     'id': null,
@@ -313,9 +313,9 @@ class EmotionServices {
       void Function(Map<String, Map>) setCurDateAll,
       void Function(bool) setIsLoading) async {
     try {
-      Map<String, Map> result = await repository.getDiaryMonth(year, month);
+      // Map<String, Map> result = await repository.getDiaryMonth(year, month);
 
-      setCurDateAll(result);
+      setCurDateAll(testData);
       setIsLoading(true);
     } catch (e) {
       //토스트업

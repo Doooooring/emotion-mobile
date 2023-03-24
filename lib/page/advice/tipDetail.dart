@@ -51,7 +51,7 @@ class TipDetail extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               BodyHeader(title, temperament, name, scaleWidth(context, 240)),
               SizedBox(height: 50),
-              BodyContent(title, detailBody)
+              BodyContent(temperament, title, detailBody)
             ])),
       ),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
@@ -116,12 +116,35 @@ class TipDetail extends StatelessWidget {
   }
 }
 
-SizedBox BodyContent(String title, String body) {
+SizedBox BodyContent(String temperament, String title, String body) {
   List<String> bodySplited = body.split("#").toList();
 
-  String imageLink = title == "Changing environment"
-      ? "assets/images/changing_environment.png"
-      : "assets/images/during_conflict.png";
+  String imageLink = "";
+  if (title == "Changing environment") {
+    switch (temperament) {
+      case ("Easy"):
+        imageLink = "assets/images/changing_environment_easy.png";
+        break;
+      case ("Difficult"):
+        imageLink = "assets/images/changing_environment_difficult.png";
+        break;
+      default:
+        imageLink = "assets/images/changing_environment_slow.png";
+        break;
+    }
+  } else {
+    switch (temperament) {
+      case ("Easy"):
+        imageLink = "assets/images/conflict_easy.png";
+        break;
+      case ("Difficult"):
+        imageLink = "assets/images/conflict_difficult.png";
+        break;
+      default:
+        imageLink = "assets/images/conflict_slow.png";
+        break;
+    }
+  }
 
   return SizedBox(
       child: Column(children: [

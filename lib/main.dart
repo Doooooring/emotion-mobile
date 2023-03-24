@@ -111,6 +111,8 @@ class _MyAppState extends State<MyApp> {
   String? userInfo = null;
 
   _asyncMethod() async {
+    await storage.deleteAll();
+
     userInfo = await storage.read(key: "access");
     if (userInfo != null) {
       Get.to(InitialPage());

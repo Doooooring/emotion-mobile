@@ -167,13 +167,20 @@ flutter:
     - assets/images/recommend4.png
     - assets/images/recommend5.png
     - assets/images/recommend6.png
-    - assets/images/changing_environment.png
+    - assets/images/changing_environment_easy.png
+    - assets/images/changing_environment_difficult.png
+    - assets/images/changing_environment_slow.png
+    - assets/images/conflict_easy.png
+    - assets/images/conflict_difficult.png
+    - assets/images/conflict_slow.png
     - assets/images/during_conflict.png
     - assets/images/babyCrying.png
     - assets/images/fisted.png
     - assets/images/school.png
     - assets/images/monitor.png
+    - assets/images/eye.png
     - assets/videos/aeye_test.mp4
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

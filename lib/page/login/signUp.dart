@@ -3,8 +3,28 @@ import "package:aeye/controller/sizeController.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+
+  bool passwordView = true;
+  void setPasswordVisible(){
+    setState(() {
+      passwordView = !passwordView;
+    });
+  }
+
+  bool passWordConfirmView = true;
+  void setPasswordConfirmVisible(){
+    setState(() {
+      passwordView = !passwordView;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +57,7 @@ class SignUp extends StatelessWidget {
                   icon: Icon(Icons.arrow_back_ios)),
               SizedBox(height: 15),
               SizedBox(
-                  child: Text("Sign up with your email",
-                      style: TextStyle(fontSize: 25))),
+                  height: 25),
               SizedBox(height: 15),
               Container(
                   padding: EdgeInsets.only(),
@@ -51,21 +70,30 @@ class SignUp extends StatelessWidget {
                       children: [
                         SizedBox(
                             width: scaleWidth(context, 120),
-                            child:
-                                Text("Name", style: TextStyle(fontSize: 20))),
+                            child: Text("Name",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700))),
                         SizedBox(height: 10),
                         Container(
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.grey,
+                                    width: 2,
+                                  ))),
                           width: double.infinity,
                           child: TextField(
                             controller: nameController,
                             decoration: InputDecoration(
-                                hintText: "Write your name",
+                                isDense: true,
+                                contentPadding: EdgeInsets.only(bottom: 20),
+                                hintText: "Enter your name",
                                 labelStyle: TextStyle(
                                     color: Color.fromRGBO(50, 50, 50, 0.4)),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.white),
+                                  BorderSide(width: 1, color: Colors.white),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -80,21 +108,30 @@ class SignUp extends StatelessWidget {
                       children: [
                         SizedBox(
                             width: scaleWidth(context, 120),
-                            child:
-                                Text("Email", style: TextStyle(fontSize: 20))),
+                            child: Text("Email",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700))),
                         SizedBox(height: 10),
                         Container(
-                          color: Colors.white,
                           width: double.infinity,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.grey,
+                                    width: 2,
+                                  ))),
                           child: TextField(
                             controller: emailController,
                             decoration: InputDecoration(
-                                hintText: "Write your email",
+                                isDense: true,
+                                contentPadding: EdgeInsets.only(bottom: 20),
+                                hintText: "Enter your email",
                                 labelStyle: TextStyle(
                                     color: Color.fromRGBO(50, 50, 50, 0.4)),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.white),
+                                  BorderSide(width: 0, color: Colors.white),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -110,50 +147,127 @@ class SignUp extends StatelessWidget {
                         SizedBox(
                             width: scaleWidth(context, 120),
                             child: Text("Password",
-                                style: TextStyle(fontSize: 20))),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700))),
                         SizedBox(height: scaleHeight(context, 10)),
                         Container(
-                            color: Colors.white,
                             width: double.infinity,
-                            child: TextField(
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                  hintText: "Write your password",
-                                  labelStyle: TextStyle(
-                                      color: Color.fromRGBO(50, 50, 50, 0.4)),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.white),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey,
+                                      width: 2,
+                                    ))),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: passwordController,
+                                    decoration: InputDecoration(
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.only(bottom: 20),
+                                        hintText:
+                                        "Your password, at least 8 character",
+                                        labelStyle: TextStyle(
+                                            color: Color.fromRGBO(50, 50, 50, 0.4)),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 0, color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 0, color: Colors.white))),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: 0, color: Colors.white))),
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      setPasswordConfirmVisible();
+                                    },
+                                    icon: Image.asset("assets/images/eye.png"))
+                              ],
+                            )),
+                        SizedBox(height: 30),
+                        SizedBox(
+                            width: scaleWidth(context, 250),
+                            child: Text("Confirm Password",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700))),
+                        SizedBox(height: scaleHeight(context, 10)),
+                        Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.grey,
+                                      width: 2,
+                                    ))),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: passwordController,
+                                    decoration: InputDecoration(
+                                        isDense: true,
+                                        contentPadding: EdgeInsets.only(bottom: 20),
+                                        hintText: "Re-type your password",
+                                        labelStyle: TextStyle(
+                                            color: Color.fromRGBO(50, 50, 50, 0.4)),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 0, color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 0, color: Colors.white))),
+                                  ),
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      setPasswordVisible();
+                                    },
+                                    icon: Image.asset("assets/images/eye.png"))
+                              ],
                             )),
                       ],
                     )
                   ])),
+              SizedBox(height: 20),
               Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xffFF717F),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: TextButton(
-                      onPressed: () async {
-                        bool result = await loginController.signUp(
-                            nameController.text,
-                            emailController.text,
-                            passwordController.text);
-                        if (result) {
-                          print(result);
-                          Get.back();
-                        } else {
-                          print("fail");
-                        }
-                      },
-                      child: Text("sign up")))
+                width: double.infinity,
+                height: 60,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 133, 127, 0.70),
+                    borderRadius: BorderRadius.circular(35)),
+                child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                          style: BorderStyle.none,
+                        )),
+                    onPressed: () async {
+                      bool result = await loginController.signUp(
+                          nameController.text,
+                          emailController.text,
+                          passwordController.text);
+                      if (result) {
+                        print(result);
+                        Get.back();
+                      } else {
+                        print("fail");
+                      }
+                    },
+                    child: Container(
+                        child: Text("Sign up",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600)))),
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
+    );}
 }
+

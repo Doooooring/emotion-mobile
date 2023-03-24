@@ -5,8 +5,20 @@ import "package:aeye/page/initial.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
+
+  @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  bool passWordVisible = true;
+  void setPassWordVisible() {
+    setState(() {
+      passWordVisible = !passWordVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +50,7 @@ class SignIn extends StatelessWidget {
                   },
                   icon: Icon(Icons.arrow_back_ios)),
               SizedBox(height: 15),
-              SizedBox(
-                  child: Text("Sign in with your email",
-                      style: TextStyle(fontSize: 25))),
+              SizedBox(height: 25),
               SizedBox(height: scaleHeight(context, 40)),
               Container(
                   padding: EdgeInsets.only(),
@@ -53,21 +63,30 @@ class SignIn extends StatelessWidget {
                       children: [
                         SizedBox(
                             width: scaleWidth(context, 120),
-                            child:
-                                Text("Email", style: TextStyle(fontSize: 20))),
+                            child: Text("Email",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700))),
                         SizedBox(height: 10),
                         Container(
-                          color: Colors.white,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                            color: Colors.grey,
+                            width: 2,
+                          ))),
                           width: double.infinity,
                           child: TextField(
                             controller: idController,
                             decoration: InputDecoration(
+                                isDense: true,
+                                contentPadding: EdgeInsets.only(bottom: 20),
                                 hintText: "Write your email",
                                 labelStyle: TextStyle(
                                     color: Color.fromRGBO(50, 50, 50, 0.4)),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.white),
+                                      BorderSide(width: 0, color: Colors.white),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -83,46 +102,83 @@ class SignIn extends StatelessWidget {
                         SizedBox(
                             width: scaleWidth(context, 120),
                             child: Text("Password",
-                                style: TextStyle(fontSize: 20))),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700))),
                         SizedBox(height: scaleHeight(context, 10)),
                         Container(
-                            color: Colors.white,
                             width: double.infinity,
-                            child: TextField(
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                  hintText: "Write your password",
-                                  labelStyle: TextStyle(
-                                      color: Color.fromRGBO(50, 50, 50, 0.4)),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 1, color: Colors.white),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                              color: Colors.grey,
+                              width: 2,
+                            ))),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: passwordController,
+                                    obscureText: passWordVisible,
+                                    decoration: InputDecoration(
+                                        isDense: true,
+                                        contentPadding:
+                                            EdgeInsets.only(bottom: 20),
+                                        hintText: "Write your password",
+                                        labelStyle: TextStyle(
+                                            color: Color.fromRGBO(
+                                                50, 50, 50, 0.4)),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 0, color: Colors.white),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                width: 0,
+                                                color: Colors.white))),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: 0, color: Colors.white))),
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      setPassWordVisible();
+                                    },
+                                    icon: Image.asset("assets/images/eye.png"))
+                              ],
                             )),
                       ],
                     )
                   ])),
+              SizedBox(height: 30),
               Container(
-                  decoration: BoxDecoration(
-                      color: Color(0xffFF717F),
-                      borderRadius: BorderRadius.circular(25)),
-                  child: TextButton(
-                      onPressed: () async {
-                        Map<String, String?> tokens = await loginController
-                            .signIn(idController.text, passwordController.text);
-                        if (tokens["access"] != null) {
-                          String accessToken = tokens["access"]!;
-                          userController.getAccess(accessToken);
-                          Get.to(() => InitialPage());
-                        } else {
-                          print("fail");
-                          return;
-                        }
-                      },
-                      child: Text("sign in")))
+                width: double.infinity,
+                height: 60,
+                decoration: BoxDecoration(
+                    color: Color.fromRGBO(255, 133, 127, 0.70),
+                    borderRadius: BorderRadius.circular(35)),
+                child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                      style: BorderStyle.none,
+                    )),
+                    onPressed: () async {
+                      Map<String, String?> tokens = await loginController
+                          .signIn(idController.text, passwordController.text);
+                      if (tokens["access"] != null) {
+                        String accessToken = tokens["access"]!;
+                        userController.getAccess(accessToken);
+                        Get.to(() => InitialPage());
+                      } else {
+                        print("fail");
+                        return;
+                      }
+                    },
+                    child: Container(
+                        child: Text("Sign in",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600)))),
+              )
             ],
           ),
         ),

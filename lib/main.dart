@@ -1,4 +1,7 @@
+import "dart:async";
+
 import "package:aeye/firebase_options.dart";
+import 'package:aeye/page/splash_screen.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
 import 'package:flutter/foundation.dart';
@@ -113,8 +116,13 @@ class _MyAppState extends State<MyApp> {
   _asyncMethod() async {
     userInfo = await storage.read(key: "access");
     if (userInfo != null) {
-      Get.to(InitialPage());
+      Timer(Duration(milliseconds: 1500), () {
+        Get.to(InitialPage());
+      });
     } else {
+      Timer(Duration(milliseconds: 1500), () {
+        Get.to(Login());
+      });
       print("Need login authorization");
     }
   }
@@ -142,7 +150,7 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         title: "login",
-        home: userController.access != null ? InitialPage() : Login());
+        home: SplashScreen());
 
     // return GetBuilder<LocalNotificationController>(builder: (controller) {
     // return GetMaterialApp(title: "hey", home: Login());
@@ -156,3 +164,6 @@ class _MyAppState extends State<MyApp> {
     // });
   }
 }
+
+// MediaQuery(
+// data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

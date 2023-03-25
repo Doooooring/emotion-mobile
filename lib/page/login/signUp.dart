@@ -11,16 +11,20 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController passwordConfirmController = TextEditingController();
 
   bool passwordView = true;
-  void setPasswordVisible(){
+  void setPasswordVisible() {
     setState(() {
       passwordView = !passwordView;
     });
   }
 
   bool passWordConfirmView = true;
-  void setPasswordConfirmVisible(){
+  void setPasswordConfirmVisible() {
     setState(() {
       passwordView = !passwordView;
     });
@@ -29,9 +33,6 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     final LoginController loginController = Get.find();
-    TextEditingController nameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
       body: GestureDetector(
@@ -56,8 +57,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   icon: Icon(Icons.arrow_back_ios)),
               SizedBox(height: 15),
-              SizedBox(
-                  height: 25),
+              SizedBox(height: 25),
               SizedBox(height: 15),
               Container(
                   padding: EdgeInsets.only(),
@@ -79,9 +79,9 @@ class _SignUpState extends State<SignUp> {
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                    color: Colors.grey,
-                                    width: 2,
-                                  ))),
+                            color: Colors.grey,
+                            width: 2,
+                          ))),
                           width: double.infinity,
                           child: TextField(
                             controller: nameController,
@@ -93,7 +93,7 @@ class _SignUpState extends State<SignUp> {
                                     color: Color.fromRGBO(50, 50, 50, 0.4)),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:
-                                  BorderSide(width: 1, color: Colors.white),
+                                      BorderSide(width: 1, color: Colors.white),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -118,9 +118,9 @@ class _SignUpState extends State<SignUp> {
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
-                                    color: Colors.grey,
-                                    width: 2,
-                                  ))),
+                            color: Colors.grey,
+                            width: 2,
+                          ))),
                           child: TextField(
                             controller: emailController,
                             decoration: InputDecoration(
@@ -131,7 +131,7 @@ class _SignUpState extends State<SignUp> {
                                     color: Color.fromRGBO(50, 50, 50, 0.4)),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide:
-                                  BorderSide(width: 0, color: Colors.white),
+                                      BorderSide(width: 0, color: Colors.white),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -156,33 +156,40 @@ class _SignUpState extends State<SignUp> {
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                      color: Colors.grey,
-                                      width: 2,
-                                    ))),
+                              color: Colors.grey,
+                              width: 2,
+                            ))),
                             child: Row(
                               children: [
                                 Expanded(
                                   child: TextField(
                                     controller: passwordController,
+                                    obscureText: passwordView,
                                     decoration: InputDecoration(
                                         isDense: true,
-                                        contentPadding: EdgeInsets.only(bottom: 20),
+                                        contentPadding:
+                                            EdgeInsets.only(bottom: 20),
                                         hintText:
-                                        "Your password, at least 8 character",
+                                            "Your password, at least 8 character",
                                         labelStyle: TextStyle(
-                                            color: Color.fromRGBO(50, 50, 50, 0.4)),
+                                            color: Color.fromRGBO(
+                                                50, 50, 50, 0.4)),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 0, color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                width: 0, color: Colors.white))),
+                                                width: 0,
+                                                color: Colors.white))),
                                   ),
                                 ),
                                 IconButton(
                                     onPressed: () {
-                                      setPasswordConfirmVisible();
+                                      if (passwordController.text.length < 8) {
+                                        return;
+                                      }
+                                      setPasswordVisible();
                                     },
                                     icon: Image.asset("assets/images/eye.png"))
                               ],
@@ -200,32 +207,36 @@ class _SignUpState extends State<SignUp> {
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
-                                      color: Colors.grey,
-                                      width: 2,
-                                    ))),
+                              color: Colors.grey,
+                              width: 2,
+                            ))),
                             child: Row(
                               children: [
                                 Expanded(
                                   child: TextField(
-                                    controller: passwordController,
+                                    controller: passwordConfirmController,
+                                    obscureText: passWordConfirmView,
                                     decoration: InputDecoration(
                                         isDense: true,
-                                        contentPadding: EdgeInsets.only(bottom: 20),
+                                        contentPadding:
+                                            EdgeInsets.only(bottom: 20),
                                         hintText: "Re-type your password",
                                         labelStyle: TextStyle(
-                                            color: Color.fromRGBO(50, 50, 50, 0.4)),
+                                            color: Color.fromRGBO(
+                                                50, 50, 50, 0.4)),
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
                                               width: 0, color: Colors.white),
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                             borderSide: BorderSide(
-                                                width: 0, color: Colors.white))),
+                                                width: 0,
+                                                color: Colors.white))),
                                   ),
                                 ),
                                 IconButton(
                                     onPressed: () {
-                                      setPasswordVisible();
+                                      setPasswordConfirmVisible();
                                     },
                                     icon: Image.asset("assets/images/eye.png"))
                               ],
@@ -243,8 +254,8 @@ class _SignUpState extends State<SignUp> {
                 child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                         side: BorderSide(
-                          style: BorderStyle.none,
-                        )),
+                      style: BorderStyle.none,
+                    )),
                     onPressed: () async {
                       bool result = await loginController.signUp(
                           nameController.text,
@@ -268,6 +279,6 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
       ),
-    );}
+    );
+  }
 }
-

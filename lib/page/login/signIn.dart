@@ -13,6 +13,9 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  TextEditingController idController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   bool passWordVisible = true;
   void setPassWordVisible() {
     setState(() {
@@ -25,8 +28,6 @@ class _SignInState extends State<SignIn> {
     final LoginController loginController = Get.find();
     final UserController userController = Get.find();
 
-    TextEditingController idController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
     return Scaffold(
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,

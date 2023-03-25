@@ -179,7 +179,13 @@ flutter:
     - assets/images/school.png
     - assets/images/monitor.png
     - assets/images/eye.png
+    - assets/images/bubble_box.png
     - assets/videos/aeye_test.mp4
+
+flutter_native_splash:
+  color : "#FFFFFFF"
+  
+
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

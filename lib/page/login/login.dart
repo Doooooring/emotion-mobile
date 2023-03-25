@@ -21,7 +21,6 @@ class _LoginState extends State<Login> {
 
   _asyncMethod() async {
     userInfo = await storage.read(key: "access");
-    print(userInfo);
     if (userInfo != null) {
       Get.to(InitialPage());
     } else {
@@ -32,9 +31,9 @@ class _LoginState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   _asyncMethod();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
   }
 
   @override

@@ -5,7 +5,6 @@ import '../../component/common/app_bar.dart';
 import '../../component/emoticon_diary/calendar/calendar.dart';
 import '../../component/emoticon_diary/emotion/emotion.dart' as input_emotion;
 import '../../component/emoticon_diary/emotion/emotion_preview.dart';
-import '../../component/emoticon_diary/emotion/emotion_selector.dart';
 import '../../services/emotion.dart';
 
 EmotionServices emotionServices = EmotionServices();
@@ -76,13 +75,6 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
-  bool navBarUp = true;
-  void setNavBarUp(bool state) {
-    setState(() {
-      navBarUp = state;
-    });
-  }
-
   TextEditingController controller = TextEditingController();
 
   @override
@@ -130,11 +122,11 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                           ),
                           SizedBox(height: 20),
                           EmotionPreview(
-                              curDates: curDates,
-                              dateSelected: dateSelected,
-                              setInputEmotionUp: setInputEmotionUp,
-                              setEmotionSelectorUp: setEmotionSelectorUp,
-                              setNavBarUp: setNavBarUp)
+                            curDates: curDates,
+                            dateSelected: dateSelected,
+                            setInputEmotionUp: setInputEmotionUp,
+                            setEmotionSelectorUp: setEmotionSelectorUp,
+                          )
                         ],
                       ),
                     ),
@@ -145,6 +137,8 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                         curDates: curDates,
                         dateSelected: dateSelected,
                         setCurDate: setCurDate,
+                        curTempEmotion: curTempEmotion,
+                        emotionSelectorUp: emotionSelectorUp,
                         setInputEmotionUp: setInputEmotionUp,
                         setCurTempEmotion: setCurTempEmotion,
                         setEmotionSelectorUp: setEmotionSelectorUp,
@@ -152,24 +146,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                       width: MediaQuery.of(context).size.width,
                       left: 0,
                       top: inputEmotionUp ? 50 : 800,
-                    ),
-                    AnimatedPositioned(
-                      duration: const Duration(milliseconds: 200),
-                      child: SelectorWrapper(
-                        setNavBarUp: setNavBarUp,
-                        date: dateSelected,
-                        tempEmotion: curTempEmotion,
-                        curDates: curDates,
-                        setCurDate: setCurDate,
-                        emotionSelectorUp: emotionSelectorUp,
-                        setInputEmotionUp: setInputEmotionUp,
-                        setEmotionSelectorUp: setEmotionSelectorUp,
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      height: 800,
-                      left: 0,
-                      top: emotionSelectorUp ? 70 : 800,
-                    ),
+                    )
                   ],
                 ),
               ),

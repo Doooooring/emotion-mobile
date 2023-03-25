@@ -10,12 +10,14 @@ class EmotionChart extends StatefulWidget {
       required this.date,
       required this.curDates,
       required this.isChanged,
+      required this.setIsLoading,
       required this.setEmotionSelectorUp,
       required this.setCurTempEmotion})
       : super(key: key);
   final Map curDates;
   final DateTime date;
   final bool isChanged;
+  final void Function(bool) setIsLoading;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(String?) setCurTempEmotion;
   @override
@@ -39,16 +41,17 @@ class _EmotionChartState extends State<EmotionChart> {
         width: 80,
         height: 80,
         child: IconButton(
-            onPressed: () {
+            onPressed: () async {
               if (state == true) {
                 // flutterToast();
                 return;
               }
               // tempemotion 받아오기
               int curId = selected["id"];
-              emotionServices.reviseTempEmotion(
+              widget.setIsLoading(true);
+              bool apiState = await emotionServices.reviseTempEmotion(
                   curId, widget.setCurTempEmotion, widget.setEmotionSelectorUp);
-              widget.setEmotionSelectorUp(true);
+              widget.setIsLoading(false);
             },
             icon: Image.asset(image)));
   }

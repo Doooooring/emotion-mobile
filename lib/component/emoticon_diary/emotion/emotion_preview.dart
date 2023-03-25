@@ -29,14 +29,12 @@ class EmotionPreview extends StatefulWidget {
     required this.dateSelected,
     required this.setInputEmotionUp,
     required this.setEmotionSelectorUp,
-    required this.setNavBarUp,
   }) : super(key: key);
 
   final Map curDates;
   final DateTime dateSelected;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
-  final void Function(bool) setNavBarUp;
 
   @override
   State<EmotionPreview> createState() => _EmotionPreviewState();
@@ -50,7 +48,6 @@ class _EmotionPreviewState extends State<EmotionPreview> {
       date: widget.dateSelected,
       setInputEmotionUp: widget.setInputEmotionUp,
       setEmotionSelectorUp: widget.setEmotionSelectorUp,
-      setNavBarUp: widget.setNavBarUp,
     );
   }
 }
@@ -62,14 +59,13 @@ class EmotionPreviewBox extends StatefulWidget {
     required this.date,
     required this.setInputEmotionUp,
     required this.setEmotionSelectorUp,
-    required this.setNavBarUp,
   }) : super(key: key);
 
   final Map curDates;
   final DateTime date;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
-  final void Function(bool) setNavBarUp;
+
   @override
   State<EmotionPreviewBox> createState() => _EmotionPreviewBoxState();
 }
@@ -118,7 +114,6 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
           curDates: widget.curDates,
           setInputEmotionUp: widget.setInputEmotionUp,
           setEmotionSelectorUp: widget.setEmotionSelectorUp,
-          setNavBarUp: widget.setNavBarUp,
         ),
         SizedBox(height: 20),
         PreviewBoxBody(context, content),
@@ -150,7 +145,6 @@ class PreviewBoxHeader extends StatefulWidget {
     required this.curDates,
     required this.setInputEmotionUp,
     required this.setEmotionSelectorUp,
-    required this.setNavBarUp,
   }) : super(key: key);
   final int? id;
   final DateTime date;
@@ -159,7 +153,6 @@ class PreviewBoxHeader extends StatefulWidget {
   final Map curDates;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
-  final void Function(bool) setNavBarUp;
 
   @override
   State<PreviewBoxHeader> createState() => _PreviewBoxHeaderState();
@@ -202,7 +195,6 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
               curDates: widget.curDates,
               setInputEmotionUp: widget.setInputEmotionUp,
               setEmotionSelectorUp: widget.setEmotionSelectorUp,
-              setNavBarUp: widget.setNavBarUp,
             )
           ]),
         )
@@ -214,23 +206,21 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
 enum SampleItem { itemOne, itemTwo, itemThree }
 
 class PopUpMenuButtonWrapper extends StatefulWidget {
-  const PopUpMenuButtonWrapper(
-      {Key? key,
-      required this.id,
-      required this.date,
-      required this.emotion,
-      required this.curDates,
-      required this.setInputEmotionUp,
-      required this.setEmotionSelectorUp,
-      required this.setNavBarUp})
-      : super(key: key);
+  const PopUpMenuButtonWrapper({
+    Key? key,
+    required this.id,
+    required this.date,
+    required this.emotion,
+    required this.curDates,
+    required this.setInputEmotionUp,
+    required this.setEmotionSelectorUp,
+  }) : super(key: key);
   final int? id;
   final DateTime date;
   final String? emotion;
   final Map curDates;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
-  final void Function(bool) setNavBarUp;
 
   @override
   State<PopUpMenuButtonWrapper> createState() => _PopUpMenuButtonWrapperState();

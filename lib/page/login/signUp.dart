@@ -189,6 +189,10 @@ class _SignUpState extends State<SignUp> {
                                       if (passwordController.text.length < 8) {
                                         return;
                                       }
+                                      if (passwordController.text !=
+                                          passwordConfirmController.text) {
+                                        return;
+                                      }
                                       setPasswordVisible();
                                     },
                                     icon: Image.asset("assets/images/eye.png"))

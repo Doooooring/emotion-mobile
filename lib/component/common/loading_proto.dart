@@ -16,7 +16,7 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
-    if (widget.isLoading == true) {
+    if (widget.isLoading == false) {
       return Container(height: 0);
     }
 
@@ -27,7 +27,7 @@ class _LoadingState extends State<Loading> {
           width: double.infinity,
           height: widget.height,
           child: Offstage(
-              offstage: widget.isLoading,
+              offstage: !widget.isLoading,
               child: Stack(children: <Widget>[
                 Opacity(
                   opacity: 0.1,

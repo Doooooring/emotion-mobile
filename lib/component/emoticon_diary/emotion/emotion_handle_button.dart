@@ -37,17 +37,18 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
     int? curId = curInfo['id'];
 
     return TextButton(
-        child: const Text("SAVE"),
+        child: const Text("SAVE", style: TextStyle(color: Colors.black)),
         onPressed: () async {
           widget.setIsChanged(false);
-          EmotionService.saveDiaryText(
+          widget.setIsLoading(true);
+          bool apiState = await EmotionService.saveDiaryText(
               curId,
               widget.dateSelected,
               widget.inputText,
-              widget.setIsLoading,
               widget.setCurDate,
               widget.setEmotionSelectorUp,
               widget.setCurTempEmotion);
+          widget.setIsLoading(false);
         });
   }
 }

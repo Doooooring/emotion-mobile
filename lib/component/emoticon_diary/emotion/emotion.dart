@@ -1,9 +1,12 @@
+import "dart:math";
+
 import 'package:flutter/material.dart';
 
 import "../../common/loading_proto.dart";
 import 'emotion_chart.dart';
 import 'emotion_head.dart';
 import 'emotion_input.dart';
+import "emotion_selector.dart";
 
 class EmotionWrapper extends StatefulWidget {
   const EmotionWrapper(
@@ -12,6 +15,8 @@ class EmotionWrapper extends StatefulWidget {
       required this.curDates,
       required this.setInputEmotionUp,
       required this.dateSelected,
+      required this.curTempEmotion,
+      required this.emotionSelectorUp,
       required this.setCurDate,
       required this.setEmotionSelectorUp,
       required this.setCurTempEmotion})
@@ -19,6 +24,8 @@ class EmotionWrapper extends StatefulWidget {
   final Map<String, Map> curDates;
   final DateTime dateSelected;
   final TextEditingController textController;
+  final String? curTempEmotion;
+  final bool emotionSelectorUp;
   final void Function(bool) setInputEmotionUp;
   final void Function(String, int?, String?, String?) setCurDate;
   final void Function(bool) setEmotionSelectorUp;
@@ -28,8 +35,29 @@ class EmotionWrapper extends StatefulWidget {
   State<EmotionWrapper> createState() => _EmotionWrapperState();
 }
 
-class _EmotionWrapperState extends State<EmotionWrapper> {
+class _EmotionWrapperState extends State<EmotionWrapper>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 800),
+    vsync: this,
+  )..addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+      ;
+    });
+
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeInOut,
+  );
+
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   String inputText = '';
   void setInputText(String text) {
     setState(() {
@@ -44,15 +72,27 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
     });
   }
 
-  bool isLoading = true;
+  bool isLoading = false;
   void setIsLoading(bool state) {
-    setState(() {
-      isLoading = state;
-    });
+    if (state) {
+      _controller.forward();
+      setState(() {
+        isLoading = state;
+      });
+    } else {
+      _controller.reset();
+      setState(() {
+        isLoading = state;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    double curValue = _animation.value;
+    double maxHeight = 50;
+    double imageHeight = max(curValue * 100, maxHeight);
+    print(isLoading);
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
@@ -91,6 +131,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                       date: widget.dateSelected,
                       curDates: widget.curDates,
                       isChanged: isChanged,
+                      setIsLoading: setIsLoading,
                       setEmotionSelectorUp: widget.setEmotionSelectorUp,
                       setCurTempEmotion: widget.setCurTempEmotion),
                   SizedBox(
@@ -106,6 +147,15 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                     ]),
                   )
                 ]),
+                SelectorWrapper(
+                    date: widget.dateSelected,
+                    tempEmotion: widget.curTempEmotion,
+                    curDates: widget.curDates,
+                    setCurDate: widget.setCurDate,
+                    emotionSelectorUp: widget.emotionSelectorUp,
+                    setInputEmotionUp: widget.setInputEmotionUp,
+                    setEmotionSelectorUp: widget.setEmotionSelectorUp,
+                    imageHeight: imageHeight),
                 Loading(isLoading: isLoading, height: 800),
               ],
             ),

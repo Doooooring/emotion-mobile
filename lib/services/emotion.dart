@@ -313,9 +313,9 @@ class EmotionServices {
       void Function(Map<String, Map>) setCurDateAll,
       void Function(bool) setIsLoading) async {
     try {
-      // Map<String, Map> result = await repository.getDiaryMonth(year, month);
+      Map<String, Map> result = await repository.getDiaryMonth(year, month);
 
-      setCurDateAll(testData);
+      setCurDateAll(result);
       setIsLoading(true);
     } catch (e) {
       //토스트업
@@ -324,16 +324,14 @@ class EmotionServices {
     }
   }
 
-  void saveDiaryText(
+  Future<bool> saveDiaryText(
       int? id,
       DateTime dateSelected,
       String text,
-      void Function(bool) setIsLoading,
       void Function(String, int?, String?, String?) setCurDate,
       void Function(bool) setEmotionSelectorUp,
       void Function(String?) setCurTempEmotion) async {
     try {
-      setIsLoading(false);
       if (id == null) {
         Map result = await repository.postDiary(dateSelected, text);
 
@@ -343,7 +341,7 @@ class EmotionServices {
         setCurDate(today, curId, text, null);
         setCurTempEmotion(tempEmotion);
         setEmotionSelectorUp(true);
-        setIsLoading(true);
+        return true;
       } else {
         Map result = await repository.patchDiary(id, text, null, "content");
 
@@ -352,24 +350,27 @@ class EmotionServices {
         setCurDate(today, id, text, null);
         setCurTempEmotion(tempEmotion);
         setEmotionSelectorUp(true);
-        setIsLoading(true);
+        return true;
       }
     } catch (e) {
       log(e.toString());
-      setIsLoading(true);
+      return false;
     }
   }
 
   //set Up the emotion selector when tap the emoticon to revise
-  void reviseTempEmotion(int id, void Function(String?) setTempEmotion,
+  Future<bool> reviseTempEmotion(int id, void Function(String?) setTempEmotion,
       void Function(bool) setEmotionSelectorUp) async {
     try {
       Map response = await repository.getDiary(id);
-
       String? tempEmotion = response["tempEmotion"];
       setTempEmotion(tempEmotion);
       setEmotionSelectorUp(true);
-    } catch (e) {}
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 
   //set total emotion based on cur temp emotion

@@ -93,13 +93,15 @@ class _InitialPageState extends State<InitialPage> {
       "Authorization": tokens["access"],
       "cookie": tokens["refresh"]
     });
-    Map result = json.decode(utf8.decode(response.bodyBytes))["result"];
-    Map? recommendVideo = result["video"];
-    String? loginCode = result["code"];
-    if (loginCode == null) {
+    Map? result = json.decode(utf8.decode(response.bodyBytes))["result"];
+    if (result == null) {
       Get.to(() => ChooseRole());
       return;
     }
+    ;
+    Map? recommendVideo = result["video"];
+    String loginCode = result["code"];
+
     userController.getCode(loginCode);
     if (recommendVideo != null) {
       video = recommendVideo["videoUrl"];

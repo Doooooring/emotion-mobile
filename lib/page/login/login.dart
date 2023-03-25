@@ -1,6 +1,5 @@
 import 'package:aeye/page/login/signIn.dart';
 import 'package:aeye/page/login/signUp.dart';
-import "package:aeye/page/splash_screen.dart";
 import "package:flutter/material.dart";
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:get/get.dart";
@@ -100,12 +99,6 @@ class _LoginState extends State<Login> {
                 )
               ],
             )),
-            TextButton(
-              child: Text("gogogo"),
-              onPressed: () {
-                Get.to(() => SplashScreen());
-              },
-            )
           ]),
     ));
   }

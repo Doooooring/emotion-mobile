@@ -4,9 +4,9 @@ import "package:flutter/material.dart";
 
 EmotionServices emotionService = new EmotionServices();
 
-AppBar Header(DateTime? curDate, String curPath) {
+AppBar Header(
+    DateTime? curDate, String curPath, void Function(bool state) setIsLoading) {
   String title = "";
-
   switch (curPath) {
     case ("init"):
       title = "A-eye";
@@ -168,32 +168,8 @@ class _MonthResultButtonState extends State<MonthResultButton> {
     return IconButton(
       icon: Image.asset("assets/images/heartemoticon.png"),
       onPressed: () async {
-        Map response = {
-          "sentimentLevel": {"positive": 16, "neutral": 2, "negative": 10},
-          "emotionHistogram": {
-            "excited": 7,
-            "happy": 3,
-            "calm": 2,
-            "content": 2,
-            "anticipate": 2,
-            "tense": 1,
-            "angry": 2,
-            "sad": 2,
-            "badSurprised": 4,
-            "goodSurprised": 1,
-            "relaxed": 1,
-            "bored": 0,
-            "tired": 1,
-            "mostFrequentEmotion": "excited" //이건 무시해죠..
-          },
-          "monthlyEmotion": {
-            "emotion": "excited",
-            "comment": "You had a wonderful day!"
-          }
-        };
-
-        // await emotionService.getMonthlyResult(
-        //     widget.curDate.year, widget.curDate.month);
+        Map response = await emotionService.getMonthlyResult(
+            widget.curDate.year, widget.curDate.month);
         Navigator.push(
             context,
             MaterialPageRoute(

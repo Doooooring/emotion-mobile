@@ -182,6 +182,7 @@ flutter:
     - assets/images/eye.png
     - assets/images/bubble_box.png
     - assets/videos/aeye_test.mp4
+    - assets/videos/aeye_edited.mp4
 
 fonts:
   - family: ITC_Avant_Garde

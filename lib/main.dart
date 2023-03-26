@@ -23,7 +23,9 @@ late AndroidNotificationChannel channel;
 Future<void> firebaseMessagingBackgroundHandler(
   RemoteMessage message,
 ) async {
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    name: "A-eye",
+  );
   String title = message.notification?.title ?? "title missing";
   String body = message.notification?.body ?? "body missing";
   NotificationDetails platformChannelSpecifics = NotificationDetails(
@@ -51,11 +53,11 @@ void main() async {
       LocalNotificationController();
   await localNotificationController.initialize();
   await Firebase.initializeApp(
+    name: "A-eye",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  print(fcmToken);
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
@@ -129,12 +131,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    widget.localNotificationController.onMessage();
+    widget.localNotificationController.onMessageOpened();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });
-
-    widget.localNotificationController.onMessage();
-    widget.localNotificationController.onMessageOpened();
 
     super.initState();
   }

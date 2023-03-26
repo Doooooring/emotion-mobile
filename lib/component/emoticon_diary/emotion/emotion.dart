@@ -74,15 +74,15 @@ class _EmotionWrapperState extends State<EmotionWrapper>
 
   bool isLoading = false;
   void setIsLoading(bool state) {
-    if (state) {
-      _controller.forward();
+    if (!state) {
       setState(() {
         isLoading = state;
+        _controller.forward();
       });
     } else {
-      _controller.reset();
       setState(() {
         isLoading = state;
+        _controller.reset();
       });
     }
   }
@@ -92,7 +92,6 @@ class _EmotionWrapperState extends State<EmotionWrapper>
     double curValue = _animation.value;
     double maxHeight = 50;
     double imageHeight = max(curValue * 100, maxHeight);
-    print(isLoading);
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,

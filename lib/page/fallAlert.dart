@@ -11,11 +11,7 @@ class BabyMonitor extends StatelessWidget {
 
     // log(localNotificationController.messaging.toString());
 
-    return Scaffold(
-      body: Wrap(children: [
-        Container(child: Stack(children: [SizedBox(), Alert()]))
-      ]),
-    );
+    return Scaffold(body: Alert());
   }
 }
 
@@ -36,10 +32,9 @@ class _AlertState extends State<Alert> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: AlertWrapper(
+    return AlertWrapper(
       isAlert: isAlert,
       setIsAlert: setIsAlert,
-    ));
+    );
   }
 }

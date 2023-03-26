@@ -1,6 +1,7 @@
 // Copyright 2019 Aleksander Woźniak
 // SPDX-License-Identifier: Apache-2.0
 
+import "package:aeye/services/emotion.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +11,23 @@ import '../shared/utils.dart' show CalendarFormat, DayBuilder;
 import 'custom_icon_button.dart';
 import 'format_button.dart';
 
+EmotionServices emotionServices = EmotionServices();
+
+Map monthMap = {
+  "January": 1,
+  "February": 2,
+  "March": 3,
+  "April": 4,
+  "May": 5,
+  "June": 6,
+  "July": 7,
+  "August": 8,
+  "September": 9,
+  "October": 10,
+  "November": 11,
+  "December": 12
+};
+
 class CalendarHeader extends StatelessWidget {
   final dynamic locale;
   final DateTime focusedMonth;
@@ -18,6 +36,8 @@ class CalendarHeader extends StatelessWidget {
   final VoidCallback onLeftChevronTap;
   final VoidCallback onRightChevronTap;
   final Function(int difference) headerChange; //refactor
+  final Function(bool state) setIsLoading;
+  final Function(Map<String, Map<dynamic, dynamic>> curDate) setCurDateAll;
   final Function(
     int year,
   ) setByYear;
@@ -37,6 +57,8 @@ class CalendarHeader extends StatelessWidget {
     required this.onRightChevronTap,
     required this.headerChange, //set header change by dropdown
     required this.setByYear, //refactor
+    required this.setIsLoading, //customed
+    required this.setCurDateAll,
     required this.onHeaderTap,
     required this.onHeaderLongPress,
     required this.onFormatButtonTap,
@@ -74,7 +96,10 @@ class CalendarHeader extends StatelessWidget {
                       YearButton(
                           year: Year,
                           headerChange: headerChange,
-                          setByYear: setByYear),
+                          setByYear: setByYear,
+                          setIsLoading: setIsLoading,
+                          setCurDateAll: setCurDateAll,
+                          month: Month),
                       Text(
                         Month,
                         style: TextStyle(fontSize: 25),
@@ -160,12 +185,18 @@ class YearButton extends StatefulWidget {
       {Key? key,
       required this.year,
       required this.headerChange,
-      required this.setByYear})
+      required this.setByYear,
+      required this.setIsLoading,
+      required this.setCurDateAll,
+      required this.month})
       : super(key: key);
 
   final String year;
+  final String month;
   final Function(int) headerChange;
   final Function(int year) setByYear;
+  final Function(bool state) setIsLoading;
+  final Function(Map<String, Map<dynamic, dynamic>> curDate) setCurDateAll;
 
   @override
   State<YearButton> createState() => _YearButtonState();
@@ -183,7 +214,7 @@ class _YearButtonState extends State<YearButton> {
           return DropdownMenuItem(
               value: year.toString(), child: Text(year.toString()));
         }).toList(),
-        onChanged: (value) {
+        onChanged: (value) async {
           if (value == null) {
             return;
           }
@@ -191,6 +222,10 @@ class _YearButtonState extends State<YearButton> {
           int nextYear = int.parse(value);
           widget.headerChange(nextYear - curYear);
           widget.setByYear(nextYear);
+          widget.setIsLoading(true);
+          await emotionServices.getEmotionMonth(
+              nextYear, monthMap[widget.month], widget.setCurDateAll);
+          widget.setIsLoading(false);
           setState(() {
             dropDownValue = value;
           });

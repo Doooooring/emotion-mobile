@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>340659862944-hvtll61mm1q89qfgbsfe1b2135jd20a8.apps.googleusercontent.com</string>
+	<string>767344301681-p4uis474vt017a5bt4apg6g7khuu3uks.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.340659862944-hvtll61mm1q89qfgbsfe1b2135jd20a8</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>340659862944-l2s30f7hqghuv9acc8gj73cfmghglmrt.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.767344301681-p4uis474vt017a5bt4apg6g7khuu3uks</string>
 	<key>API_KEY</key>
-	<string>AIzaSyB5ktMbRZDL6AMr6z0w74100JDOuo1Nx-0</string>
+	<string>AIzaSyAWwZI7eFDSbugjPSrgKt8gP0ZqBnd7YCg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>340659862944</string>
+	<string>767344301681</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.mobile.gdsc.aeye</string>
 	<key>PROJECT_ID</key>
-	<string>a-eye-fcm</string>
+	<string>a-eye-381414</string>
 	<key>STORAGE_BUCKET</key>
-	<string>a-eye-fcm.appspot.com</string>
+	<string>a-eye-381414.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:340659862944:ios:2177961caae2cf4da978c5</string>
+	<string>1:767344301681:ios:89a83a43f385c626d1add0</string>
 </dict>
 </plist>

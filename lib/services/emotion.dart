@@ -1,5 +1,3 @@
-import "dart:developer";
-
 import 'package:aeye/utils/interface/comment.dart';
 
 import "../repositories/diary.dart";
@@ -307,20 +305,19 @@ Map<String, Map> testData = {
 };
 
 class EmotionServices {
-  void getEmotionMonth(
-      int year,
-      int month,
-      void Function(Map<String, Map>) setCurDateAll,
-      void Function(bool) setIsLoading) async {
+  Future<bool> getEmotionMonth(
+    int year,
+    int month,
+    void Function(Map<String, Map>) setCurDateAll,
+  ) async {
     try {
       Map<String, Map> result = await repository.getDiaryMonth(year, month);
-
       setCurDateAll(result);
-      setIsLoading(true);
+      return true;
     } catch (e) {
       //토스트업
       print(e);
-      setIsLoading(false);
+      return false;
     }
   }
 
@@ -329,31 +326,25 @@ class EmotionServices {
       DateTime dateSelected,
       String text,
       void Function(String, int?, String?, String?) setCurDate,
-      void Function(bool) setEmotionSelectorUp,
       void Function(String?) setCurTempEmotion) async {
     try {
       if (id == null) {
         Map result = await repository.postDiary(dateSelected, text);
-
         String today = dateSelected.day.toString();
         int curId = result["diaryId"];
         String tempEmotion = result["tempEmotion"];
         setCurDate(today, curId, text, null);
         setCurTempEmotion(tempEmotion);
-        setEmotionSelectorUp(true);
         return true;
       } else {
         Map result = await repository.patchDiary(id, text, null, "content");
-
         String today = dateSelected.day.toString();
         String tempEmotion = result["tempEmotion"];
         setCurDate(today, id, text, null);
         setCurTempEmotion(tempEmotion);
-        setEmotionSelectorUp(true);
         return true;
       }
     } catch (e) {
-      log(e.toString());
       return false;
     }
   }
@@ -368,7 +359,6 @@ class EmotionServices {
       setEmotionSelectorUp(true);
       return true;
     } catch (e) {
-      print(e);
       return false;
     }
   }
@@ -386,6 +376,7 @@ class EmotionServices {
       if (id == null) {
         return;
       }
+
       bool response = await repository.patchDiary(id, null, emotion, "emotion");
 
       if (response) {
@@ -397,7 +388,6 @@ class EmotionServices {
         //toast up?
       }
     } catch (e) {
-      log(e.toString());
       Error();
     }
   }
@@ -411,7 +401,6 @@ class EmotionServices {
       void Function(String?) setCurTempEmotion) async {
     try {
       Map data = await repository.postDiary(dateSelected, diary);
-
       int curId = data["diaryId"];
       String tempEmotion = data["tempEmotion"];
       setCurDates(dateSelected.day.toString(), curId);
@@ -426,7 +415,6 @@ class EmotionServices {
     DateTime dateSelected,
   ) async {
     Map response = await repository.getDiaryResult(id);
-
     String emotion = response["emotion"];
     String emotionText = response["emotionText"];
     double sentimentLevel = response["sentimentLevel"];

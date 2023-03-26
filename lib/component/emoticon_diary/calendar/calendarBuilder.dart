@@ -223,15 +223,17 @@ class _YearButtonState extends State<YearButton> {
       icon: const Icon(Icons.arrow_downward),
       elevation: 0,
       style: const TextStyle(color: Colors.black),
-      onChanged: (int? value) {
+      onChanged: (int? value) async {
         if (value == null) {
           return;
         }
         int variation = 12 * (value - dropdownValue);
         widget.pageController.animateToPage(variation,
             duration: Duration(milliseconds: 300), curve: Curves.easeOut);
-        emotionServices.getEmotionMonth(
-            value, widget.month, widget.setCurDateAll, widget.setIsLoading);
+        widget.setIsLoading(true);
+        await emotionServices.getEmotionMonth(
+            value, widget.month, widget.setCurDateAll);
+        widget.setIsLoading(false);
         setState(() {
           dropdownValue = value;
         });

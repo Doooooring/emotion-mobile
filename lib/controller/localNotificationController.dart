@@ -1,5 +1,3 @@
-import "dart:developer";
-
 import "package:aeye/page/fallAlert.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
@@ -79,9 +77,9 @@ class LocalNotificationController extends GetxController {
 
   Future<void> initialize() async {
     await Firebase.initializeApp(
+      name: "A-eye",
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    final fcmToken = await FirebaseMessaging.instance.getToken();
 
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         FlutterLocalNotificationsPlugin();
@@ -116,17 +114,38 @@ class LocalNotificationController extends GetxController {
       //         (NotificationResponse payloadData) {
       //   log("here2");
     });
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
   }
 
   void onMessage() {
-    print("is on Message");
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      Get.to(() => BabyMonitor());
+
+      // RemoteNotification? notification = message.notification;
+      // NotificationDetails platformChannelSpecifics = NotificationDetails(
+      //     android: AndroidNotificationDetails(
+      //       "Baby fall",
+      //       "High_Importance_Notifications",
+      //       priority: Priority.max,
+      //       importance: Importance.max,
+      //     ),
+      //     iOS: DarwinNotificationDetails(
+      //         badgeNumber: 1,
+      //         subtitle: "the subtitle",
+      //         sound: "slow_spring_board.aiff"));
+      // if (notification != null) {
+      //   Get.to(() => BabyMonitor());
+      //   flutterLocalNotificationsPlugin.show(
+      //     notification.hashCode,
+      //     notification.title,
+      //     notification.body,
+      //     platformChannelSpecifics,
+      //   );
+      // }
+    });
+  }
+
+  void onMessageOpened() {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
       RemoteNotification? notification = message.notification;
       NotificationDetails platformChannelSpecifics = NotificationDetails(
           android: AndroidNotificationDetails(
@@ -136,25 +155,17 @@ class LocalNotificationController extends GetxController {
             importance: Importance.max,
           ),
           iOS: DarwinNotificationDetails(
-              badgeNumber: 1,
-              subtitle: "the subtitle",
+              presentBadge: true,
+              attachments: [
+                DarwinNotificationAttachment("assets/images/logo.png")
+              ],
               sound: "slow_spring_board.aiff"));
-      if (notification != null) {
-        Get.to(() => BabyMonitor());
-        // flutterLocalNotificationsPlugin.show(
-        //   notification.hashCode,
-        //   notification.title,
-        //   notification.body,
-        //   platformChannelSpecifics,
-        // );
-      }
-    });
-  }
-
-  void onMessageOpened() {
-    print("is on Message opened");
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      log("is background here");
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification!.title,
+        notification!.body,
+        platformChannelSpecifics,
+      );
       if (_context != null) {
         Get.to(() => BabyMonitor());
         // getAlert();

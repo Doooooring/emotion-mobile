@@ -15,13 +15,14 @@ class AdviceServices {
     return childList;
   }
 
-  void addChild(
+  Future<bool> addChild(
       String name, String temperament, ChildController controller) async {
     Map childInfo = await childRepositories.postTemperament(name, temperament);
     String id = childInfo["id"];
     Child newChild =
         Child.fromJson({"id": id, "name": name, "temperament": temperament});
     controller.addChild(newChild);
+    return true;
   }
 
   void reviseChild(String id, String name, String temperament,

@@ -81,15 +81,9 @@ class _EmotionCommentState extends State<EmotionComment> {
   }
 
   _asyncMethod() async {
-    Map dataJson = {
-      "emotion": "content-3",
-      "content": "Liam took care of Mark instead of me. I had a day off XD.",
-      "comment": []
-    };
-    // CommentPageData commentPageData =
-    //     await emotionServices.getComments(widget.id.toString());
-    // setCurData(commentPageData);
-    setCurData(CommentPageData.fromJson(dataJson));
+    CommentPageData commentPageData =
+        await emotionServices.getComments(widget.id.toString());
+    setCurData(commentPageData);
   }
 
   @override
@@ -106,10 +100,6 @@ class _EmotionCommentState extends State<EmotionComment> {
     UserController userController = Get.find();
 
     RxString role = userController.role;
-    print(role);
-    // if (curComment.length == 0) {
-    //   setCurComment(curData.comment[0]);
-    // }
 
     void removeFocus(BuildContext context) {
       FocusScope.of(context).requestFocus(new FocusNode());

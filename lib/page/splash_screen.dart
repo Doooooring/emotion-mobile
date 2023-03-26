@@ -53,8 +53,6 @@ class _SplashScreenState extends State<SplashScreen>
       return (min(1, max(0, (value - mini) * 5)));
     }
 
-    print(value);
-
     return WillPopScope(
         child: Scaffold(
             body: Container(

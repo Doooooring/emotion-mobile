@@ -37,15 +37,19 @@ class _CircleButtonState extends State<CircleButton> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [Image.asset(width: 60, height: 60, widget.icon)]),
       ),
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all(CircleBorder()),
-        backgroundColor: MaterialStateProperty.all(
-            widget.backgroundColor), // <-- Button color
-        // overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
-        //   if (states.contains(MaterialState.pressed))
-        //     return widget.overlayColor; // <-- Splash color
-        // }),
-      ),
+      style: ElevatedButton.styleFrom(
+          minimumSize: Size.zero,
+          padding: EdgeInsets.zero,
+          shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(50.0),
+          ),
+          backgroundColor: Colors.red
+          // <-- Button color
+          // overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
+          //   if (states.contains(MaterialState.pressed))
+          //     return widget.overlayColor; // <-- Splash color
+          // }),
+          ),
     );
   }
 }
@@ -74,7 +78,7 @@ class _AlertWrapperState extends State<AlertWrapper>
   }
 
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 10),
+    duration: const Duration(seconds: 30),
     vsync: this,
   )..addListener(() {
       if (mounted) {
@@ -104,92 +108,99 @@ class _AlertWrapperState extends State<AlertWrapper>
   Widget build(BuildContext context) {
     double alertLogoSize = 150;
 
-    double curValue = _animation.value * 10;
+    double curValue = _animation.value * 900;
 
-    double curOpacity = curValue - curValue.floor();
-    print(curOpacity);
+    int iteration2 = (curValue / 30).floor();
+
+    double addWidth2 = curValue - 30 * iteration2;
 
     return Stack(children: [
       Container(
-          width: double.infinity,
-          height: 930,
-          color: Color.fromRGBO(0, 0, 0, 0.1),
-          child: ClipRRect(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Column(children: [
-                SizedBox(height: 100),
-                SizedBox(
-                  child: Image.asset(
-                      width: alertLogoSize,
-                      height: alertLogoSize,
-                      "assets/images/alert.png"),
-                ),
-                SizedBox(
-                  height: 50,
-                ),
-                SizedBox(
-                    child: Column(children: [
-                  Text("It looks like",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w600)),
-                  SizedBox(height: 10),
-                  Text("your baby had a fall",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 28,
-                          fontWeight: FontWeight.w600)),
-                  SizedBox(height: 10),
-                  Text("Check on your baby!",
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500))
-                ])),
-                SizedBox(height: 20),
-                Container(child: VideoViewer()),
-                SizedBox(height: 30),
-                SizedBox(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                      SizedBox(width: 90),
-                      CircleButton(
-                          backgroundColor: Colors.red,
-                          icon: "assets/images/sos.png",
-                          action: () {}),
-                      SizedBox(width: 90)
-                    ])),
+        width: double.infinity,
+        height: double.infinity,
+        color: Color.fromRGBO(0, 0, 0, 0.1),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: SingleChildScrollView(
+            child: Column(children: [
+              SizedBox(height: 100),
+              SizedBox(
+                child: Image.asset(
+                    width: alertLogoSize,
+                    height: alertLogoSize,
+                    "assets/images/alert.png"),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              SizedBox(
+                  child: Column(children: [
+                Text("It looks like",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600)),
                 SizedBox(height: 10),
-              ]),
-            ),
-          )),
-      Container(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
-          child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              padding: EdgeInsets.only(bottom: 30),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red, width: 5)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: Container(
-                          child: Text("Baby is Okay",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontSize: 20,
-                                  color: Colors.grey)))),
-                ],
-              )))
+                Text("your baby had a fall",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600)),
+                SizedBox(height: 10),
+                Text("Check on your baby!",
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500))
+              ])),
+              SizedBox(height: 20),
+              Container(child: VideoViewer()),
+              SizedBox(height: 30),
+              SizedBox(
+                width: 120,
+                height: 120,
+                child: Stack(children: [
+                  SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 80 + addWidth2,
+                              width: 80 + addWidth2,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: Color.fromRGBO(255, 0, 0, 0.1)),
+                            ),
+                          ])),
+                  SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircleButton(
+                                backgroundColor: Colors.red,
+                                icon: "assets/images/sos.png",
+                                action: () {}),
+                          ])),
+                ]),
+              ),
+              TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Container(
+                      child: Text("Baby is Okay",
+                          style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontSize: 20,
+                              color: Colors.grey)))),
+            ]),
+          ),
+        ),
+      ),
     ]);
   }
 }
@@ -207,7 +218,7 @@ class _VideoViewerState extends State<VideoViewer> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/videos/aeye_test.mp4');
+    _controller = VideoPlayerController.asset('assets/videos/aeye_edited.mp4');
 
     _controller.addListener(() {
       setState(() {});

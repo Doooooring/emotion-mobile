@@ -71,13 +71,14 @@ class _CalendarState extends State<Calendar> {
       setFocusedYear(year);
       widget.setDateSelected(DateTime.parse(
           '${year}${focusedMonth.toString().padLeft(2, '0')}01'));
-      emotionServices.getEmotionMonth(
-          year, focusedMonth, widget.setCurDateAll, widget.setIsLoading);
+      emotionServices.getEmotionMonth(year, focusedMonth, widget.setCurDateAll);
     }
 
     return TableCalendar(
         rowHeight: 60,
         setByYear: setByYear,
+        setIsLoading: widget.setIsLoading,
+        setCurDateAll: widget.setCurDateAll,
         selectedDayPredicate: (selectedDay) {
           bool state = (selectedDay.year == focusedYear) &
               (selectedDay.month == focusedMonth) &
@@ -114,7 +115,7 @@ class _CalendarState extends State<Calendar> {
           titleCentered: true,
           formatButtonVisible: false,
           leftChevronIcon: IconButton(
-              onPressed: () {
+              onPressed: () async {
                 if (focusedMonth == 1) {
                   setFocusedYear(focusedYear - 1);
                   setFocusedMonth(12);
@@ -124,16 +125,17 @@ class _CalendarState extends State<Calendar> {
 
                 widget.setDateSelected(DateTime.parse(
                     '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay.toString().padLeft(2, '0')}'));
-
-                emotionServices.getEmotionMonth(focusedYear, focusedMonth,
-                    widget.setCurDateAll, widget.setIsLoading);
+                widget.setIsLoading(true);
+                await emotionServices.getEmotionMonth(
+                    focusedYear, focusedMonth, widget.setCurDateAll);
+                widget.setIsLoading(false);
               },
               icon: Icon(Icons.keyboard_arrow_left,
                   size: 40, color: Colors.black)),
           leftChevronMargin: EdgeInsets.all(0),
           leftChevronPadding: EdgeInsets.all(0),
           rightChevronIcon: IconButton(
-              onPressed: () {
+              onPressed: () async {
                 if (focusedMonth == 12) {
                   setFocusedYear(focusedYear + 1);
                   setFocusedMonth(1);
@@ -143,8 +145,10 @@ class _CalendarState extends State<Calendar> {
 
                 widget.setDateSelected(DateTime.parse(
                     '${focusedYear}${focusedMonth.toString().padLeft(2, '0')}${focusedDay.toString().padLeft(2, '0')}'));
-                emotionServices.getEmotionMonth(focusedYear, focusedMonth,
-                    widget.setCurDateAll, widget.setIsLoading);
+                widget.setIsLoading(true);
+                await emotionServices.getEmotionMonth(
+                    focusedYear, focusedMonth, widget.setCurDateAll);
+                widget.setIsLoading(false);
               },
               icon: Icon(Icons.keyboard_arrow_right,
                   size: 40, color: Colors.black)),

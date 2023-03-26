@@ -206,6 +206,8 @@ class TableCalendar<T> extends StatefulWidget {
 
   /// set year of focused day when push the year dropdown button;
   final void Function(int year) setByYear; //
+  final void Function(bool state) setIsLoading;
+  final void Function(Map<String, Map<dynamic, dynamic>> curDate) setCurDateAll;
 
   /// Creates a `TableCalendar` widget.
   TableCalendar({
@@ -214,7 +216,9 @@ class TableCalendar<T> extends StatefulWidget {
     required DateTime firstDay,
     required DateTime lastDay,
     DateTime? currentDay,
-    required this.setByYear,
+    required this.setByYear, //customed
+    required this.setIsLoading, //customed
+    required this.setCurDateAll,
     this.locale,
     this.rangeStartDay,
     this.rangeEndDay,
@@ -470,7 +474,9 @@ class _TableCalendarState<T> extends State<TableCalendar<T>> {
                 onLeftChevronTap: _onLeftChevronTap,
                 onRightChevronTap: _onRightChevronTap,
                 headerChange: _headerChange, //refactor
-                setByYear: widget.setByYear, //refactor
+                setByYear: widget.setByYear,
+                setIsLoading: widget.setIsLoading,
+                setCurDateAll: widget.setCurDateAll, //refactor
                 onHeaderTap: () => widget.onHeaderTapped?.call(value),
                 onHeaderLongPress: () =>
                     widget.onHeaderLongPressed?.call(value),

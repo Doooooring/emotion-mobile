@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../asset/init_data.dart';
 import '../../component/common/app_bar.dart';
+import '../../component/common/loading_proto.dart';
 import '../../component/emoticon_diary/calendar/calendar.dart';
 import '../../component/emoticon_diary/emotion/emotion.dart' as input_emotion;
 import '../../component/emoticon_diary/emotion/emotion_preview.dart';
@@ -26,7 +27,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
     });
   }
 
-  bool isLoading = true;
+  bool isLoading = false;
   void setIsLoading(bool state) {
     setState(() {
       isLoading = state;
@@ -77,13 +78,20 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
 
   TextEditingController controller = TextEditingController();
 
+  Future<void> _asyncMethod() async {
+    DateTime Today = DateTime.now().toUtc();
+    setIsLoading(true);
+    await emotionServices.getEmotionMonth(
+        Today.year, Today.month, setCurDatesAll);
+    setIsLoading(false);
+  }
+
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _asyncMethod();
+    });
     super.initState();
-
-    DateTime Today = DateTime.now().toUtc();
-    emotionServices.getEmotionMonth(
-        Today.year, Today.month, setCurDatesAll, setIsLoading);
   }
 
   @override
@@ -146,7 +154,8 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                       width: MediaQuery.of(context).size.width,
                       left: 0,
                       top: inputEmotionUp ? 50 : 800,
-                    )
+                    ),
+                    Loading(isLoading: isLoading, height: double.infinity)
                   ],
                 ),
               ),

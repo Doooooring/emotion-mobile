@@ -46,8 +46,8 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
               widget.dateSelected,
               widget.inputText,
               widget.setCurDate,
-              widget.setEmotionSelectorUp,
               widget.setCurTempEmotion);
+          widget.setEmotionSelectorUp(true);
           widget.setIsLoading(false);
         });
   }

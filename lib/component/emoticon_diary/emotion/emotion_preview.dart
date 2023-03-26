@@ -255,8 +255,8 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
           if (item == SampleItem.itemOne) {
             widget.setInputEmotionUp(true);
           } else {
-            // Map response =
-            //     await emotionService.getResultPage(widget.id, widget.date);
+            Map response =
+                await emotionService.getResultPage(widget.id, widget.date);
             if (!mounted) {
               return;
             }
@@ -264,22 +264,12 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => DailReport(
-                        date: DateTime.now(),
-                        emotion: "excited-3",
-                        emotionText: "You had a wonderful day!",
-                        sentimentLevel: 3.7,
-                        videoUrl: "CwfoyVa980U",
-                        title: "Charlie Puth - How Long")));
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => DailReport(
-            //             date: response["date"],
-            //             emotion: response["emotion"],
-            //             emotionText: response["emotionText"],
-            //             sentimentLevel: response["sentimentLevel"],
-            //             videoUrl: response["videoUrl"],
-            //             title: response["title"])));
+                        date: response["date"],
+                        emotion: response["emotion"],
+                        emotionText: response["emotionText"],
+                        sentimentLevel: response["sentimentLevel"],
+                        videoUrl: response["videoUrl"],
+                        title: response["title"])));
           }
         },
         itemBuilder: (BuildContext context) => [

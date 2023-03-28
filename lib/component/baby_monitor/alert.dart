@@ -2,6 +2,7 @@ import "dart:ui";
 
 import "package:flutter/material.dart";
 import "package:get/get.dart";
+import "package:url_launcher/url_launcher.dart";
 import "package:video_player/video_player.dart";
 
 class CircleButton extends StatefulWidget {
@@ -21,13 +22,23 @@ class CircleButton extends StatefulWidget {
 }
 
 class _CircleButtonState extends State<CircleButton> {
+  Future<void> _launchUrl(url) async {
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // final LocalNotificationController localNotificationController = Get.find();
     return ElevatedButton(
       onPressed: () {
+        print("here");
+        Uri url = Uri.parse(
+            "https://www.google.co.kr/maps/search/%EC%86%8C%EC%95%84%EA%B3%BC?hl=ko");
+        _launchUrl(url);
         // localNotificationController.messaging = false.obs;
-        Get.back();
+        // Get.back();
       },
       child: Container(
         width: 80,

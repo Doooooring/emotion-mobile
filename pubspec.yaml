@@ -181,6 +181,10 @@ flutter:
     - assets/images/monitor.png
     - assets/images/eye.png
     - assets/images/bubble_box.png
+    - assets/images/humans_for_temperament.png
+    - assets/images/broken_heart.png
+    - assets/images/quote_left.png
+    - assets/images/quote_right.png
     - assets/videos/aeye_test.mp4
     - assets/videos/aeye_edited.mp4
 

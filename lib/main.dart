@@ -58,6 +58,7 @@ void main() async {
   );
 
   final fcmToken = await FirebaseMessaging.instance.getToken();
+  print(fcmToken);
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 

@@ -111,7 +111,7 @@ class _InitialPageState extends State<InitialPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _asyncMethod();
+      // _asyncMethod();
     });
 
     super.initState();

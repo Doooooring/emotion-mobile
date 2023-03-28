@@ -4,8 +4,6 @@ import "package:flutter/material.dart";
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:get/get.dart";
 
-import '/page/initial.dart';
-
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -22,7 +20,7 @@ class _LoginState extends State<Login> {
   _asyncMethod() async {
     userInfo = await storage.read(key: "access");
     if (userInfo != null) {
-      Get.to(InitialPage());
+      // Get.to(InitialPage());
     } else {}
   }
 

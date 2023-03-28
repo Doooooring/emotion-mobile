@@ -4,8 +4,9 @@ import "package:flutter/material.dart";
 
 EmotionServices emotionService = new EmotionServices();
 
-AppBar Header(
-    DateTime? curDate, String curPath, void Function(bool state) setIsLoading) {
+//void Function(bool state) setIsLoading
+
+AppBar Header(DateTime? curDate, String curPath) {
   String title = "";
   switch (curPath) {
     case ("init"):

@@ -6,6 +6,7 @@ class AdviceServices {
   ChildRepositories childRepositories = ChildRepositories();
 
   Future<List<Child>> getChildren(ChildController controller) async {
+    return [];
     Map response = await childRepositories.getTemperament();
     List<Map> children = response["children"];
     List<Child> childList = children.map((comp) {

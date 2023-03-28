@@ -1,5 +1,8 @@
+import "dart:convert";
+
 import "package:aeye/component/common/app_bar.dart";
 import "package:flutter/material.dart";
+import "package:http/http.dart" as http;
 import "package:video_player/video_player.dart";
 
 class Monitor extends StatefulWidget {
@@ -10,6 +13,31 @@ class Monitor extends StatefulWidget {
 }
 
 class _MonitorState extends State<Monitor> {
+  _asyncMethod() async {
+    Uri endPoint = Uri.parse('http://detect.a-eye.co.kr/baby/video');
+
+    var bodyEncoded = json.encode({
+      "token":
+          "enV9Aa8c5E8NpJW6ttUnKq:APA91bGl_EMUKddUCtIda7QcKO5GZId5UvSnnoR8y106eZu54hiY3Mlm_ZwbnyoDrggbHOItmC4WQDBqu9B0mc07Ej5t2Vb2lvhq0mDwq52jdw-t2XFFMqfAYnIOJexpRH15NeyPajQ_"
+    });
+
+    http.Response response =
+        await http.post(endPoint, body: bodyEncoded, headers: {
+      "Content-Type": "application/json",
+    });
+    print(response);
+    dynamic result = utf8.decode(response.bodyBytes);
+    print(result);
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _asyncMethod();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

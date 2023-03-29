@@ -58,7 +58,6 @@ void main() async {
   );
 
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  print(fcmToken);
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
@@ -73,13 +72,7 @@ void main() async {
     initializationSettings,
     onDidReceiveNotificationResponse: (NotificationResponse notification) {
       String payload = notification.payload ?? "missing title";
-
-      //알림페이지 들어갈 부분(foreground 일 때의 동작 -> context 이동하기)
     },
-    //     onDidReceiveBackgroundNotificationResponse:
-    //         (NotificationResponse payloadData) {
-    //   ;
-    // }
   );
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -126,7 +119,6 @@ class _MyAppState extends State<MyApp> {
       Timer(Duration(milliseconds: 1500), () {
         Get.to(Login());
       });
-      print("Need login authorization");
     }
   }
 
@@ -153,17 +145,6 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: "login",
         home: SplashScreen());
-
-    // return GetBuilder<LocalNotificationController>(builder: (controller) {
-    // return GetMaterialApp(title: "hey", home: Login());
-    // return GetMaterialApp(title: "aeye", home: InitialPage());
-
-    //   if (controller.messaging.toString() == "true") {
-    //     return GetMaterialApp(title: "baby", home: BabyMonitor());
-    //   } else {
-    //     return GetMaterialApp(title: "aeye", home: InitialPage());
-    //   }
-    // });
   }
 }
 

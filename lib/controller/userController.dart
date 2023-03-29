@@ -5,7 +5,7 @@ class UserController extends GetxController {
   var name = null;
   var access = null;
   var code = null;
-  RxString role = "sub".obs;
+  RxString role = "main".obs;
 
   void getId(String newId) {
     id = newId.obs;

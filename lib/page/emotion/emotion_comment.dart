@@ -77,7 +77,6 @@ class _EmotionCommentState extends State<EmotionComment> {
     setState(() {
       curData!.comment.add(comment);
     });
-    print(curData!.comment);
   }
 
   _asyncMethod() async {
@@ -289,8 +288,8 @@ Row CommentInput(
           )),
       IconButton(
           onPressed: () async {
-            // bool response = await emotionServices.postComments(
-            //     id.toString(), controller.text);
+            bool response = await emotionServices.postComments(
+                id.toString(), controller.text);
             if (true) {
               Comment curData = Comment.fromJson({
                 "order": curComment.length,

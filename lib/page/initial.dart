@@ -82,7 +82,7 @@ class _InitialPageState extends State<InitialPage> {
   UserController userController = UserController();
   LoginController loginController = Get.find();
 
-  String? video = "CwfoyVa980U";
+  String? video = null;
 
   _asyncMethod() async {
     Map tokens = await loginController.getTokens();
@@ -93,16 +93,24 @@ class _InitialPageState extends State<InitialPage> {
       "Authorization": tokens["access"],
       "cookie": tokens["refresh"]
     });
-    Map? result = json.decode(utf8.decode(response.bodyBytes))["result"];
-    if (result == null) {
+    print(response);
+    print(utf8.decode(response.bodyBytes));
+    Map result = json.decode(utf8.decode(response.bodyBytes))["result"];
+    String? loginCode = result["code"];
+    String? role = result["role"];
+    Map? recommendVideo = result["video"];
+    if (role == null) {
       Get.to(() => ChooseRole());
       return;
     }
     ;
-    Map? recommendVideo = result["video"];
-    String loginCode = result["code"];
 
-    userController.getCode(loginCode);
+    userController.role = role.obs;
+
+    if (role == "main") {
+      userController.getCode(loginCode!);
+    }
+
     if (recommendVideo != null) {
       video = recommendVideo["videoUrl"];
     }
@@ -111,7 +119,7 @@ class _InitialPageState extends State<InitialPage> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // _asyncMethod();
+      _asyncMethod();
     });
 
     super.initState();
@@ -280,11 +288,6 @@ class _InitialPageState extends State<InitialPage> {
                               ])))
                     ])),
                 SizedBox(height: 30)
-                // IconButton(
-                //     onPressed: () {
-                //       Get.to(Login());
-                //     },
-                //     icon: Icon(Icons.ac_unit))
               ]),
             ),
           ),

@@ -7,6 +7,7 @@ import "../asset/url.dart";
 
 class DiaryRepositories {
   LoginController loginController = new LoginController();
+
   //return {
   // data : {
   //   "1" : {
@@ -17,7 +18,6 @@ class DiaryRepositories {
   //   ...
   // }
   //}
-
   Future<Map<String, Map>> getDiaryMonth(int year, int month) async {
     Map tokens = await loginController.getTokens();
     Uri endPoint =
@@ -76,7 +76,6 @@ class DiaryRepositories {
   //    "result"    : "success"
   //     }
   // }
-
   patchDiary(int id, String? text, String? emotion, String type
       //type = content or emotion
       ) async {
@@ -129,7 +128,6 @@ class DiaryRepositories {
 //      "videoUrl" : string
 //      }
 //   }
-
   getDiaryResult(int? id) async {
     Map tokens = await loginController.getTokens();
     Uri endPoint = Uri.parse('$HOST_URL/diary/result/${id}');
@@ -160,7 +158,7 @@ class DiaryRepositories {
 
   getComments(String diaryId) async {
     Map tokens = await loginController.getTokens();
-    Uri endPoint = Uri.parse('$HOST_URL/diary/commnet/${diaryId}');
+    Uri endPoint = Uri.parse('$HOST_URL/diary/comment/${diaryId}');
     http.Response response = await http.get(endPoint, headers: {
       "Content-Type": "application/json",
       "authorization": tokens["access"],
@@ -172,7 +170,7 @@ class DiaryRepositories {
 
   postComments(String diaryId, String comment) async {
     Map tokens = await loginController.getTokens();
-    Uri endPoint = Uri.parse('$HOST_URL/diary/commnet/${diaryId}');
+    Uri endPoint = Uri.parse('$HOST_URL/diary/comment/${diaryId}');
     Map body = {"commentContent": comment};
     var bodyEncoded = json.encode(body);
 

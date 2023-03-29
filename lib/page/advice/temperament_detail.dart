@@ -292,7 +292,18 @@ class _SlideWrapperState extends State<SlideWrapper>
                       ),
                     ]),
                   ),
-                )
+                ),
+                Positioned(
+                    top: 100,
+                    left: 30,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back_ios_new_outlined,
+                          color: Colors.black),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        return;
+                      },
+                    ))
               ],
             )));
   }
@@ -720,7 +731,6 @@ class _FourthSlideState extends State<FourthSlide> {
                                   fontSize: 25, color: Color(0xff828282))),
                           Column(children: [
                             SizedBox(height: 60),
-                            SizedBox(height: 30),
                             SizedBox(
                                 child: Text("Compatibility between",
                                     style: TextStyle(

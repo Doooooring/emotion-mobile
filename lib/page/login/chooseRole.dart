@@ -85,7 +85,8 @@ class ChooseRole extends StatelessWidget {
                                   style: BorderStyle.none,
                                 )),
                             onPressed: () {
-                              () => Get.to(SecondarySignUp());
+                              print("here");
+                              Get.to(() => SecondarySignUp());
                             },
                             child: Container(
                                 child: Column(

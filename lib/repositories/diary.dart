@@ -182,6 +182,6 @@ class DiaryRepositories {
         },
         body: bodyEncoded);
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
-    return result["result"];
+    return result["success"];
   }
 }

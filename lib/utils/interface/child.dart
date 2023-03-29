@@ -6,7 +6,7 @@ class Child {
   final String temperament;
 
   factory Child.fromJson(Map json) {
-    String id = json["id"];
+    String id = json["id"] is int ? json["id"].toString() : json["id"];
     String name = json["name"];
     String temperament = json["temperament"];
     return Child(id, name, temperament);

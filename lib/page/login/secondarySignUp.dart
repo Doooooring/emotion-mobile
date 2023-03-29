@@ -1,5 +1,7 @@
 import "package:aeye/controller/loginController.dart";
+import 'package:aeye/page/initial.dart';
 import "package:flutter/material.dart";
+import "package:get/get.dart";
 
 class SecondarySignUp extends StatelessWidget {
   const SecondarySignUp({Key? key}) : super(key: key);
@@ -39,9 +41,13 @@ class SecondarySignUp extends StatelessWidget {
                     ])),
                 SizedBox(
                     child: TextButton(
-                        onPressed: () {
-                          loginController.chooseRole(
-                              "sub", textEditingController.text);
+                        onPressed: () async {
+                          Map<String, String> response = await loginController
+                              .chooseRole("sub", textEditingController.text);
+                          String status = response["code"]!;
+                          if (status == "good") {
+                            Get.to(() => InitialPage());
+                          }
                         },
                         child: Text("submit")))
               ])),

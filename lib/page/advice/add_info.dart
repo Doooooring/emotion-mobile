@@ -62,9 +62,13 @@ GestureDetector PopUp(
                     icon: Icon(Icons.arrow_back_ios)),
                 TextButton(
                     onPressed: () async {
-                      // bool apiState = await adviceServices.addChild(
-                      //     textController.text, dropDownValue, childController);
-                      Get.to(AdviceMain());
+                      bool apiState = await adviceServices.addChild(
+                          textController.text, dropDownValue, childController);
+                      if (apiState) {
+                        Get.to(AdviceMain());
+                      } else {
+                        print("post error");
+                      }
                     },
                     child: Text("Save",
                         style: TextStyle(color: Colors.black, fontSize: 22)))

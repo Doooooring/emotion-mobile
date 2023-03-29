@@ -23,9 +23,8 @@ class _MainPreState extends State<MainPre> {
   ChildController childController = Get.find<ChildController>();
 
   _asyncMethod() async {
-    List<Child> childList = await adviceServices.getChildren(childController);
+    List<Child> childList = await adviceServices.getChildren();
     if (childList.isNotEmpty) {
-      childController.setChildList(childList);
       Get.back();
       Get.to(() => AdviceMain());
     }

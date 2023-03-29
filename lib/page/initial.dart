@@ -93,22 +93,24 @@ class _InitialPageState extends State<InitialPage> {
       "Authorization": tokens["access"],
       "cookie": tokens["refresh"]
     });
-    print(response);
-    print(utf8.decode(response.bodyBytes));
-    Map result = json.decode(utf8.decode(response.bodyBytes))["result"];
-    String? loginCode = result["code"];
-    String? role = result["role"];
-    Map? recommendVideo = result["video"];
-    if (role == null) {
+    Map? result = json.decode(utf8.decode(response.bodyBytes))["result"];
+
+    if (result == null) {
+      Get.back();
       Get.to(() => ChooseRole());
       return;
     }
-    ;
 
+    String loginCode = result["code"];
+    String role = result["role"];
+    print(role);
+    Map? recommendVideo = result["video"];
+
+    print(loginCode);
     userController.role = role.obs;
 
     if (role == "main") {
-      userController.getCode(loginCode!);
+      userController.getCode(loginCode);
     }
 
     if (recommendVideo != null) {

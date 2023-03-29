@@ -45,6 +45,7 @@ Future reqIOSPermission(FirebaseMessaging fbMsg) async {
 }
 
 class LocalNotificationController extends GetxController {
+  String token = "";
   RxBool messaging = false.obs;
 
   void isOff() {

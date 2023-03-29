@@ -1,7 +1,9 @@
 import "dart:convert";
 
 import "package:aeye/component/common/app_bar.dart";
+import 'package:aeye/controller/localNotificationController.dart';
 import "package:flutter/material.dart";
+import "package:get/get.dart";
 import "package:http/http.dart" as http;
 import "package:video_player/video_player.dart";
 
@@ -13,9 +15,11 @@ class Monitor extends StatefulWidget {
 }
 
 class _MonitorState extends State<Monitor> {
+  LocalNotificationController localNotificationController = Get.find();
+
   _asyncMethod() async {
     Uri endPoint = Uri.parse('http://detect.a-eye.co.kr/baby/video');
-
+    String token = localNotificationController.token;
     var bodyEncoded = json.encode({
       "token":
           "enV9Aa8c5E8NpJW6ttUnKq:APA91bGl_EMUKddUCtIda7QcKO5GZId5UvSnnoR8y106eZu54hiY3Mlm_ZwbnyoDrggbHOItmC4WQDBqu9B0mc07Ej5t2Vb2lvhq0mDwq52jdw-t2XFFMqfAYnIOJexpRH15NeyPajQ_"

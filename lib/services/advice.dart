@@ -5,9 +5,9 @@ import "package:aeye/utils/interface/child.dart";
 class AdviceServices {
   ChildRepositories childRepositories = ChildRepositories();
 
-  Future<List<Child>> getChildren(ChildController controller) async {
+  Future<List<Child>> getChildren() async {
     Map response = await childRepositories.getTemperament();
-    List<Map> children = response["children"];
+    List<Map> children = List<Map>.from(response["children"]);
     List<Child> childList = children.map((comp) {
       Child child = Child.fromJson(comp);
       return child;

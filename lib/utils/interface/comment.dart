@@ -25,7 +25,7 @@ class CommentPageData {
     String emotion = data["emotion"];
     String diary = data["content"];
 
-    List<Comment> comments = data["comment"].length == 0
+    List<Comment> comments = data["comments"].length == 0
         ? []
         : data["comment"].map<Comment>((Map comment) {
             return Comment.fromJson(comment);

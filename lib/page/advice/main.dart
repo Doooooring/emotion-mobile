@@ -1,7 +1,9 @@
 import "package:aeye/component/common/app_bar.dart";
 import "package:aeye/component/common/bottom_bar.dart";
+import "package:aeye/component/common/loading_proto.dart";
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
+import 'package:aeye/page/advice/add_info.dart';
 import "package:aeye/page/advice/temperament_explain.dart";
 import "package:aeye/page/advice/tipDetail.dart";
 import "package:aeye/utils/interface/child.dart";
@@ -31,29 +33,40 @@ class _AdviceMainState extends State<AdviceMain> {
     });
   }
 
+  List<Child>? curChildList = null;
+  void setChildList(List<Child> newList) {
+    setState(() {
+      curChildList = newList;
+    });
+  }
+
+  _asyncMethod() async {
+    List<Child> response = await adviceServices.getChildren();
+    setChildList(response);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _asyncMethod();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (curChildList == null) {
+      return Loading(
+          isLoading: true, height: MediaQuery.of(context).size.height);
+    }
+
     List<String> curTips = [
       "During conflict",
       "Changing environment",
       "Crying baby"
     ];
 
-    List<Map> curChildList = [
-      {"id": "0", "name": "Mark", "temperament": "Easy"},
-      {"id": "1", "name": "John", "temperament": "Difficult"},
-      {"id": "2", "name": "Dori", "temperament": "Slow to warm up"}
-    ];
-
-    if (childController.childList.length == 0) {
-      curChildList.forEach((child) {
-        Child cur = Child.fromJson(child);
-        childController.addChild(cur);
-      });
-    }
-
-    List<Child> childList = childController.childList!;
-    Child curView = childList[curViewInd];
+    Child curView = curChildList![curViewInd];
     String curTemp = curView.temperament;
 
     return Scaffold(
@@ -66,7 +79,7 @@ class _AdviceMainState extends State<AdviceMain> {
             Container(
                 child: Column(children: [
               ViewTemperament(
-                  childList: childList,
+                  childList: curChildList!,
                   curViewInd: curViewInd,
                   curView: curView,
                   setViewToLeft: setViewToLeft,

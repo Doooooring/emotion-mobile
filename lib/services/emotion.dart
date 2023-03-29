@@ -142,7 +142,7 @@ class EmotionServices {
   }
 
   Future<bool> postComments(String id, String comment) async {
-    Map response = await repository.postComments(id, comment);
-    return response["success"];
+    bool response = await repository.postComments(id, comment);
+    return response;
   }
 }

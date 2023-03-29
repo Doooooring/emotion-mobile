@@ -58,6 +58,8 @@ void main() async {
   );
 
   final fcmToken = await FirebaseMessaging.instance.getToken();
+  localNotificationController.token = fcmToken!;
+  print(fcmToken);
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
@@ -110,6 +112,8 @@ class _MyAppState extends State<MyApp> {
   String? userInfo = null;
 
   _asyncMethod() async {
+    await storage.deleteAll();
+
     userInfo = await storage.read(key: "access");
     if (userInfo != null) {
       Timer(Duration(milliseconds: 1500), () {
@@ -135,7 +139,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(widget.localNotificationController)..setContext(context);
+    Get.put(widget.localNotificationController);
     Get.put(LoginController());
     Get.put(userController);
     Get.put(childController);

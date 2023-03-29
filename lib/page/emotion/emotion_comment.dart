@@ -1,5 +1,6 @@
 import "dart:ui";
 
+import "package:aeye/component/common/loading_proto.dart";
 import "package:aeye/component/emoticon_diary/emotion/emotion_preview_comment.dart";
 import "package:aeye/controller/sizeController.dart";
 import 'package:aeye/controller/userController.dart';
@@ -82,6 +83,7 @@ class _EmotionCommentState extends State<EmotionComment> {
   _asyncMethod() async {
     CommentPageData commentPageData =
         await emotionServices.getComments(widget.id.toString());
+    print(commentPageData);
     setCurData(commentPageData);
   }
 
@@ -105,7 +107,7 @@ class _EmotionCommentState extends State<EmotionComment> {
     }
 
     return curData == null
-        ? Scaffold()
+        ? Loading(isLoading: true, height: MediaQuery.of(context).size.height)
         : Scaffold(
             resizeToAvoidBottomInset: true,
             appBar: Header(widget.month, widget.day),
@@ -127,6 +129,7 @@ class _EmotionCommentState extends State<EmotionComment> {
                               day: widget.day,
                               emotion: curData!.emotion,
                               diary: curData!.diary),
+                          SizedBox(height: 30),
                           Column(
                             children: curData == null
                                 ? []

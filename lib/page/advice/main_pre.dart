@@ -3,7 +3,6 @@ import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
 import "package:aeye/page/advice/add_info.dart";
-import "package:aeye/page/advice/main.dart";
 import "package:aeye/page/advice/temperament_detail.dart";
 import "package:aeye/services/advice.dart";
 import "package:aeye/utils/interface/child.dart";
@@ -22,19 +21,24 @@ class MainPre extends StatefulWidget {
 class _MainPreState extends State<MainPre> {
   ChildController childController = Get.find<ChildController>();
 
+  bool isLoading = false;
+
+  List<Child>? childList = null;
+  void setChildList(List<Child> newList) {
+    setState(() {
+      childList = newList;
+    });
+  }
+
   _asyncMethod() async {
     List<Child> childList = await adviceServices.getChildren();
-    if (childList.isNotEmpty) {
-      Get.back();
-      Get.to(() => AdviceMain());
-    }
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _asyncMethod();
+      // _asyncMethod();
     });
   }
 
@@ -77,7 +81,14 @@ class _MainPreState extends State<MainPre> {
                       scaleWidth(context, 260),
                       "Add Temperament info",
                       PopUpSelect(),
-                      Color(0xffFFF7DF))
+                      Color(0xffFFF7DF)),
+                  SizedBox(height: 30),
+                  NavigatorButton(
+                      scaleWidth(context, 20),
+                      scaleWidth(context, 260),
+                      "View children",
+                      PopUpSelect(),
+                      Color(0xffFFF7DF)),
                 ]))
               ])),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),

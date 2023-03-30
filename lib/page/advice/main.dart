@@ -56,8 +56,11 @@ class _AdviceMainState extends State<AdviceMain> {
   @override
   Widget build(BuildContext context) {
     if (curChildList == null) {
-      return Loading(
-          isLoading: true, height: MediaQuery.of(context).size.height);
+      return Container(
+        color: Colors.white,
+        child: Loading(
+            isLoading: true, height: MediaQuery.of(context).size.height),
+      );
     }
 
     List<String> curTips = [

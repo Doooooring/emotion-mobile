@@ -185,7 +185,7 @@ class _SlideWrapperState extends State<SlideWrapper>
     curve: Curves.easeInOut,
   );
   late final AnimationController _FourthController = AnimationController(
-    duration: const Duration(milliseconds: 4000),
+    duration: const Duration(milliseconds: 2000),
     vsync: this,
   )..addListener(() {
       if (mounted) {
@@ -324,7 +324,7 @@ GestureDetector gestureWrapper(Widget comp, Function setCurPage, int curPage) {
 }
 
 Container FirstSlide(BuildContext context, double curValue, double height) {
-  double titlePop = 0.2;
+  double titlePop = 0.1;
   double imagePop = 0.25;
   double firstStrPop = 0.4;
   double secondStrPop = 0.6;
@@ -334,13 +334,14 @@ Container FirstSlide(BuildContext context, double curValue, double height) {
       color: Color(0xffFFF6DA),
       width: MediaQuery.of(context).size.width,
       height: height,
+      padding: EdgeInsets.only(top: 50),
       child: Column(
         children: [
           SizedBox(height: 130),
           Transform.translate(
-            offset: Offset(0, 30 - min(curValue, titlePop) * 15),
+            offset: Offset(0, 30 - min(curValue, titlePop) * 150),
             child: Opacity(
-                opacity: min(titlePop, curValue) * 5,
+                opacity: min(titlePop, curValue) * 10,
                 child: Text("1",
                     style: TextStyle(fontSize: 25, color: Color(0xff828282)))),
           ),
@@ -352,7 +353,7 @@ Container FirstSlide(BuildContext context, double curValue, double height) {
                 Transform.translate(
                   offset: Offset(0, 30 - min(curValue, titlePop) * 150),
                   child: Opacity(
-                    opacity: min(titlePop, curValue) * 5,
+                    opacity: min(titlePop, curValue) * 10,
                     child: SizedBox(
                         child: Column(children: [
                       Text("What is",
@@ -433,7 +434,6 @@ Container SecondSlide(BuildContext context, double curValue, double height) {
   double thirdStrPop = 0.9;
 
   return Container(
-      color: Color(0xffFFF6DA),
       width: MediaQuery.of(context).size.width,
       height: height,
       padding: EdgeInsets.only(top: 50),
@@ -441,7 +441,7 @@ Container SecondSlide(BuildContext context, double curValue, double height) {
         children: [
           SizedBox(height: 130),
           Transform.translate(
-            offset: Offset(0, 30 - min(curValue, titlePop) * 30),
+            offset: Offset(0, 30 - min(curValue, titlePop) * 300),
             child: Opacity(
                 opacity: min(titlePop, curValue) * 5,
                 child: Text("2",
@@ -552,13 +552,12 @@ Container SecondSlide(BuildContext context, double curValue, double height) {
 }
 
 Container ThirdSlide(BuildContext context, double curValue, double height) {
-  double titlePop = 0.1;
+  double titlePop = 0.2;
   double firstBoxPop = 0.3;
   double leftStrPop = 0.5;
   double rightStrPop = 0.7;
 
   return Container(
-      color: Color(0xffFFF6DA),
       width: MediaQuery.of(context).size.width,
       height: height,
       padding: EdgeInsets.only(top: 50),
@@ -697,17 +696,24 @@ class _FourthSlideState extends State<FourthSlide> {
 
   @override
   Widget build(BuildContext context) {
+    double curValue = widget.curValue;
+    double titlePop = 0.1;
+    double imagePop = 0.3;
+    double leftStrPop = 0.4;
+    double rightStrPop = 0.5;
+    double elsePop = 0.7;
+
     return Container(
       height: MediaQuery.of(context).size.height,
       child: GestureDetector(
           onVerticalDragUpdate: (DragUpdateDetails details) {
             Offset delta = details.delta;
-            if (curPosition + delta.dy > 100) {
-              widget.setCurPage(2);
+            if (curPosition + delta.dy > 10) {
               setCurPosition(0);
+              widget.setCurPage(2);
               return;
             }
-            if (curPosition + delta.dy < -1200) {
+            if (curPosition + delta.dy < -600) {
               return;
             }
             setCurPosition(curPosition + delta.dy);
@@ -722,172 +728,264 @@ class _FourthSlideState extends State<FourthSlide> {
                   child: Container(
                       width: MediaQuery.of(context).size.width,
                       color: Color(0xffFFF6DA),
-                      padding: EdgeInsets.only(top: 50),
                       child: Column(
                         children: [
                           SizedBox(height: 130),
-                          Text("4",
-                              style: TextStyle(
-                                  fontSize: 25, color: Color(0xff828282))),
+                          Opacity(
+                            opacity: min(titlePop, curValue) * 5,
+                            child: Text("4",
+                                style: TextStyle(
+                                    fontSize: 25, color: Color(0xff828282))),
+                          ),
                           Column(children: [
                             SizedBox(height: 60),
-                            SizedBox(
-                                child: Text("Compatibility between",
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w400))),
-                            SizedBox(
-                                child: Text("adult-child temperament",
-                                    style: TextStyle(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w400))),
-                            SizedBox(height: 50),
-                            Container(
-                                width: double.infinity,
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text("Each cargive is also",
+                            Transform.translate(
+                              offset: Offset(
+                                  0,
+                                  30 -
+                                      max(
+                                          0,
+                                          min((curValue - titlePop), 0.1) *
+                                              300)),
+                              child: Opacity(
+                                opacity: max(
+                                    0, min((curValue - titlePop), 0.1) * 10),
+                                child: SizedBox(
+                                    child: Column(children: [
+                                  SizedBox(
+                                      child: Text("Compatibility between",
                                           style: TextStyle(
-                                              fontSize: 20, height: 1.3)),
-                                      Text("unique in his or her own",
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.w400))),
+                                  SizedBox(
+                                      child: Text("adult-child temperament",
                                           style: TextStyle(
-                                              fontSize: 20, height: 1.3)),
-                                      Text("temperament",
-                                          style: TextStyle(
-                                              fontSize: 20, height: 1.3))
-                                    ])),
-                            SizedBox(height: 10),
-                            Image.asset("assets/images/broken_heart.png"),
-                            SizedBox(height: 10),
-                            Container(
-                                width: double.infinity,
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                                child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text("The compatibility",
-                                          style: TextStyle(
-                                              fontSize: 20, height: 1.3)),
-                                      Text("between adult-child temperament",
-                                          style: TextStyle(
-                                              fontSize: 20, height: 1.3)),
-                                      Text("can affect the quality of",
-                                          style: TextStyle(
-                                              fontSize: 20, height: 1.3)),
-                                      Text("relationships.",
-                                          style: TextStyle(
-                                              fontSize: 20, height: 1.3))
-                                    ])),
-                            SizedBox(height: 60),
-                            Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 100,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Stack(clipBehavior: Clip.none, children: [
-                                      Container(
-                                        color:
-                                            Color.fromRGBO(255, 113, 127, 0.18),
-                                        padding: EdgeInsets.only(
-                                            left: 30,
-                                            right: 30,
-                                            top: 5,
-                                            bottom: 5),
-                                        child: Text("Goodness Of Fit",
-                                            style: TextStyle(fontSize: 30)),
-                                      ),
-                                      Positioned(
-                                          left: 10,
-                                          top: -10,
-                                          child: Image.asset(
-                                              "assets/images/quote_left.png")),
-                                      Positioned(
-                                          right: 10,
-                                          bottom: -10,
-                                          child: Image.asset(
-                                              "assets/images/quote_right.png"))
-                                    ]),
-                                  ],
-                                )),
-                            SizedBox(height: 20),
-                            Container(
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                                child: RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                      text:
-                                          "It happens when an adult's expectations and ",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          height: 1.3)),
-                                  TextSpan(
-                                      text:
-                                          "methods of caregiving match the child's personal style and abilities",
-                                      style: TextStyle(
-                                          color: Color(0xffFF717F),
-                                          fontSize: 20,
-                                          height: 1.3))
-                                ]))),
-                            SizedBox(height: 30),
-                            Container(
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                                child: Text(
-                                    "The goodness of fit does not require that adults and children have matching temperaments.",
-                                    style: TextStyle(
-                                        height: 1.3,
-                                        color: Colors.black,
-                                        fontSize: 20))),
-                            SizedBox(height: 30),
-                            Container(
-                                padding: EdgeInsets.only(left: 30, right: 30),
-                                child: RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                    text:
-                                        "The caregiver does not have to change who they are naturally, they can simply",
-                                    style: TextStyle(
-                                        height: 1.3,
-                                        color: Colors.black,
-                                        fontSize: 20),
-                                  ),
-                                  TextSpan(
-                                      text:
-                                          " alter or adjust caregiving methods",
-                                      style: TextStyle(
-                                          height: 1.3,
-                                          color: Color(0xffFF717F),
-                                          fontSize: 20)),
-                                  TextSpan(
-                                      text:
-                                          " to be a positive support to their child's natural way of responding to the world.",
-                                      style: TextStyle(
-                                          height: 1.3,
-                                          color: Colors.black,
-                                          fontSize: 20))
-                                ]))),
-                            Container(
-                                padding: EdgeInsets.only(top: 50, bottom: 50),
-                                child: Column(children: [
-                                  Text("For your goodness of fit,",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Color(0xff5F5F5F))),
-                                  SizedBox(height: 10),
-                                  Text("we will help you out!",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Color(0xff5F5F5F)))
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.w400))),
                                 ])),
-                            Container(
-                                width: MediaQuery.of(context).size.width,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [NavigatorToAddTemp(20)]))
+                              ),
+                            ),
+                            SizedBox(height: 50),
+                            Transform.translate(
+                              offset: Offset(
+                                  -30 +
+                                      max(
+                                          0,
+                                          min((curValue - leftStrPop), 0.2) *
+                                              150),
+                                  0),
+                              child: Opacity(
+                                opacity: max(
+                                    0, min((curValue - leftStrPop), 0.1) * 10),
+                                child: Container(
+                                    width: double.infinity,
+                                    padding:
+                                        EdgeInsets.only(left: 30, right: 30),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Each cargive is also",
+                                              style: TextStyle(
+                                                  fontSize: 20, height: 1.3)),
+                                          Text("unique in his or her own",
+                                              style: TextStyle(
+                                                  fontSize: 20, height: 1.3)),
+                                          Text("temperament",
+                                              style: TextStyle(
+                                                  fontSize: 20, height: 1.3))
+                                        ])),
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Transform.translate(
+                              offset: Offset(
+                                  0,
+                                  -30 +
+                                      max(
+                                          0,
+                                          min((curValue - imagePop), 0.1) *
+                                              300)),
+                              child: Opacity(
+                                  opacity: max(
+                                      0, min((curValue - imagePop), 0.1) * 10),
+                                  child: Image.asset(
+                                      "assets/images/broken_heart.png")),
+                            ),
+                            SizedBox(height: 10),
+                            Transform.translate(
+                              offset: Offset(
+                                  30 -
+                                      max(
+                                          0,
+                                          min((curValue - rightStrPop), 0.1) *
+                                              300),
+                                  0),
+                              child: Opacity(
+                                opacity: max(
+                                    0, min((curValue - rightStrPop), 0.1) * 10),
+                                child: Container(
+                                    width: double.infinity,
+                                    padding:
+                                        EdgeInsets.only(left: 30, right: 30),
+                                    child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text("The compatibility",
+                                              style: TextStyle(
+                                                  fontSize: 20, height: 1.3)),
+                                          Text(
+                                              "between adult-child temperament",
+                                              style: TextStyle(
+                                                  fontSize: 20, height: 1.3)),
+                                          Text("can affect the quality of",
+                                              style: TextStyle(
+                                                  fontSize: 20, height: 1.3)),
+                                          Text("relationships.",
+                                              style: TextStyle(
+                                                  fontSize: 20, height: 1.3))
+                                        ])),
+                              ),
+                            ),
+                            SizedBox(height: 60),
+                            Transform.translate(
+                              offset: Offset(
+                                  0,
+                                  30 -
+                                      max(
+                                          0,
+                                          min((curValue - elsePop), 0.1) *
+                                              300)),
+                              child: Opacity(
+                                opacity:
+                                    max(0, min((curValue - elsePop), 0.1) * 10),
+                                child: SizedBox(
+                                    width: double.infinity,
+                                    child: Column(children: [
+                                      Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 100,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Stack(
+                                                  clipBehavior: Clip.none,
+                                                  children: [
+                                                    Container(
+                                                      color: Color.fromRGBO(
+                                                          255, 113, 127, 0.18),
+                                                      padding: EdgeInsets.only(
+                                                          left: 30,
+                                                          right: 30,
+                                                          top: 5,
+                                                          bottom: 5),
+                                                      child: Text(
+                                                          "Goodness Of Fit",
+                                                          style: TextStyle(
+                                                              fontSize: 30)),
+                                                    ),
+                                                    Positioned(
+                                                        left: 10,
+                                                        top: -10,
+                                                        child: Image.asset(
+                                                            "assets/images/quote_left.png")),
+                                                    Positioned(
+                                                        right: 10,
+                                                        bottom: -10,
+                                                        child: Image.asset(
+                                                            "assets/images/quote_right.png"))
+                                                  ]),
+                                            ],
+                                          )),
+                                      SizedBox(height: 20),
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              left: 30, right: 30),
+                                          child: RichText(
+                                              text: TextSpan(children: [
+                                            TextSpan(
+                                                text:
+                                                    "It happens when an adult's expectations and ",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20,
+                                                    height: 1.3)),
+                                            TextSpan(
+                                                text:
+                                                    "methods of caregiving match the child's personal style and abilities",
+                                                style: TextStyle(
+                                                    color: Color(0xffFF717F),
+                                                    fontSize: 20,
+                                                    height: 1.3))
+                                          ]))),
+                                      SizedBox(height: 30),
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              left: 30, right: 30),
+                                          child: Text(
+                                              "The goodness of fit does not require that adults and children have matching temperaments.",
+                                              style: TextStyle(
+                                                  height: 1.3,
+                                                  color: Colors.black,
+                                                  fontSize: 20))),
+                                      SizedBox(height: 30),
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              left: 30, right: 30),
+                                          child: RichText(
+                                              text: TextSpan(children: [
+                                            TextSpan(
+                                              text:
+                                                  "The caregiver does not have to change who they are naturally, they can simply",
+                                              style: TextStyle(
+                                                  height: 1.3,
+                                                  color: Colors.black,
+                                                  fontSize: 20),
+                                            ),
+                                            TextSpan(
+                                                text:
+                                                    " alter or adjust caregiving methods",
+                                                style: TextStyle(
+                                                    height: 1.3,
+                                                    color: Color(0xffFF717F),
+                                                    fontSize: 20)),
+                                            TextSpan(
+                                                text:
+                                                    " to be a positive support to their child's natural way of responding to the world.",
+                                                style: TextStyle(
+                                                    height: 1.3,
+                                                    color: Colors.black,
+                                                    fontSize: 20))
+                                          ]))),
+                                      Container(
+                                          padding: EdgeInsets.only(
+                                              top: 50, bottom: 50),
+                                          child: Column(children: [
+                                            Text("For your goodness of fit,",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color(0xff5F5F5F))),
+                                            SizedBox(height: 10),
+                                            Text("we will help you out!",
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Color(0xff5F5F5F)))
+                                          ])),
+                                      Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                NavigatorToAddTemp(20)
+                                              ]))
+                                    ])),
+                              ),
+                            )
                           ]),
                         ],
                       )),

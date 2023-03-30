@@ -20,15 +20,14 @@ class _MonitorState extends State<Monitor> {
   _asyncMethod() async {
     Uri endPoint = Uri.parse('http://detect.a-eye.co.kr/baby/video');
     String token = localNotificationController.token;
-    var bodyEncoded = json.encode({
-      "token":
-          "enV9Aa8c5E8NpJW6ttUnKq:APA91bGl_EMUKddUCtIda7QcKO5GZId5UvSnnoR8y106eZu54hiY3Mlm_ZwbnyoDrggbHOItmC4WQDBqu9B0mc07Ej5t2Vb2lvhq0mDwq52jdw-t2XFFMqfAYnIOJexpRH15NeyPajQ_"
-    });
+    print(token);
+    var bodyEncoded = json.encode({"token": token});
 
     http.Response response =
         await http.post(endPoint, body: bodyEncoded, headers: {
       "Content-Type": "application/json",
     });
+    print("good");
     print(response);
     dynamic result = utf8.decode(response.bodyBytes);
     print(result);

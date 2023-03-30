@@ -80,8 +80,6 @@ class SecondarySignUp extends StatelessWidget {
                           style: BorderStyle.none,
                         )),
                         onPressed: () async {
-                          Get.back();
-                          return;
                           Map<String, String> response = await loginController
                               .chooseRole("sub", textEditingController.text);
                           String status = response["code"]!;

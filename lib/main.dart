@@ -57,6 +57,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  final fcmTokenNew =
+      await FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
+    print("is inspired");
+    print(fcmToken);
+  });
   final fcmToken = await FirebaseMessaging.instance.getToken();
   localNotificationController.token = fcmToken!;
   print(fcmToken);

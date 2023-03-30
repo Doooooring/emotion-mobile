@@ -6,12 +6,12 @@
 
 ## Application Version
 
-### Android
-- minSdkVersion : 31
+- Android
+  - minSdkVersion : 31
 
-### IOS
-- Make sure you have the Xcode version 14.0 or above installed on your computer.
-- IOS version with 16.2 (recommend to use simulator with iPhone 14 Pro Max with iOS 16.2
+- IOS
+  - Make sure you have the Xcode version 14.0 or above installed on your computer.
+  - IOS version with 16.2 (recommend to use simulator with iPhone 14 Pro Max with iOS 16.2
 
 ## Required permission
 - Notification (Needed) : It is used for push message about falling alert.

@@ -1,9 +1,10 @@
 import "package:aeye/controller/sizeController.dart";
+import "package:aeye/controller/userController.dart";
 import 'package:aeye/page/emotion/emotion_comment.dart';
+import 'package:aeye/page/emotion/emotion_result.dart';
+import "package:aeye/services/emotion.dart";
 import "package:flutter/material.dart";
-
-import '../../../page/emotion/emotion_result.dart';
-import "../../../services/emotion.dart";
+import "package:get/get.dart";
 
 EmotionServices emotionService = new EmotionServices();
 
@@ -159,8 +160,12 @@ class PreviewBoxHeader extends StatefulWidget {
 }
 
 class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
+  UserController userController = Get.find();
+
   @override
   Widget build(BuildContext context) {
+    String role = userController.role.toString();
+
     return Container(
       width: double.infinity,
       child: Row(children: [
@@ -188,14 +193,16 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
           width: 60,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            PopUpMenuButtonWrapper(
-              id: widget.id,
-              date: widget.date,
-              emotion: widget.emotion,
-              curDates: widget.curDates,
-              setInputEmotionUp: widget.setInputEmotionUp,
-              setEmotionSelectorUp: widget.setEmotionSelectorUp,
-            )
+            role == "main"
+                ? PopUpMenuButtonWrapper(
+                    id: widget.id,
+                    date: widget.date,
+                    emotion: widget.emotion,
+                    curDates: widget.curDates,
+                    setInputEmotionUp: widget.setInputEmotionUp,
+                    setEmotionSelectorUp: widget.setEmotionSelectorUp,
+                  )
+                : PopUpForSub(id: widget.id, date: widget.date)
           ]),
         )
       ]),
@@ -234,7 +241,6 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
     if (widget.id == null) {
       return PopupMenuButton<SampleItem>(
         initialValue: selectedMenu,
-        // Callback that sets the selected popup menu item.
         onSelected: (SampleItem item) {
           if (item == SampleItem.itemOne) {
             widget.setInputEmotionUp(true);
@@ -250,7 +256,6 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
     } else {
       return PopupMenuButton<SampleItem>(
         initialValue: selectedMenu,
-        // Callback that sets the selected popup menu item.
         onSelected: (SampleItem item) async {
           if (item == SampleItem.itemOne) {
             widget.setInputEmotionUp(true);
@@ -284,6 +289,56 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
         ],
       );
     }
+  }
+}
+
+class PopUpForSub extends StatefulWidget {
+  const PopUpForSub({
+    Key? key,
+    required this.id,
+    required this.date,
+  }) : super(key: key);
+
+  final int? id;
+  final DateTime date;
+
+  @override
+  State<PopUpForSub> createState() => _PopUpForSubState();
+}
+
+class _PopUpForSubState extends State<PopUpForSub> {
+  SampleItem? selectedMenu;
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.id == null
+        ? SizedBox(height: 0)
+        : PopupMenuButton<SampleItem>(
+            initialValue: selectedMenu,
+            onSelected: (SampleItem item) async {
+              Map response =
+                  await emotionService.getResultPage(widget.id, widget.date);
+              if (!mounted) {
+                return;
+              }
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DailReport(
+                          date: response["date"],
+                          emotion: response["emotion"],
+                          emotionText: response["emotionText"],
+                          sentimentLevel: response["sentimentLevel"],
+                          videoUrl: response["videoUrl"],
+                          title: response["title"])));
+            },
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                value: SampleItem.itemTwo,
+                child: Text("daily report"),
+              ),
+            ],
+          );
   }
 }
 

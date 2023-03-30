@@ -103,10 +103,7 @@ class _InitialPageState extends State<InitialPage> {
 
     String loginCode = result["code"];
     String role = result["role"];
-    print(role);
     Map? recommendVideo = result["video"];
-
-    print(loginCode);
     userController.role = role.obs;
 
     if (role == "main") {

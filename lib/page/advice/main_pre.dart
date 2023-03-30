@@ -51,7 +51,7 @@ class _MainPreState extends State<MainPre> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // _asyncMethod();
+      _asyncMethod();
     });
   }
 

@@ -79,7 +79,7 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
-  UserController userController = UserController();
+  UserController userController = Get.find();
   LoginController loginController = Get.find();
 
   String? video = null;
@@ -104,7 +104,9 @@ class _InitialPageState extends State<InitialPage> {
     String loginCode = result["code"];
     String role = result["role"];
     Map? recommendVideo = result["video"];
-    userController.role = role.obs;
+    userController.getRole(role);
+    print(role);
+    print(userController.role);
 
     if (role == "main") {
       userController.getCode(loginCode);

@@ -204,7 +204,11 @@ class _TextAnimationState extends State<TextAnimation>
         height: 30,
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(
-              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  decoration: TextDecoration.none,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
               '${curText}'),
           Container(
               width: 7, height: 20, color: state ? Colors.grey : Colors.black)

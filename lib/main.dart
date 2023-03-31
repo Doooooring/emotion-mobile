@@ -1,6 +1,5 @@
 import "dart:async";
 
-import "package:aeye/firebase_options.dart";
 import 'package:aeye/page/splash_screen.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
@@ -24,7 +23,7 @@ Future<void> firebaseMessagingBackgroundHandler(
   RemoteMessage message,
 ) async {
   await Firebase.initializeApp(
-    name: "A-eye",
+    name: "aeye",
   );
   String title = message.notification?.title ?? "title missing";
   String body = message.notification?.body ?? "body missing";
@@ -52,35 +51,25 @@ void main() async {
   LocalNotificationController localNotificationController =
       LocalNotificationController();
   await localNotificationController.initialize();
-  await Firebase.initializeApp(
-    name: "A-eye",
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
   final fcmTokenNew =
       await FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
     print("is inspired");
     print(fcmToken);
   });
+  final isWork = await FirebaseMessaging.instance.isSupported();
+
+  await FirebaseMessaging.instance
+      .requestPermission(sound: true, badge: true, alert: true);
+
   final fcmToken = await FirebaseMessaging.instance.getToken();
   localNotificationController.token = fcmToken!;
   print(fcmToken);
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
   final InitializationSettings initializationSettings = InitializationSettings(
       android: AndroidInitializationSettings('@mipmap/ic_launcher'),
       iOS: DarwinInitializationSettings());
-
-  await flutterLocalNotificationsPlugin.initialize(
-    initializationSettings,
-    onDidReceiveNotificationResponse: (NotificationResponse notification) {
-      String payload = notification.payload ?? "missing title";
-    },
-  );
 
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -117,8 +106,6 @@ class _MyAppState extends State<MyApp> {
   String? userInfo = null;
 
   _asyncMethod() async {
-    await storage.deleteAll();
-
     userInfo = await storage.read(key: "access");
     if (userInfo != null) {
       Timer(Duration(milliseconds: 1500), () {
@@ -144,8 +131,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(widget.localNotificationController);
+    Get.put(widget.localNotificationController)..setContext(context);
     Get.put(LoginController());
+    Get.put(storage);
     Get.put(userController);
     Get.put(childController);
     Get.put(isAlert);

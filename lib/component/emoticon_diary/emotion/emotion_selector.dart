@@ -13,11 +13,13 @@ class SelectorWrapper extends StatefulWidget {
       required this.tempEmotion,
       required this.curDates,
       required this.emotionSelectorUp,
+      required this.setIsLoading,
       required this.setCurDate,
       required this.setInputEmotionUp,
       required this.setEmotionSelectorUp,
       required this.imageHeight})
       : super(key: key);
+  final void Function(bool) setIsLoading;
   final void Function(String, int?, String?, String?) setCurDate;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
@@ -66,6 +68,7 @@ class _SelectorWrapperState extends State<SelectorWrapper> {
                 emotion: widget.tempEmotion,
                 curDates: widget.curDates,
                 emotionSelectorUp: widget.emotionSelectorUp,
+                setIsLoading: widget.setIsLoading,
                 setCurDate: widget.setCurDate,
                 setInputEmotionUp: widget.setInputEmotionUp,
                 setEmotionSelectorUp: widget.setEmotionSelectorUp,
@@ -85,6 +88,7 @@ class EmotionWrapper extends StatefulWidget {
       required this.emotion,
       required this.curDates,
       required this.emotionSelectorUp,
+      required this.setIsLoading,
       required this.setCurDate,
       required this.setInputEmotionUp,
       required this.setEmotionSelectorUp,
@@ -97,6 +101,7 @@ class EmotionWrapper extends StatefulWidget {
   final Map curDates;
   final bool emotionSelectorUp;
   final double imageHeight;
+  final void Function(bool) setIsLoading;
   final void Function(String, int?, String?, String?) setCurDate;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
@@ -143,6 +148,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                       widget.emotion,
                       widget.curDates,
                       widget.emotionSelectorUp,
+                      widget.setIsLoading,
                       widget.setCurDate,
                       widget.setInputEmotionUp,
                       widget.setEmotionSelectorUp,
@@ -160,6 +166,7 @@ List<Widget> EmoticonList(
     String? emotion,
     Map curDates,
     bool emotionSelectorUp,
+    void Function(bool) setIsLoading,
     void Function(String, int?, String?, String?) setCurDate,
     void Function(bool) setEmotionSelectorUp,
     void Function(bool) setInputEmotionUp,
@@ -179,6 +186,7 @@ List<Widget> EmoticonList(
     curWidgets.add(ButtonWrapper(
         id: id,
         emotionSelectorUp: emotionSelectorUp,
+        setIsLoading: setIsLoading,
         setEmotionSelectorUp: setEmotionSelectorUp,
         setInputEmotionUp: setInputEmotionUp,
         setCurDate: setCurDate,
@@ -196,6 +204,7 @@ class ButtonWrapper extends StatefulWidget {
     required this.emotionSelectorUp,
     required this.date,
     required this.emotion,
+    required this.setIsLoading,
     required this.setCurDate,
     required this.imageHeight,
     required this.setInputEmotionUp,
@@ -206,6 +215,7 @@ class ButtonWrapper extends StatefulWidget {
   final DateTime date;
   final String emotion;
   final double imageHeight;
+  final void Function(bool) setIsLoading;
   final void Function(String, int?, String?, String?) setCurDate;
   final void Function(bool) setInputEmotionUp;
   final void Function(bool) setEmotionSelectorUp;
@@ -222,14 +232,17 @@ class _ButtonWrapperState extends State<ButtonWrapper> {
       offset: Offset(0, widget.imageHeight - maxHeight),
       child: IconButton(
           padding: EdgeInsets.all(0),
-          onPressed: () {
-            emotionServices.reviseEmotion(
+          onPressed: () async {
+            widget.setIsLoading(true);
+            bool state = await emotionServices.reviseEmotion(
                 widget.id,
                 widget.emotion,
                 widget.date,
                 widget.setEmotionSelectorUp,
                 widget.setInputEmotionUp,
                 widget.setCurDate);
+            print(state);
+            widget.setIsLoading(false);
             // Navigator.push(context,
             //     MaterialPageRoute(builder: (context) => EmotionResult()));
           },

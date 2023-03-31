@@ -97,7 +97,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Header(dateSelected, "emotionDiary"),
+        appBar: Header(curDate: dateSelected, curPath: "emotionDiary"),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           physics: ClampingScrollPhysics(),
@@ -130,6 +130,7 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                           ),
                           SizedBox(height: 20),
                           EmotionPreview(
+                            isLoading: isLoading,
                             curDates: curDates,
                             dateSelected: dateSelected,
                             setInputEmotionUp: setInputEmotionUp,
@@ -140,17 +141,20 @@ class _CalendarWrapperState extends State<CalendarWrapper> {
                     ),
                     AnimatedPositioned(
                       duration: const Duration(milliseconds: 200),
-                      child: input_emotion.EmotionWrapper(
-                        textController: controller,
-                        curDates: curDates,
-                        dateSelected: dateSelected,
-                        setCurDate: setCurDate,
-                        curTempEmotion: curTempEmotion,
-                        emotionSelectorUp: emotionSelectorUp,
-                        setInputEmotionUp: setInputEmotionUp,
-                        setCurTempEmotion: setCurTempEmotion,
-                        setEmotionSelectorUp: setEmotionSelectorUp,
-                      ),
+                      child: isLoading
+                          ? SizedBox(height: 0, width: 0)
+                          : input_emotion.EmotionWrapper(
+                              textController: controller,
+                              curDates: curDates,
+                              dateSelected: dateSelected,
+                              setCurDate: setCurDate,
+                              curTempEmotion: curTempEmotion,
+                              emotionSelectorUp: emotionSelectorUp,
+                              setIsLoading: setIsLoading,
+                              setInputEmotionUp: setInputEmotionUp,
+                              setCurTempEmotion: setCurTempEmotion,
+                              setEmotionSelectorUp: setEmotionSelectorUp,
+                            ),
                       width: MediaQuery.of(context).size.width,
                       left: 0,
                       top: inputEmotionUp ? 50 : 800,

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>767344301681-p4uis474vt017a5bt4apg6g7khuu3uks.apps.googleusercontent.com</string>
+	<string>330734716432-v4no2kegbecjs6p5nf4fb7ef1rvjk8lg.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.767344301681-p4uis474vt017a5bt4apg6g7khuu3uks</string>
+	<string>com.googleusercontent.apps.330734716432-v4no2kegbecjs6p5nf4fb7ef1rvjk8lg</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAWwZI7eFDSbugjPSrgKt8gP0ZqBnd7YCg</string>
+	<string>AIzaSyDZX8W7HpH1Wr4qVAQUwq4gJuDALjdoGas</string>
 	<key>GCM_SENDER_ID</key>
-	<string>767344301681</string>
+	<string>330734716432</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.mobile.gdsc.aeye</string>
 	<key>PROJECT_ID</key>
-	<string>a-eye-381414</string>
+	<string>a-eye-fcm-ea7a0</string>
 	<key>STORAGE_BUCKET</key>
-	<string>a-eye-381414.appspot.com</string>
+	<string>a-eye-fcm-ea7a0.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:767344301681:ios:89a83a43f385c626d1add0</string>
+	<string>1:330734716432:ios:27cbaab8ebc15866e02c95</string>
 </dict>
 </plist>

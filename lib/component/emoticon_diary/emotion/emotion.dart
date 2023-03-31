@@ -17,6 +17,7 @@ class EmotionWrapper extends StatefulWidget {
       required this.dateSelected,
       required this.curTempEmotion,
       required this.emotionSelectorUp,
+      required this.setIsLoading,
       required this.setCurDate,
       required this.setEmotionSelectorUp,
       required this.setCurTempEmotion})
@@ -27,6 +28,7 @@ class EmotionWrapper extends StatefulWidget {
   final String? curTempEmotion;
   final bool emotionSelectorUp;
   final void Function(bool) setInputEmotionUp;
+  final void Function(bool) setIsLoading;
   final void Function(String, int?, String?, String?) setCurDate;
   final void Function(bool) setEmotionSelectorUp;
   final void Function(String?) setCurTempEmotion;
@@ -154,6 +156,7 @@ class _EmotionWrapperState extends State<EmotionWrapper>
                     emotionSelectorUp: widget.emotionSelectorUp,
                     setInputEmotionUp: widget.setInputEmotionUp,
                     setEmotionSelectorUp: widget.setEmotionSelectorUp,
+                    setIsLoading: widget.setIsLoading,
                     imageHeight: imageHeight),
                 Loading(isLoading: isLoading, height: 800),
               ],

@@ -24,4 +24,9 @@ class ChildController extends GetxController {
     }).toList();
     setChildList(newList);
   }
+
+  void reset() {
+    childList = <Child>[].obs;
+    update();
+  }
 }

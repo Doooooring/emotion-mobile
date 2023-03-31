@@ -24,6 +24,7 @@ class _LoadingState extends State<Loading> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
+          color : Colors.white,
           width: double.infinity,
           height: widget.height,
           child: Offstage(

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import "package:aeye/component/common/loading_proto.dart";
+import "package:aeye/services/emotion.dart";
 import "package:flutter/material.dart";
 import "package:syncfusion_flutter_charts/charts.dart";
 
@@ -59,6 +61,103 @@ Map<String, List> sentimentMap = {
   "1": NeutralList,
   "2": NegativeList
 };
+
+class EmotionMonthResult extends StatefulWidget {
+  const EmotionMonthResult({Key? key, required this.year, required this.month})
+      : super(key: key);
+
+  final int year;
+  final int month;
+
+  @override
+  State<EmotionMonthResult> createState() => _EmotionMonthResultState();
+}
+
+class _EmotionMonthResultState extends State<EmotionMonthResult> {
+  EmotionServices emotionServices = EmotionServices();
+
+  Map? data = null;
+  void setCurData(Map newData) {
+    setState(() {
+      data = newData;
+    });
+  }
+
+  _asyncMethod() async {
+    Map response =
+        await emotionServices.getMonthlyResult(widget.year, widget.month);
+    print(response);
+    setCurData(response);
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _asyncMethod();
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String mon = monthToStr[widget.month];
+    if (data == null) {
+      return Loading(
+          isLoading: true, height: MediaQuery.of(context).size.height);
+    }
+
+    Map sentimentalLevel = data!["sentimentLevel"];
+    Map emotionHistogram = data!["emotionHistogram"];
+    Map monthlyEmotion = data!["monthlyEmotion"];
+    return Scaffold(
+      body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          physics: ClampingScrollPhysics(),
+          child: Container(
+              width: double.infinity,
+              height: 1300,
+              padding: EdgeInsets.only(bottom: 100),
+              color: Color(0xffFFF7DF),
+              child: Column(children: [
+                Container(
+                    child: Column(children: [
+                  SizedBox(height: 80),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            IconButton(
+                                iconSize: 30,
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                icon: Icon(Icons.arrow_back_ios_new),
+                                color: Colors.black),
+                          ],
+                        ),
+                      ),
+                      Text("${mon} ${widget.year}",
+                          style: TextStyle(fontSize: 20, color: Colors.grey)),
+                      SizedBox(
+                        width: 100,
+                      )
+                    ],
+                  ),
+                  Text("Monthly Report", style: TextStyle(fontSize: 30)),
+                  SizedBox(height: 20)
+                ])),
+                ChartWrapper(
+                    sentimentalLevel: sentimentalLevel,
+                    emotionHistogram: emotionHistogram,
+                    monthlyEmotion: monthlyEmotion),
+              ]))),
+    );
+  }
+}
 
 class EmoticonMonthResult extends StatelessWidget {
   const EmoticonMonthResult(

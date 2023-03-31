@@ -80,6 +80,13 @@ class _EmotionCommentState extends State<EmotionComment> {
     });
   }
 
+  bool isLoading = false;
+  setIsLoading(bool state) {
+    setState(() {
+      isLoading = state;
+    });
+  }
+
   _asyncMethod() async {
     CommentPageData commentPageData =
         await emotionServices.getComments(widget.id.toString());
@@ -106,7 +113,7 @@ class _EmotionCommentState extends State<EmotionComment> {
       FocusScope.of(context).requestFocus(new FocusNode());
     }
 
-    return curData == null
+    return curData == null || isLoading
         ? Loading(isLoading: true, height: MediaQuery.of(context).size.height)
         : Scaffold(
             resizeToAvoidBottomInset: true,
@@ -122,22 +129,23 @@ class _EmotionCommentState extends State<EmotionComment> {
                     Container(
                       child: SingleChildScrollView(
                         child: Container(
+                            height: 1000,
                             child: Column(children: [
-                          EmotionPreview(
-                              year: widget.year,
-                              month: widget.month,
-                              day: widget.day,
-                              emotion: curData!.emotion,
-                              diary: curData!.diary),
-                          SizedBox(height: 30),
-                          Column(
-                            children: curData == null
-                                ? []
-                                : curData!.comment.map((Comment data) {
-                                    return CommentLabel(context, data);
-                                  }).toList(),
-                          ),
-                        ])),
+                              EmotionPreview(
+                                  year: widget.year,
+                                  month: widget.month,
+                                  day: widget.day,
+                                  emotion: curData!.emotion,
+                                  diary: curData!.diary),
+                              SizedBox(height: 30),
+                              Column(
+                                children: curData == null
+                                    ? []
+                                    : curData!.comment.map((Comment data) {
+                                        return CommentLabel(context, data);
+                                      }).toList(),
+                              ),
+                            ])),
                       ),
                     ),
                     Container(
@@ -145,8 +153,15 @@ class _EmotionCommentState extends State<EmotionComment> {
                         height: MediaQuery.of(context).size.height,
                         padding: EdgeInsets.only(bottom: 20),
                         alignment: Alignment.bottomCenter,
-                        child: CommentInput(widget.id, role, controller,
-                            addComment, curComment, context, removeFocus))
+                        child: CommentInput(
+                            widget.id,
+                            role,
+                            controller,
+                            addComment,
+                            curComment,
+                            context,
+                            removeFocus,
+                            setIsLoading))
                   ])),
             ),
           );
@@ -253,7 +268,8 @@ Row CommentInput(
     void Function(Comment) addComment,
     List<Comment> curComment,
     BuildContext context,
-    void Function(BuildContext) removeFocus) {
+    void Function(BuildContext) removeFocus,
+    void Function(bool) setIsLoading) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -291,17 +307,22 @@ Row CommentInput(
           )),
       IconButton(
           onPressed: () async {
+            setIsLoading(true);
             bool response = await emotionServices.postComments(
                 id.toString(), controller.text);
+            print(curComment);
+            print(role);
+            print(controller.text);
             if (true) {
               Comment curData = Comment.fromJson({
                 "order": curComment.length,
-                "date": DateTime.now(),
+                "commentCreatedAt": DateTime.now(),
                 "role": role.toString(),
                 "commentContent": controller.text
               });
               addComment(curData);
             } else {}
+            setIsLoading(false);
           },
           icon: Icon(Icons.send))
     ],

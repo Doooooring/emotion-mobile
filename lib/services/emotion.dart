@@ -12,6 +12,7 @@ class EmotionServices {
   ) async {
     try {
       Map<String, Map> result = await repository.getDiaryMonth(year, month);
+      print(result);
       setCurDateAll(result);
       return true;
     } catch (e) {
@@ -64,7 +65,7 @@ class EmotionServices {
   }
 
   //set total emotion based on cur temp emotion
-  void reviseEmotion(
+  Future<bool> reviseEmotion(
     int? id,
     String emotion,
     DateTime dateSelected,
@@ -74,7 +75,7 @@ class EmotionServices {
   ) async {
     try {
       if (id == null) {
-        return;
+        return false;
       }
 
       bool response = await repository.patchDiary(id, null, emotion, "emotion");
@@ -84,11 +85,14 @@ class EmotionServices {
         setCurDate(today, null, null, emotion);
         setEmotionSelectorUp(false);
         setInputEmotionUp(false);
+        return true;
       } else {
+        return false;
         //toast up?
       }
     } catch (e) {
       Error();
+      return false;
     }
   }
 

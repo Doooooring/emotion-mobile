@@ -1,8 +1,10 @@
 import "dart:math" as math;
 import "dart:math";
 
+import 'package:aeye/services/emotion.dart';
 import 'package:flutter/material.dart';
 
+import "../../component/common/loading_proto.dart";
 import '../../component/common/youtube_player.dart';
 
 Map Month = {
@@ -19,6 +21,55 @@ Map Month = {
   "11": "Nov",
   "12": "Dec"
 };
+
+class DailyReportWrapper extends StatefulWidget {
+  const DailyReportWrapper({Key? key, required this.id, required this.date})
+      : super(key: key);
+
+  final int id;
+  final DateTime date;
+
+  @override
+  State<DailyReportWrapper> createState() => _DailyReportWrapperState();
+}
+
+class _DailyReportWrapperState extends State<DailyReportWrapper> {
+  EmotionServices emotionServices = EmotionServices();
+
+  Map? data = null;
+  void setData(Map newData) {
+    setState(() {
+      data = newData;
+    });
+  }
+
+  _asyncMethod() async {
+    Map response = await emotionServices.getResultPage(widget.id, widget.date);
+    setData(response);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _asyncMethod();
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return data == null
+        ? Loading(isLoading: true, height: MediaQuery.of(context).size.height)
+        : DailReport(
+            date: data!["date"],
+            emotion: data!["emotion"],
+            emotionText: data!["emotionText"],
+            sentimentLevel: data!["sentimentLevel"],
+            videoUrl: data!["videoUrl"],
+            title: data!["title"]);
+  }
+}
 
 class DailReport extends StatefulWidget {
   const DailReport(

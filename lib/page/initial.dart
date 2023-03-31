@@ -84,6 +84,20 @@ class _InitialPageState extends State<InitialPage> {
 
   String? video = null;
 
+  String role = "main";
+  void setRole(String newRole) {
+    setState(() {
+      role = newRole;
+    });
+  }
+
+  bool viewCode = false;
+  void setViewCode() {
+    setState(() {
+      viewCode = !viewCode;
+    });
+  }
+
   _asyncMethod() async {
     Map tokens = await loginController.getTokens();
     Uri endPoint = Uri.parse('$HOST_URL/home');
@@ -105,8 +119,7 @@ class _InitialPageState extends State<InitialPage> {
     String role = result["role"];
     Map? recommendVideo = result["video"];
     userController.getRole(role);
-    print(role);
-    print(userController.role);
+    setRole(role);
 
     if (role == "main") {
       userController.getCode(loginCode);
@@ -136,7 +149,7 @@ class _InitialPageState extends State<InitialPage> {
     String title = "How are you today?";
 
     return Scaffold(
-      appBar: Header(null, "init"),
+      appBar: Header(curDate: null, curPath: "init"),
       body: Container(
         color: Colors.white,
         child: Column(children: [
@@ -159,56 +172,81 @@ class _InitialPageState extends State<InitialPage> {
                   right: scaleWidth(context, 40),
                   top: scaleHeight(context, 30),
                   bottom: scaleHeight(context, 30)),
-              child: Row(children: [
-                Container(
-                    width: scaleWidth(context, 90),
-                    height: scaleWidth(context, 90),
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(255, 113, 127, 0.41),
-                        borderRadius: BorderRadius.circular(40)),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(monthToStr,
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          SizedBox(height: 1),
-                          Text(day.toString(),
-                              style: TextStyle(
-                                  fontSize: 30, fontWeight: FontWeight.w700))
-                        ])),
-                SizedBox(width: scaleWidth(context, 30)),
-                Container(
-                    width: scaleWidth(context, 150),
-                    child: Column(children: [
-                      Text(title,
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              height: 1.3)),
-                      SizedBox(height: 10),
-                      video != null
-                          ? SizedBox(width: 0)
-                          : TextButton(
-                              style: TextButton.styleFrom(
-                                minimumSize: Size.zero,
-                                padding: EdgeInsets.zero,
-                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              ),
-                              onPressed: () {
-                                Get.to(CalendarWrapper());
-                              },
-                              child: SizedBox(
-                                  child: Row(children: [
-                                Image.asset("assets/images/pencil.png"),
-                                SizedBox(width: 10),
-                                Text("write diary",
-                                    style: TextStyle(color: Colors.grey))
-                              ])))
-                    ]))
-              ])),
+              child: Column(
+                children: [
+                  Row(children: [
+                    Container(
+                        width: scaleWidth(context, 90),
+                        height: scaleWidth(context, 90),
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(255, 113, 127, 0.41),
+                            borderRadius: BorderRadius.circular(40)),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(monthToStr,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                  )),
+                              SizedBox(height: 1),
+                              Text(day.toString(),
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w700))
+                            ])),
+                    SizedBox(width: scaleWidth(context, 30)),
+                    Container(
+                        width: scaleWidth(context, 150),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(title,
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                      height: 1.3)),
+                              SizedBox(height: 10),
+                              video != null
+                                  ? SizedBox(width: 0)
+                                  : TextButton(
+                                      style: TextButton.styleFrom(
+                                        minimumSize: Size.zero,
+                                        padding: EdgeInsets.zero,
+                                        tapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                      ),
+                                      onPressed: () {
+                                        Get.to(CalendarWrapper());
+                                      },
+                                      child: SizedBox(
+                                          child: Row(children: [
+                                        Image.asset("assets/images/pencil.png"),
+                                        SizedBox(width: 10),
+                                        Text("write diary",
+                                            style:
+                                                TextStyle(color: Colors.grey)),
+                                      ]))),
+                            ]))
+                  ]),
+                  SizedBox(height: 20),
+                  role == "main"
+                      ? TextButton(
+                          style: TextButton.styleFrom(
+                            minimumSize: Size.zero,
+                            padding: EdgeInsets.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          onPressed: () {
+                            setViewCode();
+                          },
+                          child: viewCode
+                              ? Text(userController.code.toString())
+                              : Text("View code",
+                                  style: TextStyle(fontSize: 15)))
+                      : SizedBox(width: 0),
+                ],
+              )),
           Expanded(
             child: SingleChildScrollView(
               physics: ClampingScrollPhysics(),

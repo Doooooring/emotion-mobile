@@ -44,45 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBoeqAv7FGYNmWvIdtmkvzCzCSsgodDObc',
-    appId: '1:340659862944:web:efc3ad0ad913ef46a978c5',
-    messagingSenderId: '340659862944',
-    projectId: 'a-eye-fcm',
-    authDomain: 'a-eye-fcm.firebaseapp.com',
-    storageBucket: 'a-eye-fcm.appspot.com',
+    apiKey: 'AIzaSyDA-RLAw2t4T_h4-a5rcYQ5hNJL1WeLV90',
+    appId: '1:330734716432:web:4e6e0d35227293c1e02c95',
+    messagingSenderId: '330734716432',
+    projectId: 'a-eye-fcm-ea7a0',
+    authDomain: 'a-eye-fcm-ea7a0.firebaseapp.com',
+    storageBucket: 'a-eye-fcm-ea7a0.appspot.com',
+    measurementId: 'G-LK6MC79B8M',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDQnXX5JRQelui6MCaTzMfBt1nFj3fwZOQ',
-    appId: '1:340659862944:android:5677a075c1d22ac0a978c5',
-    messagingSenderId: '340659862944',
-    projectId: 'a-eye-fcm',
-    storageBucket: 'a-eye-fcm.appspot.com',
+    apiKey: 'AIzaSyC2_Ab4D6m1W49EKmJsTPEF7hfAcGtyNHc',
+    appId: '1:330734716432:android:c38ea97bb6ed16dae02c95',
+    messagingSenderId: '330734716432',
+    projectId: 'a-eye-fcm-ea7a0',
+    storageBucket: 'a-eye-fcm-ea7a0.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB5ktMbRZDL6AMr6z0w74100JDOuo1Nx-0',
-    appId: '1:340659862944:ios:d0a103eaf59148dda978c5',
-    messagingSenderId: '340659862944',
-    projectId: 'a-eye-fcm',
-    storageBucket: 'a-eye-fcm.appspot.com',
-    androidClientId:
-        '340659862944-l2s30f7hqghuv9acc8gj73cfmghglmrt.apps.googleusercontent.com',
-    iosClientId:
-        '340659862944-65qojuu06nfbdh63637ruvh1ff4ds4ca.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDZX8W7HpH1Wr4qVAQUwq4gJuDALjdoGas',
+    appId: '1:330734716432:ios:27cbaab8ebc15866e02c95',
+    messagingSenderId: '330734716432',
+    projectId: 'a-eye-fcm-ea7a0',
+    storageBucket: 'a-eye-fcm-ea7a0.appspot.com',
+    iosClientId: '330734716432-v4no2kegbecjs6p5nf4fb7ef1rvjk8lg.apps.googleusercontent.com',
     iosBundleId: 'com.mobile.gdsc.aeye',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB5ktMbRZDL6AMr6z0w74100JDOuo1Nx-0',
-    appId: '1:340659862944:ios:d0a103eaf59148dda978c5',
-    messagingSenderId: '340659862944',
-    projectId: 'a-eye-fcm',
-    storageBucket: 'a-eye-fcm.appspot.com',
-    androidClientId:
-        '340659862944-l2s30f7hqghuv9acc8gj73cfmghglmrt.apps.googleusercontent.com',
-    iosClientId:
-        '340659862944-65qojuu06nfbdh63637ruvh1ff4ds4ca.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDZX8W7HpH1Wr4qVAQUwq4gJuDALjdoGas',
+    appId: '1:330734716432:ios:27cbaab8ebc15866e02c95',
+    messagingSenderId: '330734716432',
+    projectId: 'a-eye-fcm-ea7a0',
+    storageBucket: 'a-eye-fcm-ea7a0.appspot.com',
+    iosClientId: '330734716432-v4no2kegbecjs6p5nf4fb7ef1rvjk8lg.apps.googleusercontent.com',
     iosBundleId: 'com.mobile.gdsc.aeye',
   );
 }

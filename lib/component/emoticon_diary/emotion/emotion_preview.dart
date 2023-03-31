@@ -26,12 +26,13 @@ Map Month = {
 class EmotionPreview extends StatefulWidget {
   const EmotionPreview({
     Key? key,
+    required this.isLoading,
     required this.curDates,
     required this.dateSelected,
     required this.setInputEmotionUp,
     required this.setEmotionSelectorUp,
   }) : super(key: key);
-
+  final bool isLoading;
   final Map curDates;
   final DateTime dateSelected;
   final void Function(bool) setInputEmotionUp;
@@ -44,12 +45,14 @@ class EmotionPreview extends StatefulWidget {
 class _EmotionPreviewState extends State<EmotionPreview> {
   @override
   Widget build(BuildContext context) {
-    return EmotionPreviewBox(
-      curDates: widget.curDates,
-      date: widget.dateSelected,
-      setInputEmotionUp: widget.setInputEmotionUp,
-      setEmotionSelectorUp: widget.setEmotionSelectorUp,
-    );
+    return widget.isLoading
+        ? SizedBox(width: 0, height: 0)
+        : EmotionPreviewBox(
+            curDates: widget.curDates,
+            date: widget.dateSelected,
+            setInputEmotionUp: widget.setInputEmotionUp,
+            setEmotionSelectorUp: widget.setEmotionSelectorUp,
+          );
   }
 }
 
@@ -261,21 +264,11 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
           if (item == SampleItem.itemOne) {
             widget.setInputEmotionUp(true);
           } else {
-            Map response =
-                await emotionService.getResultPage(widget.id, widget.date);
-            if (!mounted) {
-              return;
-            }
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => DailReport(
-                        date: response["date"],
-                        emotion: response["emotion"],
-                        emotionText: response["emotionText"],
-                        sentimentLevel: response["sentimentLevel"],
-                        videoUrl: response["videoUrl"],
-                        title: response["title"])));
+                    builder: (context) =>
+                        DailyReportWrapper(id: widget.id!, date: widget.date)));
           }
         },
         itemBuilder: (BuildContext context) => [

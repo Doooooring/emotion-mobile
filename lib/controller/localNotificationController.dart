@@ -1,4 +1,4 @@
-import "package:aeye/page/fallAlert.dart";
+import 'package:aeye/page/babyMonitor/fallAlert.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
 import "package:flutter/material.dart";
@@ -48,16 +48,6 @@ class LocalNotificationController extends GetxController {
   String token = "";
   RxBool messaging = false.obs;
 
-  void isOff() {
-    messaging = false.obs;
-    update();
-  }
-
-  void isOn() {
-    messaging = true.obs;
-    update();
-  }
-
   BuildContext? _context = null;
 
   void setContext(BuildContext context) {
@@ -78,12 +68,16 @@ class LocalNotificationController extends GetxController {
 
   Future<void> initialize() async {
     await Firebase.initializeApp(
-      name: "A-eye",
+      name: "aeye",
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
 
     final InitializationSettings initializationSettings =
         InitializationSettings(
@@ -104,11 +98,12 @@ class LocalNotificationController extends GetxController {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (NotificationResponse notification) {
       String payload = notification.payload ?? "missing title";
+      print("is hererre");
       if (_context != null) {
+        print("here");
         getAlert();
         return;
       }
-
       //알림페이지 들어갈 부분(foreground 일 때의 동작 -> context 이동하기)
 
       // }, onDidReceiveBackgroundNotificationResponse:
@@ -119,29 +114,10 @@ class LocalNotificationController extends GetxController {
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      print(notification);
+      print("it's getting message");
       Get.to(() => BabyMonitor());
-
-      // RemoteNotification? notification = message.notification;
-      // NotificationDetails platformChannelSpecifics = NotificationDetails(
-      //     android: AndroidNotificationDetails(
-      //       "Baby fall",
-      //       "High_Importance_Notifications",
-      //       priority: Priority.max,
-      //       importance: Importance.max,
-      //     ),
-      //     iOS: DarwinNotificationDetails(
-      //         badgeNumber: 1,
-      //         subtitle: "the subtitle",
-      //         sound: "slow_spring_board.aiff"));
-      // if (notification != null) {
-      //   Get.to(() => BabyMonitor());
-      //   flutterLocalNotificationsPlugin.show(
-      //     notification.hashCode,
-      //     notification.title,
-      //     notification.body,
-      //     platformChannelSpecifics,
-      //   );
-      // }
     });
   }
 
@@ -156,11 +132,7 @@ class LocalNotificationController extends GetxController {
             importance: Importance.max,
           ),
           iOS: DarwinNotificationDetails(
-              presentBadge: true,
-              attachments: [
-                DarwinNotificationAttachment("assets/images/logo.png")
-              ],
-              sound: "slow_spring_board.aiff"));
+              presentBadge: true, sound: "slow_spring_board.aiff"));
       flutterLocalNotificationsPlugin.show(
         notification.hashCode,
         notification!.title,
@@ -168,6 +140,7 @@ class LocalNotificationController extends GetxController {
         platformChannelSpecifics,
       );
       if (_context != null) {
+        print("get some message");
         Get.to(() => BabyMonitor());
         // getAlert();
         return;

@@ -73,7 +73,7 @@ class _AdviceMainState extends State<AdviceMain> {
     String curTemp = curView.temperament;
 
     return Scaffold(
-      appBar: Header(null, "advice"),
+      appBar: Header(curDate: null, curPath: "advice"),
       body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -228,20 +228,9 @@ Container Slide(Child child, double width, double height) {
       padding: EdgeInsets.only(left: 50, right: 30, top: 10),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(
-            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-          PopUpMenuButtonWrapper()
-          // TextButton(
-          //     onPressed: () {
-          //       Get.to(() => ReviseInfo(id: child.id));
-          //     },
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.end,
-          //       children: [
-          //         Text("Change child's", style: TextStyle(color: Colors.grey)),
-          //         Text("temperament", style: TextStyle(color: Colors.grey))
-          //       ],
-          //     ))
-        ])),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [PopUpMenuButtonWrapper()])),
         Text(child.name,
             style: TextStyle(fontSize: 45, fontWeight: FontWeight.w800)),
         SizedBox(height: 20),

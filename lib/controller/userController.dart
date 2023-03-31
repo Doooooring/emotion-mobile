@@ -31,4 +31,13 @@ class UserController extends GetxController {
     role = log.obs;
     update();
   }
+
+  void reset() {
+    id = null;
+    name = null;
+    access = null;
+    code = null;
+    role = "".obs;
+    update();
+  }
 }

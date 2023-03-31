@@ -2,6 +2,7 @@ import "package:aeye/component/common/app_bar.dart";
 import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/component/common/loading_proto.dart";
 import "package:aeye/controller/childController.dart";
+import 'package:aeye/controller/localNotificationController.dart';
 import "package:aeye/controller/sizeController.dart";
 import "package:aeye/page/advice/add_info.dart";
 import 'package:aeye/page/advice/main.dart';
@@ -9,6 +10,7 @@ import "package:aeye/page/advice/temperament_detail.dart";
 import "package:aeye/services/advice.dart";
 import "package:aeye/utils/interface/child.dart";
 import "package:flutter/material.dart";
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:get/get.dart";
 
 AdviceServices adviceServices = AdviceServices();
@@ -22,6 +24,8 @@ class MainPre extends StatefulWidget {
 
 class _MainPreState extends State<MainPre> {
   ChildController childController = Get.find<ChildController>();
+  LocalNotificationController localNotificationController = Get.find();
+  FlutterSecureStorage storage = FlutterSecureStorage();
 
   bool isLoading = false;
   void setIsLoading(bool state) {
@@ -66,7 +70,7 @@ class _MainPreState extends State<MainPre> {
             ),
           )
         : Scaffold(
-            appBar: Header(null, "advice"),
+            appBar: Header(curDate: null, curPath: "advice"),
             body: Container(
                 height: double.infinity,
                 padding: EdgeInsets.only(left: 40, right: 40, top: 50),

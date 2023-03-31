@@ -44,7 +44,7 @@ class _MonitorState extends State<Monitor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Header(null, "babyMonitor"),
+        appBar: Header(curDate: null, curPath: "babyMonitor"),
         body: Container(
             width: double.infinity,
             height: double.infinity,

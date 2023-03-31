@@ -27,7 +27,7 @@ class CommentPageData {
 
     List<Comment> comments = data["comments"].length == 0
         ? []
-        : data["comment"].map<Comment>((Map comment) {
+        : data["comments"].map<Comment>((comment) {
             return Comment.fromJson(comment);
           }).toList();
 
@@ -44,10 +44,13 @@ class Comment {
   final String comment;
 
   factory Comment.fromJson(Map data) {
-    int year = data["date"].year;
-    int month = data["date"].month;
+    DateTime dateData = data["commentCreatedAt"] is int
+        ? DateTime.fromMicrosecondsSinceEpoch(data["commentCreatedAt"])
+        : data["commentCreatedAt"];
+    int year = dateData.year;
+    int month = dateData.month;
     String monthToStr = Month[month.toString()];
-    int day = data["date"].day;
+    int day = dateData.day;
 
     String dateToStr = "${monthToStr} ${day} ${year}";
 

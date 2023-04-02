@@ -102,13 +102,7 @@ class _AdviceMainState extends State<AdviceMain> {
                   SizedBox(height: 20),
                   Column(
                       children: curTips.map((tip) {
-                    return TipsNavigator(
-                        tip,
-                        TipDetail(
-                            temperament: curTemp,
-                            title: tip,
-                            name: curView.name),
-                        context);
+                    return TipsNavigator(tip, curTemp, curView.name, context);
                   }).toList())
                 ])),
           ])),
@@ -270,7 +264,8 @@ Container Slide(Child child, double width, double height) {
       ]));
 }
 
-Container TipsNavigator(String title, Widget navigate, BuildContext context) {
+Container TipsNavigator(
+    String title, String curTemp, String name, BuildContext context) {
   String imageLink = "";
   switch (title) {
     case ("Changing environment"):
@@ -307,7 +302,16 @@ Container TipsNavigator(String title, Widget navigate, BuildContext context) {
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 alignment: Alignment.topLeft),
             onPressed: () {
-              Get.to(() => navigate);
+              if (title == "Crying baby"){
+                return;
+              }
+              Get.to(
+                () => TipDetail(temperament: curTemp, title: title, name: name),
+              );
+              // TipDetail(
+              // temperament: "Easy",
+              // title: "Changing environment",
+              // name: "Mark"));
             },
             child: Container(
               padding: EdgeInsets.only(left: 20, top: 10, bottom: 10),

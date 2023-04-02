@@ -36,7 +36,6 @@ class TipDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String detailBody = DetailBody[title]![temperament];
-
     return Scaffold(
       appBar: TipDetailHeader(title),
       body: SingleChildScrollView(

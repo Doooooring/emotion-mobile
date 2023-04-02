@@ -12,12 +12,9 @@ class EmotionServices {
   ) async {
     try {
       Map<String, Map> result = await repository.getDiaryMonth(year, month);
-      print(result);
       setCurDateAll(result);
       return true;
     } catch (e) {
-      //토스트업
-      print(e);
       return false;
     }
   }

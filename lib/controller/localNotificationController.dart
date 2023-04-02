@@ -7,31 +7,6 @@ import "package:get/get.dart";
 
 import '../../firebase_options.dart';
 
-@pragma('vm:entry-point')
-Future<void> firebaseMessagingBackgroundHandler(
-  RemoteMessage message,
-) async {
-  await Firebase.initializeApp();
-  String title = message.notification?.title ?? "title missing";
-  String body = message.notification?.body ?? "body missing";
-  NotificationDetails platformChannelSpecifics = NotificationDetails(
-    android: AndroidNotificationDetails(
-      "Baby fall",
-      "High_Importance_Notifications",
-      priority: Priority.max,
-      importance: Importance.max,
-    ),
-  );
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-  flutterLocalNotificationsPlugin.show(
-    message.notification.hashCode,
-    message.notification?.title,
-    message.notification?.body,
-    platformChannelSpecifics,
-  );
-}
-
 Future reqIOSPermission(FirebaseMessaging fbMsg) async {
   NotificationSettings settings = await fbMsg.requestPermission(
     alert: true,
@@ -68,9 +43,16 @@ class LocalNotificationController extends GetxController {
 
   Future<void> initialize() async {
     await Firebase.initializeApp(
-      name: "aeye",
+      name: "a-eye-fcm",
       options: DefaultFirebaseOptions.currentPlatform,
     );
+
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    token = fcmToken!;
+    print(fcmToken);
+
+    await FirebaseMessaging.instance
+        .requestPermission(sound: true, badge: true, alert: true);
 
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
@@ -98,9 +80,8 @@ class LocalNotificationController extends GetxController {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (NotificationResponse notification) {
       String payload = notification.payload ?? "missing title";
-      print("is hererre");
+
       if (_context != null) {
-        print("here");
         getAlert();
         return;
       }
@@ -114,15 +95,15 @@ class LocalNotificationController extends GetxController {
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("get on message");
       RemoteNotification? notification = message.notification;
-      print(notification);
-      print("it's getting message");
       Get.to(() => BabyMonitor());
     });
   }
 
   void onMessageOpened() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      print("get on message opened");
       RemoteNotification? notification = message.notification;
       NotificationDetails platformChannelSpecifics = NotificationDetails(
           android: AndroidNotificationDetails(
@@ -140,7 +121,6 @@ class LocalNotificationController extends GetxController {
         platformChannelSpecifics,
       );
       if (_context != null) {
-        print("get some message");
         Get.to(() => BabyMonitor());
         // getAlert();
         return;

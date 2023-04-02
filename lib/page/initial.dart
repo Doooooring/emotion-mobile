@@ -107,7 +107,8 @@ class _InitialPageState extends State<InitialPage> {
       "Authorization": tokens["access"],
       "cookie": tokens["refresh"]
     });
-    Map? result = json.decode(utf8.decode(response.bodyBytes))["result"];
+
+    dynamic result = json.decode(utf8.decode(response.bodyBytes))["result"];
 
     if (result == null) {
       Get.back();
@@ -115,9 +116,10 @@ class _InitialPageState extends State<InitialPage> {
       return;
     }
 
-    String loginCode = result["code"];
+    String loginCode = result["code"].toString();
+
     String role = result["role"];
-    Map? recommendVideo = result["video"];
+    Map? recommendVideo = result["homeVideo"];
     userController.getRole(role);
     setRole(role);
 

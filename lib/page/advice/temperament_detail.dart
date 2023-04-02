@@ -111,7 +111,6 @@ SizedBox NavigatorButton(String temperament, BuildContext context) {
                 style: BorderStyle.none,
               )),
           onPressed: () {
-            print("here");
             Get.to(() => TemperamentExplain(temperament: temperament));
           },
           child: SizedBox(

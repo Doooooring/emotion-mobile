@@ -405,8 +405,8 @@ class _CircularChartState extends State<CircularChart> {
   Widget build(BuildContext context) {
     return SfCircularChart(series: <DoughnutSeries<_CircularData, String>>[
       DoughnutSeries<_CircularData, String>(
-        radius: "65%",
-        innerRadius: "75%",
+        radius: "60%",
+        innerRadius: "80%",
         dataSource: widget.curData,
         onPointTap: (ChartPointDetails data) {
           int seriesIndex = data.pointIndex!;
@@ -429,7 +429,7 @@ class _CircularChartState extends State<CircularChart> {
               return Container(
                   height: 13,
                   width: widget.curIdx == -1 || pointIndex == widget.curIdx
-                      ? 16
+                      ? 10
                       : 500,
                   child: Text(data.data.toString(),
                       style: TextStyle(
@@ -467,6 +467,9 @@ class ChartLegend extends StatelessWidget {
     int total = curData.fold(0, (vTotal, element) {
       return vTotal + element.data;
     });
+    if (total == 0) {
+      return SizedBox(width: 0);
+    }
 
     return Container(
         padding: EdgeInsets.only(right: 20),

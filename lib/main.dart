@@ -23,7 +23,7 @@ Future<void> firebaseMessagingBackgroundHandler(
   RemoteMessage message,
 ) async {
   await Firebase.initializeApp(
-    name: "aeye",
+    name: "a-eye-fcm",
   );
   String title = message.notification?.title ?? "title missing";
   String body = message.notification?.body ?? "body missing";
@@ -39,8 +39,8 @@ Future<void> firebaseMessagingBackgroundHandler(
       FlutterLocalNotificationsPlugin();
   flutterLocalNotificationsPlugin.show(
     message.notification.hashCode,
-    message.notification?.title,
-    message.notification?.body,
+    title,
+    body,
     platformChannelSpecifics,
   );
 }
@@ -52,30 +52,9 @@ void main() async {
       LocalNotificationController();
   await localNotificationController.initialize();
   final fcmTokenNew =
-      await FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
-    print("is inspired");
-    print(fcmToken);
-  });
-  final isWork = await FirebaseMessaging.instance.isSupported();
-
-  await FirebaseMessaging.instance
-      .requestPermission(sound: true, badge: true, alert: true);
-
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  localNotificationController.token = fcmToken!;
-  print(fcmToken);
+      await FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {});
 
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-
-  final InitializationSettings initializationSettings = InitializationSettings(
-      android: AndroidInitializationSettings('@mipmap/ic_launcher'),
-      iOS: DarwinInitializationSettings());
-
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
 
   runApp(MyApp(localNotificationController: localNotificationController));
   // runApp(MyApp());

@@ -11,7 +11,7 @@
 
 - IOS
   - Make sure you have the Xcode version 14.0 or above installed on your computer.
-  - IOS version with 16.2 (recommend to use simulator with iPhone 14 Pro Max with iOS 16.2
+  - IOS version with 16.2 (recommend to use simulator with iPhone 14 Pro Max with iOS 16.2)
 
 ## Required permission
 - Notification (Needed) : It is used for push message about falling alert.
@@ -23,21 +23,20 @@ The following libraries are used in this project.
 - flutter local notifications
 - firebase messaging
 
+## Getting started
+  - Recommend to build in xcode with simulator iPhone 14 Pro Max with iOS 16.2
+  - It would be published ASAP
+
 ## Usage
-![aeye-splash mp4](https://user-images.githubusercontent.com/106396244/229190824-e5b1b7cd-558d-4609-8e0a-324780282804.gif)
+<p>
+
+<img src="https://user-images.githubusercontent.com/106396244/229190824-e5b1b7cd-558d-4609-8e0a-324780282804.gif" width="200px" />
+<img src="https://user-images.githubusercontent.com/106396244/229361505-5c6263f4-f4ab-4f49-92c5-96f26d5c9566.gif" width="200px" />
+<img src="https://user-images.githubusercontent.com/106396244/229361529-2252bf37-63d0-4c85-9392-c0cbbdd2cc35.gif" width="200px" />
+<img src="https://user-images.githubusercontent.com/106396244/229361937-7212060f-37d5-4ed6-93d3-2e432315bdaf.gif" width="200px" />
 
 
-
-https://user-images.githubusercontent.com/106396244/229192377-3f747d02-c2a0-4395-87e6-bded4facd28f.mp4
-
-https://user-images.githubusercontent.com/106396244/229192414-b75576f6-1d6a-4466-8eb8-d174166c65fe.mp4
-
-https://user-images.githubusercontent.com/106396244/229192675-0fa86adb-4674-4c9c-bb5a-93f2d57a02dc.mp4
-
-https://user-images.githubusercontent.com/106396244/229192453-9198d257-84c0-4e18-8828-2e3ba392fa07.mp4
-
-
-
+</p>
 
 - Login
   - After signing up and signing in, the user should choose the role between main caregiver and sub caregiver.

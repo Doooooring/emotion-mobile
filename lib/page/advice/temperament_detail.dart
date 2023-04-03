@@ -1,6 +1,5 @@
 import "dart:math";
 
-import "package:aeye/component/common/button_back.dart";
 import "package:aeye/controller/sizeController.dart";
 import "package:aeye/page/advice/add_info.dart";
 import "package:aeye/page/advice/temperament_explain.dart";
@@ -12,73 +11,7 @@ class TemperamentDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: true
-            ? SlideWrapper()
-            : Container(
-                color: Color(0xffFFF7DF),
-                width: double.infinity,
-                height: double.infinity,
-                padding: EdgeInsets.only(
-                    left: scaleWidth(context, 35),
-                    right: scaleWidth(context, 35),
-                    top: scaleHeight(context, 80)),
-                child: Column(children: [
-                  SizedBox(
-                      width: double.infinity,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ButtonBack(),
-                            Expanded(
-                                child: Column(children: [
-                              Text("What is",
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w400)),
-                              Text("temperament?",
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w400))
-                            ])),
-                            Opacity(opacity: 0, child: ButtonBack())
-                          ])),
-                  SizedBox(height: 20),
-                  Container(
-                      padding: EdgeInsets.only(
-                          left: scaleWidth(context, 20),
-                          right: scaleWidth(context, 20),
-                          top: scaleHeight(context, 20),
-                          bottom: scaleHeight(context, 20)),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Temperament",
-                                style: TextStyle(
-                                    fontSize: 22, color: Color(0xffFF717F))),
-                            SizedBox(height: 10),
-                            Text(
-                                "is a person's own unique characteristic that he or she has since birth",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.w500))
-                          ])),
-                  SizedBox(height: 30),
-                  Text("Types of Temperaments",
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.w500)),
-                  SizedBox(height: 30),
-                  SizedBox(
-                      child: Column(children: [
-                    NavigatorButton("Easy", context),
-                    SizedBox(height: 20),
-                    NavigatorButton("Difficult", context),
-                    SizedBox(height: 20),
-                    NavigatorButton("Slow to warm up", context)
-                  ]))
-                ])));
+    return Scaffold(body: SlideWrapper());
   }
 }
 

@@ -1,6 +1,5 @@
+import "package:aeye/services/emotion.dart";
 import 'package:flutter/material.dart';
-
-import "../../../services/emotion.dart";
 
 var EmotionService = new EmotionServices();
 

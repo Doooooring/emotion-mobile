@@ -1,9 +1,8 @@
 import 'dart:convert';
 
+import "package:aeye/asset/url.dart";
 import "package:aeye/controller/loginController.dart";
 import 'package:http/http.dart' as http;
-
-import "../asset/url.dart";
 
 class ChildRepositories {
   LoginController loginController = new LoginController();

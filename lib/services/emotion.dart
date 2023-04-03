@@ -1,6 +1,5 @@
+import "package:aeye/repositories/diary.dart";
 import 'package:aeye/utils/interface/comment.dart';
-
-import "../repositories/diary.dart";
 
 DiaryRepositories repository = new DiaryRepositories();
 

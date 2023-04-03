@@ -1,8 +1,8 @@
+import 'package:aeye/asset/emoticon_url.dart';
+import "package:aeye/services/emotion.dart";
 import 'package:flutter/material.dart';
 
 import './table-calendar/table_calendar.dart';
-import '../../../asset/emoticon_url.dart';
-import "../../../services/emotion.dart";
 
 EmotionServices emotionServices = EmotionServices();
 
@@ -247,47 +247,3 @@ class _YearButtonState extends State<YearButton> {
     );
   }
 }
-
-// , headerTitleBuilder: (context, date) {
-// int year = date.year;
-// int month = date.month;
-// String monthToString = date.month.toString();
-// String monthToEng = Month[monthToString];
-// PageController pageController = PageController();
-// return Container(
-// height: 60,
-// child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-// IconButton(
-// onPressed: () {
-// log("here1");
-// pageController.previousPage(
-// duration: Duration(milliseconds: 300), curve: Curves.easeOut);
-// emotionServices.getEmotionMonth(
-// year, month - 1, setCurDateAll, setIsLoading);
-// },
-// icon:
-// Icon(Icons.keyboard_arrow_left, size: 40, color: Colors.black),
-// ),
-// Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-// SizedBox(
-// child: YearButton(
-// pageController: pageController,
-// month: month,
-// setCurDateAll: setCurDateAll,
-// setIsLoading: setIsLoading,
-// )),
-// SizedBox(child: Text(monthToEng))
-// ]),
-// IconButton(
-// onPressed: () {
-// log("here2");
-// pageController.nextPage(
-// duration: Duration(milliseconds: 300),
-// curve: Curves.easeOut);
-// emotionServices.getEmotionMonth(
-// year, month + 1, setCurDateAll, setIsLoading);
-// },
-// icon: Icon(Icons.keyboard_arrow_right,
-// size: 40, color: Colors.black))
-// ]));
-// }

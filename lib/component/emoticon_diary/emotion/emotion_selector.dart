@@ -1,8 +1,7 @@
 import 'dart:ui';
 
+import "package:aeye/services/emotion.dart";
 import 'package:flutter/material.dart';
-
-import "../../../services/emotion.dart";
 
 EmotionServices emotionServices = new EmotionServices();
 

@@ -71,13 +71,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool isAlert = false;
-  void setIsAlert(bool state) {
-    setState(() {
-      isAlert = state;
-    });
-  }
-
   FlutterSecureStorage storage = FlutterSecureStorage();
   UserController userController = UserController();
   ChildController childController = ChildController();
@@ -115,7 +108,6 @@ class _MyAppState extends State<MyApp> {
     Get.put(storage);
     Get.put(userController);
     Get.put(childController);
-    Get.put(isAlert);
 
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
@@ -123,6 +115,3 @@ class _MyAppState extends State<MyApp> {
         home: SplashScreen());
   }
 }
-
-// MediaQuery(
-// data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

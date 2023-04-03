@@ -1,11 +1,10 @@
 import "dart:math" as math;
 import "dart:math";
 
+import "package:aeye/component/common/loading_proto.dart";
+import 'package:aeye/component/common/youtube_player.dart';
 import 'package:aeye/services/emotion.dart';
 import 'package:flutter/material.dart';
-
-import "../../component/common/loading_proto.dart";
-import '../../component/common/youtube_player.dart';
 
 Map Month = {
   "1": "Jan",

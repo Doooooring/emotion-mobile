@@ -1,20 +1,19 @@
 import 'dart:convert';
 
+import "package:aeye/asset/url.dart";
+import "package:aeye/component/common/app_bar.dart";
+import "package:aeye/component/common/bottom_bar.dart";
+import "package:aeye/component/common/youtube_player.dart";
 import 'package:aeye/controller/loginController.dart';
+import "package:aeye/controller/sizeController.dart";
+import "package:aeye/controller/userController.dart";
+import "package:aeye/page/emotion/emotion_diary.dart";
+import "package:aeye/page/login/chooseRole.dart";
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import "package:get/get.dart";
 import "package:http/http.dart" as http;
 import 'package:url_launcher/url_launcher.dart';
-
-import "../asset/url.dart";
-import "../component/common/app_bar.dart";
-import "../component/common/bottom_bar.dart";
-import "../component/common/youtube_player.dart";
-import "../controller/sizeController.dart";
-import "../controller/userController.dart";
-import "../page/emotion/emotion_diary.dart";
-import "../page/login/chooseRole.dart";
 
 final dio = Dio();
 

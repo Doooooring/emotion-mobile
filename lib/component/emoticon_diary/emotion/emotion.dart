@@ -1,8 +1,8 @@
 import "dart:math";
 
+import "package:aeye/component/common/loading_proto.dart";
 import 'package:flutter/material.dart';
 
-import "../../common/loading_proto.dart";
 import 'emotion_chart.dart';
 import 'emotion_head.dart';
 import 'emotion_input.dart';

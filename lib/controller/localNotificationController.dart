@@ -85,17 +85,11 @@ class LocalNotificationController extends GetxController {
         getAlert();
         return;
       }
-      //알림페이지 들어갈 부분(foreground 일 때의 동작 -> context 이동하기)
-
-      // }, onDidReceiveBackgroundNotificationResponse:
-      //         (NotificationResponse payloadData) {
-      //   log("here2");
     });
   }
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("get on message");
       RemoteNotification? notification = message.notification;
       Get.to(() => BabyMonitor());
     });
@@ -103,7 +97,6 @@ class LocalNotificationController extends GetxController {
 
   void onMessageOpened() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      print("get on message opened");
       RemoteNotification? notification = message.notification;
       NotificationDetails platformChannelSpecifics = NotificationDetails(
           android: AndroidNotificationDetails(

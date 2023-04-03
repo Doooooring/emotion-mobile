@@ -1,6 +1,5 @@
+import 'package:aeye/component/baby_monitor/alert.dart';
 import 'package:flutter/material.dart';
-
-import '../../component/baby_monitor/alert.dart';
 
 class BabyMonitor extends StatelessWidget {
   const BabyMonitor({Key? key}) : super(key: key);

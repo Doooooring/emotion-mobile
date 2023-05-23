@@ -24,7 +24,7 @@ class _LoadingState extends State<Loading> {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
-          color : Colors.white,
+          color: Colors.white,
           width: double.infinity,
           height: widget.height,
           child: Offstage(
@@ -37,8 +37,13 @@ class _LoadingState extends State<Loading> {
                 Center(
                     child: Stack(children: [
                   Container(
-                      width: 200,
                       height: 200,
+                      padding: EdgeInsets.only(
+                        left: 10.0,
+                        right: 10.0,
+                        top: 10.0,
+                        bottom: 10.0,
+                      ),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -156,11 +161,10 @@ List<String> commentList = [
   'analyzing emotion.',
   'analyzing emotion..',
   'analyzing emotion...',
-  'analyzing emotion....',
-  'analyzing emotion....',
-  'analyzing emotion....',
-  'analyzing emotion....',
-  'analyzing emotion....'
+  'analyzing emotion...',
+  'analyzing emotion...',
+  'analyzing emotion...',
+  'analyzing emotion...',
 ];
 
 class TextAnimation extends StatefulWidget {
@@ -207,7 +211,7 @@ class _TextAnimationState extends State<TextAnimation>
           Text(
               style: TextStyle(
                   decoration: TextDecoration.none,
-                  fontSize: 15,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
               '${curText}'),

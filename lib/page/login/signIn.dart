@@ -39,6 +39,7 @@ class _SignInState extends State<SignIn> {
         ? Loading(
             isLoading: isLoading, height: MediaQuery.of(context).size.height)
         : Scaffold(
+            resizeToAvoidBottomInset: false,
             body: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {

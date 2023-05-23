@@ -12,6 +12,7 @@ class SecondarySignUp extends StatelessWidget {
     TextEditingController textEditingController = TextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
           decoration: BoxDecoration(
             color: Color(0xffFFF7DF),

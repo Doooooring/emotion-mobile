@@ -35,69 +35,71 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
-      width: double.infinity,
-      padding: EdgeInsets.only(left: 40, right: 40),
-      color: Color(0xffFFF7DF),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(child: Image.asset("assets/images/logo.png")),
-            Container(
-                child: Image.asset(width: 230, "assets/images/logo_title.png")),
-            SizedBox(height: 50),
-            SizedBox(
-                child: Column(
+          width: double.infinity,
+          padding: EdgeInsets.only(left: 40, right: 40),
+          color: Color(0xffFFF7DF),
+          child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                Container(child: Image.asset("assets/images/logo.png")),
                 Container(
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 133, 127, 0.70),
-                      borderRadius: BorderRadius.circular(35)),
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                        style: BorderStyle.none,
-                      )),
-                      onPressed: () {
-                        Get.to(() => SignIn());
-                      },
-                      child: Container(
-                          child: Text("Sign In",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600)))),
-                ),
-                SizedBox(height: 30),
-                Container(
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 133, 127, 0.70),
-                      borderRadius: BorderRadius.circular(35)),
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                        style: BorderStyle.none,
-                      )),
-                      onPressed: () {
-                        Get.to(() => SignUp());
-                      },
-                      child: Container(
-                          child: Text("Sign Up",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w600)))),
-                )
-              ],
-            )),
-          ]),
-    ));
+                    child: Image.asset(
+                        width: 230, "assets/images/logo_title.png")),
+                SizedBox(height: 50),
+                SizedBox(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(255, 133, 127, 0.70),
+                          borderRadius: BorderRadius.circular(35)),
+                      child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                            style: BorderStyle.none,
+                          )),
+                          onPressed: () {
+                            Get.to(() => SignIn());
+                          },
+                          child: Container(
+                              child: Text("Sign In",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600)))),
+                    ),
+                    SizedBox(height: 30),
+                    Container(
+                      width: double.infinity,
+                      height: 60,
+                      decoration: BoxDecoration(
+                          color: Color.fromRGBO(255, 133, 127, 0.70),
+                          borderRadius: BorderRadius.circular(35)),
+                      child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              side: BorderSide(
+                            style: BorderStyle.none,
+                          )),
+                          onPressed: () {
+                            Get.to(() => SignUp());
+                          },
+                          child: Container(
+                              child: Text("Sign Up",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600)))),
+                    )
+                  ],
+                )),
+              ]),
+        ));
   }
 }

@@ -29,6 +29,7 @@ class _ReviseInfoState extends State<ReviseInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: PopUp(context, widget.id, dropDownValue, setDropDownValue,
             nameController, childController));
   }

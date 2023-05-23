@@ -15,6 +15,7 @@ import "./controller/loginController.dart";
 import "./controller/userController.dart";
 import './page/initial.dart';
 import "./page/login/login.dart";
+import "firebase_options.dart";
 
 late AndroidNotificationChannel channel;
 
@@ -23,8 +24,7 @@ Future<void> firebaseMessagingBackgroundHandler(
   RemoteMessage message,
 ) async {
   await Firebase.initializeApp(
-    name: "a-eye-fcm",
-  );
+      name: "a-eye-fcm", options: DefaultFirebaseOptions.currentPlatform);
   String title = message.notification?.title ?? "title missing";
   String body = message.notification?.body ?? "body missing";
   NotificationDetails platformChannelSpecifics = NotificationDetails(
@@ -50,14 +50,19 @@ void main() async {
 
   LocalNotificationController localNotificationController =
       LocalNotificationController();
-  await localNotificationController.initialize();
-  final fcmTokenNew =
-      await FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {});
+  try {
+    await localNotificationController.initialize();
+    final fcmTokenNew =
+        await FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {});
 
-  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    print(fcmTokenNew);
 
-  runApp(MyApp(localNotificationController: localNotificationController));
-  // runApp(MyApp());
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  } catch (e) {
+    print(e);
+  } finally {
+    runApp(MyApp(localNotificationController: localNotificationController));
+  }
 }
 
 class MyApp extends StatefulWidget {

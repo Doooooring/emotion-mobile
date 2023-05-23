@@ -30,6 +30,7 @@ class _PopUpSelectState extends State<PopUpSelect> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: PopUp(context, dropDownValue, setDropDownValue, nameController,
             childController));
   }

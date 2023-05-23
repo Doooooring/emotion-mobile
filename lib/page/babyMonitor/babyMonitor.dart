@@ -1,11 +1,14 @@
 import "dart:convert";
+import "dart:typed_data";
 
+import 'package:aeye/asset/url.dart';
 import "package:aeye/component/common/app_bar.dart";
 import 'package:aeye/controller/localNotificationController.dart';
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 import "package:http/http.dart" as http;
 import "package:video_player/video_player.dart";
+import 'package:web_socket_channel/io.dart';
 
 class Monitor extends StatefulWidget {
   const Monitor({Key? key}) : super(key: key);
@@ -20,17 +23,13 @@ class _MonitorState extends State<Monitor> {
   _asyncMethod() async {
     Uri endPoint = Uri.parse('http://detect.a-eye.co.kr/baby/video');
     String token = localNotificationController.token;
-    print(token);
     var bodyEncoded = json.encode({"token": token});
 
     http.Response response =
         await http.post(endPoint, body: bodyEncoded, headers: {
       "Content-Type": "application/json",
     });
-    print("good");
-    print(response);
     dynamic result = utf8.decode(response.bodyBytes);
-    print(result);
   }
 
   @override
@@ -52,6 +51,46 @@ class _MonitorState extends State<Monitor> {
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Container(child: VideoViewer()),
             ])));
+  }
+}
+
+class VideoStreaming extends StatefulWidget {
+  const VideoStreaming({Key? key}) : super(key: key);
+
+  @override
+  State<VideoStreaming> createState() => _VideoStreamingState();
+}
+
+class _VideoStreamingState extends State<VideoStreaming> {
+  late IOWebSocketChannel _channel;
+
+  @override
+  void initState() {
+    super.initState();
+    _channel = IOWebSocketChannel.connect('$HOST_URL');
+  }
+
+  @override
+  void dispose() {
+    _channel.sink.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: _channel.stream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          Uint8List videoFrame = snapshot.data as Uint8List;
+          return Image.memory(videoFrame);
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 }
 

@@ -310,9 +310,6 @@ Row CommentInput(
             setIsLoading(true);
             bool response = await emotionServices.postComments(
                 id.toString(), controller.text);
-            print(curComment);
-            print(role);
-            print(controller.text);
             if (true) {
               Comment curData = Comment.fromJson({
                 "order": curComment.length,

@@ -5,8 +5,8 @@ class PrimarySignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("here");
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
           decoration: BoxDecoration(
             color: Color(0xffFFF7DF),

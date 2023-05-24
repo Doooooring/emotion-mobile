@@ -158,6 +158,7 @@ flutter:
     - assets/images/home.png
     - assets/images/search.png
     - assets/images/logo.png
+    - assets/images/logo_bard.png
     - assets/images/logo_title.png
     - assets/images/dog.png
     - assets/images/cat.png
@@ -178,6 +179,7 @@ flutter:
     - assets/images/during_conflict.png
     - assets/images/babyCrying.png
     - assets/images/fisted.png
+    - assets/images/send_Icon.png
     - assets/images/school.png
     - assets/images/monitor.png
     - assets/images/eye.png

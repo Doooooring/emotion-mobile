@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:aeye/component/common/loading_proto.dart";
 import "package:flutter/material.dart";
 
@@ -18,6 +20,12 @@ class AiChatting extends StatefulWidget {
 }
 
 class _AiChattingState extends State<AiChatting> {
+  TextEditingController controller = TextEditingController();
+
+  void removeFocus(BuildContext context) {
+    FocusScope.of(context).requestFocus(new FocusNode());
+  }
+
   List<Widget> commentBody = [];
   void setCommentBody(Widget comment) {
     setState(() {
@@ -53,13 +61,6 @@ class _AiChattingState extends State<AiChatting> {
     });
   }
 
-  bool? isChildSame = null;
-  void setIsChildSame(bool state) {
-    setState(() {
-      isChildSame = state;
-    });
-  }
-
   String curStep = "init";
   /**
    * init
@@ -79,12 +80,12 @@ class _AiChattingState extends State<AiChatting> {
       setCurChild(input);
       setCurStep("ageCheck");
       setCommentBody(ChattingRow("user", UserWrapper(Text(input))));
-      setCommentBody(ChattingRow("bot", BotAgeCheck(input)));
+      setCommentBody(BotAgeCheck(input));
     } else if (curStep == "ageCheck") {
       setCurAge(input);
       setCurStep("temperamentCheck");
       setCommentBody(ChattingRow("user", UserWrapper(Text(input))));
-      setCommentBody(ChattingRow("bot", BotTemperamentCheck(curChild)));
+      setCommentBody(BotTemperamentCheck(curChild));
       setCommentBody(ChattingRow(
           "user",
           TemperamentButtonWrapper(
@@ -94,9 +95,9 @@ class _AiChattingState extends State<AiChatting> {
           )));
     } else if (curStep == "problemCheck") {
       setCurProblem(input);
-      setCurStep("problemCheck");
+      setCurStep("end");
       setCommentBody(ChattingRow("user", UserWrapper(Text(input))));
-      setCommentBody(ChattingRow("bot", BotHmm()));
+      setCommentBody(BotHmm());
       setCommentBody(ViewSolution(
           name: curChild,
           age: curAge,
@@ -108,60 +109,21 @@ class _AiChattingState extends State<AiChatting> {
   @override
   Widget build(BuildContext context) {
     if (commentBody.length == 0) {
-      setCommentBody(StateWrapper(
-          content: ChattingRow("bot", BotFirst(widget.child)), state: true));
-      setCommentBody(StateWrapper(
-          content: ChattingRow(
-              "user",
-              Container(
-                  child: Row(children: [
-                Container(
-                    child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                          style: BorderStyle.none,
-                        )),
-                        onPressed: () async {
-                          setIsChildSame(true);
-                          setCurStep("problemCheck");
-                          setCurChild(widget.child);
-                          setCurAge(widget.age.toString());
-                          setCurTemperament(widget.temperament);
-                          setCommentBody(StateWrapper(
-                              content: ChattingRow("bot", BotProblemCheck()),
-                              state: true));
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            color: Color(0xffFF717F),
-                            padding: EdgeInsets.all(5),
-                            child: Text("Yes")))),
-                Container(
-                    child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                            side: BorderSide(
-                          style: BorderStyle.none,
-                        )),
-                        onPressed: () async {
-                          setIsChildSame(false);
-                          setCurStep("nameCheck");
-                          setCommentBody(StateWrapper(
-                              content: BotNameCheck(), state: true));
-                        },
-                        child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            color: Color(0xffFF717F),
-                            padding: EdgeInsets.all(5),
-                            child: Text("No"))))
-              ]))),
-          state: true));
+      setCommentBody(ChattingRow("bot", BotFirst(widget.child)));
+      setCommentBody(ButtonWrapper(
+        child: widget.child,
+        temperament: widget.temperament,
+        age: widget.age.toString(),
+        setCurStep: setCurStep,
+        setCurTemperament: setCurTemperament,
+        setCurChild: setCurChild,
+        setCurAge: setCurAge,
+        setCommentBody: setCommentBody,
+      ));
     }
 
     return Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           leadingWidth: 50,
           titleSpacing: 0,
@@ -183,7 +145,8 @@ class _AiChattingState extends State<AiChatting> {
           title: Container(
             child: Row(
               children: [
-                AeyeIcon(),
+                AeyeIcon(Colors.white),
+                SizedBox(width: 15),
                 Text("A-eye",
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -195,10 +158,102 @@ class _AiChattingState extends State<AiChatting> {
             ),
           ),
         ),
-        body: Container(
-            height: double.infinity,
-            width: double.infinity,
-            child: Column(children: [])));
+        body: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              removeFocus(context);
+            },
+            child: Container(
+              padding: EdgeInsets.only(left: 10, right: 10, top: 30),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Column(children: [
+                  Expanded(
+                      child: SingleChildScrollView(
+                          child: Container(
+                              height: 1000,
+                              padding: EdgeInsets.only(left: 30, right: 30),
+                              child: Column(children: commentBody)))),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.all(20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 280,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.withOpacity(1),
+                                      blurRadius: 1,
+                                      spreadRadius: 0,
+                                      offset: Offset(0, 0))
+                                ],
+                                borderRadius: BorderRadius.circular(45)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextFormField(
+                                  controller: controller,
+                                  scrollPadding: EdgeInsets.all(0),
+                                  style: TextStyle(
+                                      fontSize: 14, color: Colors.black),
+                                  decoration: InputDecoration(
+                                      hintText: "Add A Comment",
+                                      labelStyle: TextStyle(
+                                          color:
+                                              Color.fromRGBO(50, 50, 50, 0.4)),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                            width: 0, color: Colors.white),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              width: 0, color: Colors.white))),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                                side: BorderSide(
+                              style: BorderStyle.none,
+                            )),
+                            child: Container(
+                                padding: EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    color: Color(0xffFF717F),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(25))),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                          padding: EdgeInsets.all(2),
+                                          width: 25,
+                                          height: 25,
+                                          child: Image.asset(
+                                            "assets/images/send_Icon.png",
+                                          ))
+                                    ])),
+                            onPressed: () async {
+                              userInput(controller.text);
+                              controller.text = "";
+                              removeFocus(context);
+                            },
+                          )
+                        ],
+                      )),
+                ]),
+              ),
+            )));
   }
 }
 
@@ -314,69 +369,107 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: double.infinity,
-        child: Row(children: [
-          Container(
-              child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                    style: BorderStyle.none,
-                  )),
-                  onPressed: () async {
-                    setCurCheck("Easy");
-                    widget.setCurTemperament("Easy");
-                    widget.setCommentBody(ChattingRow(
-                        "bot",
-                        BotWrapper(
-                            Text("Tell me about the problem briefly."))));
-                  },
-                  child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      color: Color(0xffFF717F),
-                      padding: EdgeInsets.all(5),
-                      child: Text("easy")))),
-          Container(
-              child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                    style: BorderStyle.none,
-                  )),
-                  onPressed: () async {
-                    setCurCheck("Difficult");
-                    widget.setCurTemperament("Difficult");
-                    widget.setCommentBody(ChattingRow("user",
-                        BotWrapper(Text("Tell me about the problem briefly"))));
-                  },
-                  child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      color: Color(0xffFF717F),
-                      padding: EdgeInsets.all(5),
-                      child: Text("difficult")))),
-          Container(
-              child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                    style: BorderStyle.none,
-                  )),
-                  onPressed: () async {
-                    setCurCheck("Slow-to-warm-up");
-                    widget.setCurTemperament("Slow-to-warm-up");
-                    widget.setCommentBody(ChattingRow("user",
-                        BotWrapper(Text("Tell me about the problem briefly"))));
-                  },
-                  child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      color: Color(0xffFF717F),
-                      padding: EdgeInsets.all(5),
-                      child: Text("slow-to-warm-up"))))
-        ]));
+    return ChattingRow(
+        "user",
+        UserWrapper(
+          Row(children: [
+            Container(
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        side: BorderSide(
+                          style: BorderStyle.none,
+                        )),
+                    onPressed: () async {
+                      setCurCheck("Easy");
+                      widget.setCurStep("problemCheck");
+                      widget.setCurTemperament("Easy");
+                      widget.setCommentBody(ChattingRow(
+                          "bot",
+                          BotWrapper(
+                              Text("Tell me about the problem briefly."))));
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: curCheck == "Easy"
+                              ? Color(0xffFF717F)
+                              : Colors.white,
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Text("easy",
+                            style: TextStyle(
+                                color: curCheck == "Easy"
+                                    ? Colors.white
+                                    : Color(0xff72777A)))))),
+            SizedBox(width: 10),
+            Container(
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        side: BorderSide(
+                          style: BorderStyle.none,
+                        )),
+                    onPressed: () async {
+                      setCurCheck("Difficult");
+                      widget.setCurStep("problemCheck");
+                      widget.setCurTemperament("Difficult");
+                      widget.setCommentBody(ChattingRow(
+                          "user",
+                          BotWrapper(
+                              Text("Tell me about the problem briefly"))));
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: curCheck == "Difficult"
+                              ? Color(0xffFF717F)
+                              : Colors.white,
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Text("difficult",
+                            style: TextStyle(
+                                color: curCheck == "Difficult"
+                                    ? Colors.white
+                                    : Color(0xff72777A)))))),
+            SizedBox(width: 10),
+            Container(
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        padding: EdgeInsets.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        side: BorderSide(
+                          style: BorderStyle.none,
+                        )),
+                    onPressed: () async {
+                      setCurCheck("Slow-to-warm-up");
+                      widget.setCurStep("problemCheck");
+                      widget.setCurTemperament("Slow-to-warm-up");
+                      widget.setCommentBody(ChattingRow(
+                          "user",
+                          BotWrapper(
+                              Text("Tell me about the problem briefly"))));
+                    },
+                    child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: curCheck == "Slow-to-warm-up"
+                              ? Color(0xffFF717F)
+                              : Colors.white,
+                        ),
+                        padding: EdgeInsets.all(10),
+                        child: Text("slow-to-warm-up",
+                            style: TextStyle(
+                                color: curCheck == "Slow-to-warm-up"
+                                    ? Colors.white
+                                    : Color(0xff72777A))))))
+          ]),
+        ));
   }
 }
 
@@ -416,7 +509,9 @@ class _ViewSolutionState extends State<ViewSolution> {
   _asyncMethod() async {
     setIsLoading(true);
     // api 호출
-    setIsLoading(false);
+    Timer(Duration(seconds: 3), () {
+      setIsLoading(false);
+    });
   }
 
   @override
@@ -433,7 +528,11 @@ class _ViewSolutionState extends State<ViewSolution> {
         "bot",
         BotWrapper(Column(children: [
           SizedBox(height: 10),
-          ProgressIndicatorWrapper(isLoading: isLoading),
+          isLoading
+              ? Container(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: ProgressIndicatorWrapper(isLoading: isLoading))
+              : SizedBox(height: 0),
           isLoading
               ? SizedBox(height: 0)
               : Container(
@@ -450,8 +549,8 @@ class _ViewSolutionState extends State<ViewSolution> {
                           child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
+                                color: Color(0xffFFDD67),
                               ),
-                              color: Color(0xffFFDD67),
                               padding: EdgeInsets.all(5),
                               child: Text("View  solutions",
                                   style: TextStyle(color: Colors.white)))),
@@ -462,74 +561,205 @@ class _ViewSolutionState extends State<ViewSolution> {
   }
 }
 
+class ButtonWrapper extends StatefulWidget {
+  const ButtonWrapper(
+      {Key? key,
+      required this.child,
+      required this.temperament,
+      required this.age,
+      required this.setCurStep,
+      required this.setCurChild,
+      required this.setCurAge,
+      required this.setCurTemperament,
+      required this.setCommentBody})
+      : super(key: key);
+
+  final String child;
+  final String temperament;
+  final String age;
+  final void Function(String) setCurStep;
+  final void Function(String) setCurChild;
+  final void Function(String) setCurAge;
+  final void Function(String) setCurTemperament;
+  final void Function(Widget) setCommentBody;
+
+  @override
+  State<ButtonWrapper> createState() => _ButtonWrapperState();
+}
+
+class _ButtonWrapperState extends State<ButtonWrapper> {
+  bool? isChildSame = null;
+  void setIsChildSame(bool state) {
+    setState(() {
+      isChildSame = state;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChattingRow(
+        "user",
+        UserWrapper(Container(
+            child: Row(children: [
+          Container(
+              child: TextButton(
+                  style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      side: BorderSide(
+                        style: BorderStyle.none,
+                      )),
+                  onPressed: () {
+                    if (isChildSame != null) return;
+                    setIsChildSame(true);
+                    widget.setCurStep("problemCheck");
+                    widget.setCurChild(widget.child);
+                    widget.setCurAge(widget.age.toString());
+                    widget.setCurTemperament(widget.temperament);
+                    widget.setCommentBody(
+                        StateWrapper(content: BotProblemCheck(), state: true));
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: isChildSame == true
+                            ? Color(0xffFFA8A6)
+                            : Colors.white,
+                      ),
+                      padding: EdgeInsets.only(
+                        top: 10,
+                        bottom: 10,
+                        right: 15,
+                        left: 15,
+                      ),
+                      child: Text("Yes",
+                          style: TextStyle(
+                              color: isChildSame == true
+                                  ? Colors.white
+                                  : Color(0xff72777A)))))),
+          SizedBox(width: 10),
+          Container(
+              child: TextButton(
+                  style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      side: BorderSide(
+                        style: BorderStyle.none,
+                      )),
+                  onPressed: () async {
+                    if (isChildSame != null) return;
+                    setIsChildSame(false);
+                    widget.setCurStep("nameCheck");
+                    widget.setCommentBody(
+                        StateWrapper(content: BotNameCheck(), state: true));
+                  },
+                  child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: isChildSame == false
+                              ? Color(0xffFFA8A6)
+                              : Colors.white),
+                      padding: EdgeInsets.only(
+                        top: 10,
+                        bottom: 10,
+                        right: 15,
+                        left: 15,
+                      ),
+                      child: Text("No",
+                          style: TextStyle(
+                              color: isChildSame == false
+                                  ? Colors.white
+                                  : Color(0xff72777A))))))
+        ]))));
+  }
+}
+
 Container BotFirst(String child) {
-  return BotWrapper(Column(children: [
-    Row(children: [
-      Text("Hello. I'm A-eye"),
-      Text("I'm your personal assistant")
-    ]),
-    Text("I'm your personal assistant"),
-    Text("Are you having problem with '$child'")
-  ]));
+  return BotWrapper(Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text("Hello. I'm A-eye", style: TextStyle(height: 1.5)),
+        Text("I'm your personal assistant", style: TextStyle(height: 1.5)),
+        Text("Are you having problem with", style: TextStyle(height: 1.5)),
+        Text("`$child`?", style: TextStyle(height: 1.5))
+      ]));
 }
 
 Container BotNameCheck() {
-  return BotWrapper(Column(children: [Text("What is his/her name?")]));
+  return ChattingRow(
+      "bot", BotWrapper(Column(children: [Text("What is his/her name?")])));
 }
 
 Container BotAgeCheck(String child) {
-  return BotWrapper(Column(children: [Text("How old is $child")]));
+  return ChattingRow(
+      "bot", BotWrapper(Column(children: [Text("How old is $child")])));
 }
 
 Container BotTemperamentCheck(String child) {
-  return BotWrapper(
-      Column(children: [Text("What temperament does $child have?")]));
+  return ChattingRow(
+      "bot",
+      BotWrapper(
+          Column(children: [Text("What temperament does $child have?")])));
 }
 
 Container BotProblemCheck() {
-  return BotWrapper(
-      Column(children: [Text("Tell me about the problem briefly")]));
+  return ChattingRow(
+      "bot",
+      BotWrapper(
+          Column(children: [Text("Tell me about the problem briefly")])));
 }
 
 Container BotHmm() {
-  return BotWrapper(Column(children: [Text("Hmm.. Let me see")]));
+  return ChattingRow(
+      "bot", BotWrapper(Column(children: [Text("Hmm.. Let me see")])));
 }
 
 Container ChattingRow(String user, Widget content) {
   if (user == "bot") {
     return Container(
+        margin: EdgeInsets.only(bottom: 20),
         child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-          Container(child: AeyeIcon()),
-          Container(child: content)
-        ]));
+              Container(child: AeyeIcon(Color(0xffFFF7DF))),
+              SizedBox(width: 15),
+              Container(child: content)
+            ]));
   } else {
     return Container(
+        margin: EdgeInsets.only(bottom: 15),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [content]));
   }
 }
 
-Container AeyeIcon() {
+Container AeyeIcon(Color backgroundColor) {
   return Container(
-      padding: EdgeInsets.all(5),
+      width: 50,
+      height: 50,
+      padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(10)),
-      child: Image.asset("assets/images/logo.png"));
+          color: backgroundColor, borderRadius: BorderRadius.circular(30)),
+      child: Image.asset(
+        "assets/images/logo_bard.png",
+      ));
 }
 
 Container BotWrapper(Widget content) {
   return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 16, right: 16, top: 15, bottom: 15),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(10),
-            bottomRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-          ),
-          color: Color(0xffFFF7DF)),
+        color: Color(0xffFFF7DF),
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+          bottomLeft: Radius.circular(20),
+        ),
+      ),
       child: content);
 }
 
@@ -537,11 +767,12 @@ Container UserWrapper(Widget content) {
   return Container(
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-            bottomLeft: Radius.circular(10),
-          ),
-          color: Color(0xffFFF1EC)),
+        color: Color(0xffFFF1EC),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+          bottomLeft: Radius.circular(15),
+        ),
+      ),
       child: content);
 }

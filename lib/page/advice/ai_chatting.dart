@@ -1,7 +1,10 @@
 import "dart:async";
 
 import "package:aeye/component/common/loading_proto.dart";
+import "package:aeye/page/advice/ai_result.dart";
 import "package:flutter/material.dart";
+import 'package:flutter/scheduler.dart';
+import "package:get/get.dart";
 
 class AiChatting extends StatefulWidget {
   const AiChatting(
@@ -21,15 +24,28 @@ class AiChatting extends StatefulWidget {
 
 class _AiChattingState extends State<AiChatting> {
   TextEditingController controller = TextEditingController();
+  ScrollController _scrollController = ScrollController();
 
   void removeFocus(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
+  }
+
+  void _scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn,
+    );
   }
 
   List<Widget> commentBody = [];
   void setCommentBody(Widget comment) {
     setState(() {
       commentBody.add(comment);
+    });
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _scrollDown();
     });
   }
 
@@ -139,7 +155,7 @@ class _AiChattingState extends State<AiChatting> {
               },
             );
           }),
-          backgroundColor: Color(0xffFFF7DF),
+          backgroundColor: Color(0xffFFF2CB),
           elevation: 0.1,
           centerTitle: false,
           title: Container(
@@ -171,9 +187,9 @@ class _AiChattingState extends State<AiChatting> {
                 child: Column(children: [
                   Expanded(
                       child: SingleChildScrollView(
+                          controller: _scrollController,
                           child: Container(
-                              height: 1000,
-                              padding: EdgeInsets.only(left: 30, right: 30),
+                              padding: EdgeInsets.only(left: 20, right: 20),
                               child: Column(children: commentBody)))),
                   Container(
                       width: MediaQuery.of(context).size.width,
@@ -203,7 +219,7 @@ class _AiChattingState extends State<AiChatting> {
                                   style: TextStyle(
                                       fontSize: 14, color: Colors.black),
                                   decoration: InputDecoration(
-                                      hintText: "Add A Comment",
+                                      hintText: "Type a message",
                                       labelStyle: TextStyle(
                                           color:
                                               Color.fromRGBO(50, 50, 50, 0.4)),
@@ -246,7 +262,6 @@ class _AiChattingState extends State<AiChatting> {
                             onPressed: () async {
                               userInput(controller.text);
                               controller.text = "";
-                              removeFocus(context);
                             },
                           )
                         ],
@@ -328,20 +343,6 @@ Row CommentInput(TextEditingController controller) {
   ]);
 }
 
-class ChattingBody extends StatefulWidget {
-  const ChattingBody({Key? key}) : super(key: key);
-
-  @override
-  State<ChattingBody> createState() => _ChattingBodyState();
-}
-
-class _ChattingBodyState extends State<ChattingBody> {
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
 class TemperamentButtonWrapper extends StatefulWidget {
   const TemperamentButtonWrapper(
       {Key? key,
@@ -395,7 +396,7 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: curCheck == "Easy"
-                              ? Color(0xffFF717F)
+                              ? Color(0xffFFA8A6)
                               : Colors.white,
                         ),
                         padding: EdgeInsets.all(10),
@@ -419,7 +420,7 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                       widget.setCurStep("problemCheck");
                       widget.setCurTemperament("Difficult");
                       widget.setCommentBody(ChattingRow(
-                          "user",
+                          "bot",
                           BotWrapper(
                               Text("Tell me about the problem briefly"))));
                     },
@@ -427,7 +428,7 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: curCheck == "Difficult"
-                              ? Color(0xffFF717F)
+                              ? Color(0xffFFA8A6)
                               : Colors.white,
                         ),
                         padding: EdgeInsets.all(10),
@@ -451,7 +452,7 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                       widget.setCurStep("problemCheck");
                       widget.setCurTemperament("Slow-to-warm-up");
                       widget.setCommentBody(ChattingRow(
-                          "user",
+                          "bot",
                           BotWrapper(
                               Text("Tell me about the problem briefly"))));
                     },
@@ -459,7 +460,7 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: curCheck == "Slow-to-warm-up"
-                              ? Color(0xffFF717F)
+                              ? Color(0xffFFA8A6)
                               : Colors.white,
                         ),
                         padding: EdgeInsets.all(10),
@@ -538,21 +539,24 @@ class _ViewSolutionState extends State<ViewSolution> {
               : Container(
                   child: Column(
                     children: [
-                      Text("Here are solutions"),
+                      Text("Here are solutions",
+                          style: TextStyle(fontSize: 17, height: 1.5)),
                       SizedBox(height: 10),
                       OutlinedButton(
                           style: OutlinedButton.styleFrom(
                               side: BorderSide(
                             style: BorderStyle.none,
                           )),
-                          onPressed: () async {},
+                          onPressed: () async {
+                            Get.to(AiResult());
+                          },
                           child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
                                 color: Color(0xffFFDD67),
                               ),
                               padding: EdgeInsets.all(5),
-                              child: Text("View  solutions",
+                              child: Text("View solutions",
                                   style: TextStyle(color: Colors.white)))),
                     ],
                   ),
@@ -681,40 +685,58 @@ Container BotFirst(String child) {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text("Hello. I'm A-eye", style: TextStyle(height: 1.5)),
-        Text("I'm your personal assistant", style: TextStyle(height: 1.5)),
-        Text("Are you having problem with", style: TextStyle(height: 1.5)),
-        Text("`$child`?", style: TextStyle(height: 1.5))
+        Text("Hello. I'm A-eye", style: TextStyle(fontSize: 17, height: 1.5)),
+        Text("I'm your personal assistant",
+            style: TextStyle(fontSize: 17, height: 1.5)),
+        Text("Are you having problem with",
+            style: TextStyle(fontSize: 17, height: 1.5)),
+        Text("`$child`?", style: TextStyle(fontSize: 17, height: 1.5))
       ]));
 }
 
 Container BotNameCheck() {
   return ChattingRow(
-      "bot", BotWrapper(Column(children: [Text("What is his/her name?")])));
+      "bot",
+      BotWrapper(Column(children: [
+        Text("What is his/her name?",
+            style: TextStyle(fontSize: 17, height: 1.5))
+      ])));
 }
 
 Container BotAgeCheck(String child) {
   return ChattingRow(
-      "bot", BotWrapper(Column(children: [Text("How old is $child")])));
+      "bot",
+      BotWrapper(Column(children: [
+        Text("How old is $child", style: TextStyle(fontSize: 17, height: 1.5))
+      ])));
 }
 
 Container BotTemperamentCheck(String child) {
   return ChattingRow(
       "bot",
       BotWrapper(
-          Column(children: [Text("What temperament does $child have?")])));
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text("What temperament does",
+            style: TextStyle(fontSize: 17, height: 1.5)),
+        Text("$child have?", style: TextStyle(fontSize: 17, height: 1.5))
+      ])));
 }
 
 Container BotProblemCheck() {
   return ChattingRow(
       "bot",
-      BotWrapper(
-          Column(children: [Text("Tell me about the problem briefly")])));
+      BotWrapper(Column(children: [
+        Text("Tell me about the problem briefly",
+            style: TextStyle(fontSize: 17, height: 1.5))
+      ])));
 }
 
 Container BotHmm() {
   return ChattingRow(
-      "bot", BotWrapper(Column(children: [Text("Hmm.. Let me see")])));
+      "bot",
+      BotWrapper(Column(children: [
+        Text("Hmm.. Let me see", style: TextStyle(fontSize: 17, height: 1.5))
+      ])));
 }
 
 Container ChattingRow(String user, Widget content) {
@@ -725,7 +747,7 @@ Container ChattingRow(String user, Widget content) {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(child: AeyeIcon(Color(0xffFFF7DF))),
+              Container(child: AeyeIcon(Color(0xffFFF2CB))),
               SizedBox(width: 15),
               Container(child: content)
             ]));
@@ -751,13 +773,13 @@ Container AeyeIcon(Color backgroundColor) {
 
 Container BotWrapper(Widget content) {
   return Container(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 15, bottom: 15),
+      padding: EdgeInsets.only(left: 20, top: 20, bottom: 20, right: 24),
       decoration: BoxDecoration(
-        color: Color(0xffFFF7DF),
+        color: Color(0xffFFF2CB),
         borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-          bottomLeft: Radius.circular(20),
+          topRight: Radius.circular(25),
+          bottomRight: Radius.circular(25),
+          bottomLeft: Radius.circular(25),
         ),
       ),
       child: content);
@@ -765,13 +787,13 @@ Container BotWrapper(Widget content) {
 
 Container UserWrapper(Widget content) {
   return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Color(0xffFFF1EC),
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15),
-          topRight: Radius.circular(15),
-          bottomLeft: Radius.circular(15),
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25),
+          bottomLeft: Radius.circular(25),
         ),
       ),
       child: content);

@@ -3,7 +3,7 @@ import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/component/common/loading_proto.dart";
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
-import 'package:aeye/page/advice/add_info.dart';
+import 'package:aeye/page/advice/ai_chatting.dart';
 import "package:aeye/page/advice/temperament_explain.dart";
 import "package:aeye/page/advice/tipDetail.dart";
 import "package:aeye/utils/interface/child.dart";
@@ -41,8 +41,11 @@ class _AdviceMainState extends State<AdviceMain> {
   }
 
   _asyncMethod() async {
-    List<Child> response = await adviceServices.getChildren();
-    setChildList(response);
+    // List<Child> response = await adviceServices.getChildren();
+    // setChildList(response);
+    Child alex =
+        Child.fromJson({"id": "1241", "name": "Alex", "temperament": "Easy"});
+    setChildList([alex]);
   }
 
   @override
@@ -66,7 +69,8 @@ class _AdviceMainState extends State<AdviceMain> {
     List<String> curTips = [
       "During conflict",
       "Changing environment",
-      "Crying baby"
+      "Crying baby",
+      "Ask anything"
     ];
 
     Child curView = curChildList![curViewInd];
@@ -78,34 +82,36 @@ class _AdviceMainState extends State<AdviceMain> {
           width: double.infinity,
           height: double.infinity,
           padding: EdgeInsets.only(top: 30, left: 30, right: 30),
-          child: Column(children: [
-            Container(
-                child: Column(children: [
-              ViewTemperament(
-                  childList: curChildList!,
-                  curViewInd: curViewInd,
-                  curView: curView,
-                  setViewToLeft: setViewToLeft,
-                  setViewToRight: setViewToRight)
-            ])),
-            SizedBox(height: 30),
-            Container(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  Container(
-                    padding: EdgeInsets.only(left: 20, bottom: 10),
-                    child: Text("Parenting tips",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.w600)),
-                  ),
-                  SizedBox(height: 20),
-                  Column(
-                      children: curTips.map((tip) {
-                    return TipsNavigator(tip, curTemp, curView.name, context);
-                  }).toList())
-                ])),
-          ])),
+          child: SingleChildScrollView(
+            child: Column(children: [
+              Container(
+                  child: Column(children: [
+                ViewTemperament(
+                    childList: curChildList!,
+                    curViewInd: curViewInd,
+                    curView: curView,
+                    setViewToLeft: setViewToLeft,
+                    setViewToRight: setViewToRight)
+              ])),
+              SizedBox(height: 30),
+              Container(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                    Container(
+                      padding: EdgeInsets.only(left: 20, bottom: 10),
+                      child: Text("Parenting tips",
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w600)),
+                    ),
+                    SizedBox(height: 20),
+                    Column(
+                        children: curTips.map((tip) {
+                      return TipsNavigator(tip, curTemp, curView.name, context);
+                    }).toList())
+                  ])),
+            ]),
+          )),
       bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),
     );
   }
@@ -277,6 +283,9 @@ Container TipsNavigator(
     case ("Crying baby"):
       imageLink = "assets/images/babyCrying.png";
       break;
+    case ("Ask anything"):
+      imageLink = "assets/images/bard.png";
+      break;
     default:
       break;
   }
@@ -302,7 +311,12 @@ Container TipsNavigator(
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 alignment: Alignment.topLeft),
             onPressed: () {
-              if (title == "Crying baby"){
+              if (title == "Crying baby") {
+                return;
+              }
+              if (title == "Ask anything") {
+                Get.to(() =>
+                    AiChatting(child: "Alex", temperament: "Easy", age: 5));
                 return;
               }
               Get.to(
@@ -318,11 +332,14 @@ Container TipsNavigator(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(imageLink),
+                  SizedBox(
+                      width: 30, height: 30, child: Image.asset(imageLink)),
                   SizedBox(width: 10),
                   Text(title,
                       style: TextStyle(
-                          color: Colors.black,
+                          color: title != "Ask anything"
+                              ? Colors.black
+                              : Color(0xffC28FEF),
                           fontSize: 20,
                           fontWeight: FontWeight.w500)),
                 ],

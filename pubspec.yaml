@@ -170,6 +170,7 @@ flutter:
     - assets/images/recommend4.png
     - assets/images/recommend5.png
     - assets/images/recommend6.png
+    - assets/images/bard.png
     - assets/images/changing_environment_easy.png
     - assets/images/changing_environment_difficult.png
     - assets/images/changing_environment_slow.png

@@ -389,8 +389,8 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                       widget.setCurTemperament("Easy");
                       widget.setCommentBody(ChattingRow(
                           "bot",
-                          BotWrapper(
-                              Text("Tell me about the problem briefly."))));
+                          BotWrapper(Text("Tell me about the problem briefly.",
+                              style: TextStyle(fontSize: 15, height: 1.5)))));
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -421,8 +421,8 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                       widget.setCurTemperament("Difficult");
                       widget.setCommentBody(ChattingRow(
                           "bot",
-                          BotWrapper(
-                              Text("Tell me about the problem briefly"))));
+                          BotWrapper(Text("Tell me about the problem briefly",
+                              style: TextStyle(fontSize: 15, height: 1.5)))));
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -453,8 +453,8 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                       widget.setCurTemperament("Slow-to-warm-up");
                       widget.setCommentBody(ChattingRow(
                           "bot",
-                          BotWrapper(
-                              Text("Tell me about the problem briefly"))));
+                          BotWrapper(Text("Tell me about the problem briefly",
+                              style: TextStyle(fontSize: 15, height: 1.5)))));
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -540,7 +540,7 @@ class _ViewSolutionState extends State<ViewSolution> {
                   child: Column(
                     children: [
                       Text("Here are solutions",
-                          style: TextStyle(fontSize: 17, height: 1.5)),
+                          style: TextStyle(fontSize: 15, height: 1.5)),
                       SizedBox(height: 10),
                       OutlinedButton(
                           style: OutlinedButton.styleFrom(
@@ -685,12 +685,12 @@ Container BotFirst(String child) {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text("Hello. I'm A-eye", style: TextStyle(fontSize: 17, height: 1.5)),
+        Text("Hello. I'm A-eye", style: TextStyle(fontSize: 15, height: 1.5)),
         Text("I'm your personal assistant",
-            style: TextStyle(fontSize: 17, height: 1.5)),
+            style: TextStyle(fontSize: 15, height: 1.5)),
         Text("Are you having problem with",
-            style: TextStyle(fontSize: 17, height: 1.5)),
-        Text("`$child`?", style: TextStyle(fontSize: 17, height: 1.5))
+            style: TextStyle(fontSize: 15, height: 1.5)),
+        Text("`$child`?", style: TextStyle(fontSize: 15, height: 1.5))
       ]));
 }
 
@@ -699,7 +699,7 @@ Container BotNameCheck() {
       "bot",
       BotWrapper(Column(children: [
         Text("What is his/her name?",
-            style: TextStyle(fontSize: 17, height: 1.5))
+            style: TextStyle(fontSize: 15, height: 1.5))
       ])));
 }
 
@@ -707,7 +707,7 @@ Container BotAgeCheck(String child) {
   return ChattingRow(
       "bot",
       BotWrapper(Column(children: [
-        Text("How old is $child", style: TextStyle(fontSize: 17, height: 1.5))
+        Text("How old is $child", style: TextStyle(fontSize: 15, height: 1.5))
       ])));
 }
 
@@ -717,8 +717,8 @@ Container BotTemperamentCheck(String child) {
       BotWrapper(
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text("What temperament does",
-            style: TextStyle(fontSize: 17, height: 1.5)),
-        Text("$child have?", style: TextStyle(fontSize: 17, height: 1.5))
+            style: TextStyle(fontSize: 15, height: 1.5)),
+        Text("$child have?", style: TextStyle(fontSize: 15, height: 1.5))
       ])));
 }
 
@@ -727,7 +727,7 @@ Container BotProblemCheck() {
       "bot",
       BotWrapper(Column(children: [
         Text("Tell me about the problem briefly",
-            style: TextStyle(fontSize: 17, height: 1.5))
+            style: TextStyle(fontSize: 15, height: 1.5))
       ])));
 }
 
@@ -735,7 +735,7 @@ Container BotHmm() {
   return ChattingRow(
       "bot",
       BotWrapper(Column(children: [
-        Text("Hmm.. Let me see", style: TextStyle(fontSize: 17, height: 1.5))
+        Text("Hmm.. Let me see", style: TextStyle(fontSize: 15, height: 1.5))
       ])));
 }
 

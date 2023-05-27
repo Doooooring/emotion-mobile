@@ -1,6 +1,6 @@
 import "dart:async";
 
-import 'package:aeye/page/advice/temperament_test.dart';
+import 'package:aeye/page/advice/main.dart';
 import 'package:aeye/page/splash_screen.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
@@ -85,8 +85,8 @@ class _MyAppState extends State<MyApp> {
 
   _asyncMethod() async {
     userInfo = await storage.read(key: "access");
-    // Get.to(AiResult());
-    Get.to(TemperamentTest(child: "Alex"));
+    Get.to(AdviceMain());
+    // Get.to(TemperamentTest(child: "Alex"));
     return;
     if (userInfo != null) {
       Timer(Duration(milliseconds: 1500), () {

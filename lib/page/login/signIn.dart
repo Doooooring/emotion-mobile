@@ -54,7 +54,7 @@ class _SignInState extends State<SignIn> {
                       width: double.infinity,
                       height: double.infinity,
                       padding: EdgeInsets.only(left: 30, right: 30),
-                      color: Color(0xffFFF7DF),
+                      color: Color(0xffFFF2CB),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -72,7 +72,7 @@ class _SignInState extends State<SignIn> {
                           Container(
                               padding: EdgeInsets.only(),
                               decoration: BoxDecoration(
-                                color: Color(0xffFFF7DF),
+                                color: Color(0xffFFF2CB),
                               ),
                               child: Column(children: [
                                 Column(

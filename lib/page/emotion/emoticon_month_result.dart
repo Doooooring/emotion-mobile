@@ -117,7 +117,7 @@ class _EmotionMonthResultState extends State<EmotionMonthResult> {
               width: double.infinity,
               height: 1300,
               padding: EdgeInsets.only(bottom: 100),
-              color: Color(0xffFFF7DF),
+              color: Color(0xffFFF2CB),
               child: Column(children: [
                 Container(
                     child: Column(children: [
@@ -184,7 +184,7 @@ class EmoticonMonthResult extends StatelessWidget {
               width: double.infinity,
               height: 1300,
               padding: EdgeInsets.only(bottom: 100),
-              color: Color(0xffFFF7DF),
+              color: Color(0xffFFF2CB),
               child: Column(children: [
                 Container(
                     child: Column(children: [

@@ -47,7 +47,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     if (curPath == "init") {
       return AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xffFFF7DF),
+          backgroundColor: Color(0xffFFF2CB),
           elevation: 0,
           centerTitle: false,
           title: SizedBox(
@@ -91,7 +91,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     if (curPath == "advice") {
       return AppBar(
           automaticallyImplyLeading: false,
-          backgroundColor: Color(0xffFFF7DF),
+          backgroundColor: Color(0xffFFF2CB),
           elevation: 0.1,
           centerTitle: false,
           title: SizedBox(
@@ -144,7 +144,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             },
           );
         }),
-        backgroundColor: Color(0xffFFF7DF),
+        backgroundColor: Color(0xffFFF2CB),
         elevation: 1.0,
         centerTitle: false,
         title: SizedBox(
@@ -213,7 +213,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 //   if (curPath == "init") {
 //     return AppBar(
 //         automaticallyImplyLeading: false,
-//         backgroundColor: Color(0xffFFF7DF),
+//         backgroundColor: Color(0xffFFF2CB),
 //         elevation: 0,
 //         centerTitle: false,
 //         title: SizedBox(
@@ -254,7 +254,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 //   if (curPath == "advice") {
 //     return AppBar(
 //         automaticallyImplyLeading: false,
-//         backgroundColor: Color(0xffFFF7DF),
+//         backgroundColor: Color(0xffFFF2CB),
 //         elevation: 0.1,
 //         centerTitle: false,
 //         title: SizedBox(
@@ -304,7 +304,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 //           },
 //         );
 //       }),
-//       backgroundColor: Color(0xffFFF7DF),
+//       backgroundColor: Color(0xffFFF2CB),
 //       elevation: 1.0,
 //       centerTitle: false,
 //       title: SizedBox(

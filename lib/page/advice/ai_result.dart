@@ -190,7 +190,7 @@ class _AiResultState extends State<AiResult> with TickerProviderStateMixin {
             },
           );
         }),
-        backgroundColor: Color(0xffFFF7DF),
+        backgroundColor: Color(0xffFFF2CB),
         elevation: 0.1,
         centerTitle: false,
         title: Container(
@@ -305,7 +305,7 @@ class _AdviceBlockState extends State<AdviceBlock> {
           width: wrapperWidth,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40),
-            color: Color(0xffFFF7DF).withOpacity(opacity),
+            color: Color(0xffFFF2CB).withOpacity(opacity),
           ),
           child: Container(
             width: wrapperWidth,

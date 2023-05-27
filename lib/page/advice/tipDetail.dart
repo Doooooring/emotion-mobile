@@ -72,7 +72,7 @@ class TipDetail extends StatelessWidget {
           },
         );
       }),
-      backgroundColor: Color(0xffFFF7DF),
+      backgroundColor: Color(0xffFFF2CB),
       elevation: 0.1,
       centerTitle: false,
       title: Container(

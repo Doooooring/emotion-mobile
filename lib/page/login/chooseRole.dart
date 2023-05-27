@@ -17,7 +17,7 @@ class ChooseRole extends StatelessWidget {
       body: Container(
           padding: EdgeInsets.only(),
           decoration: BoxDecoration(
-            color: Color(0xffFFF7DF),
+            color: Color(0xffFFF2CB),
           ),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

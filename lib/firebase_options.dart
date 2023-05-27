@@ -44,40 +44,37 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDA-RLAw2t4T_h4-a5rcYQ5hNJL1WeLV90',
-    appId: '1:330734716432:web:4e6e0d35227293c1e02c95',
-    messagingSenderId: '330734716432',
-    projectId: 'a-eye-fcm-ea7a0',
-    authDomain: 'a-eye-fcm-ea7a0.firebaseapp.com',
-    storageBucket: 'a-eye-fcm-ea7a0.appspot.com',
-    measurementId: 'G-LK6MC79B8M',
+    apiKey: 'AIzaSyCaNTLdGQ_a3GnNW8LcAdQuUq4cE-xXb3o',
+    appId: '1:387542839332:web:ee2cc516356f7abc44a8b1',
+    messagingSenderId: '387542839332',
+    projectId: 'eternal-sylph-387408',
+    authDomain: 'eternal-sylph-387408.firebaseapp.com',
+    storageBucket: 'eternal-sylph-387408.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC2_Ab4D6m1W49EKmJsTPEF7hfAcGtyNHc',
-    appId: '1:330734716432:android:c38ea97bb6ed16dae02c95',
-    messagingSenderId: '330734716432',
-    projectId: 'a-eye-fcm-ea7a0',
-    storageBucket: 'a-eye-fcm-ea7a0.appspot.com',
+    apiKey: 'AIzaSyAUhFa5V-IiID8Th3uQHzyEUuKqKMUsFQk',
+    appId: '1:387542839332:android:78775ea202f2d41a44a8b1',
+    messagingSenderId: '387542839332',
+    projectId: 'eternal-sylph-387408',
+    storageBucket: 'eternal-sylph-387408.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDZX8W7HpH1Wr4qVAQUwq4gJuDALjdoGas',
-    appId: '1:330734716432:ios:27cbaab8ebc15866e02c95',
-    messagingSenderId: '330734716432',
-    projectId: 'a-eye-fcm-ea7a0',
-    storageBucket: 'a-eye-fcm-ea7a0.appspot.com',
-    iosClientId: '330734716432-v4no2kegbecjs6p5nf4fb7ef1rvjk8lg.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDVEhpkk6flYHdYpO3H0Ev-FYnwk-p69SY',
+    appId: '1:387542839332:ios:34f3fa621c00c0ec44a8b1',
+    messagingSenderId: '387542839332',
+    projectId: 'eternal-sylph-387408',
+    storageBucket: 'eternal-sylph-387408.appspot.com',
     iosBundleId: 'com.mobile.gdsc.aeye',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDZX8W7HpH1Wr4qVAQUwq4gJuDALjdoGas',
-    appId: '1:330734716432:ios:27cbaab8ebc15866e02c95',
-    messagingSenderId: '330734716432',
-    projectId: 'a-eye-fcm-ea7a0',
-    storageBucket: 'a-eye-fcm-ea7a0.appspot.com',
-    iosClientId: '330734716432-v4no2kegbecjs6p5nf4fb7ef1rvjk8lg.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDVEhpkk6flYHdYpO3H0Ev-FYnwk-p69SY',
+    appId: '1:387542839332:ios:34f3fa621c00c0ec44a8b1',
+    messagingSenderId: '387542839332',
+    projectId: 'eternal-sylph-387408',
+    storageBucket: 'eternal-sylph-387408.appspot.com',
     iosBundleId: 'com.mobile.gdsc.aeye',
   );
 }

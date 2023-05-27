@@ -1,7 +1,7 @@
-import "dart:async";
-
 import 'package:aeye/component/common/loading_proto.dart';
+import 'package:aeye/controller/childController.dart';
 import 'package:aeye/page/advice/temperament_result.dart';
+import "package:aeye/services/advice.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
@@ -21,6 +21,8 @@ import "package:get/get.dart";
 //   final QuestionContent left;
 //   final QuestionContent right;
 // }
+
+AdviceServices adviceServices = AdviceServices();
 
 List questionList = [
   {
@@ -119,9 +121,11 @@ List questionList = [
 ];
 
 class TemperamentTest extends StatefulWidget {
-  const TemperamentTest({Key? key, required this.child}) : super(key: key);
+  const TemperamentTest({Key? key, required this.child, required this.age})
+      : super(key: key);
 
   final String child;
+  final int age;
 
   @override
   State<TemperamentTest> createState() => _TemperamentTestState();
@@ -129,6 +133,7 @@ class TemperamentTest extends StatefulWidget {
 
 class _TemperamentTestState extends State<TemperamentTest>
     with TickerProviderStateMixin {
+  ChildController childController = Get.find();
   late final AnimationController _controller = AnimationController(
     duration: const Duration(milliseconds: 500),
     vsync: this,
@@ -145,7 +150,7 @@ class _TemperamentTestState extends State<TemperamentTest>
   );
 
   @override
-  void initState(){
+  void initState() {
     _controller.forward();
     super.initState();
   }
@@ -191,7 +196,20 @@ class _TemperamentTestState extends State<TemperamentTest>
     });
   }
 
-  void boxClicked(List<dynamic> scores) {
+  String getTemperament(int easy, int slowTo, int difficult) {
+    List<int> numList = [easy, slowTo, difficult];
+    numList.sort();
+    int maxNum = numList[2];
+    if (maxNum == easy) {
+      return "Easy";
+    } else if (maxNum == slowTo) {
+      return "Slow to warm up";
+    } else {
+      return "Difficult";
+    }
+  }
+
+  void boxClicked(List<dynamic> scores) async {
     scores.forEach((score) {
       switch (score) {
         case (0):
@@ -207,9 +225,14 @@ class _TemperamentTestState extends State<TemperamentTest>
     });
     if (curInd == 8) {
       setIsLoading();
-      Timer(Duration(seconds: 2), () {
-        Get.to(TemperamentResult(child: widget.child, temperament: "Easy"));
-      });
+      String curTemp =
+          getTemperament(easyScore, slowToWarmUpScore, difficultScore);
+      await adviceServices.addChild(
+          widget.child, curTemp, widget.age, childController);
+      // await Timer(Duration(seconds: 2), () {
+      //   Get.to(TemperamentResult(child: widget.child, temperament: curTemp));
+      // });
+      Get.to(TemperamentResult(child: widget.child, temperament: curTemp));
       setIsLoading();
       return;
     }
@@ -233,7 +256,7 @@ class _TemperamentTestState extends State<TemperamentTest>
           automaticallyImplyLeading: false,
           leadingWidth: 50,
           titleSpacing: 0,
-          backgroundColor: Color(0xffFFF7DF),
+          backgroundColor: Color(0xffFFF2CB),
           elevation: 0.1,
           centerTitle: false,
           title: Container(

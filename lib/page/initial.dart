@@ -163,7 +163,7 @@ class _InitialPageState extends State<InitialPage> {
                         spreadRadius: 0.0,
                         offset: Offset(0, 6))
                   ],
-                  color: Color(0xffFFF7DF),
+                  color: Color(0xffFFF2CB),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(50),
                     bottomRight: Radius.circular(50),

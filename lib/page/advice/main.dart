@@ -20,6 +20,13 @@ class AdviceMain extends StatefulWidget {
 class _AdviceMainState extends State<AdviceMain> {
   ChildController childController = Get.find();
 
+  bool isLoading = false;
+  setIsLoading(bool state) {
+    setState(() {
+      isLoading = state;
+    });
+  }
+
   int curViewInd = 0;
   void setViewToRight() {
     setState(() {
@@ -41,11 +48,17 @@ class _AdviceMainState extends State<AdviceMain> {
   }
 
   _asyncMethod() async {
-    // List<Child> response = await adviceServices.getChildren();
-    // setChildList(response);
-    Child alex =
-        Child.fromJson({"id": "1241", "name": "Alex", "temperament": "Easy"});
-    setChildList([alex]);
+    try {
+      setIsLoading(true);
+      // List<Child> response = await adviceServices.getChildren();
+      // setChildList(response);
+      Child alex = Child.fromJson(
+          {"id": "1241", "name": "Alex", "temperament": "Easy", "age": 5});
+      setChildList([alex]);
+    } catch (e) {
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   @override
@@ -147,7 +160,7 @@ class _ViewTemperamentState extends State<ViewTemperament> {
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Color(0xffFFF7DF),
+          color: Color(0xffFFF2CB),
           boxShadow: [
             BoxShadow(
                 color: Colors.grey.withOpacity(0.1),

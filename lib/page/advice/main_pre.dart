@@ -43,12 +43,18 @@ class _MainPreState extends State<MainPre> {
 
   _asyncMethod() async {
     setIsLoading(true);
-    List<Child> response = await adviceServices.getChildren();
-    if (response.isNotEmpty) {
-      childController.childList = response.obs;
+    try {
+      List<Child> response = await adviceServices.getChildren();
+      if (response.isNotEmpty) {
+        childController.childList = response.obs;
+      }
+      setChildList(response);
+    } catch (e) {
+      print("here");
+    } finally {
+      setIsLoading(false);
+      Get.to(AdviceMain());
     }
-    setChildList(response);
-    setIsLoading(false);
   }
 
   @override
@@ -109,7 +115,7 @@ class _MainPreState extends State<MainPre> {
                                 scaleWidth(context, 260),
                                 "View advice",
                                 AdviceMain(),
-                                Color(0xffFFF7DF)),
+                                Color(0xffFFF2CB)),
                         SizedBox(height: 30),
                         ButtonToMain()
                       ]))

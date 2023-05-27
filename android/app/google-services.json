@@ -1,43 +1,26 @@
 {
   "project_info": {
-    "project_number": "330734716432",
-    "project_id": "a-eye-fcm-ea7a0",
-    "storage_bucket": "a-eye-fcm-ea7a0.appspot.com"
+    "project_number": "387542839332",
+    "project_id": "eternal-sylph-387408",
+    "storage_bucket": "eternal-sylph-387408.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:330734716432:android:c38ea97bb6ed16dae02c95",
+        "mobilesdk_app_id": "1:387542839332:android:78775ea202f2d41a44a8b1",
         "android_client_info": {
           "package_name": "com.mobile.gdsc.aeye"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "330734716432-nu87thl69co3c09bc1dmpi96i4om2309.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC2_Ab4D6m1W49EKmJsTPEF7hfAcGtyNHc"
+          "current_key": "AIzaSyAUhFa5V-IiID8Th3uQHzyEUuKqKMUsFQk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "330734716432-nu87thl69co3c09bc1dmpi96i4om2309.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "330734716432-v4no2kegbecjs6p5nf4fb7ef1rvjk8lg.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.mobile.gdsc.aeye"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

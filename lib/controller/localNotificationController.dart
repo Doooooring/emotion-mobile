@@ -43,7 +43,7 @@ class LocalNotificationController extends GetxController {
 
   Future<void> initialize() async {
     await Firebase.initializeApp(
-      name: "a-eye-fcm",
+      name: "a-eye-gdsc",
       options: DefaultFirebaseOptions.currentPlatform,
     );
 

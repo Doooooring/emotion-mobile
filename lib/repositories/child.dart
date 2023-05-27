@@ -21,11 +21,12 @@ class ChildRepositories {
     return result;
   }
 
-  Future<Map> postTemperament(String name, String temperament) async {
+  Future<Map> postTemperament(String name, String temperament, int age) async {
     Map tokens = await loginController.getTokens();
     Uri endPoint = Uri.parse('$HOST_URL/child/advice');
 
-    var bodyEncoded = json.encode({"name": name, "temperament": temperament});
+    var bodyEncoded =
+        json.encode({"name": name, "temperament": temperament, "age": age});
 
     http.Response response =
         await http.post(endPoint, body: bodyEncoded, headers: {

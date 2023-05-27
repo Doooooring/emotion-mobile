@@ -1,6 +1,6 @@
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
-import "package:aeye/page/advice/main.dart";
+import 'package:aeye/page/advice/temperament_test.dart';
 import "package:aeye/services/advice.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
@@ -18,6 +18,7 @@ class PopUpSelect extends StatefulWidget {
 
 class _PopUpSelectState extends State<PopUpSelect> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
   ChildController childController = Get.find();
 
   String dropDownValue = "Easy";
@@ -32,7 +33,7 @@ class _PopUpSelectState extends State<PopUpSelect> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: PopUp(context, dropDownValue, setDropDownValue, nameController,
-            childController));
+            ageController, childController));
   }
 }
 
@@ -40,7 +41,8 @@ GestureDetector PopUp(
     BuildContext context,
     String dropDownValue,
     Function(String) setDropDownValue,
-    TextEditingController textController,
+    TextEditingController nameController,
+    TextEditingController ageController,
     ChildController childController) {
   return GestureDetector(
     behavior: HitTestBehavior.opaque,
@@ -62,14 +64,19 @@ GestureDetector PopUp(
                     },
                     icon: Icon(Icons.arrow_back_ios)),
                 TextButton(
-                    onPressed: () async {
-                      bool apiState = await adviceServices.addChild(
-                          textController.text, dropDownValue, childController);
-                      if (apiState) {
-                        Get.to(AdviceMain());
-                      } else {
-                        print("post error");
-                      }
+                    onPressed: () {
+                      Get.to(TemperamentTest(
+                          child: nameController.text,
+                          age: int.parse(ageController.text)));
+                      // bool apiState = await adviceServices.addChild(
+                      //     nameController.text,
+                      //     ageController.text,
+                      //     childController);
+                      // if (apiState) {
+                      //   Get.to(AdviceMain());
+                      // } else {
+                      //   print("post error");
+                      // }
                     },
                     child: Text("Save",
                         style: TextStyle(color: Colors.black, fontSize: 22)))
@@ -113,7 +120,7 @@ GestureDetector PopUp(
                         scrollPadding: EdgeInsets.all(0),
                         style: TextStyle(
                             fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
-                        controller: textController,
+                        controller: nameController,
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.only(left: 10),
                             hintText: "Write your child name",
@@ -137,7 +144,7 @@ GestureDetector PopUp(
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 SizedBox(
                     width: scaleWidth(context, 140),
-                    child: Text("Temperament",
+                    child: Text("Age",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w400, fontSize: 23))),
@@ -156,33 +163,51 @@ GestureDetector PopUp(
                           spreadRadius: 0,
                         )
                       ]),
-                  child: DropdownButtonFormField(
-                      decoration: InputDecoration(
-                          labelStyle:
-                              TextStyle(color: Color.fromRGBO(50, 50, 50, 0.4)),
-                          contentPadding: EdgeInsets.only(left: 10),
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white))),
-                      dropdownColor: Colors.white,
-                      menuMaxHeight: 200,
-                      value: dropDownValue,
-                      items: ["Easy", "Difficult", "Slow to warm up"]
-                          .map((temperament) {
-                        return DropdownMenuItem(
-                            value: temperament,
-                            child: Container(
-                                child: Text(
-                              temperament,
-                            )));
-                      }).toList(),
-                      onChanged: (value) {
-                        if (value == null) {
-                          return;
-                        }
-                        setDropDownValue(value);
-                      }),
+                  child: TextField(
+                    scrollPadding: EdgeInsets.all(0),
+                    style: TextStyle(
+                        fontSize: 15, color: Color.fromRGBO(50, 50, 50, 1)),
+                    controller: ageController,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 10),
+                        hintText: "Write your child name",
+                        hintStyle: TextStyle(fontSize: 15),
+                        labelStyle:
+                            TextStyle(color: Color.fromRGBO(50, 50, 50, 0.4)),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1, color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.white))),
+                  ),
+                  // child: DropdownButtonFormField(
+                  //     decoration: InputDecoration(
+                  //         labelStyle:
+                  //             TextStyle(color: Color.fromRGBO(50, 50, 50, 0.4)),
+                  //         contentPadding: EdgeInsets.only(left: 10),
+                  //         enabledBorder: InputBorder.none,
+                  //         focusedBorder: InputBorder.none,
+                  //         border: OutlineInputBorder(
+                  //             borderSide: BorderSide(color: Colors.white))),
+                  //     dropdownColor: Colors.white,
+                  //     menuMaxHeight: 200,
+                  //     value: dropDownValue,
+                  //     items: ["Easy", "Difficult", "Slow to warm up"]
+                  //         .map((temperament) {
+                  //       return DropdownMenuItem(
+                  //           value: temperament,
+                  //           child: Container(
+                  //               child: Text(
+                  //             temperament,
+                  //           )));
+                  //     }).toList(),
+                  //     onChanged: (value) {
+                  //       if (value == null) {
+                  //         return;
+                  //       }
+                  //       setDropDownValue(value);
+                  //     }),
                 )
               ]))
         ])),

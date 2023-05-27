@@ -1,4 +1,6 @@
+import 'package:aeye/page/advice/main.dart';
 import "package:flutter/material.dart";
+import "package:get/get.dart";
 
 class Explain {
   Explain(this.characteristics, this.raising, this.example);
@@ -81,16 +83,20 @@ class _TemperamentResultState extends State<TemperamentResult> {
             scrollDirection: Axis.vertical,
             physics: ClampingScrollPhysics(),
             child: Container(
-                color: Color(0xffFFF7DF),
+                color: Color(0xffFFF2CB),
                 padding:
                     EdgeInsets.only(left: 30, right: 30, top: 80, bottom: 120),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                        Text("Done",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w600))
+                        TextButton(
+                            onPressed: () {
+                              Get.to(AdviceMain());
+                            },
+                            child: Text("Done",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.w600)))
                       ]),
                       SizedBox(height: 40),
                       Row(

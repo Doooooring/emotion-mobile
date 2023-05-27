@@ -9,7 +9,7 @@ class PrimarySignUp extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Container(
           decoration: BoxDecoration(
-            color: Color(0xffFFF7DF),
+            color: Color(0xffFFF2CB),
           ),
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

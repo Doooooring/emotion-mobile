@@ -80,7 +80,7 @@ class _TemperamentExplainState extends State<TemperamentExplain> {
             scrollDirection: Axis.vertical,
             physics: ClampingScrollPhysics(),
             child: Container(
-                color: Color(0xffFFF7DF),
+                color: Color(0xffFFF2CB),
                 padding:
                     EdgeInsets.only(left: 30, right: 30, top: 80, bottom: 120),
                 child: Column(

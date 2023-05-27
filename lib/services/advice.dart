@@ -15,12 +15,13 @@ class AdviceServices {
     return childList;
   }
 
-  Future<bool> addChild(
-      String name, String temperament, ChildController controller) async {
-    Map childInfo = await childRepositories.postTemperament(name, temperament);
+  Future<bool> addChild(String name, String temperament, int age,
+      ChildController controller) async {
+    Map childInfo =
+        await childRepositories.postTemperament(name, temperament, age);
     String id = childInfo["id"];
-    Child newChild =
-        Child.fromJson({"id": id, "name": name, "temperament": temperament});
+    Child newChild = Child.fromJson(
+        {"id": id, "name": name, "temperament": temperament, "age": age});
     controller.addChild(newChild);
     return true;
   }

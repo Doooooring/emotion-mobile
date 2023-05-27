@@ -39,7 +39,7 @@ class _LoginState extends State<Login> {
         body: Container(
           width: double.infinity,
           padding: EdgeInsets.only(left: 40, right: 40),
-          color: Color(0xffFFF7DF),
+          color: Colors.white,
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

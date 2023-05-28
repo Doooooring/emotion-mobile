@@ -5,7 +5,11 @@ import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
 
 class AiResult extends StatefulWidget {
-  const AiResult({Key? key}) : super(key: key);
+  const AiResult({Key? key, required this.title, required this.solutions})
+      : super(key: key);
+
+  final String title;
+  final List solutions;
 
   @override
   State<AiResult> createState() => _AiResultState();
@@ -214,7 +218,7 @@ class _AiResultState extends State<AiResult> with TickerProviderStateMixin {
             padding: EdgeInsets.only(top: 20),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: curData.map((data) {
+                children: widget.solutions.map((data) {
                   int idx = curData.indexOf(data);
                   return AdviceBlock(
                       order: idx,

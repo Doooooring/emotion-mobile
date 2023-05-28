@@ -53,12 +53,12 @@ SizedBox NavigatorButton(String temperament, BuildContext context) {
             Text(temperament,
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w400)),
             Text(" temperament",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w400))
           ]))));
 }
@@ -645,7 +645,7 @@ class _FourthSlideState extends State<FourthSlide> {
               widget.setCurPage(2);
               return;
             }
-            if (curPosition + delta.dy < -600) {
+            if (curPosition + delta.dy < -700) {
               return;
             }
             setCurPosition(curPosition + delta.dy);

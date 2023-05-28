@@ -1,11 +1,10 @@
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
 import 'package:aeye/page/advice/temperament_test.dart';
-import "package:aeye/services/advice.dart";
 import "package:flutter/material.dart";
 import "package:get/get.dart";
 
-AdviceServices adviceServices = AdviceServices();
+// AdviceServices adviceServices = AdviceServices();
 
 class PopUpSelect extends StatefulWidget {
   const PopUpSelect({

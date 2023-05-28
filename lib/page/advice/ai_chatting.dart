@@ -1,19 +1,22 @@
-import "dart:async";
-
 import "package:aeye/component/common/loading_proto.dart";
 import "package:aeye/page/advice/ai_result.dart";
+import "package:aeye/services/advice.dart";
 import "package:flutter/material.dart";
 import 'package:flutter/scheduler.dart';
 import "package:get/get.dart";
 
+AdviceServices adviceServices = AdviceServices();
+
 class AiChatting extends StatefulWidget {
   const AiChatting(
       {Key? key,
+      required this.id,
       required this.child,
       required this.temperament,
       required this.age})
       : super(key: key);
 
+  final String id;
   final String child;
   final String temperament;
   final int age;
@@ -115,6 +118,7 @@ class _AiChattingState extends State<AiChatting> {
       setCommentBody(ChattingRow("user", UserWrapper(Text(input))));
       setCommentBody(BotHmm());
       setCommentBody(ViewSolution(
+          id: widget.id,
           name: curChild,
           age: curAge,
           temperament: curTemperament,
@@ -192,13 +196,13 @@ class _AiChattingState extends State<AiChatting> {
                               padding: EdgeInsets.only(left: 20, right: 20),
                               child: Column(children: commentBody)))),
                   Container(
+                      margin: EdgeInsets.only(bottom: 20),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: 280,
+                            width: MediaQuery.of(context).size.width * 0.7,
                             height: 60,
                             decoration: BoxDecoration(
                                 color: Colors.white,
@@ -235,11 +239,14 @@ class _AiChattingState extends State<AiChatting> {
                             ),
                           ),
                           SizedBox(width: 5),
-                          OutlinedButton(
-                            style: OutlinedButton.styleFrom(
+                          TextButton(
+                            style: TextButton.styleFrom(
+                                minimumSize: Size.zero,
+                                padding: EdgeInsets.zero,
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                                 side: BorderSide(
-                              style: BorderStyle.none,
-                            )),
+                                  style: BorderStyle.none,
+                                )),
                             child: Container(
                                 padding: EdgeInsets.all(10),
                                 decoration: BoxDecoration(
@@ -320,26 +327,6 @@ Row CommentInput(TextEditingController controller) {
                     borderSide: BorderSide(width: 0, color: Colors.white))),
           )
         ])),
-    OutlinedButton(
-      style: OutlinedButton.styleFrom(
-          side: BorderSide(
-        style: BorderStyle.none,
-      )),
-      onPressed: () async {},
-      child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          color: Color(0xffFF717F),
-          padding: EdgeInsets.all(5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Icon(Icons.send, color: Colors.white),
-            ],
-          )),
-    )
   ]);
 }
 
@@ -389,8 +376,11 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                       widget.setCurTemperament("Easy");
                       widget.setCommentBody(ChattingRow(
                           "bot",
-                          BotWrapper(Text("Tell me about the problem briefly.",
-                              style: TextStyle(fontSize: 15, height: 1.5)))));
+                          BotWrapper(Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+                            child: Text("Tell me about the problem briefly",
+                                style: TextStyle(fontSize: 15, height: 1.5)),
+                          ))));
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -421,8 +411,11 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                       widget.setCurTemperament("Difficult");
                       widget.setCommentBody(ChattingRow(
                           "bot",
-                          BotWrapper(Text("Tell me about the problem briefly",
-                              style: TextStyle(fontSize: 15, height: 1.5)))));
+                          BotWrapper(Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+                            child: Text("Tell me about the problem briefly",
+                                style: TextStyle(fontSize: 15, height: 1.5)),
+                          ))));
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -453,8 +446,11 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
                       widget.setCurTemperament("Slow-to-warm-up");
                       widget.setCommentBody(ChattingRow(
                           "bot",
-                          BotWrapper(Text("Tell me about the problem briefly",
-                              style: TextStyle(fontSize: 15, height: 1.5)))));
+                          BotWrapper(Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+                            child: Text("Tell me about the problem briefly",
+                                style: TextStyle(fontSize: 15, height: 1.5)),
+                          ))));
                     },
                     child: Container(
                         decoration: BoxDecoration(
@@ -477,12 +473,14 @@ class _TemperamentButtonWrapperState extends State<TemperamentButtonWrapper> {
 class ViewSolution extends StatefulWidget {
   const ViewSolution(
       {Key? key,
+      required this.id,
       required this.name,
       required this.age,
       required this.temperament,
       required this.problem})
       : super(key: key);
 
+  final String id;
   final String name;
   final String age;
   final String temperament;
@@ -500,6 +498,13 @@ class _ViewSolutionState extends State<ViewSolution> {
     });
   }
 
+  String title = "";
+  void setTitle(String newTitle) {
+    setState(() {
+      title = newTitle;
+    });
+  }
+
   List<void> solutions = [];
   void setSolutions(List<void> newSolutions) {
     setState(() {
@@ -509,10 +514,13 @@ class _ViewSolutionState extends State<ViewSolution> {
 
   _asyncMethod() async {
     setIsLoading(true);
-    // api 호출
-    Timer(Duration(seconds: 3), () {
-      setIsLoading(false);
-    });
+    Map<String, dynamic> result = await adviceServices.getAdvice(widget.id,
+        widget.name, int.parse(widget.age), widget.temperament, widget.problem);
+
+    setTitle(result["title"]);
+    setSolutions(result["solutions"]);
+
+    setIsLoading(false);
   }
 
   @override
@@ -548,7 +556,8 @@ class _ViewSolutionState extends State<ViewSolution> {
                             style: BorderStyle.none,
                           )),
                           onPressed: () async {
-                            Get.to(AiResult());
+                            Get.to(
+                                AiResult(title: title, solutions: solutions));
                           },
                           child: Container(
                               decoration: BoxDecoration(
@@ -726,8 +735,11 @@ Container BotProblemCheck() {
   return ChattingRow(
       "bot",
       BotWrapper(Column(children: [
-        Text("Tell me about the problem briefly",
-            style: TextStyle(fontSize: 15, height: 1.5))
+        Container(
+          constraints: BoxConstraints(maxWidth: 200),
+          child: Text("Tell me about the problem briefly",
+              style: TextStyle(fontSize: 15, height: 1.5)),
+        )
       ])));
 }
 

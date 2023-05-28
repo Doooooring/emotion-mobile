@@ -3,6 +3,7 @@ import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/component/common/loading_proto.dart";
 import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
+import 'package:aeye/page/advice/add_info.dart';
 import 'package:aeye/page/advice/ai_chatting.dart';
 import "package:aeye/page/advice/temperament_explain.dart";
 import "package:aeye/page/advice/tipDetail.dart";
@@ -50,11 +51,11 @@ class _AdviceMainState extends State<AdviceMain> {
   _asyncMethod() async {
     try {
       setIsLoading(true);
-      // List<Child> response = await adviceServices.getChildren();
-      // setChildList(response);
-      Child alex = Child.fromJson(
-          {"id": "1241", "name": "Alex", "temperament": "Easy", "age": 5});
-      setChildList([alex]);
+      List<Child> response = await adviceServices.getChildren();
+      setChildList(response);
+      // Child alex = Child.fromJson(
+      //     {"id": "1241", "name": "Alex", "temperament": "Easy", "age": 5});
+      // setChildList([alex]);
     } catch (e) {
     } finally {
       setIsLoading(false);
@@ -120,7 +121,7 @@ class _AdviceMainState extends State<AdviceMain> {
                     SizedBox(height: 20),
                     Column(
                         children: curTips.map((tip) {
-                      return TipsNavigator(tip, curTemp, curView.name, context);
+                      return TipsNavigator(tip, curTemp, curView, context);
                     }).toList())
                   ])),
             ]),
@@ -284,7 +285,12 @@ Container Slide(Child child, double width, double height) {
 }
 
 Container TipsNavigator(
-    String title, String curTemp, String name, BuildContext context) {
+    String title, String curTemp, Child child, BuildContext context) {
+  String id = child.id;
+  String name = child.name;
+  String temperament = child.temperament;
+  int age = child.age;
+
   String imageLink = "";
   switch (title) {
     case ("Changing environment"):
@@ -328,8 +334,8 @@ Container TipsNavigator(
                 return;
               }
               if (title == "Ask anything") {
-                Get.to(() =>
-                    AiChatting(child: "Alex", temperament: "Easy", age: 5));
+                Get.to(() => AiChatting(
+                    id: id, child: name, temperament: temperament, age: age));
                 return;
               }
               Get.to(
@@ -387,17 +393,14 @@ class _PopUpMenuButtonWrapperState extends State<PopUpMenuButtonWrapper> {
         // Callback that sets the selected popup menu item.
         onSelected: (SampleItem item) async {
           if (item == SampleItem.itemOne) {
+            Get.to(PopUpSelect());
           } else {}
         },
         itemBuilder: (BuildContext context) => [
           PopupMenuItem(
             value: SampleItem.itemOne,
             child: Text("edit"),
-          ),
-          PopupMenuItem(
-            value: SampleItem.itemTwo,
-            child: Text("daily report"),
-          ),
+          )
         ],
       ),
     );

@@ -30,6 +30,8 @@ class EmotionServices {
         String today = dateSelected.day.toString();
         int curId = result["diaryId"];
         String tempEmotion = result["tempEmotion"];
+        print("is temp emotion");
+        print(tempEmotion);
         setCurDate(today, curId, text, null);
         setCurTempEmotion(tempEmotion);
         return true;
@@ -37,11 +39,14 @@ class EmotionServices {
         Map result = await repository.patchDiary(id, text, null, "content");
         String today = dateSelected.day.toString();
         String tempEmotion = result["tempEmotion"];
+        print("is temp emotion");
+        print(tempEmotion);
         setCurDate(today, id, text, null);
         setCurTempEmotion(tempEmotion);
         return true;
       }
     } catch (e) {
+      print(e);
       return false;
     }
   }

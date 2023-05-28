@@ -47,7 +47,7 @@ class DiaryRepositories {
       "day": date.day,
       "content": text
     });
-
+    print("is f.....");
     http.Response response =
         await http.post(endPoint, body: bodyEncoded, headers: {
       "Content-Type": "application/json",
@@ -55,7 +55,11 @@ class DiaryRepositories {
       "cookie": tokens["refresh"]
     });
 
+    print("is s ....");
+
     dynamic result = json.decode(utf8.decode(response.bodyBytes));
+    print(result);
+    print(result["result"]);
     return Map.from(result["result"]);
   }
 

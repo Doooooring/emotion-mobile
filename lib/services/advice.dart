@@ -1,9 +1,11 @@
 import "package:aeye/controller/childController.dart";
+import "package:aeye/repositories/bard.dart";
 import "package:aeye/repositories/child.dart";
 import "package:aeye/utils/interface/child.dart";
 
 class AdviceServices {
   ChildRepositories childRepositories = ChildRepositories();
+  BardRepositories bardRepositories = BardRepositories();
 
   Future<List<Child>> getChildren() async {
     Map response = await childRepositories.getTemperament();
@@ -32,5 +34,18 @@ class AdviceServices {
     Child newInfo =
         Child.fromJson({id: id, name: name, temperament: temperament});
     controller.reviseChild(id, newInfo);
+  }
+
+  Future<Map<String, dynamic>> getAdvice(String id, String name, int age,
+      String temperament, String content) async {
+    try {
+      Map<String, dynamic> result =
+          await bardRepositories.getAdvice(id, name, age, temperament, content);
+      return result;
+    } catch (e) {
+      print(e);
+    } finally {
+      return {"result": null};
+    }
   }
 }

@@ -80,6 +80,9 @@ class LocalNotificationController extends GetxController {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (NotificationResponse notification) {
       String payload = notification.payload ?? "missing title";
+      print("is payload");
+      print(payload);
+      print("...");
 
       if (_context != null) {
         getAlert();
@@ -90,13 +93,16 @@ class LocalNotificationController extends GetxController {
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      print("is here");
       RemoteNotification? notification = message.notification;
+      print(notification);
       Get.to(() => BabyMonitor());
     });
   }
 
   void onMessageOpened() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      print("is here??");
       RemoteNotification? notification = message.notification;
       NotificationDetails platformChannelSpecifics = NotificationDetails(
           android: AndroidNotificationDetails(

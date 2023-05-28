@@ -47,13 +47,13 @@ class _MainPreState extends State<MainPre> {
       List<Child> response = await adviceServices.getChildren();
       if (response.isNotEmpty) {
         childController.childList = response.obs;
+        setChildList(response);
+        Get.to(AdviceMain());
       }
-      setChildList(response);
     } catch (e) {
       print("here");
     } finally {
       setIsLoading(false);
-      Get.to(AdviceMain());
     }
   }
 

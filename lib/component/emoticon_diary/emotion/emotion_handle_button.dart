@@ -38,6 +38,7 @@ class _EmotionHandleButtonState extends State<EmotionHandleButton> {
     return TextButton(
         child: const Text("SAVE", style: TextStyle(color: Colors.black)),
         onPressed: () async {
+          FocusScope.of(context).requestFocus(new FocusNode());
           widget.setIsChanged(false);
           widget.setIsLoading(true);
           bool apiState = await EmotionService.saveDiaryText(

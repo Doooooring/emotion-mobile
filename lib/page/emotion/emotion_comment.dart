@@ -274,7 +274,7 @@ Row CommentInput(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Container(
-          width: 320,
+          width: 280,
           height: 70,
           decoration: BoxDecoration(
               color: Colors.white,

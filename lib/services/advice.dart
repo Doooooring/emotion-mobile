@@ -36,16 +36,19 @@ class AdviceServices {
     controller.reviseChild(id, newInfo);
   }
 
-  Future<Map<String, dynamic>> getAdvice(String id, String name, int age,
-      String temperament, String content) async {
+  Future<List> getAdvice(
+      String name, int age, String temperament, String content) async {
     try {
-      Map<String, dynamic> result =
-          await bardRepositories.getAdvice(id, name, age, temperament, content);
+      print("is get advice");
+
+      List result =
+          await bardRepositories.getAdvice(name, age, temperament, content);
+      print("...");
+      print(result);
       return result;
     } catch (e) {
       print(e);
-    } finally {
-      return {"result": null};
+      return [];
     }
   }
 }

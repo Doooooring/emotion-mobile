@@ -45,7 +45,7 @@ Future<void> firebaseMessagingBackgroundHandler(
   );
 }
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   LocalNotificationController localNotificationController =
@@ -54,8 +54,6 @@ void main() async {
     await localNotificationController.initialize();
     final fcmTokenNew =
         await FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {});
-    print("token refresh");
-    print(fcmTokenNew);
 
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   } catch (e) {
@@ -84,12 +82,17 @@ class _MyAppState extends State<MyApp> {
 
   _asyncMethod() async {
     userInfo = await storage.read(key: "access");
+    //
+    // Get.to(AdviceMain());
+    // return;
+
     // Get.to(AdviceMain());
     // Get.to(TemperamentTest(child: "Alex"));
     // Timer(Duration(milliseconds: 1500), () {
     //   Get.to(InitialPage());
     // });
     // return;
+
     if (userInfo != null) {
       Timer(Duration(milliseconds: 1500), () {
         Get.to(InitialPage());
@@ -103,10 +106,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    print("is started");
     widget.localNotificationController.onMessage();
     widget.localNotificationController.onMessageOpened();
-    print("is on message");
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _asyncMethod();
     });

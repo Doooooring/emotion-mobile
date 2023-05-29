@@ -42,12 +42,14 @@ class LocalNotificationController extends GetxController {
       FlutterLocalNotificationsPlugin();
 
   Future<void> initialize() async {
-    await Firebase.initializeApp(
+    FirebaseApp state = await Firebase.initializeApp(
       name: "a-eye-gdsc",
       options: DefaultFirebaseOptions.currentPlatform,
     );
 
     final fcmToken = await FirebaseMessaging.instance.getToken();
+    print("...");
+    print(state);
     token = fcmToken!;
     print(fcmToken);
 
@@ -93,16 +95,7 @@ class LocalNotificationController extends GetxController {
 
   void onMessage() {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("is here");
-      RemoteNotification? notification = message.notification;
-      print(notification);
-      Get.to(() => BabyMonitor());
-    });
-  }
-
-  void onMessageOpened() {
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
-      print("is here??");
+      print("...onMessage...");
       RemoteNotification? notification = message.notification;
       NotificationDetails platformChannelSpecifics = NotificationDetails(
           android: AndroidNotificationDetails(
@@ -116,7 +109,31 @@ class LocalNotificationController extends GetxController {
       flutterLocalNotificationsPlugin.show(
         notification.hashCode,
         notification!.title,
-        notification!.body,
+        notification.body,
+        platformChannelSpecifics,
+      );
+      print(notification);
+      Get.to(() => BabyMonitor());
+    });
+  }
+
+  void onMessageOpened() {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      print("...on message opened...");
+      RemoteNotification? notification = message.notification;
+      NotificationDetails platformChannelSpecifics = NotificationDetails(
+          android: AndroidNotificationDetails(
+            "Baby fall",
+            "High_Importance_Notifications",
+            priority: Priority.max,
+            importance: Importance.max,
+          ),
+          iOS: DarwinNotificationDetails(
+              presentBadge: true, sound: "slow_spring_board.aiff"));
+      flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification!.title,
+        notification.body,
         platformChannelSpecifics,
       );
       if (_context != null) {

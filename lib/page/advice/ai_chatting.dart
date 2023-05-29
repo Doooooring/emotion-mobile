@@ -218,6 +218,9 @@ class _AiChattingState extends State<AiChatting> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 TextFormField(
+                                  onTap: () {
+                                    _scrollDown();
+                                  },
                                   controller: controller,
                                   scrollPadding: EdgeInsets.all(0),
                                   style: TextStyle(
@@ -297,7 +300,7 @@ class _StateWrapperState extends State<StateWrapper> {
   }
 }
 
-Row CommentInput(TextEditingController controller) {
+Row CommentInput(TextEditingController controller, Function scrollDown) {
   return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
     Container(
         width: 320,
@@ -314,6 +317,10 @@ Row CommentInput(TextEditingController controller) {
             borderRadius: BorderRadius.circular(45)),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           TextFormField(
+            onTap: () {
+              print("is on tap");
+              scrollDown();
+            },
             controller: controller,
             scrollPadding: EdgeInsets.all(0),
             style: TextStyle(fontSize: 18, color: Colors.black),
@@ -514,11 +521,11 @@ class _ViewSolutionState extends State<ViewSolution> {
 
   _asyncMethod() async {
     setIsLoading(true);
-    Map<String, dynamic> result = await adviceServices.getAdvice(widget.id,
+    List result = await adviceServices.getAdvice(
         widget.name, int.parse(widget.age), widget.temperament, widget.problem);
-
-    setTitle(result["title"]);
-    setSolutions(result["solutions"]);
+    print("is async method");
+    print(result);
+    setSolutions(result);
 
     setIsLoading(false);
   }
@@ -556,8 +563,8 @@ class _ViewSolutionState extends State<ViewSolution> {
                             style: BorderStyle.none,
                           )),
                           onPressed: () async {
-                            Get.to(
-                                AiResult(title: title, solutions: solutions));
+                            print(solutions);
+                            Get.to(AiResult(solutions: solutions));
                           },
                           child: Container(
                               decoration: BoxDecoration(

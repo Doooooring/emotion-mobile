@@ -315,7 +315,7 @@ class _TemperamentTestState extends State<TemperamentTest>
                                   height: 160,
                                   padding: EdgeInsets.all(30),
                                   decoration: BoxDecoration(
-                                      color: Color(0xffFFF1EC),
+                                      color: Color(0xffFFD8CB),
                                       boxShadow: [
                                         BoxShadow(
                                             color: Colors.grey.withOpacity(0.2),
@@ -362,7 +362,7 @@ class _TemperamentTestState extends State<TemperamentTest>
                                             spreadRadius: 1.0,
                                             offset: Offset(0, 0))
                                       ],
-                                      color: Color(0xffFFF1EC),
+                                      color: Color(0xffFFD8CB),
                                       borderRadius: BorderRadius.circular(18)),
                                   child: Column(
                                       mainAxisAlignment:

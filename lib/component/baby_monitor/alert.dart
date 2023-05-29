@@ -33,9 +33,8 @@ class _CircleButtonState extends State<CircleButton> {
     // final LocalNotificationController localNotificationController = Get.find();
     return ElevatedButton(
       onPressed: () {
-        print("here");
         Uri url = Uri.parse(
-            "https://www.google.co.kr/maps/search/%EC%86%8C%EC%95%84%EA%B3%BC?hl=ko");
+            "https://www.google.co.kr/maps/search/%EB%B3%91%EC%9B%90");
         _launchUrl(url);
         // localNotificationController.messaging = false.obs;
         // Get.back();

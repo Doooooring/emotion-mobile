@@ -225,7 +225,7 @@ class ButtonWrapper extends StatefulWidget {
 class _ButtonWrapperState extends State<ButtonWrapper> {
   @override
   Widget build(BuildContext context) {
-    double maxHeight = 50;
+    double maxHeight = 90;
 
     return Transform.translate(
       offset: Offset(0, widget.imageHeight - maxHeight),

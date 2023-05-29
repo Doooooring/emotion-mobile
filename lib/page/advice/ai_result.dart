@@ -5,10 +5,8 @@ import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
 
 class AiResult extends StatefulWidget {
-  const AiResult({Key? key, required this.title, required this.solutions})
-      : super(key: key);
+  const AiResult({Key? key, required this.solutions}) : super(key: key);
 
-  final String title;
   final List solutions;
 
   @override
@@ -16,39 +14,6 @@ class AiResult extends StatefulWidget {
 }
 
 class _AiResultState extends State<AiResult> with TickerProviderStateMixin {
-  List curData = [
-    {
-      "index": 1,
-      "title": "Make vegetables fun and appealing",
-      "content":
-          "Cut vegetables into fun shapes, or serve them with a dip that Alex likes. You can also try cooking vegetables in different ways, such as roasting, grilling, or steaming."
-    },
-    {
-      "index": 2,
-      "title": "Be a role model",
-      "content":
-          "Alex is more likely to eat vegetables if they see you eating them. Make sure to include vegetables in your own meals and snacks."
-    },
-    {
-      "index": 3,
-      "title": "Don't force it",
-      "content":
-          "If Alex refuses to eat vegetables, don't force them. This will only make them more resistant. Instead, try offering them vegetables again at a later time."
-    },
-    {
-      "index": 4,
-      "title": "Make it a game",
-      "content":
-          "Turn eating vegetables into a game. You can try seeing who can eat the most vegetables in a minute, or who can make the funniest face while eating a vegetable."
-    },
-    {
-      "index": 5,
-      "title": "Offer positive reinforcement",
-      "content":
-          "Praise Alex when they do eat vegetables. You can also offer them a small reward, such as a sticker or a piece of fruit."
-    },
-  ];
-
   late final AnimationController _FirstController = AnimationController(
     duration: const Duration(milliseconds: 250),
     vsync: this,
@@ -219,7 +184,7 @@ class _AiResultState extends State<AiResult> with TickerProviderStateMixin {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: widget.solutions.map((data) {
-                  int idx = curData.indexOf(data);
+                  int idx = widget.solutions.indexOf(data);
                   return AdviceBlock(
                       order: idx,
                       title: data["title"],

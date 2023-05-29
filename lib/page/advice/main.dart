@@ -5,6 +5,7 @@ import "package:aeye/controller/childController.dart";
 import "package:aeye/controller/sizeController.dart";
 import 'package:aeye/page/advice/add_info.dart';
 import 'package:aeye/page/advice/ai_chatting.dart';
+import 'package:aeye/page/advice/temperament_detail.dart';
 import "package:aeye/page/advice/temperament_explain.dart";
 import "package:aeye/page/advice/tipDetail.dart";
 import "package:aeye/utils/interface/child.dart";
@@ -87,7 +88,9 @@ class _AdviceMainState extends State<AdviceMain> {
       "Ask anything"
     ];
 
-    Child curView = curChildList![curViewInd];
+    Child curView = curViewInd < curChildList!.length
+        ? curChildList![curViewInd]
+        : curChildList![curViewInd - 1];
     String curTemp = curView.temperament;
 
     return Scaffold(
@@ -114,9 +117,20 @@ class _AdviceMainState extends State<AdviceMain> {
                       children: [
                     Container(
                       padding: EdgeInsets.only(left: 20, bottom: 10),
-                      child: Text("Parenting tips",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.w600)),
+                      child: Row(
+                        children: [
+                          Text("Parenting tips",
+                              style: TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.w600)),
+                          IconButton(
+                            icon: Image.asset(
+                                "assets/images/question_in_circle.png"),
+                            onPressed: () {
+                              Get.to(TemperamentDetail());
+                            },
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(height: 20),
                     Column(
@@ -179,10 +193,53 @@ class _ViewTemperamentState extends State<ViewTemperament> {
             duration: Duration(milliseconds: 200),
             left: -1 * distance * widget.curViewInd,
             child: SizedBox(
-                child: Row(
-                    children: widget.childList.map((child) {
-              return Slide(child, distance, height);
-            }).toList())),
+                child: Row(children: [
+              ...widget.childList.map((child) {
+                return Slide(child, distance, height);
+              }).toList(),
+              Container(
+                  width: distance,
+                  height: height,
+                  padding: EdgeInsets.only(left: 30, right: 30),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(0.1),
+                          blurRadius: 18.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(0, 6))
+                    ],
+                    color: Color(0xffE2E2E2),
+                  ),
+                  child: TextButton(
+                      onPressed: () {
+                        Get.to(PopUpSelect());
+                      },
+                      style: TextButton.styleFrom(
+                          minimumSize: Size.zero,
+                          padding: EdgeInsets.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          side: BorderSide(
+                            style: BorderStyle.none,
+                          )),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                                width: 60,
+                                height: 60,
+                                child: Image.asset(
+                                    "assets/images/baby_vacant.png")),
+                            SizedBox(width: 10),
+                            SizedBox(
+                                child: Text("Add baby",
+                                    style: TextStyle(
+                                        color: Color(0xff5F5F5F),
+                                        fontSize: 30)))
+                          ])))
+            ])),
           ),
           Positioned(
               top: height / 2 - 15,
@@ -208,12 +265,12 @@ class _ViewTemperamentState extends State<ViewTemperament> {
                   padding: EdgeInsets.zero, // 패딩 설정
                   constraints: BoxConstraints(),
                   onPressed: () {
-                    if (widget.curViewInd + 1 == widget.childList.length) {
+                    if (widget.curViewInd == widget.childList.length) {
                       return;
                     }
                     widget.setViewToRight();
                   },
-                  icon: widget.curViewInd + 1 == widget.childList.length
+                  icon: widget.curViewInd == widget.childList.length
                       ? SizedBox(width: 0)
                       : Icon(size: 30, Icons.keyboard_arrow_right)))
         ]));
@@ -241,10 +298,7 @@ Container Slide(Child child, double width, double height) {
       height: height,
       padding: EdgeInsets.only(left: 50, right: 30, top: 10),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [PopUpMenuButtonWrapper()])),
+        SizedBox(height: 20),
         Text(child.name,
             style: TextStyle(fontSize: 45, fontWeight: FontWeight.w800)),
         SizedBox(height: 20),
@@ -268,14 +322,14 @@ Container Slide(Child child, double width, double height) {
                       children: [
                         Text(child.temperament,
                             style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
                                 color: Color(0xffFF717F))),
-                        SizedBox(height: 15),
+                        SizedBox(height: 5),
                         Text("temperament",
                             style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.w400,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
                                 color: Color(0xffFF717F)))
                       ]),
                 ),

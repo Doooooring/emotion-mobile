@@ -93,8 +93,7 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
 
     String selectDay = '${monthToEng} ${day} ${year}';
 
-    Color backgroundColor =
-        id == null ? Color.fromRGBO(250, 250, 250, 0.2) : Color(0xffFFF6DA);
+    Color backgroundColor = id == null ? Color(0xffFAF8F8) : Color(0xffFFF6DA);
 
     return Container(
       padding: EdgeInsets.only(top: 15, bottom: 30),
@@ -103,10 +102,10 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
           borderRadius: BorderRadius.circular(50),
           boxShadow: [
             BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                blurRadius: 5.0,
+                color: Color.fromRGBO(0, 0, 0, 0.06),
+                blurRadius: 18.0,
                 spreadRadius: 0.0,
-                offset: Offset(0, 0))
+                offset: Offset(0, 6))
           ],
           color: backgroundColor),
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [

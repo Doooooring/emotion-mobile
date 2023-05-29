@@ -94,10 +94,11 @@ class _EmotionWrapperState extends State<EmotionWrapper>
     double curValue = _animation.value;
     double maxHeight = 50;
     double imageHeight = max(curValue * 100, maxHeight);
+    double pageHeight = MediaQuery.of(context).size.height;
     return SingleChildScrollView(
       child: Container(
         width: double.infinity,
-        height: 800,
+        height: pageHeight,
         decoration: BoxDecoration(color: Colors.white),
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -106,7 +107,7 @@ class _EmotionWrapperState extends State<EmotionWrapper>
           },
           child: Container(
             width: double.infinity,
-            height: 800,
+            height: pageHeight,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
@@ -158,7 +159,7 @@ class _EmotionWrapperState extends State<EmotionWrapper>
                     setEmotionSelectorUp: widget.setEmotionSelectorUp,
                     setIsLoading: widget.setIsLoading,
                     imageHeight: imageHeight),
-                Loading(isLoading: isLoading, height: 800),
+                Loading(isLoading: isLoading, height: pageHeight),
               ],
             ),
           ),

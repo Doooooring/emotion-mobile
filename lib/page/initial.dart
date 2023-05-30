@@ -230,22 +230,7 @@ class _InitialPageState extends State<InitialPage> {
                                       ]))),
                             ]))
                   ]),
-                  SizedBox(height: 20),
-                  role == "main"
-                      ? TextButton(
-                          style: TextButton.styleFrom(
-                            minimumSize: Size.zero,
-                            padding: EdgeInsets.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          onPressed: () {
-                            setViewCode();
-                          },
-                          child: viewCode
-                              ? Text(userController.code.toString())
-                              : Text("View code",
-                                  style: TextStyle(fontSize: 15)))
-                      : SizedBox(width: 0),
+                  SizedBox(height: 20)
                 ],
               )),
           Expanded(

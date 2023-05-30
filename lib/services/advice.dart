@@ -43,8 +43,7 @@ class AdviceServices {
 
       List result =
           await bardRepositories.getAdvice(name, age, temperament, content);
-      print("...");
-      print(result);
+
       return result;
     } catch (e) {
       print(e);

@@ -268,10 +268,11 @@ Container FirstSlide(BuildContext context, double curValue, double height) {
       height: height,
       padding: EdgeInsets.only(top: 50),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: 130),
           Transform.translate(
-            offset: Offset(0, 30 - min(curValue, titlePop) * 150),
+            offset: Offset(0, 30 - min(curValue, titlePop) * 300),
             child: Opacity(
                 opacity: min(titlePop, curValue) * 10,
                 child: Text("1",
@@ -370,12 +371,13 @@ Container SecondSlide(BuildContext context, double curValue, double height) {
       height: height,
       padding: EdgeInsets.only(top: 50),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: 130),
           Transform.translate(
             offset: Offset(0, 30 - min(curValue, titlePop) * 300),
             child: Opacity(
-                opacity: min(titlePop, curValue) * 5,
+                opacity: min(titlePop, curValue) * 10,
                 child: Text("2",
                     style: TextStyle(fontSize: 25, color: Color(0xff828282)))),
           ),
@@ -484,7 +486,7 @@ Container SecondSlide(BuildContext context, double curValue, double height) {
 }
 
 Container ThirdSlide(BuildContext context, double curValue, double height) {
-  double titlePop = 0.2;
+  double titlePop = 0.1;
   double firstBoxPop = 0.3;
   double leftStrPop = 0.5;
   double rightStrPop = 0.7;
@@ -496,10 +498,13 @@ Container ThirdSlide(BuildContext context, double curValue, double height) {
       child: Column(
         children: [
           SizedBox(height: 130),
-          Opacity(
-              opacity: min(titlePop, curValue) * 5,
-              child: Text("3",
-                  style: TextStyle(fontSize: 25, color: Color(0xff828282)))),
+          Transform.translate(
+              offset: Offset(0, 30 - min(curValue, titlePop) * 300),
+              child: Opacity(
+                  opacity: min(titlePop, curValue) * 5,
+                  child: Text("3",
+                      style:
+                          TextStyle(fontSize: 25, color: Color(0xff828282))))),
           Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -660,15 +665,20 @@ class _FourthSlideState extends State<FourthSlide> {
                   child: Container(
                       width: MediaQuery.of(context).size.width,
                       color: Color(0xffFFF6DA),
+                      padding: EdgeInsets.only(top: 50),
                       child: Column(
                         children: [
                           SizedBox(height: 130),
-                          Opacity(
-                            opacity: min(titlePop, curValue) * 5,
-                            child: Text("4",
-                                style: TextStyle(
-                                    fontSize: 25, color: Color(0xff828282))),
-                          ),
+                          Transform.translate(
+                              offset:
+                                  Offset(0, 30 - min(curValue, titlePop) * 300),
+                              child: Opacity(
+                                opacity: min(titlePop, curValue) * 5,
+                                child: Text("4",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        color: Color(0xff828282))),
+                              )),
                           Column(children: [
                             SizedBox(height: 60),
                             Transform.translate(
@@ -946,7 +956,7 @@ Container NavigatorToAddTemp(double fontSize) {
         },
         child: Container(
           padding: EdgeInsets.only(left: 20, right: 20),
-          child: Text("Add Temperament info",
+          child: Text("Temperament test",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: fontSize,

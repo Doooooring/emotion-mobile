@@ -225,16 +225,20 @@ class _TemperamentTestState extends State<TemperamentTest>
     });
     if (curInd == 8) {
       setIsLoading();
-      String curTemp =
-          getTemperament(easyScore, slowToWarmUpScore, difficultScore);
-      await adviceServices.addChild(
-          widget.child, curTemp, widget.age, childController);
-      // await Timer(Duration(seconds: 2), () {
-      //   Get.to(TemperamentResult(child: widget.child, temperament: curTemp));
-      // });
-      Get.to(TemperamentResult(child: widget.child, temperament: curTemp));
-      setIsLoading();
-      return;
+      try {
+        String curTemp =
+            getTemperament(easyScore, slowToWarmUpScore, difficultScore);
+        await adviceServices.addChild(
+            widget.child, curTemp, widget.age, childController);
+        // await Timer(Duration(seconds: 2), () {
+        //   Get.to(TemperamentResult(child: widget.child, temperament: curTemp));
+        // });
+        Get.to(TemperamentResult(child: widget.child, temperament: curTemp));
+      } catch (e) {
+      } finally {
+        setIsLoading();
+        return;
+      }
     }
     addCurInd();
     _controller.reset();
@@ -251,140 +255,135 @@ class _TemperamentTestState extends State<TemperamentTest>
 
     double opacity = 0.5 + (_animation.value - 0.5).abs();
 
-    return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          leadingWidth: 50,
-          titleSpacing: 0,
-          backgroundColor: Color(0xffFFF2CB),
-          elevation: 0.1,
-          centerTitle: false,
-          title: Container(
-            child: Row(
-              children: [
-                SizedBox(width: 20),
-                Text("Temperament test",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    )),
-              ],
+    return isLoading
+        ? Loading(isLoading: isLoading, height: double.infinity)
+        : Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              leadingWidth: 50,
+              titleSpacing: 0,
+              backgroundColor: Color(0xffFFF2CB),
+              elevation: 0.1,
+              centerTitle: false,
+              title: Container(
+                child: Row(
+                  children: [
+                    SizedBox(width: 20),
+                    Text("Temperament test",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        )),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
-        body: isLoading
-            ? Loading(isLoading: isLoading, height: double.infinity)
-            : Container(
+            body: Container(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                    SizedBox(height: 30),
-                    Container(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [0, 1, 2, 3, 4, 5, 6, 7, 8].map((ind) {
-                              return Container(
-                                margin: EdgeInsets.only(left: 2, right: 2),
-                                color: curInd >= ind
-                                    ? Color(0xffFFDD67)
-                                    : Color(0xffE2E2E2),
-                                width: 30,
-                                height: 4,
-                              );
-                            }).toList())),
-                    SizedBox(height: 80),
-                    SizedBox(
-                        child: Text("${widget.child} is...",
-                            style: TextStyle(
-                                fontSize: 30, color: Color(0xffFF717F)))),
-                    SizedBox(height: 100),
-                    Container(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                          GestureDetector(
-                            onTap: () {
-                              boxClicked(left["score"] as List<dynamic>);
-                            },
-                            child: Opacity(
-                              opacity: opacity,
-                              child: Container(
-                                  width: 160,
-                                  height: 160,
-                                  padding: EdgeInsets.all(30),
-                                  decoration: BoxDecoration(
-                                      color: Color(0xffFFD8CB),
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            blurRadius: 5.0,
-                                            spreadRadius: 1.0,
-                                            offset: Offset(0, 0))
-                                      ],
-                                      borderRadius: BorderRadius.circular(18)),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: (left["content"] as String)
-                                          .split(" ")
-                                          .map((str) {
-                                        return Container(
-                                            margin: EdgeInsets.only(
-                                              top: 5,
-                                              bottom: 5,
-                                            ),
-                                            child: Opacity(
-                                              opacity: _controller.value,
-                                              child: Text(str,
-                                                  style:
-                                                      TextStyle(fontSize: 18)),
-                                            ));
-                                      }).toList())),
-                            ),
+                  SizedBox(height: 30),
+                  Container(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [0, 1, 2, 3, 4, 5, 6, 7, 8].map((ind) {
+                            return Container(
+                              margin: EdgeInsets.only(left: 2, right: 2),
+                              color: curInd >= ind
+                                  ? Color(0xffFFDD67)
+                                  : Color(0xffE2E2E2),
+                              width: 30,
+                              height: 4,
+                            );
+                          }).toList())),
+                  SizedBox(height: 80),
+                  SizedBox(
+                      child: Text("${widget.child} is...",
+                          style: TextStyle(
+                              fontSize: 30, color: Color(0xffFF717F)))),
+                  SizedBox(height: 100),
+                  Container(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                        GestureDetector(
+                          onTap: () {
+                            boxClicked(left["score"] as List<dynamic>);
+                          },
+                          child: Opacity(
+                            opacity: opacity,
+                            child: Container(
+                                width: 160,
+                                height: 160,
+                                decoration: BoxDecoration(
+                                    color: Color(0xffFFD8CB),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          blurRadius: 5.0,
+                                          spreadRadius: 1.0,
+                                          offset: Offset(0, 0))
+                                    ],
+                                    borderRadius: BorderRadius.circular(18)),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: (left["content"] as String)
+                                        .split(" ")
+                                        .map((str) {
+                                      return Container(
+                                          margin: EdgeInsets.only(
+                                            top: 5,
+                                            bottom: 5,
+                                          ),
+                                          child: Opacity(
+                                            opacity: _controller.value,
+                                            child: Text(str,
+                                                style: TextStyle(fontSize: 18)),
+                                          ));
+                                    }).toList())),
                           ),
-                          SizedBox(width: 20),
-                          GestureDetector(
-                            onTap: () {
-                              boxClicked(right["score"] as List<dynamic>);
-                            },
-                            child: Opacity(
-                              opacity: opacity,
-                              child: Container(
-                                  width: 160,
-                                  height: 160,
-                                  decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            blurRadius: 5.0,
-                                            spreadRadius: 1.0,
-                                            offset: Offset(0, 0))
-                                      ],
-                                      color: Color(0xffFFD8CB),
-                                      borderRadius: BorderRadius.circular(18)),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: (right["content"] as String)
-                                          .split(" ")
-                                          .map((str) {
-                                        return Container(
-                                            margin: EdgeInsets.only(
-                                              top: 5,
-                                              bottom: 5,
-                                            ),
-                                            child: Opacity(
-                                              opacity: _controller.value,
-                                              child: Text(str,
-                                                  style:
-                                                      TextStyle(fontSize: 18)),
-                                            ));
-                                      }).toList())),
-                            ),
-                          )
-                        ]))
-                  ])));
+                        ),
+                        SizedBox(width: 20),
+                        GestureDetector(
+                          onTap: () {
+                            boxClicked(right["score"] as List<dynamic>);
+                          },
+                          child: Opacity(
+                            opacity: opacity,
+                            child: Container(
+                                width: 160,
+                                height: 160,
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          blurRadius: 5.0,
+                                          spreadRadius: 1.0,
+                                          offset: Offset(0, 0))
+                                    ],
+                                    color: Color(0xffFFD8CB),
+                                    borderRadius: BorderRadius.circular(18)),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: (right["content"] as String)
+                                        .split(" ")
+                                        .map((str) {
+                                      return Container(
+                                          margin: EdgeInsets.only(
+                                            top: 5,
+                                            bottom: 5,
+                                          ),
+                                          child: Opacity(
+                                            opacity: _controller.value,
+                                            child: Text(str,
+                                                style: TextStyle(fontSize: 18)),
+                                          ));
+                                    }).toList())),
+                          ),
+                        )
+                      ]))
+                ])));
   }
 }

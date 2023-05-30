@@ -181,7 +181,7 @@ class _TextAnimationState extends State<TextAnimation>
   late AnimationController controller =
       AnimationController(vsync: this, duration: Duration(milliseconds: 1800))
         ..repeat(reverse: false);
-  late Animation<double> animation = Tween<double>(begin: 0, end: 25)
+  late Animation<double> animation = Tween<double>(begin: 0, end: 24)
       .animate(controller)
     ..addListener(_listener);
 

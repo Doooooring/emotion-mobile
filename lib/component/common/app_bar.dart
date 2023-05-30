@@ -2,6 +2,7 @@ import 'package:aeye/controller/childController.dart';
 import 'package:aeye/controller/userController.dart';
 import 'package:aeye/page/emotion/emoticon_month_result.dart';
 import 'package:aeye/page/login/login.dart';
+import 'package:aeye/page/login/viewCode.dart';
 import "package:aeye/services/emotion.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -26,6 +27,11 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     final UserController userController = Get.find();
     final ChildController childController = Get.find();
     String title = "";
+    String role = userController.role.toString();
+
+    List<String> mainHeaderDrop =
+        role == "main" ? ["logout", "view code"] : ["logout"];
+
     switch (curPath) {
       case ("init"):
         title = "A-eye";
@@ -72,12 +78,16 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                       size: 30, Icons.keyboard_control, color: Colors.black)),
               iconSize: 40,
               onSelected: (result) async {
-                await storage.deleteAll();
-                userController.reset();
-                childController.reset();
-                Get.to(() => Login());
+                if (result == "logout") {
+                  await storage.deleteAll();
+                  userController.reset();
+                  childController.reset();
+                  Get.to(() => Login());
+                } else {
+                  Get.to(() => ViewCode());
+                }
               },
-              itemBuilder: (BuildContext context) => ["logout"]
+              itemBuilder: (BuildContext context) => mainHeaderDrop
                   .map((value) => PopupMenuItem(
                         value: value,
                         child: Text(value),

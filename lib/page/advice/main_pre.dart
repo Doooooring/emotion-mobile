@@ -5,7 +5,6 @@ import "package:aeye/controller/childController.dart";
 import 'package:aeye/controller/localNotificationController.dart';
 import "package:aeye/controller/sizeController.dart";
 import "package:aeye/page/advice/add_info.dart";
-import 'package:aeye/page/advice/main.dart';
 import "package:aeye/page/advice/temperament_detail.dart";
 import "package:aeye/services/advice.dart";
 import "package:aeye/utils/interface/child.dart";
@@ -44,12 +43,12 @@ class _MainPreState extends State<MainPre> {
   _asyncMethod() async {
     setIsLoading(true);
     try {
-      List<Child> response = await adviceServices.getChildren();
-      if (response.isNotEmpty) {
-        childController.childList = response.obs;
-        setChildList(response);
-        Get.to(AdviceMain());
-      }
+      // List<Child> response = await adviceServices.getChildren();
+      // if (response.isNotEmpty) {
+      //   childController.childList = response.obs;
+      //   setChildList(response);
+      //   Get.to(AdviceMain());
+      // }
     } catch (e) {
       print("here");
     } finally {
@@ -104,20 +103,16 @@ class _MainPreState extends State<MainPre> {
                         NavigatorButton(
                             scaleWidth(context, 20),
                             scaleWidth(context, 260),
-                            "Add temperament info",
-                            PopUpSelect(),
+                            "What is temperament?",
+                            TemperamentDetail(),
                             Color(0xffE2E2E2)),
                         SizedBox(height: 30),
-                        childList == null
-                            ? SizedBox(width: 0, height: 0)
-                            : NavigatorButton(
-                                scaleWidth(context, 20),
-                                scaleWidth(context, 260),
-                                "View advice",
-                                AdviceMain(),
-                                Color(0xffFFF2CB)),
-                        SizedBox(height: 30),
-                        ButtonToMain()
+                        NavigatorButton(
+                            scaleWidth(context, 20),
+                            scaleWidth(context, 260),
+                            "Temperament test",
+                            PopUpSelect(),
+                            Color(0xffFFF7DF)),
                       ]))
                     ])),
             bottomNavigationBar: BottomNavBar(state: true, curPath: "advice"),

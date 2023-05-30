@@ -82,10 +82,10 @@ class _AdviceMainState extends State<AdviceMain> {
     }
 
     List<String> curTips = [
+      "Ask anything",
       "During conflict",
       "Changing environment",
       "Crying baby",
-      "Ask anything"
     ];
 
     Child curView = curViewInd < curChildList!.length
@@ -124,7 +124,8 @@ class _AdviceMainState extends State<AdviceMain> {
                                   fontSize: 24, fontWeight: FontWeight.w600)),
                           IconButton(
                             icon: Image.asset(
-                                "assets/images/question_in_circle.png"),
+                                "assets/images/question_in_circle.png",
+                                width: 28),
                             onPressed: () {
                               Get.to(TemperamentDetail());
                             },

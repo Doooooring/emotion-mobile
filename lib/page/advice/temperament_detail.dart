@@ -73,7 +73,7 @@ class SlideWrapper extends StatefulWidget {
 class _SlideWrapperState extends State<SlideWrapper>
     with TickerProviderStateMixin {
   late final AnimationController _FirstController = AnimationController(
-    duration: const Duration(milliseconds: 2500),
+    duration: const Duration(milliseconds: 2000),
     vsync: this,
   )..addListener(() {
       if (mounted) {
@@ -88,7 +88,7 @@ class _SlideWrapperState extends State<SlideWrapper>
   );
 
   late final AnimationController _SecondController = AnimationController(
-    duration: const Duration(milliseconds: 2500),
+    duration: const Duration(milliseconds: 2000),
     vsync: this,
   )..addListener(() {
       if (mounted) {
@@ -103,7 +103,7 @@ class _SlideWrapperState extends State<SlideWrapper>
   );
 
   late final AnimationController _ThirdController = AnimationController(
-    duration: const Duration(milliseconds: 2500),
+    duration: const Duration(milliseconds: 2000),
     vsync: this,
   )..addListener(() {
       if (mounted) {
@@ -241,25 +241,32 @@ class _SlideWrapperState extends State<SlideWrapper>
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [0, 1, 2, 3].map((ind) {
-                            return Container(
-                                width: 30,
-                                height: 30,
-                                margin: EdgeInsets.only(left: 5, right: 5),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text((ind + 1).toString(),
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: ind == curPage
-                                                ? Color(0xffFFDD67)
-                                                : Color(0xffB9B9B9))),
-                                  ],
-                                ));
+                            return GestureDetector(
+                              onTap: () {
+                                if (curPage == ind) return;
+                                setCurPage(ind);
+                              },
+                              child: Container(
+                                  width: 30,
+                                  height: 30,
+                                  margin: EdgeInsets.only(left: 5, right: 5),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(30)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text((ind + 1).toString(),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: ind == curPage
+                                                  ? Color(0xffFFDD67)
+                                                  : Color(0xffB9B9B9))),
+                                    ],
+                                  )),
+                            );
                           }).toList())),
                 )),
             Positioned(
@@ -314,13 +321,6 @@ Container FirstSlide(BuildContext context, double curValue, double height) {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: 130),
-          Transform.translate(
-            offset: Offset(0, 30 - min(curValue, titlePop) * 300),
-            child: Opacity(
-                opacity: min(titlePop, curValue) * 10,
-                child: Text("1",
-                    style: TextStyle(fontSize: 25, color: Color(0xff828282)))),
-          ),
           Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -417,13 +417,6 @@ Container SecondSlide(BuildContext context, double curValue, double height) {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: 130),
-          Transform.translate(
-            offset: Offset(0, 30 - min(curValue, titlePop) * 300),
-            child: Opacity(
-                opacity: min(titlePop, curValue) * 10,
-                child: Text("2",
-                    style: TextStyle(fontSize: 25, color: Color(0xff828282)))),
-          ),
           Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -541,13 +534,6 @@ Container ThirdSlide(BuildContext context, double curValue, double height) {
       child: Column(
         children: [
           SizedBox(height: 130),
-          Transform.translate(
-              offset: Offset(0, 30 - min(curValue, titlePop) * 300),
-              child: Opacity(
-                  opacity: min(titlePop, curValue) * 10,
-                  child: Text("3",
-                      style:
-                          TextStyle(fontSize: 25, color: Color(0xff828282))))),
           Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -718,16 +704,6 @@ class _FourthSlideState extends State<FourthSlide> {
                       child: Column(
                         children: [
                           SizedBox(height: 130),
-                          Transform.translate(
-                              offset:
-                                  Offset(0, 30 - min(curValue, titlePop) * 300),
-                              child: Opacity(
-                                opacity: min(titlePop, curValue) * 10,
-                                child: Text("4",
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        color: Color(0xff828282))),
-                              )),
                           Column(children: [
                             SizedBox(height: 60),
                             Transform.translate(

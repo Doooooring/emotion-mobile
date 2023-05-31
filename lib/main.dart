@@ -1,6 +1,7 @@
 import "dart:async";
 
-import 'package:aeye/page/advice/temperament_detail.dart';
+import 'package:aeye/page/initial.dart';
+import 'package:aeye/page/login/login.dart';
 import 'package:aeye/page/splash_screen.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
@@ -81,7 +82,7 @@ class _MyAppState extends State<MyApp> {
 
   _asyncMethod() async {
     userInfo = await storage.read(key: "access");
-    Get.to(() => TemperamentDetail());
+    // Get.to(() => TemperamentDetail());
     //
     // Get.to(AdviceMain());
     // return;
@@ -93,15 +94,15 @@ class _MyAppState extends State<MyApp> {
     // });
     // return;
 
-    // if (userInfo != null) {
-    //   Timer(Duration(milliseconds: 1500), () {
-    //     Get.to(InitialPage());
-    //   });
-    // } else {
-    //   Timer(Duration(milliseconds: 1500), () {
-    //     Get.to(Login());
-    //   });
-    // }
+    if (userInfo != null) {
+      Timer(Duration(milliseconds: 1500), () {
+        Get.to(InitialPage());
+      });
+    } else {
+      Timer(Duration(milliseconds: 1500), () {
+        Get.to(Login());
+      });
+    }
   }
 
   @override

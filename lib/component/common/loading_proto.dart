@@ -141,30 +141,23 @@ Container ProgressIndicator(double animationValue, bool isLoading) {
 
 List<String> commentList = [
   '',
-  'a',
-  'an',
-  'ana',
-  'anal',
-  'analy',
-  'analyz',
-  'analyzi',
-  'analyzin',
-  'analyzing',
-  'analyzing ',
-  'analyzing e',
-  'analyzing em',
-  'analyzing emo',
-  'analyzing emot',
-  'analyzing emoti',
-  'analyzing emotio',
-  'analyzing emotion',
-  'analyzing emotion.',
-  'analyzing emotion..',
-  'analyzing emotion...',
-  'analyzing emotion...',
-  'analyzing emotion...',
-  'analyzing emotion...',
-  'analyzing emotion...',
+  'l',
+  'lo',
+  'loa',
+  'load',
+  'load',
+  'load',
+  'load d',
+  'load da',
+  'load dat',
+  'load data',
+  'load data.',
+  'load data..',
+  'load data...',
+  'load data....',
+  'load data....',
+  'load data....',
+  'load data....',
 ];
 
 class TextAnimation extends StatefulWidget {
@@ -181,7 +174,7 @@ class _TextAnimationState extends State<TextAnimation>
   late AnimationController controller =
       AnimationController(vsync: this, duration: Duration(milliseconds: 1800))
         ..repeat(reverse: false);
-  late Animation<double> animation = Tween<double>(begin: 0, end: 24)
+  late Animation<double> animation = Tween<double>(begin: 0, end: 17)
       .animate(controller)
     ..addListener(_listener);
 

@@ -1,5 +1,6 @@
 import "dart:async";
 
+import 'package:aeye/page/advice/temperament_detail.dart';
 import 'package:aeye/page/splash_screen.dart';
 import "package:firebase_core/firebase_core.dart";
 import "package:firebase_messaging/firebase_messaging.dart";
@@ -13,8 +14,6 @@ import "./controller/childController.dart";
 import "./controller/localNotificationController.dart";
 import "./controller/loginController.dart";
 import "./controller/userController.dart";
-import './page/initial.dart';
-import "./page/login/login.dart";
 import "firebase_options.dart";
 
 late AndroidNotificationChannel channel;
@@ -82,6 +81,7 @@ class _MyAppState extends State<MyApp> {
 
   _asyncMethod() async {
     userInfo = await storage.read(key: "access");
+    Get.to(() => TemperamentDetail());
     //
     // Get.to(AdviceMain());
     // return;
@@ -93,15 +93,15 @@ class _MyAppState extends State<MyApp> {
     // });
     // return;
 
-    if (userInfo != null) {
-      Timer(Duration(milliseconds: 1500), () {
-        Get.to(InitialPage());
-      });
-    } else {
-      Timer(Duration(milliseconds: 1500), () {
-        Get.to(Login());
-      });
-    }
+    // if (userInfo != null) {
+    //   Timer(Duration(milliseconds: 1500), () {
+    //     Get.to(InitialPage());
+    //   });
+    // } else {
+    //   Timer(Duration(milliseconds: 1500), () {
+    //     Get.to(Login());
+    //   });
+    // }
   }
 
   @override

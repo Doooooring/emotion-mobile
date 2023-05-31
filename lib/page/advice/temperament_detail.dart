@@ -131,6 +131,8 @@ class _SlideWrapperState extends State<SlideWrapper>
     curve: Curves.easeInOut,
   );
 
+  ScrollController fourthScrollController = ScrollController();
+
   int curPage = 0;
   void setCurPage(int nextPage) {
     List controllerList = [
@@ -142,6 +144,10 @@ class _SlideWrapperState extends State<SlideWrapper>
 
     AnimationController curController = controllerList[curPage];
     AnimationController nextController = controllerList[nextPage];
+
+    if (curPage == 3) {
+      fourthScrollController.jumpTo(0);
+    }
 
     setState(() {
       curPage = nextPage;
@@ -157,10 +163,22 @@ class _SlideWrapperState extends State<SlideWrapper>
     });
   }
 
+  double headerOpacity = 1;
+  void setHeaderOpacity(double curHeight) {
+    setState(() {
+      headerOpacity = 1 - min(100, max(0, curHeight)) / 100;
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     _FirstController.forward();
+    fourthScrollController.addListener(() {
+      print("here");
+      setHeaderOpacity(fourthScrollController.offset);
+    });
+
     super.initState();
   }
 
@@ -176,78 +194,103 @@ class _SlideWrapperState extends State<SlideWrapper>
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
     return Container(
         width: double.infinity,
         height: height,
         color: Color(0xffFFF6DA),
-        child: GestureDetector(
-            onVerticalDragEnd: (DragEndDetails details) {
-              // if (isOnFourth) {
-              //   return;
-              // }
-              // if (details.velocity.pixelsPerSecond.dy < 0 && curPage < 3) {
-              //   setCurPage(curPage + 1);
-              //
-              // } else if (details.velocity.pixelsPerSecond.dy > 0 &&
-              //     curPage > 0) {
-              //   setCurPage(curPage - 1);
-              //
-              // } else {
-              //   return;
-              // }
-            },
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                AnimatedPositioned(
-                  duration: Duration(milliseconds: 200),
-                  top: -1 * curPage * MediaQuery.of(context).size.height,
-                  left: 0,
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Column(children: [
-                      gestureWrapper(
-                          FirstSlide(context, _FirstAnimation.value, height),
-                          setCurPage,
-                          curPage),
-                      gestureWrapper(
-                          SecondSlide(context, _SecondAnimation.value, height),
-                          setCurPage,
-                          curPage),
-                      gestureWrapper(
-                          ThirdSlide(context, _ThirdAnimation.value, height),
-                          setCurPage,
-                          curPage),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            AnimatedPositioned(
+              duration: Duration(milliseconds: 200),
+              top: 0,
+              left: -1 * curPage * MediaQuery.of(context).size.width,
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: Row(children: [
+                  gestureWrapper(
+                      FirstSlide(context, _FirstAnimation.value, height),
+                      setCurPage,
+                      curPage),
+                  gestureWrapper(
+                      SecondSlide(context, _SecondAnimation.value, height),
+                      setCurPage,
+                      curPage),
+                  gestureWrapper(
+                      ThirdSlide(context, _ThirdAnimation.value, height),
+                      setCurPage,
+                      curPage),
+                  gestureWrapper(
                       FourthSlide(
-                        curValue: _FourthAnimation.value,
-                        setCurPage: setCurPage,
-                      ),
-                    ]),
+                          curValue: _FourthAnimation.value,
+                          setCurPage: setCurPage,
+                          scrollController: fourthScrollController),
+                      setCurPage,
+                      curPage),
+                ]),
+              ),
+            ),
+            Positioned(
+                top: 100,
+                child: Opacity(
+                  opacity: headerOpacity,
+                  child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [0, 1, 2, 3].map((ind) {
+                            return Container(
+                                width: 30,
+                                height: 30,
+                                margin: EdgeInsets.only(left: 5, right: 5),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text((ind + 1).toString(),
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: ind == curPage
+                                                ? Color(0xffFFDD67)
+                                                : Color(0xffB9B9B9))),
+                                  ],
+                                ));
+                          }).toList())),
+                )),
+            Positioned(
+                top: 100,
+                left: 30,
+                child: Opacity(
+                  opacity: headerOpacity,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back_ios_new_outlined,
+                        color: Colors.black),
+                    onPressed: () {
+                      Navigator.pop(context);
+                      return;
+                    },
                   ),
-                ),
-                Positioned(
-                    top: 100,
-                    left: 30,
-                    child: IconButton(
-                      icon: Icon(Icons.arrow_back_ios_new_outlined,
-                          color: Colors.black),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        return;
-                      },
-                    ))
-              ],
-            )));
+                )),
+          ],
+        ));
   }
 }
 
 GestureDetector gestureWrapper(Widget comp, Function setCurPage, int curPage) {
   return GestureDetector(
-      onVerticalDragEnd: (DragEndDetails details) {
-        if (details.velocity.pixelsPerSecond.dy < 0 && curPage < 3) {
+      onHorizontalDragEnd: (DragEndDetails details) {
+        if (details.velocity.pixelsPerSecond.dx < 0 && curPage < 3) {
           setCurPage(curPage + 1);
-        } else if (details.velocity.pixelsPerSecond.dy > 0 && curPage > 0) {
+          return;
+        }
+        if (details.velocity.pixelsPerSecond.dx > 0 && curPage > 0) {
           setCurPage(curPage - 1);
+          return;
         } else {
           return;
         }
@@ -501,7 +544,7 @@ Container ThirdSlide(BuildContext context, double curValue, double height) {
           Transform.translate(
               offset: Offset(0, 30 - min(curValue, titlePop) * 300),
               child: Opacity(
-                  opacity: min(titlePop, curValue) * 5,
+                  opacity: min(titlePop, curValue) * 10,
                   child: Text("3",
                       style:
                           TextStyle(fontSize: 25, color: Color(0xff828282))))),
@@ -613,11 +656,15 @@ Container ThirdSlide(BuildContext context, double curValue, double height) {
 
 class FourthSlide extends StatefulWidget {
   const FourthSlide(
-      {Key? key, required this.curValue, required this.setCurPage})
+      {Key? key,
+      required this.curValue,
+      required this.setCurPage,
+      required this.scrollController})
       : super(key: key);
 
   final double curValue;
   final Function(int nextPage) setCurPage;
+  final ScrollController scrollController;
 
   @override
   State<FourthSlide> createState() => _FourthSlideState();
@@ -641,27 +688,29 @@ class _FourthSlideState extends State<FourthSlide> {
     double elsePop = 0.7;
 
     return Container(
+      width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: GestureDetector(
           onVerticalDragUpdate: (DragUpdateDetails details) {
-            Offset delta = details.delta;
-            if (curPosition + delta.dy > 10) {
-              setCurPosition(0);
-              widget.setCurPage(2);
-              return;
-            }
-            if (curPosition + delta.dy < -700) {
-              return;
-            }
-            setCurPosition(curPosition + delta.dy);
+            // Offset delta = details.delta;
+            // if (curPosition + delta.dy > 10) {
+            //   setCurPosition(0);
+            //   widget.setCurPage(2);
+            //   return;
+            // }
+            // if (curPosition + delta.dy < -700) {
+            //   return;
+            // }
+            // setCurPosition(curPosition + delta.dy);
           },
           child: Stack(
             clipBehavior: Clip.none,
             children: [
-              Positioned(
-                top: curPosition,
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
                 child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
+                  controller: widget.scrollController,
                   child: Container(
                       width: MediaQuery.of(context).size.width,
                       color: Color(0xffFFF6DA),
@@ -673,7 +722,7 @@ class _FourthSlideState extends State<FourthSlide> {
                               offset:
                                   Offset(0, 30 - min(curValue, titlePop) * 300),
                               child: Opacity(
-                                opacity: min(titlePop, curValue) * 5,
+                                opacity: min(titlePop, curValue) * 10,
                                 child: Text("4",
                                     style: TextStyle(
                                         fontSize: 25,
@@ -929,6 +978,7 @@ class _FourthSlideState extends State<FourthSlide> {
                               ),
                             )
                           ]),
+                          Container(height: 50)
                         ],
                       )),
                 ),

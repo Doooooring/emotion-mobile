@@ -37,6 +37,8 @@ class BardRepositories {
       Map<String, dynamic> responseEncode =
           json.decode(utf8.decode(response.bodyBytes));
 
+      print(responseEncode);
+
       List result = responseEncode["result"];
 
       return result;

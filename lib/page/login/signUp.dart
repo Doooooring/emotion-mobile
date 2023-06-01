@@ -123,7 +123,11 @@ class _SignUpState extends State<SignUp> {
                                                         borderSide: BorderSide(
                                                             width: 0,
                                                             color:
-                                                                Colors.white))),
+                                                                Color.fromRGBO(
+                                                                    0,
+                                                                    0,
+                                                                    0,
+                                                                    0)))),
                                           ),
                                         ),
                                       ],

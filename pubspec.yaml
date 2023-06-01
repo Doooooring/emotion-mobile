@@ -38,11 +38,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.5
   page_transition: ^2.0.9
-  speech_to_text: ^6.1.1
   youtube_player_flutter: ^8.1.2
   toast: ^0.3.0
   socket_io_client: ^2.0.1
-  flutter_webrtc: ^0.9.23
   intl: ^0.17.0
   simple_gesture_detector: ^0.2.0
   get: ^4.6.5

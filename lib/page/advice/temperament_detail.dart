@@ -724,6 +724,7 @@ class _FourthSlideState extends State<FourthSlide> {
                                           style: TextStyle(
                                               fontSize: 30,
                                               fontWeight: FontWeight.w400))),
+                                  SizedBox(height : 10),
                                   SizedBox(
                                       child: Text("adult-child temperament",
                                           style: TextStyle(

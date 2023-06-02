@@ -134,7 +134,7 @@ class _EmotionWrapperState extends State<EmotionWrapper> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("How do you feel?", style: (TextStyle(fontSize: 18)))
+                      Text("Choos Emoji!", style: (TextStyle(fontSize: 18)))
                     ])),
             Container(
               height: 100,

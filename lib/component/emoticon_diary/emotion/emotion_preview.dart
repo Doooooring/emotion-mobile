@@ -167,7 +167,6 @@ class _PreviewBoxHeaderState extends State<PreviewBoxHeader> {
   @override
   Widget build(BuildContext context) {
     String role = userController.role.toString();
-    print(role);
 
     return Container(
       width: double.infinity,

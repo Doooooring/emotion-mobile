@@ -5,6 +5,7 @@ import "package:aeye/controller/childController.dart";
 import 'package:aeye/controller/localNotificationController.dart';
 import "package:aeye/controller/sizeController.dart";
 import "package:aeye/page/advice/add_info.dart";
+import 'package:aeye/page/advice/main.dart';
 import "package:aeye/page/advice/temperament_detail.dart";
 import "package:aeye/services/advice.dart";
 import "package:aeye/utils/interface/child.dart";
@@ -43,12 +44,12 @@ class _MainPreState extends State<MainPre> {
   _asyncMethod() async {
     setIsLoading(true);
     try {
-      // List<Child> response = await adviceServices.getChildren();
-      // if (response.isNotEmpty) {
-      //   childController.childList = response.obs;
-      //   setChildList(response);
-      //   Get.to(AdviceMain());
-      // }
+      List<Child> response = await adviceServices.getChildren();
+      if (response.isNotEmpty) {
+        childController.childList = response.obs;
+        setChildList(response);
+        Get.to(AdviceMain());
+      }
     } catch (e) {
       print("here");
     } finally {

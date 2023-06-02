@@ -564,6 +564,7 @@ class _ViewSolutionState extends State<ViewSolution> {
                           )),
                           onPressed: () async {
                             print(solutions);
+                            Get.back();
                             Get.to(AiResult(solutions: solutions));
                           },
                           child: Container(
@@ -571,7 +572,7 @@ class _ViewSolutionState extends State<ViewSolution> {
                                 borderRadius: BorderRadius.circular(20),
                                 color: Color(0xffFFDD67),
                               ),
-                              padding: EdgeInsets.all(5),
+                              padding: EdgeInsets.all(12),
                               child: Text("View solutions",
                                   style: TextStyle(color: Colors.white)))),
                     ],

@@ -224,7 +224,7 @@ class _InitialPageState extends State<InitialPage> {
                                           child: Row(children: [
                                         Image.asset("assets/images/pencil.png"),
                                         SizedBox(width: 10),
-                                        Text("write diary",
+                                        Text("write a diary",
                                             style:
                                                 TextStyle(color: Colors.grey)),
                                       ]))),

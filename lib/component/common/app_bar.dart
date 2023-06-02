@@ -30,7 +30,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     String role = userController.role.toString();
 
     List<String> mainHeaderDrop =
-        role == "main" ? ["logout", "view code"] : ["logout"];
+        role == "main" ? ["Sign Out", "View Code"] : ["Sign Out"];
 
     switch (curPath) {
       case ("init"):
@@ -78,7 +78,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                       size: 30, Icons.keyboard_control, color: Colors.black)),
               iconSize: 40,
               onSelected: (result) async {
-                if (result == "logout") {
+                if (result == "Sign Out") {
                   await storage.deleteAll();
                   userController.reset();
                   childController.reset();
@@ -133,7 +133,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 childController.reset();
                 Get.to(() => Login());
               },
-              itemBuilder: (BuildContext context) => ["logout"]
+              itemBuilder: (BuildContext context) => ["Sign Out"]
                   .map((value) => PopupMenuItem(
                         value: value,
                         child: Text(value),
@@ -186,7 +186,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
               childController.reset();
               Get.to(() => Login());
             },
-            itemBuilder: (BuildContext context) => ["logout"]
+            itemBuilder: (BuildContext context) => ["Sign Out"]
                 .map((value) => PopupMenuItem(
                       value: value,
                       child: Text(value),

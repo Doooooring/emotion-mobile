@@ -128,11 +128,11 @@ GestureDetector PopUp(
                                 color: Color.fromRGBO(50, 50, 50, 0.4)),
                             enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(width: 1, color: Colors.white),
+                                  BorderSide(width: 0, color: Colors.white),
                             ),
                             focusedBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.white))),
+                                    BorderSide(width: 0, color: Colors.white))),
                       ),
                     )
                   ])),

@@ -109,6 +109,16 @@ class _EmotionMonthResultState extends State<EmotionMonthResult> {
     Map sentimentalLevel = data!["sentimentLevel"];
     Map emotionHistogram = data!["emotionHistogram"];
     Map monthlyEmotion = data!["monthlyEmotion"];
+
+    num totalEmotion = 0;
+    sentimentalLevel.keys.forEach((key) {
+      print(sentimentalLevel[key]);
+      totalEmotion += sentimentalLevel[key];
+    });
+
+    print(totalEmotion);
+
+    bool isShowChart = totalEmotion != 0;
     return Scaffold(
       body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
@@ -150,10 +160,12 @@ class _EmotionMonthResultState extends State<EmotionMonthResult> {
                   Text("Monthly Report", style: TextStyle(fontSize: 30)),
                   SizedBox(height: 20)
                 ])),
-                ChartWrapper(
-                    sentimentalLevel: sentimentalLevel,
-                    emotionHistogram: emotionHistogram,
-                    monthlyEmotion: monthlyEmotion),
+                isShowChart
+                    ? ChartWrapper(
+                        sentimentalLevel: sentimentalLevel,
+                        emotionHistogram: emotionHistogram,
+                        monthlyEmotion: monthlyEmotion)
+                    : SizedBox(height: 0),
               ]))),
     );
   }
@@ -176,52 +188,68 @@ class EmoticonMonthResult extends StatelessWidget {
     Map emotionHistogram = data["emotionHistogram"];
     Map monthlyEmotion = data["monthlyEmotion"];
 
+    num totalEmotion = 0;
+    sentimentalLevel.keys.forEach((key) {
+      print(sentimentalLevel[key]);
+      totalEmotion += sentimentalLevel[key];
+    });
+
+    print(totalEmotion);
+
+    bool isShowChart = totalEmotion != 0;
+
     return Scaffold(
-      body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          physics: ClampingScrollPhysics(),
-          child: Container(
-              width: double.infinity,
-              height: 1300,
-              padding: EdgeInsets.only(bottom: 100),
-              color: Color(0xffFFF2CB),
-              child: Column(children: [
-                Container(
-                    child: Column(children: [
-                  SizedBox(height: 80),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                                iconSize: 30,
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: Icon(Icons.arrow_back_ios_new),
-                                color: Colors.black),
-                          ],
+      body: Container(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height,
+        child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            physics: ClampingScrollPhysics(),
+            child: Container(
+                width: double.infinity,
+                height: 1300,
+                padding: EdgeInsets.only(bottom: 100),
+                color: Color(0xffFFF2CB),
+                child: Column(children: [
+                  Container(
+                      child: Column(children: [
+                    SizedBox(height: 80),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 100,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                  iconSize: 30,
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: Icon(Icons.arrow_back_ios_new),
+                                  color: Colors.black),
+                            ],
+                          ),
                         ),
-                      ),
-                      Text("${mon} ${year}",
-                          style: TextStyle(fontSize: 20, color: Colors.grey)),
-                      SizedBox(
-                        width: 100,
-                      )
-                    ],
-                  ),
-                  Text("Monthly Report", style: TextStyle(fontSize: 30)),
-                  SizedBox(height: 20)
-                ])),
-                ChartWrapper(
-                    sentimentalLevel: sentimentalLevel,
-                    emotionHistogram: emotionHistogram,
-                    monthlyEmotion: monthlyEmotion),
-              ]))),
+                        Text("${mon} ${year}",
+                            style: TextStyle(fontSize: 20, color: Colors.grey)),
+                        SizedBox(
+                          width: 100,
+                        )
+                      ],
+                    ),
+                    Text("Monthly Report", style: TextStyle(fontSize: 30)),
+                    SizedBox(height: 20)
+                  ])),
+                  isShowChart
+                      ? ChartWrapper(
+                          sentimentalLevel: sentimentalLevel,
+                          emotionHistogram: emotionHistogram,
+                          monthlyEmotion: monthlyEmotion)
+                      : SizedBox(height: 0),
+                ]))),
+      ),
     );
   }
 }

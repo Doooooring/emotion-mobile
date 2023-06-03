@@ -82,17 +82,6 @@ class _MyAppState extends State<MyApp> {
 
   _asyncMethod() async {
     userInfo = await storage.read(key: "access");
-    // Get.to(() => TemperamentDetail());
-    //
-    // Get.to(AdviceMain());
-    // return;
-
-    // Get.to(AdviceMain());
-    // Get.to(TemperamentTest(child: "Alex"));
-    // Timer(Duration(milliseconds: 1500), () {
-    //   Get.to(InitialPage());
-    // });
-    // return;
 
     if (userInfo != null) {
       Timer(Duration(milliseconds: 1500), () {

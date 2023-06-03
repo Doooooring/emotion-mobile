@@ -93,47 +93,57 @@ class _EmotionPreviewBoxState extends State<EmotionPreviewBox> {
 
     String selectDay = '${monthToEng} ${day} ${year}';
 
-    Color backgroundColor = id == null ? Color(0xffFAF8F8) : Color(0xffFFF6DA);
+    Color fontColor =
+        id == null ? Color.fromRGBO(130, 130, 130, 1) : Colors.black;
 
-    return Container(
-      padding: EdgeInsets.only(top: 15, bottom: 30),
-      width: 380,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          boxShadow: [
-            BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.06),
-                blurRadius: 18.0,
-                spreadRadius: 0.0,
-                offset: Offset(0, 6))
-          ],
-          color: backgroundColor),
-      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        PreviewBoxHeader(
-          id: id,
-          date: widget.date,
-          emotion: emotion,
-          title: selectDay,
-          curDates: widget.curDates,
-          setInputEmotionUp: widget.setInputEmotionUp,
-          setEmotionSelectorUp: widget.setEmotionSelectorUp,
-        ),
-        SizedBox(height: 20),
-        PreviewBoxBody(context, content),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(left: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              id == null
-                  ? SizedBox(width: 0)
-                  : ButtonToComment(context, id, widget.date.year,
-                      widget.date.month, widget.date.day),
+    Color backgroundColor = id == null ? Color(0xffFCFCFC) : Color(0xffFFF6DA);
+
+    return GestureDetector(
+      onTap: () {
+        print("emotion up");
+        widget.setInputEmotionUp(true);
+        print("here");
+      },
+      child: Container(
+        padding: EdgeInsets.only(top: 15, bottom: 30),
+        width: 380,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50),
+            boxShadow: [
+              BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.06),
+                  blurRadius: 18.0,
+                  spreadRadius: 0.0,
+                  offset: Offset(0, 6))
             ],
+            color: backgroundColor),
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          PreviewBoxHeader(
+            id: id,
+            date: widget.date,
+            emotion: emotion,
+            title: selectDay,
+            curDates: widget.curDates,
+            setInputEmotionUp: widget.setInputEmotionUp,
+            setEmotionSelectorUp: widget.setEmotionSelectorUp,
           ),
-        )
-      ]),
+          SizedBox(height: 20),
+          PreviewBoxBody(context, content, fontColor),
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                id == null
+                    ? SizedBox(width: 0)
+                    : ButtonToComment(context, id, widget.date.year,
+                        widget.date.month, widget.date.day),
+              ],
+            ),
+          )
+        ]),
+      ),
     );
   }
 }
@@ -334,17 +344,17 @@ class _PopUpForSubState extends State<PopUpForSub> {
   }
 }
 
-Container PreviewBoxBody(BuildContext context, String text) {
+Container PreviewBoxBody(BuildContext context, String text, Color color) {
   return Container(
       width: double.infinity,
       padding: EdgeInsets.only(
           left: scaleWidth(context, 20), right: scaleWidth(context, 20)),
       child: Text(
         style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-          height: 1.5,
-        ),
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            height: 1.5,
+            color: color),
         text,
       ));
 }

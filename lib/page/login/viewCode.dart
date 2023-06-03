@@ -3,14 +3,45 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:get/get.dart";
 
-class ViewCode extends StatelessWidget {
+class ViewCode extends StatefulWidget {
   const ViewCode({Key? key}) : super(key: key);
+
+  @override
+  State<ViewCode> createState() => _ViewCodeState();
+}
+
+class _ViewCodeState extends State<ViewCode> with TickerProviderStateMixin {
+  late final AnimationController _Controller = AnimationController(
+    duration: const Duration(milliseconds: 1000),
+    vsync: this,
+  )..addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+      ;
+    });
+
+  late final Animation<double> _Animation = CurvedAnimation(
+    parent: _Controller,
+    curve: Curves.easeInOut,
+  );
+
+  @override
+  void dispose(){
+    _Controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final UserController userController = Get.find();
 
     String code = userController.code.toString();
+    double opacity = _Animation.value;
+    if (opacity == 1) {
+      _Controller.reverse();
+    }
+
     return Scaffold(
         appBar: AppBar(
           leadingWidth: 50,
@@ -81,13 +112,18 @@ class ViewCode extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 24, fontWeight: FontWeight.w600)),
                           IconButton(
+                            splashColor: Colors.grey,
                             onPressed: () {
                               Clipboard.setData(ClipboardData(text: code));
+                              _Controller.forward();
                             },
                             icon: Image.asset("assets/images/file_icon.png"),
                           )
                         ])),
-                SizedBox(height: 60)
+                SizedBox(height: 60),
+                Opacity(
+                    opacity: opacity,
+                    child: Container(child: Text("Code Saved!")))
               ],
             )));
   }

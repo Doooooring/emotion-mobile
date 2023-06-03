@@ -39,8 +39,6 @@ class AdviceServices {
   Future<List> getAdvice(
       String name, int age, String temperament, String content) async {
     try {
-      print("is get advice");
-
       List result =
           await bardRepositories.getAdvice(name, age, temperament, content);
 

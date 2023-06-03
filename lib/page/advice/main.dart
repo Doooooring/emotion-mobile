@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import "package:aeye/component/common/app_bar.dart";
 import "package:aeye/component/common/bottom_bar.dart";
 import "package:aeye/component/common/loading_proto.dart";
@@ -257,7 +259,9 @@ class _ViewTemperamentState extends State<ViewTemperament> {
                   },
                   icon: widget.curViewInd == 0
                       ? SizedBox(width: 0)
-                      : Icon(size: 30, Icons.keyboard_arrow_left))),
+                      : Transform.rotate(
+                          angle: pi,
+                          child: Image.asset("assets/images/arrow_icon.png")))),
           Positioned(
               top: height / 2 - 15,
               right: 5,
@@ -273,7 +277,7 @@ class _ViewTemperamentState extends State<ViewTemperament> {
                   },
                   icon: widget.curViewInd == widget.childList.length
                       ? SizedBox(width: 0)
-                      : Icon(size: 30, Icons.keyboard_arrow_right)))
+                      : Image.asset("assets/images/arrow_icon.png")))
         ]));
   }
 }

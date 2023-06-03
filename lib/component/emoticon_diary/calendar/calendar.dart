@@ -92,9 +92,6 @@ class _CalendarState extends State<Calendar> {
           if (selectedDay.isAfter(DateTime.now())) {
             return;
           }
-          // List<String> dayToArray = selectedDay.toString().split(' ');
-          // String ymd = dayToArray[0];
-          // String dateInForm = getDate(ymd);
 
           Map curInfo = widget.curDates[selectedDay.day.toString()] ?? {};
           String diaryContent = curInfo["content"] ?? "";
@@ -111,7 +108,7 @@ class _CalendarState extends State<Calendar> {
               right: scaleWidth(context, 2),
               bottom: scaleWidth(context, 10)),
           headerMargin:
-              EdgeInsets.only(left: 62, top: 10, right: 62, bottom: 0),
+              EdgeInsets.only(left: 62, top: 10, right: 62, bottom: 10),
           titleCentered: true,
           formatButtonVisible: false,
           leftChevronIcon: IconButton(

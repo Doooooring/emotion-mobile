@@ -165,7 +165,19 @@ class _EmotionMonthResultState extends State<EmotionMonthResult> {
                         sentimentalLevel: sentimentalLevel,
                         emotionHistogram: emotionHistogram,
                         monthlyEmotion: monthlyEmotion)
-                    : SizedBox(height: 0),
+                    : Container(
+                        height: 200,
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("There is no diary this month",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w400,
+                                    height: 1.5,
+                                    color: Colors.grey,
+                                  ))
+                            ])),
               ]))),
     );
   }

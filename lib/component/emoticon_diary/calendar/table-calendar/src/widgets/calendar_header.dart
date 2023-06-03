@@ -79,6 +79,7 @@ class CalendarHeader extends StatelessWidget {
       padding: headerStyle.headerPadding,
       child: Row(
         mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           if (headerStyle.leftChevronVisible)
             CustomIconButton(
@@ -206,9 +207,9 @@ class _YearButtonState extends State<YearButton> {
   @override
   Widget build(BuildContext context) {
     String dropDownValue = widget.year;
-
     return DropdownButton(
         menuMaxHeight: 150,
+        elevation: 0,
         value: dropDownValue,
         items: YearList.map((year) {
           return DropdownMenuItem(

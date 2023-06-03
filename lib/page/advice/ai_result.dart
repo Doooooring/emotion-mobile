@@ -295,7 +295,7 @@ class _AdviceBlockState extends State<AdviceBlock> {
                       )),
                   SizedBox(width: 10),
                   Container(
-                      width: 250,
+                      width: 230,
                       padding: EdgeInsets.only(left: 10, right: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20)),
@@ -330,37 +330,21 @@ class _AdviceBlockState extends State<AdviceBlock> {
                                                   fontSize: 16.0))),
                                     ),
                                   ])),
-                            // widget.value < 0.5
-                            //     ? SizedBox(height: 0)
-                            //     : SizedBox(height: 10),
-                            // widget.value < 0.5
-                            //     ? SizedBox(height: 0)
-                            //     : Opacity(
-                            //         opacity: opacity,
-                            //         child: RichText(
-                            //             overflow: TextOverflow.clip,
-                            //             text: TextSpan(
-                            //                 text: widget.advice,
-                            //                 style: TextStyle(
-                            //                     color: Colors.black,
-                            //                     height: 1.5,
-                            //                     fontSize: 16.0))),
-                            //       ),
-                            // widget.value < 0.5
-                            //     ? SizedBox(height: 0)
-                            //     : SizedBox(height: 20)
                           ])),
                   SizedBox(width: 20),
-                  Transform.rotate(
-                      angle: rotateAngle,
-                      child: Container(
-                          child: Row(
+                  Container(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.arrow_back_ios, color: Color(0xffD5D5D5)),
+                          Transform.rotate(
+                            angle: rotateAngle,
+                            child: Image.asset("assets/images/arrow_icon.png",
+                                width: 30),
+                          ),
                         ],
-                      )))
+                      ))
                 ]),
           ),
         ),

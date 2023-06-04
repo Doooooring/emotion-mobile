@@ -48,6 +48,7 @@ class _MainPreState extends State<MainPre> {
       if (response.isNotEmpty) {
         childController.childList = response.obs;
         setChildList(response);
+        Get.back();
         Get.to(AdviceMain());
       }
     } catch (e) {

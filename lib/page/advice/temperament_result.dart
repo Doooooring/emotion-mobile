@@ -96,7 +96,9 @@ class _TemperamentResultState extends State<TemperamentResult> {
                             },
                             child: Text("Done",
                                 style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.w600)))
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600)))
                       ]),
                       SizedBox(height: 40),
                       Row(
